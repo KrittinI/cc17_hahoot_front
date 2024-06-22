@@ -1,10 +1,12 @@
-import Header from "./layouts/Header";
-
+import AuthContextProvider from "./contexts/AuthContext";
+import Router from "./routes";
 
 function App() {
   return (
     <div>
-      <Header/> 
+      <AuthContextProvider>
+        <Router />
+      </AuthContextProvider>
     </div>
   );
 }

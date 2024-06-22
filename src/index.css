@@ -6,12 +6,13 @@
   line-height: 1.5;
   font-weight: 400;
   color:"#171717";
+  height: 100vh;
   /* height: 100vh; */
 
   /* color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87); */
-  /* background-image:url("./assets/greenBackground.jpg"); */
-  background-repeat:repeat;
+  background-image:url("./assets/Webp.net-resizeimage.jpg");
+  background-repeat:no-repeat;
   background-size: cover;
 
   /* color-scheme: light dark;
