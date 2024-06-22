@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import validateRegister from "../validation/register-validator";
+import authApi from "../../../api/auth";
 
 const initialInput = {
   email: "",
@@ -32,11 +33,12 @@ export default function RegisterForm() {
       }
 
       setInputError({ ...initialInputError });
+      // const isEmailExist = await
+      // if (input.email === isEmailExist) {
+      //   setInputError(prev => {})
+      // }
 
-      //   const isEmailExist = await
-      //   if (input.email === isEmailExist) {
-      //     setInputError()
-      //   }
+      await authApi.register(input);
     } catch (error) {
       console.log(error);
     }
