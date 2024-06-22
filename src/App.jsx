@@ -1,9 +1,10 @@
-import Logo from "./components/Logo";
+import Header from "./layouts/Header";
+
 
 function App() {
   return (
     <div>
-      <Logo/>
+      <Header/> 
     </div>
   );
 }

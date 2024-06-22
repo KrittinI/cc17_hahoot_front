@@ -17,13 +17,20 @@ export default {
         darkgrey: "#969A9D",
       },
       fontSize: {
+        "font-logo": [
+          "2rem",
+          {
+            lineHeight: "2.25rem",
+            letterSpacing: "-0.01em",
+            fontWeight: "700",
+          },
+        ],
         "font-header": [
           "5rem",
           {
             lineHeight: "1rem",
             letterSpacing: "-0.01em",
             fontWeight: "800",
-
           },
         ],
         "font-title": [
@@ -61,6 +68,9 @@ export default {
       },
       backgroundImage: {
         "custom-image": "url('src/assets/greenBackground.jpg')",
+      },
+      outline: {
+        'blue-bottom-solid-2': ['2px solid blue', '0 0 2px 0'],
       },
     },
   },
