@@ -1,12 +1,11 @@
+import Router from "./routes";
 
 function App() {
-
   return (
-    <div >
-
-      HelloHaHoot
+    <div>
+      <Router />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
