@@ -56,21 +56,17 @@ export function Dropdown() {
   );
 }
 
-
 // *************************  Profile Dropdown  ***************************
 
-import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-  } from "@headlessui/react";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+// import useAuth from "../hooks/useAuth";
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export function ProfileDropdown() {
+    // const {authUser} = useAuth();
   return (
     <>
       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -128,15 +124,15 @@ export function ProfileDropdown() {
           >
             <MenuItem>
               {({ focus }) => (
-                <a
-                  href="#"
-                  className={classNames(
+                <Link to={""} 
+                className={classNames(
                     focus ? "bg-blue text-white" : "",
                     "block px-4 py-2 text-sm text-gray-700"
-                  )}
+                  )
+                }
                 >
                   Your Profile
-                </a>
+                </Link>
               )}
             </MenuItem>
             <MenuItem>
