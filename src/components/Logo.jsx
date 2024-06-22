@@ -1,13 +1,16 @@
-import { SquareIcon, TriangleIcon } from "../icons";
+// import { Link } from "react-router-dom";
 
 export default function Logo() {
   return (
-    <>
-      <div>
-        <TriangleIcon />
-        <SquareIcon />
-      </div>
-      <div></div>
-    </>
+    //    <Link to="/">
+    <div className="flex items-end w-[162px] ">
+      <img
+        className="w-[38px] h-[36px]"
+        src="src/assets/icon-hh.png"
+        alt="logo"
+      />
+      <h1 className="text-font-title">Hahoot</h1>
+    </div>
+    //  </Link>
   );
 }

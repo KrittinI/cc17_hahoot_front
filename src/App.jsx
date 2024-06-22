@@ -1,13 +1,11 @@
-import Logo from "./components/Logo"
+import Logo from "./components/Logo";
 
 function App() {
-
   return (
-    <div >
+    <div>
       <Logo/>
-      HelloHaHoot
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
