@@ -19,6 +19,33 @@ export default {
         grey:'#D9D9D9',
         darkgrey:'#969A9D',
       },
+      fontSize: {
+        'text-header': ['3rem', {
+          lineHeight: '1rem',
+          letterSpacing: '-0.01em',
+          fontWeight: '600',
+        }],
+        'text-title': ['1.875rem', {
+          lineHeight: '2.25rem',
+          letterSpacing: '-0.02em',
+          fontWeight: '600',
+        }],
+        'text-btn': ['1.25rem', {
+          lineHeight: '1.75rem',
+          letterSpacing: '-0.02em',
+          fontWeight: '600',
+        }],
+        'text-body': ['1rem', {
+          lineHeight: '1.5rem',
+          letterSpacing: '-0.02em',
+          fontWeight: '300',
+        }],
+        'text-valid': ['0.875rem', {
+          lineHeight: '1.25rem',
+          letterSpacing: '-0.02em',
+          fontWeight: '300',
+        }],
+      },
       backgroundImage: {
         'custom-image': "url('src/assets/greenBackground.jpg')",
       }
