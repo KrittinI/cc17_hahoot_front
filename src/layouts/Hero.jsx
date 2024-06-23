@@ -11,12 +11,12 @@ const heroCard = [
 
 export default function HeroContianer() {
   return (
-    <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+    <div className="mt-20 mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-10 px-4 py-10 sm:px-6 sm:py-10 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
       {/* **************************** left container ************************* */}
       <div className="bg-white p-10 h-full rounded-lg">
         {heroCard.map((heroCard) => (
           <>
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-3xl">
               {heroCard.heroTitle}
             </h2>
             <p className="mt-4 text-gray-500">{heroCard.heroDescription}</p>
@@ -33,7 +33,7 @@ export default function HeroContianer() {
       {/* **************************** left container ************************* */}
 
       {/* **************************** right container ************************* */}
-      <div className="bg-white p-10 h-full rounded-lg">
+      <div className="bg-white p-4 h-full rounded-lg">
         {heroCard.map((heroCard) => (
           <>
             <img
