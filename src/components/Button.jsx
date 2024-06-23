@@ -7,6 +7,7 @@ const bgMap = {
   red: "border border-red-500 bg-red-500 hover:bg-red-600",
   avatar: "",
   disable: "bg-gray-200",
+  black: "bg-black text-white rounded-[8px] hover:bg-blue  ",
 };
 
 const colorMap = {
@@ -21,40 +22,16 @@ const widthMap = {
   40: "w-40",
   60: "w-60",
 };
-
-export function Button({
-  children,
-  bg = "blue",
-  color = "white",
-  width,
-  onClick,
-}) {
+const marginTopMap = {
+  4: "mt-12",
+}
+export function Button({ children, bg, color, width, onClick,mt }) {
   return (
     <button
-      className={`px-3 py-1.5 ${bgMap[bg]} ${colorMap[color]} rounded-xl ${widthMap[width]}`}
+      className={`px-3 py-1.5 ${bgMap[bg]} ${colorMap[color]} rounded-xl ${widthMap[width]} ${marginTopMap[mt]}`}
       onClick={onClick}
     >
       {children}
     </button>
   );
 }
-
-// ----------------- button menu --------------------- //
-
-export function ButtonMenu({
-    children,
-    bg = "bl",
-    color = "white",
-    width,
-    onClick,
-  }) {
-    return (
-      <button
-        className={`px-3 py-1.5 ${bgMap[bg]} ${colorMap[color]} rounded-xl ${widthMap[width]}`}
-        onClick={onClick}
-      >
-        {children}
-      </button>
-    );
-  }
-

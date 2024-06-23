@@ -1,5 +1,9 @@
+import HeroContianer from "../layouts/Hero";
+
 export default function HomePage() {
     return (
-        <div className="bg-blue">HomePage</div>
+        <>
+        <HeroContianer/>
+        </>
     )
 }
