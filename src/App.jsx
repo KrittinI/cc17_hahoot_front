@@ -1,12 +1,14 @@
+import AuthContextProvider from "./contexts/AuthContext";
+import Router from "./routes";
 
 function App() {
-
   return (
-    <div >
-
-      HelloHaHoot
+    <div>
+      <AuthContextProvider>
+        <Router />
+      </AuthContextProvider>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
