@@ -1,5 +1,11 @@
+import ContianerCardQuiz from "../layouts/ContainerCardQuiz";
+import HeroContianer from "../layouts/Hero";
+
 export default function HomePage() {
-    return (
-        <div>HomePage</div>
-    )
+  return (
+    <>
+      <HeroContianer />
+      <ContianerCardQuiz />
+    </>
+  );
 }
