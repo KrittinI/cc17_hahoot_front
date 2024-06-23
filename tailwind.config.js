@@ -70,7 +70,7 @@ export default {
         "custom-image": "url('src/assets/greenBackground.jpg')",
       },
       outline: {
-        'blue-bottom-solid-2': ['2px solid blue', '0 0 2px 0'],
+        "blue-bottom-solid-2": ["2px solid blue", "0 0 2px 0"],
       },
     },
   },

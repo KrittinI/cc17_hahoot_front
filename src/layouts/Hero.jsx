@@ -1,5 +1,3 @@
-// import { Button } from "../components/Button";
-
 const heroCard = [
   {
     heroTitle: "We are  Hahoot !",
@@ -28,7 +26,6 @@ export default function HeroContianer() {
             See All
           </Button>
         </div> */}
-       
       </div>
       {/* **************************** left container ************************* */}
 

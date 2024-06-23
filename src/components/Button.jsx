@@ -24,8 +24,8 @@ const widthMap = {
 };
 const marginTopMap = {
   4: "mt-12",
-}
-export function Button({ children, bg, color, width, onClick,mt }) {
+};
+export function Button({ children, bg, color, width, onClick, mt }) {
   return (
     <button
       className={`px-3 py-1.5 ${bgMap[bg]} ${colorMap[color]} rounded-xl ${widthMap[width]} ${marginTopMap[mt]}`}

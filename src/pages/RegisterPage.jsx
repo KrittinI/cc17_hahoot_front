@@ -1,5 +1,9 @@
+import RegisterForm from "../features/authentication/components/RegisterForm";
+
 export default function RegisterPage() {
-    return (
-        <div>RegisterPage</div>
-    )
+  return (
+    <div className="flex justify-center items-center">
+      <RegisterForm />
+    </div>
+  );
 }

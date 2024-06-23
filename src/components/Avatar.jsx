@@ -8,8 +8,12 @@
 
 export default function Avatar() {
   return (
-    <div className="" >
-      <img className="w-[34px] h-[34px] rounded-full border-none" src="src/assets/user.png" alt="avatar" />
+    <div className="">
+      <img
+        className="w-[34px] h-[34px] rounded-full border-none"
+        src="src/assets/user.png"
+        alt="avatar"
+      />
     </div>
   );
 }
