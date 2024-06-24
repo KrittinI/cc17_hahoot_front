@@ -1,8 +1,8 @@
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Logo() {
   return (
-    <>
+    <Link to="/">
       <div className="flex items-end w-[162px] ">
         <img
           className="w-[38px] h-[36px]"
@@ -11,6 +11,6 @@ export default function Logo() {
         />
         <h1 className="text-font-logo">Hahoot</h1>
       </div>
-    </>
+    </Link>
   );
 }
