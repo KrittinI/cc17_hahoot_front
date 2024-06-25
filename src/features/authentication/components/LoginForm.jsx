@@ -6,6 +6,7 @@ import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
+import authApi from "../../../api/auth";
 
 const initialInput = {
   email: "",
@@ -40,7 +41,14 @@ export default function LoginForm() {
       if (errorMassage) {
         return setInputError(errorMassage);
       }
-
+      const res = await authApi.register(input);
+      if (res.request.status === 400) {
+        setInputError((pre) => ({
+          ...pre,
+          email: "Email or password incorrect",
+          password: "Email or password incorrect",
+        }));
+      }
       setInputError({ ...initialInputError });
       await login(input);
       navigate("/");
@@ -63,6 +71,7 @@ export default function LoginForm() {
     const data = {};
     data.email = res.profileObj.email;
     data.password = res.profileObj.googleId;
+    // data.googlePassword = res.profileObj.googleId;
     await login(data);
     navigate("/");
   };

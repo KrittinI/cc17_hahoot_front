@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "/profilepage",
+        path: "/users/:userId",
         element: <ProfilePage />,
       },
       {
@@ -36,7 +36,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
 export default function Router() {
   return <RouterProvider router={router} />;
 }

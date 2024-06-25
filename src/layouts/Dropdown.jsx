@@ -12,7 +12,9 @@ export function Dropdown() {
 
   const { authUser, logout } = useAuth();
 
-  const handleClickLogout = () => {
+  const handleClickLogout = (e) => {
+    e.preventDefault();
+    console.log("logout here");
     setOpen(false);
     logout();
     navigate("/login");
@@ -30,7 +32,7 @@ export function Dropdown() {
           {authUser ? (
             <>
               <Link
-                to={`/users/${authUser.id}`}
+                to={`/users/${authUser?.id}`}
                 className="w-full text-center rounded-lg hover:bg-blue-50"
               >
                 Profile
@@ -64,28 +66,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const notLoginMap = [
-  { title: "Register", to: "/register" },
-  { title: "Log in", to: "/login" },
-];
-
-const adminMap = [
-  { title: "Admin", to: "/admin" },
-  { title: "Admin Quiz", to: "/your-quiz" },
-  { title: "Admin Event", to: "/your-event" },
-  { title: "Log out", to: "/login" },
-];
-
-const userMap = [
-  { title: "Your Profile", to: "/profile" },
-  { title: "Your Quiz", to: "/your-quiz" },
-  { title: "Your Event", to: "/your-event" },
-  { title: "Log out", to: "/login" },
-];
-
 export function ProfileDropdown() {
   const { authUser } = useAuth();
   const [menuMap, setMenuMap] = useState([]);
+  const userMap = [
+    { title: "Your Profile", to: `/users/${authUser?.id}` },
+    { title: "Your Quiz", to: "/your-quiz" },
+    { title: "Your Event", to: "/your-event" },
+    { title: "Log out", to: "/login" },
+  ];
+  const notLoginMap = [
+    { title: "Register", to: "/register" },
+    { title: "Log in", to: "/login" },
+  ];
+
+  const adminMap = [
+    { title: "Admin", to: "/admin" },
+    { title: "Admin Quiz", to: "/your-quiz" },
+    { title: "Admin Event", to: "/your-event" },
+    { title: "Log out", to: "/login" },
+  ];
 
   useEffect(() => {
     if (!authUser) {
@@ -107,7 +107,7 @@ export function ProfileDropdown() {
             <MenuButton className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
-              <Avatar />
+              <Avatar src={authUser?.profileImage} />
             </MenuButton>
           </div>
           <MenuItems

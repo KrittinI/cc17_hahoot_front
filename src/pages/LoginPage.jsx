@@ -5,5 +5,6 @@ export default function LoginPage() {
       <div className="flex justify-center items-center h-[calc(100vh-8rem)] w-full">
         <LoginForm />
       </div>
+
   );
 }
