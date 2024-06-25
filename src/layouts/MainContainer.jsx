@@ -6,7 +6,7 @@ import Footer from "./Footer";
 
 export default function MainContainer() {
     return (
-        <div className="h-[calc(100vh-10rem)]">
+        <div>
             <Header />
             <Outlet />
             <Footer />
