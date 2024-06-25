@@ -25,6 +25,10 @@ export default function LoginForm() {
   const clientId =
     "363481062777-mcp0obbajfl7cga0sua955vko0rprrsu.apps.googleusercontent.com";
 
+  const onClickCloseForm = () => {
+    navigate("/");
+  };
+
   const onChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -73,10 +77,29 @@ export default function LoginForm() {
   return (
     <>
       <div className="flex justify-center items-center h-[calc(100vh-8rem)] bg-black opacity-40 relative"></div>
+
       <form
-        className=" bg-white w-72 shadow-xl rounded-lg p-4 flex justify-center items-center flex-col gap-5 absolute top-60 left-[51rem]"
+        className=" bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 absolute top-60 left-[51rem]"
         onSubmit={handleSubmitLogin}
       >
+        <h2 className="text-center mb-2 font-bold text-black text-3xl">Login</h2>
+        <div role="button" className="absolute top-1 right-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-5 text-red"
+            onClick={onClickCloseForm}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
+        </div>
         <>
           <Input
             name="email"
@@ -86,6 +109,7 @@ export default function LoginForm() {
             onChage={onChangeInput}
             error={inputError.email}
           />
+
           <Input
             name="password"
             placeholder="Password"
@@ -114,7 +138,7 @@ export default function LoginForm() {
             onSuccess={onSuccessLoginGoogle}
             onFailure={onFailureLoginGoogle}
             cookiePolicy={"single_host_origin"}
-            className="flex justify-center w-full hover:bg-blue hover:text-white"
+            className="flex justify-center w-full"
           />
         </>
       </form>
