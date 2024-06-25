@@ -3,7 +3,7 @@ import Router from "./routes";
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <AuthContextProvider>
         <Router />
       </AuthContextProvider>
