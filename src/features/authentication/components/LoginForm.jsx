@@ -85,10 +85,10 @@ export default function LoginForm() {
   };
   return (
     <>
-      <div className="flex justify-center items-center h-[calc(100vh-8rem)] bg-black opacity-40 relative"></div>
+      {/* <div className="flex justify-center items-center h-[calc(100vh-8rem)] bg-black opacity-40 relative"></div> */}
 
       <form
-        className=" bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 absolute top-60 left-[51rem]"
+        className=" bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 relative"
         onSubmit={handleSubmitLogin}
       >
         <h2 className="text-center mb-2 font-bold text-black text-3xl">

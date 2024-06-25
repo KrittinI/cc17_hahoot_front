@@ -1,3 +1,4 @@
+
 import UserContextProvider from "../contexts/UserContext";
 import UserProfileForm from "../features/userProfile/components/UserProfileForm";
 import SplitScreen from "../layouts/SplitScreen";
@@ -11,6 +12,4 @@ export default function ProfilePage() {
           <UserProfileForm />
         </SplitScreen>
       </UserContextProvider>
-    </div>
-  );
-}
+    }
