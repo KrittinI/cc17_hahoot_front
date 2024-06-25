@@ -1,5 +1,4 @@
 const bgMap = {
-  // blue: "border border-blue-500 bg-blue-500 hover:bg-blue-600",
   sky: "border border-blue-400 bg-blue-400 hover:bg-blue-500",
   green: "border border-green-500 bg-green-500 hover:bg-green-600",
   gray: "border border-gray-200 bg-gray-200 hover:bg-gray-300",
@@ -10,7 +9,7 @@ const bgMap = {
 
   // hh-button
   black: "bg-black text-white rounded-[8px] hover:bg-blue  ",
-  blue: "bg-blue text-white rounded-[8px] hover:bg-darkblue"
+  blue: "bg-blue text-white rounded-[8px] hover:bg-darkblue",
 };
 
 const colorMap = {

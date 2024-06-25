@@ -6,12 +6,12 @@
 //     )
 // }
 
-export default function Avatar() {
+export default function Avatar({ src }) {
   return (
     <div className="">
       <img
-        className="w-[34px] h-[34px] rounded-full border-none"
-        src="src/assets/user.png"
+        className="w-[40px] h-[40px] rounded-full border-none"
+        src={src || "src/assets/user.png"}
         alt="avatar"
       />
     </div>

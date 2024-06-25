@@ -31,7 +31,7 @@ export default function HeroContianer() {
 
       {/* **************************** right container ************************* */}
       <div className="bg-white p-4 h-full rounded-lg">
-        {heroCard.map((heroCard,index) => (
+        {heroCard.map((heroCard, index) => (
           <div key={index}>
             <img
               src={heroCard.heroImage}

@@ -18,16 +18,13 @@ const initialInputError = {
 };
 
 export default function LoginForm() {
-  const { login } = useAuth();
+  const { login, authApi } = useAuth();
   const navigate = useNavigate();
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
+  const [isGoogleRegister, setIsGoogleRegister] = useState(true);
   const clientId =
     "363481062777-mcp0obbajfl7cga0sua955vko0rprrsu.apps.googleusercontent.com";
-
-  const onClickCloseForm = () => {
-    navigate("/");
-  };
 
   const onChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -71,35 +68,29 @@ export default function LoginForm() {
     console.log(res);
   };
 
+  const onSuccessRegisterGoogle = async (res) => {
+    const data = {};
+    data.email = res.profileObj.email;
+    data.password = res.profileObj.googleId;
+    data.confirmPassword = res.profileObj.googleId;
+    data.profileImage = res.profileObj.imageUrl;
+    await authApi.register(data);
+    setIsGoogleRegister(false);
+  };
+
+  const onFailureRegisterGoogle = (res) => {
+    console.log(res);
+  };
+
   const navigateToRegister = () => {
     navigate("/register");
   };
   return (
-    <>
-      <div className="flex justify-center items-center h-[calc(100vh-8rem)] bg-black opacity-40 relative"></div>
-
-      <form
-        className=" bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 absolute top-60 left-[51rem]"
-        onSubmit={handleSubmitLogin}
-      >
-        <h2 className="text-center mb-2 font-bold text-black text-3xl">Login</h2>
-        <div role="button" className="absolute top-1 right-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-5 text-red"
-            onClick={onClickCloseForm}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18 18 6M6 6l12 12"
-            />
-          </svg>
-        </div>
+    <form
+      className=" bg-white w-72 shadow-xl rounded-lg p-4 flex flex-col gap-5"
+      onSubmit={handleSubmitLogin}
+    >
+      {isGoogleRegister ? (
         <>
           <Input
             name="email"
@@ -109,7 +100,6 @@ export default function LoginForm() {
             onChage={onChangeInput}
             error={inputError.email}
           />
-
           <Input
             name="password"
             placeholder="Password"
@@ -119,11 +109,18 @@ export default function LoginForm() {
             onChage={onChangeInput}
             error={inputError.password}
           />
-
+          <GoogleLogin
+            clientId={clientId}
+            buttonText="Login with Google"
+            onSuccess={onSuccessLoginGoogle}
+            onFailure={onFailureLoginGoogle}
+            cookiePolicy={"single_host_origin"}
+            className="flex justify-center"
+          />
           <Button width="full" bg="black">
             Login
           </Button>
-          <hr className="shadow-2 w-full" />
+          <hr />
           <Button
             width="full"
             bg="blue"
@@ -134,14 +131,21 @@ export default function LoginForm() {
           </Button>
           <GoogleLogin
             clientId={clientId}
-            buttonText="Login with Google"
-            onSuccess={onSuccessLoginGoogle}
-            onFailure={onFailureLoginGoogle}
+            buttonText="Sign up with Google"
+            onSuccess={onSuccessRegisterGoogle}
+            onFailure={onFailureRegisterGoogle}
             cookiePolicy={"single_host_origin"}
-            className="flex justify-center w-full"
+            className="flex justify-center"
           />
         </>
-      </form>
-    </>
+      ) : (
+        <>
+          <div>register success</div>
+          <a href="https://mail.google.com/" target="_blank">
+            please verify email
+          </a>
+        </>
+      )}
+    </form>
   );
 }

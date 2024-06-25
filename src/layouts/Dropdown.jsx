@@ -12,7 +12,9 @@ export function Dropdown() {
 
   const { authUser, logout } = useAuth();
 
-  const handleClickLogout = () => {
+  const handleClickLogout = (e) => {
+    e.preventDefault();
+    console.log("logout here");
     setOpen(false);
     logout();
     navigate("/login");
@@ -107,7 +109,7 @@ export function ProfileDropdown() {
             <MenuButton className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
-              <Avatar />
+              <Avatar src={authUser?.profileImage} />
             </MenuButton>
           </div>
           <MenuItems
