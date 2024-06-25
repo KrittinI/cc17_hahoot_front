@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import ProfilePage from "../pages/ProfilePage";
+import PlayGamePage from "../pages/PlaygamePage";
 
 const router = createBrowserRouter([
   {
@@ -25,9 +26,13 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "/:userId",
+        path: "/profilepage",
         element: <ProfilePage />,
       },
+      {
+        path: "/playgame",
+        element: <PlayGamePage />,
+      }
     ],
   },
 ]);

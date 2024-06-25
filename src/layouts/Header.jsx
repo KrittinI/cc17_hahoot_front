@@ -22,7 +22,7 @@ export default function Example() {
   return (
     <Disclosure
       as="nav"
-      className="bg-white w-full fixed top-0
+      className="bg-white w-full sticky top-0
     "
     >
       {({ open }) => (

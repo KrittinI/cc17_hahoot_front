@@ -1,3 +1,7 @@
+import { useState } from "react";
+import Modal from "./Modal";
+import ReadyAlert from "./ReadyAlert";
+
 const bgMap = {
     red: " bg-red hover:bg-darkred",
     blue: " bg-blue hover:bg-darkblue",
@@ -5,11 +9,12 @@ const bgMap = {
     green: " bg-green hover:bg-darkgreen",
   };
   
-  export default function CardQuizHome({ imageSrc, title, bg, onClick }) {
+  export default function CardQuizHome({ imageSrc, title, bg }) {
+  const [open, setOpen] = useState(false);
     return (
       <div
         role="button"
-        onClick={onClick}
+        onClick={() => setOpen(true)}
         className={`
           flex 
           ${bgMap[bg]} 
@@ -23,6 +28,9 @@ const bgMap = {
             <img className="w-full" src={imageSrc} alt={title} />
           </div>
         </div>
+        <Modal title="" open={open} onClose={() => setOpen(false)}>
+          <ReadyAlert/>
+        </Modal>
       </div>
     );
   }

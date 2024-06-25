@@ -79,9 +79,8 @@ export default function RegisterForm() {
 
   return (
     <>
-      <div className="flex justify-center items-center h-[calc(100vh-8rem)] w-full bg-black opacity-40 relative"></div>
       <form
-        className="bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 absolute top-60 left-[51rem]"
+        className="bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 absolute"
         onSubmit={handleSubmitRegister}
       >
         <div role="button" className="absolute top-1 right-1">
