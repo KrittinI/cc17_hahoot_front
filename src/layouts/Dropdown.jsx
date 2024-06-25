@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
-// import useAuth from "../hooks/useAuth";
-
-export function Dropdown() {
+export default function Dropdown() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const { authUser, logout } = useAuth();
 
-  const handleClickLogout = () => {
+  const handleClickLogout = (e) => {
+    e.preventDefault();
+    console.log("logout here");
     setOpen(false);
     logout();
     navigate("/login");
@@ -66,7 +66,17 @@ function classNames(...classes) {
 }
 
 export function ProfileDropdown() {
-  // const {authUser} = useAuth();
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const { authUser, logout } = useAuth();
+
+  const handleClickLogout = (e) => {
+    e.preventDefault();
+    console.log("logout here");
+    setOpen(false);
+    logout();
+    navigate("/login");
+  };
   return (
     <>
       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -115,7 +125,7 @@ export function ProfileDropdown() {
             <MenuButton className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue">
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Open user menu</span>
-              <Avatar />
+              <Avatar src={authUser?.profileImage} />
             </MenuButton>
           </div>
           <MenuItems
@@ -125,7 +135,7 @@ export function ProfileDropdown() {
             <MenuItem>
               {({ focus }) => (
                 <Link
-                  to={""}
+                  to={`/users/${authUser?.id}`}
                   className={classNames(
                     focus ? "bg-blue text-white" : "",
                     "block px-4 py-2 text-sm text-gray-700"
@@ -164,7 +174,8 @@ export function ProfileDropdown() {
             <MenuItem>
               {({ focus }) => (
                 <a
-                  href="#"
+                  // href="#"
+                  onClick={handleClickLogout}
                   className={classNames(
                     focus ? "bg-blue text-white" : "",
                     "block px-4 py-2 text-sm text-gray-700"

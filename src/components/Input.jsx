@@ -25,8 +25,8 @@ export default function Input({
         } ${fontSize}
             ${
               error
-                ? "border-red-500 focus:ring-red-300"
-                : "border-gray-300 focus:border-blue-500 focus:ring-blue300"
+                ? "border-red focus:ring-red"
+                : "border-gray focus:border-blue focus:ring-blue"
             }
                         `}
         value={value}
@@ -34,7 +34,7 @@ export default function Input({
         name={name}
         id={name}
       />
-      {error ? <small className="text-red-500">{error}</small> : null}
+      {error ? <small className="text-red">{error}</small> : null}
     </>
   );
 }
