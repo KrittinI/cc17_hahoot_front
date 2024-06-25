@@ -1,11 +1,15 @@
 import UserContextProvider from "../contexts/UserContext";
-import UserProfileForm from "../features/authentication/userProfile/components/UserProfileForm";
+import UserProfileForm from "../features/userProfile/components/UserProfileForm";
+import SplitScreen from "../layouts/SplitScreen";
 
 export default function ProfilePage() {
   return (
-    <div className="flex justify-center items-center mt-20">
+    <div>
       <UserContextProvider>
-        <UserProfileForm />
+        <SplitScreen>
+          <div>Hello</div>
+          <UserProfileForm />
+        </SplitScreen>
       </UserContextProvider>
     </div>
   );

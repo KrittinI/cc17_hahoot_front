@@ -32,7 +32,7 @@ export function Dropdown() {
           {authUser ? (
             <>
               <Link
-                to={`/users/${authUser.id}`}
+                to={`/users/${authUser?.id}`}
                 className="w-full text-center rounded-lg hover:bg-blue-50"
               >
                 Profile
@@ -66,28 +66,26 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const notLoginMap = [
-  { title: "Register", to: "/register" },
-  { title: "Log in", to: "/login" },
-];
-
-const adminMap = [
-  { title: "Admin", to: "/admin" },
-  { title: "Admin Quiz", to: "/your-quiz" },
-  { title: "Admin Event", to: "/your-event" },
-  { title: "Log out", to: "/login" },
-];
-
-const userMap = [
-  { title: "Your Profile", to: "/profile" },
-  { title: "Your Quiz", to: "/your-quiz" },
-  { title: "Your Event", to: "/your-event" },
-  { title: "Log out", to: "/login" },
-];
-
 export function ProfileDropdown() {
   const { authUser } = useAuth();
   const [menuMap, setMenuMap] = useState([]);
+  const userMap = [
+    { title: "Your Profile", to: `/users/${authUser?.id}` },
+    { title: "Your Quiz", to: "/your-quiz" },
+    { title: "Your Event", to: "/your-event" },
+    { title: "Log out", to: "/login" },
+  ];
+  const notLoginMap = [
+    { title: "Register", to: "/register" },
+    { title: "Log in", to: "/login" },
+  ];
+
+  const adminMap = [
+    { title: "Admin", to: "/admin" },
+    { title: "Admin Quiz", to: "/your-quiz" },
+    { title: "Admin Event", to: "/your-event" },
+    { title: "Log out", to: "/login" },
+  ];
 
   useEffect(() => {
     if (!authUser) {

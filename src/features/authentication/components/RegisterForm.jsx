@@ -60,10 +60,13 @@ export default function RegisterForm() {
   const onSuccessRegisterGoogle = async (res) => {
     const data = {};
     data.email = res.profileObj.email;
-    data.password = res.profileObj.googleId;
+    // data.password = res.profileObj.googleId;
+    // data.confirmPassword = res.profileObj.googleId;
+    data.googlePassword = res.profileObj.googleId;
     data.confirmPassword = res.profileObj.googleId;
-    data.profileImage = res.profileObj.imageUrl;
+    data.googleImage = res.profileObj.imageUrl;
     await authApi.register(data);
+    console.log(data);
     setIsGoogleRegister(false);
   };
 
