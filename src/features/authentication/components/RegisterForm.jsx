@@ -6,6 +6,7 @@ import authApi from "../../../api/auth";
 import LinkButton from "../../../components/LinkButton";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
+import MailIcon from "../../../icons/mail";
 
 const clientId =
   "363481062777-mcp0obbajfl7cga0sua955vko0rprrsu.apps.googleusercontent.com";
@@ -83,9 +84,6 @@ export default function RegisterForm() {
         className="bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 absolute top-60 left-[51rem]"
         onSubmit={handleSubmitRegister}
       >
-        <h2 className="text-center mb-2 font-bold text-black text-3xl">
-          Register
-        </h2>
         <div role="button" className="absolute top-1 right-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -105,6 +103,9 @@ export default function RegisterForm() {
         </div>
         {isGoogleRegister ? (
           <>
+            <h2 className="text-center mb-2 font-bold text-black text-3xl">
+              Register
+            </h2>
             <Input
               name="email"
               placeholder="E-mail"
@@ -134,6 +135,7 @@ export default function RegisterForm() {
             <Button width="full" bg="black">
               Register
             </Button>
+            <hr className="shadow-2 w-full py-1" />
             <GoogleLogin
               clientId={clientId}
               buttonText="Sign Up with Google"
@@ -150,9 +152,14 @@ export default function RegisterForm() {
           </>
         ) : (
           <>
-            <div>register success</div>
-            <a href="https://mail.google.com/" target="_blank">
-              please verify email
+            <MailIcon />
+            <hr className="shadow-2 w-full" />
+            <a
+              href="https://mail.google.com/"
+              target="_blank"
+              className="text-black hover:text-darkblue"
+            >
+              Please verify email
             </a>
           </>
         )}
