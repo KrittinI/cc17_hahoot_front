@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import ReadyAlert from "./ReadyAlert";
-// import Button from "./Button";
 
 const bgMap = {
   red: " bg-red hover:bg-darkred",
@@ -13,16 +12,10 @@ const bgMap = {
 export default function CardQuizHome({ imageSrc, title, bg }) {
   const [open, setOpen] = useState(false);
 
-
-  const onClose = () => {
-    console.log("Close");
-    setOpen(false)
-  }
-
   return (
     <div
       role="button"
-      // onClick={() => setOpen(true)}
+      onClick={() => setOpen(true)}
       className={`
           flex 
           ${bgMap[bg]} 

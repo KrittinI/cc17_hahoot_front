@@ -1,6 +1,6 @@
 import { getToday } from "../utils/get-today";
 
-export default function InputDateTime({ placeholder, type = "datetime-local", error, value, onChage, name, size = 3 }) {
+export default function InputDateTime({ placeholder, type = "datetime-local", error, value, onChange, name, size = 3 }) {
     const today = getToday()
     return (
         <>
@@ -13,7 +13,7 @@ export default function InputDateTime({ placeholder, type = "datetime-local", er
                         : 'border-gray-300 focus:border-blue-500 focus:ring-blue300'}
                         `}
                 value={value}
-                onChange={onChage}
+                onChange={onChange}
                 name={name}
             />
             {error ? <small className="text-red-500">{error}</small> : null}

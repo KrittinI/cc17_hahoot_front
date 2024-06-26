@@ -1,4 +1,4 @@
-export default function InputNumber({ placeholder, type = 'number', error, value, onChage, name, size = 3, max = 1000 }) {
+export default function InputNumber({ placeholder, type = 'number', error, value, onChange, name, size = 3, max = 1000 }) {
     return (
         <>
             <input
@@ -11,7 +11,7 @@ export default function InputNumber({ placeholder, type = 'number', error, value
                         : 'border-gray-300 focus:border-blue-500 focus:ring-blue300'}
                         `}
                 value={value}
-                onChange={onChage}
+                onChange={onChange}
                 name={name}
                 id={name}
             />

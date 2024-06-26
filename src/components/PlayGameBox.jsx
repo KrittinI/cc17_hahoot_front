@@ -7,17 +7,17 @@ import { useState } from "react";
 
 export default function PlayGameBox({ width, isButton, isUsername }) {
   const { authUser } = useAuth();
-  const [select, setSelect] = useState(0);
+  const [select, setSelect] = useState(0)
   const onSelect = (id) => {
     setSelect(id);
   };
   const avatarMap = [
-    { id: 1, src: userImg },
+    { id: 1, src: authUser?.googleImage },
     { id: 2, src: userImg },
     { id: 3, src: userImg },
     { id: 4, src: userImg },
     { id: 5, src: userImg },
-    { id: 6, src: authUser?.googleImage },
+    { id: 6, src: userImg },
   ];
 
   return (
