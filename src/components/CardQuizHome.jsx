@@ -35,10 +35,9 @@ export default function CardQuizHome({ imageSrc, title, bg }) {
         <div>
           <img className="w-full" src={imageSrc} alt={title} />
         </div>
-        <Button onClick={() => setOpen(true)}>Open</Button>
       </div>
-      <Modal title="" open={open} onClose={onClose}>
-        <ReadyAlert onClose={onClose} />
+      <Modal title="Are you ready" open={open} onClose={() => setOpen(false)}>
+        <ReadyAlert onClose={() => setOpen(false)} />
       </Modal>
     </div>
   );

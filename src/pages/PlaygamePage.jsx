@@ -1,5 +1,5 @@
-export default function PlayGamePage(){
-    return(
-        <div>Playgame Page</div>
-    )
+import QuizCard from "../components/QuizCard";
+
+export default function PlayGamePage() {
+  return <QuizCard />;
 }
