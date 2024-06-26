@@ -7,9 +7,11 @@ export default function ProfilePage() {
   return (
     <div>
       <UserContextProvider>
-        <SplitScreen>
+        <SplitScreen sizeRatio={70}>
           <div>Hello</div>
           <UserProfileForm />
         </SplitScreen>
       </UserContextProvider>
-    }
+    </div>
+  )
+}

@@ -70,8 +70,8 @@ export default function LoginForm() {
   const onSuccessLoginGoogle = async (res) => {
     const data = {};
     data.email = res.profileObj.email;
-    data.password = res.profileObj.googleId;
-    // data.googlePassword = res.profileObj.googleId;
+    // data.password = res.profileObj.googleId;
+    data.googlePassword = res.profileObj.googleId;
     await login(data);
     navigate("/");
   };
@@ -134,6 +134,14 @@ export default function LoginForm() {
           <Button width="full" bg="black">
             Login
           </Button>
+          <GoogleLogin
+            clientId={clientId}
+            buttonText="Continue with Google"
+            onSuccess={onSuccessLoginGoogle}
+            onFailure={onFailureLoginGoogle}
+            cookiePolicy={"single_host_origin"}
+            className="flex justify-center w-full"
+          />
           <hr className="shadow-2 w-full" />
           <Button
             width="full"
@@ -143,14 +151,6 @@ export default function LoginForm() {
           >
             Register
           </Button>
-          <GoogleLogin
-            clientId={clientId}
-            buttonText="Login with Google"
-            onSuccess={onSuccessLoginGoogle}
-            onFailure={onFailureLoginGoogle}
-            cookiePolicy={"single_host_origin"}
-            className="flex justify-center w-full"
-          />
         </>
       </form>
     </>

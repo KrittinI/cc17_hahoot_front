@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { createPortal } from "react-dom"
 
-export default function Modal({ width = 30, children, open, onClose }) {
+export default function Modal({ width = 30, title, children, open, onClose }) {
     useEffect(() => {
         const handleEscPress = e => {
             if (e.keyCode === 27) {
@@ -23,10 +23,10 @@ export default function Modal({ width = 30, children, open, onClose }) {
                                 <div className="bg-white rounded-lg shadow-lg" style={{ width: `${width}rem` }} onMouseDown={e => e.stopPropagation()}>
                                     <div className="flex justify-between items-center p-4">
                                         <button className="invisible">&#10005;</button>
-                                        <h5 className="text-2xl font-semibold"></h5>
+                                        <h5 className="text-2xl font-semibold">{title}</h5>
                                         <button className="text-red" onClick={onClose}>&#10005;</button>
                                     </div>
-                                    <div className="pr-2 pt-1">{children}</div>
+                                    <div className="p-2">{children}</div>
                                 </div>
                             </div>
                         </div>

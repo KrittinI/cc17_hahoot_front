@@ -61,10 +61,7 @@ export default function RegisterForm() {
   const onSuccessRegisterGoogle = async (res) => {
     const data = {};
     data.email = res.profileObj.email;
-    // data.password = res.profileObj.googleId;
-    // data.confirmPassword = res.profileObj.googleId;
     data.googlePassword = res.profileObj.googleId;
-    data.confirmPassword = res.profileObj.googleId;
     data.googleImage = res.profileObj.imageUrl;
     await authApi.register(data);
     console.log(data);
@@ -159,7 +156,7 @@ export default function RegisterForm() {
             <a
               href="https://mail.google.com/"
               target="_blank"
-              className="text-black hover:text-darkblue"
+              className="text-blue underline hover:text-darkblue"
             >
               Please verify email
             </a>
