@@ -1,5 +1,5 @@
 import Logo from "../icons/Logo";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Disclosure,
   DisclosureButton,
@@ -10,8 +10,8 @@ import { ProfileDropdown } from "./Dropdown";
 
 const navigation = [
   { name: "Play", href: "#", current: true },
-  { name: "All Event", href: "#", current: false },
-  { name: "All Quiz", href: "#", current: false },
+  { name: "All Event", href: "/events", current: false },
+  { name: "All Quiz", href: "/questions", current: false },
 ];
 
 function classNames(...classes) {
@@ -19,6 +19,7 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const { pathname } = useLocation()
   return (
     <Disclosure
       as="nav"
