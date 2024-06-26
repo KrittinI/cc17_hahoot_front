@@ -7,7 +7,7 @@ export default function ProfilePage() {
   return (
     <div>
       <UserContextProvider>
-        <SplitScreen sizeRatio={60}>
+        <SplitScreen sizeRatio={70}>
           <UserEventAndQuizForm />
           <UserProfileForm />
         </SplitScreen>
