@@ -42,4 +42,5 @@ export default function Modal({ width = 30, title, children, open, onClose }) {
         : null}
     </>
   );
+
 }

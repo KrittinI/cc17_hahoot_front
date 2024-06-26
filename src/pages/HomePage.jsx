@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import ContianerCardQuiz from "../layouts/ContainerCardQuiz";
 import HeroContianer from "../layouts/Hero";
-import Modal from "../components/Modal";
+import ModalCardMini from "../components/Modal";
 import { useState } from "react";
 import PlayGameBox from "../components/PlayGameBox";
 
@@ -22,9 +22,9 @@ export default function HomePage() {
       <div className="h-[calc(100vh-8rem)] ">
         <HeroContianer />
         <ContianerCardQuiz />
-        <Modal open={open} title={'Choose Your Avatar and Username'}>
+        <ModalCardMini open={open} title={'Choose Your Avatar and Username'}>
           <PlayGameBox width={80} />
-        </Modal>
+        </ModalCardMini>
       </div>
     </>
   );

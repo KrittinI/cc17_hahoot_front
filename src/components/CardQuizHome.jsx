@@ -28,8 +28,8 @@ const bgMap = {
             <img className="w-full" src={imageSrc} alt={title} />
           </div>
         </div>
-        <Modal title="" open={open} onClose={() => setOpen(false)}>
-          <ReadyAlert/>
+        <Modal title="Are you ready" open={open} onClose={() => setOpen(false)}>
+          <ReadyAlert onClose={() => setOpen(false)} />
         </Modal>
       </div>
     );
