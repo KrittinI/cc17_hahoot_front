@@ -1,4 +1,4 @@
-import profileImg from '../assets/user.png'
+import profileImg from "../assets/user.png";
 
 // export default function Avatar({ src, size = 2.5 }) {
 //     return (
@@ -11,13 +11,15 @@ const sizeMap = {
   60: "w-[60px] h-[60px]",
   80: "w-[80px] h-[80px]",
   100: "w-[100px] h-[100px]",
-}
+};
 
-export default function Avatar({ src, size = 40 }) {
+export default function Avatar({ src, size = 40, select = true }) {
   return (
     <div className="">
       <img
-        className={`${sizeMap[size]} rounded-full border-none`}
+        className={`${sizeMap[size]} rounded-full border-none hover:shadow-xl ${
+          select ? "hover:border-2 border-blue" : null
+        }`}
         src={src || profileImg}
         alt="avatar"
       />
