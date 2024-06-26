@@ -29,7 +29,7 @@ const bgMap = {
           </div>
         </div>
         <Modal title="Are you ready" open={open} onClose={() => setOpen(false)}>
-          <ReadyAlert/>
+          <ReadyAlert onClose={() => setOpen(false)} />
         </Modal>
       </div>
     );
