@@ -1,7 +1,7 @@
 import QuestionIcon from "../icons/Question";
 import Button from "./Button";
 
-export default function ReadyAlert() {
+export default function ReadyAlert({ onClose }) {
   return (
 
     <div className="flex flex-col justify-center items-center gap-6 p-4">

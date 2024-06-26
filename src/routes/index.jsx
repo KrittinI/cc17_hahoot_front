@@ -6,6 +6,8 @@ import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import ProfilePage from "../pages/ProfilePage";
 import PlayGamePage from "../pages/PlaygamePage";
+import AllQuizPage from "../pages/AllQuizPage";
+import AllEventPage from "../pages/AllEventPage";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,15 @@ const router = createBrowserRouter([
       {
         path: "/playgame",
         element: <PlayGamePage />,
-      }
+      },
+      {
+        path: "/questions",
+        element: <AllQuizPage />,
+      },
+      {
+        path: "/events",
+        element: <AllEventPage />,
+      },
     ],
   },
 ]);
