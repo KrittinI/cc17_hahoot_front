@@ -11,7 +11,6 @@ export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
