@@ -1,118 +1,114 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import Avatar from "../../../components/Avatar";
-import userImage from "../../../assets/user.png";
 import useUser from "../../../hooks/useUser";
+import Modal from "../../../components/Modal";
+import PlayGameBox from "../../../components/PlayGameBox";
 
 const initialInput = {
-    username: "",
-    profileImage: "",
-    password: "",
-    confirmPassword: "",
+  username: "",
+  password: "",
+};
+const initialInputError = {
+  username: "",
+  password: "",
 };
 
 export default function UserProfileForm() {
-    const { userId } = useParams();
-    const { getUser, updateProfileUser } = useUser();
-    const [profile, setProfile] = useState(null);
-    const [input, setInput] = useState(initialInput);
+  const { userId } = useParams();
+  const { getUser, updateProfileUser } = useUser();
+  const [profile, setProfile] = useState(null);
+  const [avatar, setAvatar] = useState(null);
+  const [input, setInput] = useState(initialInput);
+  const [open, setOpen] = useState(false);
+  const [inputError, setInputError] = useState(initialInputError);
 
-useEffect(() => {
-    const getme = async () => {
-    const res = await getUser(userId);
-    setProfile(res);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await getUser(userId);
+      setProfile(res);
     };
-    getme();
-}, [getUser, userId]);
+    fetchUser();
+  }, [getUser, userId]);
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = {};
-    data.username = input.username;
-    data.password = input.password;
-    data.confirmPassword = input.confirmPassword;
-    data.profileImage = input.profileImage;
-    await updateProfileUser(data);
-};
-
-const onChangeInput = (e) => {
+  const onChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSelectAvatar = (e) => {
-    setInput({ profileImage: e.target.src });
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {};
 
-  const onChangeAvatar = (e) => {
-    setInput({ profileImage: e.target.src });
+    if (input.password || input.username || avatar) {
+      console.log(input.username, input.password);
+      if (input.username.length < 5) {
+        setInputError({ username: "Username must have at least 6 characters" });
+      }
+
+      setInputError({ ...initialInputError });
+
+      if (0 < input.password.length < 5) {
+        setInputError((prev) => ({
+          ...prev,
+          password: "Password must have at least 6 characters",
+        }));
+      }
+
+      data.username = input.username;
+      data.password = input.password;
+      data.profileImage = avatar;
+      await updateProfileUser(data);
+    } else if (!(input.password && input.username && avatar)) {
+      alert("Please fill form");
+    }
   };
 
   return (
-    <div>
-      <form
-        className="flex flex-col justify-center items-center p-4 gap-6 bg-pink-200 w-60"
-        onClick={handleSelectAvatar}
+    <div className="flex justify-center h-[calc(100vh-8rem)] w-full">
+      <Modal
+        open={open}
+        title={"Edit Your Avatar and Username"}
+        onClose={() => setOpen(false)}
       >
-        <div>My avatar</div>
-        <Avatar src={profile?.profileImage} />
-        <div>select avatar</div>
-        <img
-          src={userImage}
-          role="button"
-          className="h-14 w-14"
-          onChange={onChangeAvatar}
+        <PlayGameBox width={80} />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <Input
+            name="username"
+            placeholder={profile?.username || "Username"}
+            value={input.username}
+            onChage={onChangeInput}
+            error={inputError.username}
+          />
+          <Input placeholder={profile?.email || "E-mail"} disabled />
+          <Input
+            name="password"
+            placeholder="Password"
+            value={input.password}
+            type="password"
+            onChage={onChangeInput}
+            error={inputError.password}
+          />
+          <Button bg="black" width="full" type="submit">
+            Save Changes
+          </Button>
+        </form>
+      </Modal>
+      <form className="bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 absolute">
+        <h2 className="text-center mb-2 font-bold text-black text-3xl">
+          My profile
+        </h2>
+        <Avatar
+          src={profile?.profileImage || profile?.googleImage}
+          size="100"
         />
-        <img
-          src={profile?.profileImage}
-          role="button"
-          className="h-14 w-14"
-          onChange={onChangeAvatar}
-        />
-        <Button>select Avatar</Button>
-      </form>
-
-      <form
-        className="flex flex-col justify-center items-center p-4 gap-6 bg-pink-200 w-60"
-        onClick={handleSubmit}
-      >
-        <div className="flex items-center gap-5">
-          <Avatar src={input?.profileImage || profile?.profileImage} />
-          <div className="h-44 w-full flex flex-col gap-4">
-            <Input
-              placeholder={profile?.username || "Username"}
-              onChage={onChangeInput}
-              name="username"
-              value={input.username}
-            />
-            <Input
-              placeholder={profile?.password || "Password"}
-              onChage={onChangeInput}
-              name="password"
-              value={input.password}
-              type="password"
-            />
-            <Input
-              placeholder="Confirm password"
-              onChage={onChangeInput}
-              name="confirmPassword"
-              value={input.confirmPassword}
-              type="password"
-            />
-            <Button>update</Button>
-          </div>
-        </div>
+        <Input placeholder={profile?.username || "Username"} disabled />
+        <Input placeholder={profile?.email || "E-mail"} disabled />
+        <Button bg="black" width="full" onClick={() => setOpen(true)}>
+          Edit profile
+        </Button>
       </form>
     </div>
   );
 }
-
-// export default function UserProfileForm(){
-//     return(
-//         <div>
-            
-//         </div>
-//     )
-// }
