@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import ReadyAlert from "./ReadyAlert";
-import Button from "./Button";
+// import Button from "./Button";
 
 const bgMap = {
   red: " bg-red hover:bg-darkred",
