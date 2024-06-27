@@ -5,10 +5,10 @@ import useAuth from "../../hooks/useAuth";
 import userImg from "../../assets/user.png";
 import { useState } from "react";
 import userApi from "../../api/user";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProfileForm({ onSuccess }) {
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
   const { authUser, setAuthUser } = useAuth();
   const [input, setInput] = useState(authUser);
   const [select, setSelect] = useState(1);
@@ -49,7 +49,7 @@ export default function EditProfileForm({ onSuccess }) {
         setError(response?.response?.data.message);
       }
       onSuccess();
-    //   navigate('/play')
+      navigate("/play");
       setAuthUser({ ...input });
     } catch (error) {
       console.log(error);

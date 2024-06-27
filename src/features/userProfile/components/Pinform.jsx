@@ -6,9 +6,8 @@ import AvatarForm from "../../playGames/AvatarForm";
 import { useState } from "react";
 import ModalSecond from "../../playGames/ModalSecond";
 
-export default function PinForm() {
+export default function PinForm({ onSuccess }) {
   const [openModal, setOpenModal] = useState(false);
-
 
   //   const [input, setInput] = useState();
   //   const [error, setError] = useState("");
@@ -27,6 +26,13 @@ export default function PinForm() {
   //     setError("");
   //     setInput({ ...input, [e.target.name]: e.target.value });
   //   };
+  const handleClickSave = () => {
+    setOpenModal(true);
+  };
+  const handleSuccess = () => {
+    onSuccess();
+    // setOpenModal(false);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 p-4 ">
@@ -40,7 +46,7 @@ export default function PinForm() {
       {/* <div className="grid grid-cols-3 gap-2" role="button"></div> */}
 
       {/* <Button bg={`black`} width={`full`} onClick={handleClickEnter}> */}
-      <Button bg={`black`} width={`full`} onClick={()=>setOpenModal(true)}>
+      <Button bg={`black`} width={`full`} onClick={handleClickSave}>
         Enter
       </Button>
       <ModalSecond
@@ -48,7 +54,7 @@ export default function PinForm() {
         title={<Logo />}
         onClose={() => setOpenModal(false)}
       >
-        <AvatarForm onSuccess={() => setOpenModal(false)} />
+        <AvatarForm onSuccess={handleSuccess} />
       </ModalSecond>
     </div>
   );

@@ -15,8 +15,8 @@ export default function CardBoxInProfile({
       <div className="h-[50%] rounded-t-lg">
         <img className="rounded-t-lg" src={image} />
       </div>
-      <div className="grid grid-cols-1 gap-3 p-3 rounded-lg">
-        <div className="{`text-${size}`} text-font-title-card h-10">
+      <div className="grid grid-cols-1 gap-3 py-3 px-2 rounded-lg">
+        <div className="{`text-${size}`} text-font-title-card h-10 ">
           {title}
         </div>
         <div className="flex justify-around">
