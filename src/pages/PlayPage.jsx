@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import image from "../assets/hh-hero.png"
-
+import image from "../assets/hh-hero.png";
+import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 const quizData = [
   {
     question: "1 + 1 เท่ากับเท่าไหร่ ?",
@@ -14,8 +15,13 @@ export default function PlayPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
-//   const [score, setScore] = useState(0);
+  //   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(20);
+  const navigate = useNavigate();
+
+    const handleOnClickBackToHome = () => {
+      navigate("/");
+    };
 
   useEffect(() => {
     if (timeLeft > 0 && !showAnswer) {
@@ -31,9 +37,7 @@ export default function PlayPage() {
 
     setSelectedAnswer(option);
     setShowAnswer(true);
-
   };
-
 
   const { question, options, answer, image } = quizData[currentQuestionIndex];
 
@@ -90,6 +94,9 @@ export default function PlayPage() {
             {answer} : เป็นคำตอบที่ถูกต้อง
           </div>
         )}
+        <div className="flex justify-end mt-4">
+          <Button bg={"black"}  onClick={handleOnClickBackToHome}>Back to Home</Button>
+        </div>
       </div>
     </div>
   );
