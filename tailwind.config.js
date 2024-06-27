@@ -41,6 +41,14 @@ export default {
             fontWeight: "600",
           },
         ],
+        "font-title-card": [
+          "1rem",
+          {
+            lineHeight: "1.5rem",
+            letterSpacing: "-0.02em",
+            fontWeight: "500",
+          },
+        ],
         "font-btn": [
           "1.25rem",
           {

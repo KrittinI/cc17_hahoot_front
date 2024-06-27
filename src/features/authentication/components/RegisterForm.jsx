@@ -110,7 +110,7 @@ export default function RegisterForm() {
               placeholder="E-mail"
               position="center"
               value={input.email}
-              onChage={onChangeInput}
+              onChange={onChangeInput}
               error={inputError.email}
             />
             <Input
@@ -119,7 +119,7 @@ export default function RegisterForm() {
               position="center"
               type="password"
               value={input.password}
-              onChage={onChangeInput}
+              onChange={onChangeInput}
               error={inputError.password}
             />
             <Input
@@ -128,7 +128,7 @@ export default function RegisterForm() {
               position="center"
               type="password"
               value={input.confirmPassword}
-              onChage={onChangeInput}
+              onChange={onChangeInput}
               error={inputError.confirmPassword}
             />
             <Button width="full" bg="black">
