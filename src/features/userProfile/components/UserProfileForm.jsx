@@ -55,7 +55,6 @@ export default function UserProfileForm() {
           password: "Password must have at least 6 characters",
         }));
       }
-
       data.username = input.username;
       data.password = input.password;
       data.profileImage = avatar;

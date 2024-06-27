@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import ContianerCardQuiz from "../layouts/ContainerCardQuiz";
 import HeroContianer from "../layouts/Hero";
-import ModalCardMini from "../components/Modal";
+import Modal from "../components/Modal";
 import { useState } from "react";
 import PlayGameBox from "../components/PlayGameBox";
+import EditProfileForm from "../features/userProfile/components/EditProfileForm";
 
 export default function HomePage() {
   const { authUser } = useAuth()
@@ -12,7 +13,7 @@ export default function HomePage() {
 
   useEffect(() => {
     if (authUser?.username === null) {
-      setOpen(false)
+      setOpen(true)
     }
   }, [authUser])
 
@@ -22,9 +23,9 @@ export default function HomePage() {
       <div className="h-[calc(100vh-8rem)] ">
         <HeroContianer />
         <ContianerCardQuiz />
-        <ModalCardMini open={open} title={'Choose Your Avatar and Username'}>
-          <PlayGameBox width={80} />
-        </ModalCardMini>
+        <Modal open={open} title={'Choose Your Avatar and Username'}>
+          <EditProfileForm onSuccess={() => setOpen(false)} />
+        </Modal>
       </div>
     </>
   );

@@ -8,6 +8,7 @@ const sizeMap = {
   50: "w-[50%]",
   60: "w-[60%]",
   70: "w-[70%]",
+  75: "w-[75%]",
   80: "w-[80%]",
   90: "w-[90%]",
 };
@@ -19,21 +20,23 @@ export default function SplitScreen({
 }) {
   const [left, right] = children;
   return (
-    <div className="flex">
-      <div
-        className={`${sizeMap[sizeRatio]} bg-red p-8 ${
-          border ? "border-r" : ""
-        }`}
-      >
-        {left}
+    <>
+      <div className="flex justify-center">
+        <div className="flex">
+          <div
+            className={`${sizeMap[sizeRatio]} pl-12 pt-8 ${border ? "border-r" : ""
+              }`}
+          >
+            {left}
+          </div>
+          <div
+            className={`${sizeMap[100 - sizeRatio]} pt-8 ${border ? "border-l" : ""
+              }`}
+          >
+            {right}
+          </div>
+        </div>
       </div>
-      <div
-        className={`${sizeMap[100 - sizeRatio]} bg-blue p-8 ${
-          border ? "border-l" : ""
-        }`}
-      >
-        {right}
-      </div>
-    </div>
+    </>
   );
 }

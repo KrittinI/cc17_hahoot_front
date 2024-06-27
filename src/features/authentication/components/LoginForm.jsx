@@ -41,7 +41,7 @@ export default function LoginForm() {
       if (errorMassage) {
         return setInputError(errorMassage);
       }
-      const res = await authApi.register(input);
+      const res = await authApi.login(input);
       if (res.request.status === 400) {
         setInputError((pre) => ({
           ...pre,
@@ -117,7 +117,7 @@ export default function LoginForm() {
             placeholder="E-mail"
             position="center"
             value={input.email}
-            onChage={onChangeInput}
+            onChange={onChangeInput}
             error={inputError.email}
           />
 
@@ -127,7 +127,7 @@ export default function LoginForm() {
             position="center"
             type="password"
             value={input.password}
-            onChage={onChangeInput}
+            onChange={onChangeInput}
             error={inputError.password}
           />
 

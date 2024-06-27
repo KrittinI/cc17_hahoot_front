@@ -43,6 +43,7 @@ export default function AuthContextProvider({ children }) {
     login,
     logout,
     authUser,
+    setAuthUser
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
