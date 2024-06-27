@@ -8,13 +8,19 @@ import ProfilePage from "../pages/ProfilePage";
 import PlayGamePage from "../pages/PlaygamePage";
 import AllQuizPage from "../pages/AllQuizPage";
 import AllEventPage from "../pages/AllEventPage";
+import QuestionContextProvider from "../contexts/QuestionContext";
+import EventContextProvider from "../contexts/EventContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <>
-        <MainContainer />
+        <EventContextProvider>
+          <QuestionContextProvider>
+            <MainContainer />
+          </QuestionContextProvider>
+        </EventContextProvider>
       </>
     ),
     children: [
