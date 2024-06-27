@@ -20,10 +20,10 @@ axios.interceptors.response.use(
     if (err.response.status === 401) {
       localStorage.removeItem("ACCESS_TOKEN");
       // window.location.assign('/login')
-      return err;
+      return err.response;
     }
     // return Promise.reject(err)
-    return err;
+    return err.response;
   }
 );
 export default axios;
