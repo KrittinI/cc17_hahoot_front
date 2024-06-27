@@ -10,7 +10,7 @@ export default function EventContextProvider({ children }) {
 
   const getEventByUserId = async (id) => {
     const res = await authEvent.getEventByUserId(id);
-    return res.data;
+    return res.data.events;
   };
 
   const getEventByTopic = async (id) => {

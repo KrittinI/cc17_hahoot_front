@@ -10,7 +10,7 @@ export default function QuestionContextProvider({ children }) {
 
   const getQuestionByUserId = async (id) => {
     const res = await authQuestion.getQuestionByUserId(id);
-    return res.data;
+    return res.data.questions;
   };
 
   const getQuestionByQuestionId = async (id) => {
