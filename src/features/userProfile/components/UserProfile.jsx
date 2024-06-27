@@ -15,18 +15,19 @@ export default function UserProfile() {
     }, [authUser, profile])
 
     return (
-        <div className="flex flex-col items-center gap-4 h-[calc(100vh-8rem)] w-full bg-white rounded-lg p-2">
-            <h2 className="text-center mb-2 font-bold text-black text-3xl">
-                {profile?.username}
+        <div className="flex flex-col items-center gap-4 h-[auto] w-full bg-white rounded-lg p-6">
+            <h2 className="text-font-title">
+                {/* {profile?.username} */}
+                John Doe
             </h2>
             <Avatar
                 src={profile?.profileImage || profile?.googleImage}
                 size="100"
             />
-            <h2 className="text-center mb-2 font-bold text-black text-3xl">
+            <h2 className="text-center mb-2 text-font-title">
             </h2>
-            <h2 className="text-center mb-2  text-black text-l">
-                Email: {profile?.email}
+            <h2 className="text-center mb-2 text-font-title-card">
+                E-mail: {profile?.email}
             </h2>
             {authUser?.id === profile?.id && <EditProfileBox />}
             <hr className="mt-2 shadow-md w-[80%]" />

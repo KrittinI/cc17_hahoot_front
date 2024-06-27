@@ -22,9 +22,8 @@ export default function SplitScreen({
   return (
     <>
       <div className="flex justify-center">
-        <div className="flex w-[68%]">
           <div
-            className={`${sizeMap[sizeRatio]} pl-12 pt-8 ${
+            className={`${sizeMap[sizeRatio]} pl-12 pt-8 mr-8 ${
               border ? "border-r" : ""
             }`}
           >
@@ -36,7 +35,6 @@ export default function SplitScreen({
             }`}
           >
             {right}
-          </div>
         </div>
       </div>
     </>
