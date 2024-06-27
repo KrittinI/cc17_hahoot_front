@@ -41,7 +41,7 @@ export default function LoginForm() {
       if (errorMassage) {
         return setInputError(errorMassage);
       }
-      const res = await authApi.register(input);
+      const res = await authApi.login(input);
       if (res.request.status === 400) {
         setInputError((pre) => ({
           ...pre,

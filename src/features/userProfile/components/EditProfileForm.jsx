@@ -45,7 +45,7 @@ export default function EditProfileForm({ onSuccess }) {
             const response = await userApi.update(data)
             console.log(response);
             if (response.response?.status !== 200) {
-                setError(response?.response?.data.message)
+                return setError(response?.response?.data.message)
             }
             onSuccess()
             setAuthUser({ ...input })
