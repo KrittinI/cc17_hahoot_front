@@ -25,33 +25,33 @@ export default function EditProfileForm({ onSuccess }) {
     setInput({ ...input, profileImage: el.src });
   };
 
-  const handleClickSave = async () => {
-    try {
-      const data = { ...input };
-      if (data.username === null || data?.username?.length < 6) {
-        return setError("invalid username");
-      }
-      if (data.password) {
-        if (data.password === "firstLogin" || data.password.length < 5) {
-          return setError("invalid password");
+    const handleClickSave = async () => {
+        try {
+            const data = { ...input }
+            if (data.username === null || data?.username?.length < 6) {
+                return setError("invalid username")
+            }
+            if (data.password) {
+                if (data.password === "firstLogin" || data.password.length < 5) {
+                    return setError("invalid password")
+                }
+                if (data.password !== data.confirmPassword) {
+                    return setError("password and confirmpassword not match")
+                }
+                delete data.id
+                delete data.confirmPassword
+            }
+            const response = await userApi.update(data)
+            console.log(response);
+            if (response.response?.status !== 200) {
+                return setError(response?.response?.data.message)
+            }
+            onSuccess()
+            setAuthUser({ ...input })
+        } catch (error) {
+            console.log(error);
         }
-        if (data.password !== data.confirmPassword) {
-          return setError("password and confirmpassword not match");
-        }
-        delete data.id;
-        delete data.confirmPassword;
-      }
-      const response = await userApi.update(data);
-      console.log(response);
-      if (response.response?.status !== 200) {
-        setError(response?.response?.data.message);
-      }
-      onSuccess();
-      setAuthUser({ ...input });
-    } catch (error) {
-      console.log(error);
     }
-  };
 
   const handleChangeInput = (e) => {
     setError("");
