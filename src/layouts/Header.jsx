@@ -9,7 +9,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ProfileDropdown } from "./Dropdown";
 import PinBox from "../features/playGames/PinBox";
 
-export default function Example() {
+export default function Header() {
   return (
     <Disclosure
       as="nav"

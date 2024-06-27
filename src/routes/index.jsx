@@ -33,6 +33,10 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
+        path: "/play/:eventId",
+        element: <PlayPage />,
+      },
+      {
         path: "/playgame",
         element: <PlayGamePage />,
       },
