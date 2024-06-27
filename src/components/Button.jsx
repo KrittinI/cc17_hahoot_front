@@ -1,9 +1,11 @@
 const bgMap = {
-
-  disable: "bg-gray-200",
+  active: "bg-blue",
+  disable: "bg-gray",
   // hh-button
   black: "bg-black text-white rounded-[8px] hover:bg-blue",
   blue: "bg-blue text-white rounded-[8px] hover:bg-darkblue",
+  outline: "hover:text-blue"
+
 };
 
 const colorMap = {
@@ -26,7 +28,7 @@ export default function Button({ children, bg, color, width, onClick, mt }) {
 
   return (
     <button
-      className={`px-3 py-1.5 ${bgMap[bg]} ${colorMap[color]} rounded-md ${widthMap[width]} ${marginTopMap[mt]}`}
+      className={`px-3 py-1 ${bgMap[bg]} ${colorMap[color]} rounded-md ${widthMap[width]} ${marginTopMap[mt]}`}
       onClick={onClick}
     >
       {children}

@@ -8,6 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import PlayGamePage from "../pages/PlaygamePage";
 import AllQuizPage from "../pages/AllQuizPage";
 import AllEventPage from "../pages/AllEventPage";
+import PlayPage from "../pages/PlayPage";
 
 const router = createBrowserRouter([
   {

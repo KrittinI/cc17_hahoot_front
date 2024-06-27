@@ -6,7 +6,7 @@ import EditProfileForm from './EditProfileForm'
 export default function EditProfileBox() {
     const [open, setOpen] = useState(false)
     return (
-        <div>
+        <div className="pt-2">
             <Button bg={`black`} width={40} onClick={() => setOpen(true)}>Edit Profile</Button>
             <Modal title={`Edit Your Profile`} open={open} onClose={() => setOpen(false)}>
                 <EditProfileForm onSuccess={() => setOpen(false)} />

@@ -7,13 +7,13 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useEffect } from "react";
 
 export function Dropdown() {
-  const [open, setOpen] = useState(false);
+  const [openD, setOpenD] = useState(false);
   const navigate = useNavigate();
 
   const { authUser, logout } = useAuth();
 
   const handleClickLogout = () => {
-    setOpen(false);
+    setOpenD(false);
     logout();
     navigate("/login");
   };
@@ -22,10 +22,10 @@ export function Dropdown() {
     <div
       role="button"
       className="relative px-8 py-2 "
-      onClick={() => setOpen((prev) => !prev)}
+      onClick={() => setOpenD((prev) => !prev)}
     >
       <Avatar src={authUser?.profileImage} />
-      {open && (
+      {openD && (
         <div className="absolute bg-white right-8 translate-y-2 p-2 w-24 rounded-xl shadow flex flex-col justify-center items-center gap-2">
           {authUser ? (
             <>
