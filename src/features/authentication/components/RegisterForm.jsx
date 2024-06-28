@@ -26,7 +26,8 @@ const initialInputError = {
 export default function RegisterForm() {
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
-  const [isGoogleRegister, setIsGoogleRegister] = useState(true);
+  const [isSuccessRegister, setIsSuccessRegister] = useState(true);
+  const [failRegisterGoogle, setFailRegisterGoogle] = useState("");
 
   const navigate = useNavigate();
 
@@ -49,10 +50,11 @@ export default function RegisterForm() {
       setInputError({ ...initialInputError });
 
       const res = await authApi.register(input);
-      setIsGoogleRegister(false);
-      if (res.request.status === 400) {
+      if (res.status === 400) {
         setInputError((pre) => ({ ...pre, email: "Email already existed" }));
+        return;
       }
+      setIsSuccessRegister(false);
     } catch (error) {
       console.log(error);
     }
@@ -63,9 +65,12 @@ export default function RegisterForm() {
     data.email = res.profileObj.email;
     data.googlePassword = res.profileObj.googleId;
     data.googleImage = res.profileObj.imageUrl;
-    await authApi.register(data);
-    console.log(data);
-    setIsGoogleRegister(false);
+    const res2 = await authApi.register(data);
+    if (res2.status === 400) {
+      setFailRegisterGoogle("Email already existed");
+      return;
+    }
+    setIsSuccessRegister(false);
   };
 
   const onFailureRegisterGoogle = (res) => {
@@ -100,7 +105,7 @@ export default function RegisterForm() {
             />
           </svg>
         </div>
-        {isGoogleRegister ? (
+        {isSuccessRegister ? (
           <>
             <h2 className="text-center mb-2 font-bold text-black text-3xl">
               Register
@@ -143,6 +148,9 @@ export default function RegisterForm() {
               cookiePolicy={"single_host_origin"}
               className="flex justify-center w-full"
             />
+            {failRegisterGoogle ? (
+              <small className="text-red">{failRegisterGoogle}</small>
+            ) : null}
             <LinkButton
               onClick={handleClickGoLogin}
               text="Already a User?"

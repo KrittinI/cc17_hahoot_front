@@ -1,11 +1,14 @@
 import { createContext } from "react";
 import authEvent from "../api/event";
+import { useEffect } from "react";
+import { useState } from "react";
 export const EventContext = createContext();
 
 export default function EventContextProvider({ children }) {
+  const [data, setData] = useState([]);
   const getAllEvent = async () => {
     const res = await authEvent.getAllEvent();
-    return res.data;
+    return res.data.events;
   };
 
   const getEventByUserId = async (id) => {
@@ -15,7 +18,7 @@ export default function EventContextProvider({ children }) {
 
   const getEventByTopic = async (id) => {
     const res = await authEvent.getEventByTopic(id);
-    return res.data;
+    return res.data.events;
   };
 
   const getEvent = async (id) => {
@@ -25,7 +28,7 @@ export default function EventContextProvider({ children }) {
 
   const getFevEvent = async () => {
     const res = await authEvent.getFevEvent();
-    return res.data;
+    return res.data.events;
   };
 
   const createEvent = async (body) => {

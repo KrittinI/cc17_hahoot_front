@@ -12,7 +12,17 @@ authQuestion.getQuestionByTopicId = async (topicId) =>
 authQuestion.getQuestionByUserId = async (id) =>
   axios.get(`/questions/users/${id}`);
 
+// Favorite
 authQuestion.getFavQuestion = async (id) =>
   axios.get("/questions/favorite", id);
+authQuestion.createFev = async (id) => axios.post(`/questions/${id}/favorite`);
+authQuestion.deleteFev = async (id) =>
+  axios.delete(`/questions/${id}/favorite`);
 
+// Comment
+authQuestion.comment = async (id) => axios.post(`/questions/${id}/comment`);
+authQuestion.deleteComment = async (questionId, commentId) =>
+  axios.delete(`/questions/${questionId}/comment/${commentId}`);
+authQuestion.editComment = async (questionId, commentId, body) =>
+  axios.patch(`/questions/${questionId}/comment/${commentId}`, body);
 export default authQuestion;

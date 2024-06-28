@@ -5,7 +5,7 @@ export const QuestionContext = createContext();
 export default function QuestionContextProvider({ children }) {
   const getAllQuestion = async () => {
     const res = await authQuestion.getAllQuestion();
-    return res.data;
+    return res.data.questions;
   };
 
   const getQuestionByUserId = async (id) => {
@@ -20,12 +20,12 @@ export default function QuestionContextProvider({ children }) {
 
   const getQuestionByTopicId = async (id) => {
     const res = await authQuestion.getQuestionByTopicId(id);
-    return res.data;
+    return res.data.questions;
   };
 
   const getFavQuestion = async (id) => {
     const res = await authQuestion.getFavQuestion(id);
-    return res.data;
+    return res.data.questions;
   };
 
   const createQuestion = async (body) => {

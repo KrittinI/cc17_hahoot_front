@@ -8,19 +8,30 @@ import ProfilePage from "../pages/ProfilePage";
 import PlayGamePage from "../pages/PlaygamePage";
 import AllQuizPage from "../pages/AllQuizPage";
 import AllEventPage from "../pages/AllEventPage";
-import QuestionContextProvider from "../contexts/QuestionContext";
-import EventContextProvider from "../contexts/EventContext";
 
 const router = createBrowserRouter([
+  // user
   {
     path: "/",
     element: (
       <>
-        <EventContextProvider>
-          <QuestionContextProvider>
-            <MainContainer />
-          </QuestionContextProvider>
-        </EventContextProvider>
+        <MainContainer />
+      </>
+    ),
+    children: [
+      {
+        path: "/users/:userId",
+        element: <ProfilePage />,
+      },
+    ],
+  },
+
+  // visitor + User
+  {
+    path: "/",
+    element: (
+      <>
+        <MainContainer />
       </>
     ),
     children: [
@@ -34,12 +45,16 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "/users/:userId",
-        element: <ProfilePage />,
+        path: "/play/:eventId",
+        element: <h1>play</h1>,
       },
       {
-        path: "/playgame",
+        path: "/playgame/:eventId",
         element: <PlayGamePage />,
+      },
+      {
+        path: "/pincode",
+        element: <h1>pincode</h1>,
       },
       {
         path: "/questions",
@@ -50,6 +65,17 @@ const router = createBrowserRouter([
         element: <AllEventPage />,
       },
     ],
+  },
+
+  // Admin
+  {
+    path: "/admin",
+    element: (
+      <>
+        <MainContainer />
+      </>
+    ),
+    children: [{ path: "/admin", element: <h1>admin</h1> }],
   },
 ]);
 export default function Router() {
