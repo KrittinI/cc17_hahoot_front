@@ -5,6 +5,7 @@ const bgMap = {
   disable: "bg-gray",
   // hh-button
   black: "bg-black text-white rounded-[8px] hover:bg-blue",
+  red: "bg-red text-white rounded-[8px] hover:bg-darkred",
   blue: "bg-blue text-white rounded-[8px] hover:bg-darkblue",
   outline: "hover:text-blue",
 };

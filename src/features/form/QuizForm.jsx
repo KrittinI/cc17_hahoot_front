@@ -1,6 +1,6 @@
 import CardBoxInProfile from "../../components/CardBoxInProfile";
 import image from "../../assets/c4.jpeg";
-import SeeAllForm from "./SeeAllForm";
+import CardContainer from "./CardContainer";
 
 const eventData = [
   {
@@ -88,7 +88,7 @@ const eventData = [
 export default function QuizForm() {
   return (
     <div className="flex flex-col mb-7">
-      <SeeAllForm title="All Quiz">
+      <CardContainer title="All Quiz">
         <div className="flex flex-wrap justify-center h-auto gap-10 pt-4 mb-6">
           {eventData.map((eventData, index) => (
             <CardBoxInProfile
@@ -98,7 +98,7 @@ export default function QuizForm() {
             />
           ))}
         </div>
-      </SeeAllForm>
+      </CardContainer>
     </div>
   );
 }

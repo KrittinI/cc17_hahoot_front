@@ -1,5 +1,6 @@
 
-// import HeartIcon from "../icons/heart";
+import useAuth from "../hooks/useAuth";
+import { HeartIconHover } from "../icons/heart";
 import Button from "./Button";
 import Input from "./Input";
 
@@ -24,21 +25,25 @@ const topicMenu = [
 ];
 
 export default function SearchBar({ buttonText }) {
+  const { authUser } = useAuth()
   return (
     <div className="flex flex-col h-[auto] gap-8 bg-white p-8 rounded-lg mb-6 ">
       <div className="flex flex-col gap-4 border-b border-gray-300 pb-4">
-        {/* <Button bg={`black`} width={`full`}>
-          {buttonText}
-        </Button> */}
-       
-        <Input placeholder=  {"Search"} />
+        {authUser &&
+          <Button bg={`black`} width={`full`}>
+            {buttonText}
+          </Button>
+        }
+        <Input placeholder={"Search"} />
 
-        {/* <Button bg={`blue`} width={`full`}>
-          <div className="flex justify-center ">
-            <HeartIcon />
-            My Favorite
-          </div>
-        </Button> */}
+        {authUser &&
+          <Button bg={`red`} width={`full`}>
+            <div className="flex justify-center gap-2">
+              <HeartIconHover />
+              <h1>My Favorite</h1>
+            </div>
+          </Button>
+        }
       </div>
       <div className="flex flex-col gap-2 max-h-[80vh] overflow-auto">
         <h1 className="sticky top-0 w-full text-font-title bg-white">Topics</h1>

@@ -32,7 +32,7 @@ export default function RegisterForm() {
   const navigate = useNavigate();
 
   const onClickCloseForm = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const onChangeInput = (e) => {
@@ -165,6 +165,7 @@ export default function RegisterForm() {
               href="https://mail.google.com/"
               target="_blank"
               className="text-blue underline hover:text-darkblue"
+              onClick={onClickCloseForm}
             >
               Please verify email
             </a>

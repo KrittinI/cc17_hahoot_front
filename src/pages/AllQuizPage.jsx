@@ -1,5 +1,5 @@
 import SearchBar from "../components/SearchBar";
-import QuizForm from "../features/visitor/QuizForm";
+import QuizForm from "../features/form/QuizForm";
 import SplitScreen from "../layouts/SplitScreen";
 
 export default function AllQuizPage() {
