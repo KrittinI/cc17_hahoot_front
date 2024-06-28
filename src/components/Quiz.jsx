@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Ranking from "./Ranking";
-//AddComment
+//AddCommentXX
 const socket = io("http://localhost:4000");
 
 const Quiz = () => {
