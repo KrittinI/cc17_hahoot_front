@@ -1,5 +1,5 @@
 import CardBoxInProfile from "../../components/CardBoxInProfile";
-import SeeAllForm from "./SeeAllForm";
+import CardContainer from "./CardContainer";
 import image from "../../assets/c4.jpeg";
 
 export default function EventForm() {
@@ -87,7 +87,7 @@ export default function EventForm() {
   ];
   return (
     <div className="mb-7">
-      <SeeAllForm title="All Event">
+      <CardContainer title="All Event">
         <div className="flex flex-wrap justify-center h-auto gap-10 pt-4 mb-6">
           {eventData.map((eventData, index) => (
             <CardBoxInProfile
@@ -97,7 +97,7 @@ export default function EventForm() {
             />
           ))}
         </div>
-      </SeeAllForm>
+      </CardContainer>
     </div>
   );
 }

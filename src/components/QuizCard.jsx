@@ -16,6 +16,18 @@ const quizData = [
     answer: "G",
     image: "src/assets/c4.jpeg",
   },
+  {
+    question: "1 + 2 เท่ากับเท่าไหร่ ?",
+    options: ["1", "2", "3", "4"],
+    answer: "2",
+    image: "src/assets/hh-hero.png",
+  },
+  {
+    question: "1 + 3 เท่ากับเท่าไหร่ ?",
+    options: ["G", "H", "I", "J"],
+    answer: "G",
+    image: "src/assets/c4.jpeg",
+  },
 
   // (ใส่คำถามอื่นๆ ที่ยากในนี้)
 ];
@@ -57,7 +69,11 @@ export default function QuizCard() {
   const handlePrevioQuestion = () => {
     setSelectedAnswer(null);
     setShowAnswer(false);
-    setCurrentQuestionIndex(currentQuestionIndex - 1);
+    if (currentQuestionIndex !== 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    } else {
+      setCurrentQuestionIndex(quizData.length - 1)
+    }
     setTimeLeft(20);
   };
 
@@ -75,7 +91,7 @@ export default function QuizCard() {
             <Button
               bg="black"
               width="60"
-              // onClick={() => window.location.reload()}
+            // onClick={() => window.location.reload()}
             >
               Send to your E-mail
             </Button>
@@ -134,21 +150,18 @@ export default function QuizCard() {
         {/* Answer Option */}
         <div className="grid grid-cols-2 gap-4 w-full">
           {options.map((option) => (
-            <>
-              <button
-                key={option}
-                onClick={() => handleAnswerClick(option)}
-                className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${
-                  option === selectedAnswer
-                    ? option === answer
-                      ? "bg-green"
-                      : "bg-red"
-                    : "bg-blue hover:bg-darkblue"
+            <button
+              key={option}
+              onClick={() => handleAnswerClick(option)}
+              className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${option === selectedAnswer
+                ? option === answer
+                  ? "bg-green"
+                  : "bg-red"
+                : "bg-blue hover:bg-darkblue"
                 }`}
-              >
-                {option}
-              </button>
-            </>
+            >
+              {option}
+            </button>
           ))}
         </div>
         {/* Answer Option */}

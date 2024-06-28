@@ -2,23 +2,23 @@ import Avatar from "../../../components/Avatar";
 import EditProfileBox from "./EditProfileBox";
 import useUser from "../../../hooks/useUser";
 import useAuth from "../../../hooks/useAuth";
+import { useEffect } from "react";
 
 export default function UserProfile() {
-  const { authUser } = useAuth();
-  const { profile } = useUser();
+    const { authUser } = useAuth();
+    const { profile, setProfile } = useUser();
 
 
     useEffect(() => {
         if (authUser?.id === profile?.id) {
             setProfile(authUser)
         }
-    }, [authUser, profile])
+    }, [authUser])
 
     return (
         <div className="flex flex-col items-center gap-4 h-[auto] w-full bg-white rounded-lg p-6">
             <h2 className="text-font-title">
-                {/* {profile?.username} */}
-                John Doe
+                {profile?.username}
             </h2>
             <Avatar
                 src={profile?.profileImage || profile?.googleImage}

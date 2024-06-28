@@ -22,6 +22,10 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
         path: "/users/:userId",
         element: <ProfilePage />,
       },
@@ -48,10 +52,6 @@ const router = createBrowserRouter([
       },
       {
         path: "/play/:eventId",
-        element: <h1>play</h1>,
-      },
-      {
-        path: "/play/:eventId",
         element: <PlayPage />,
       },
       {
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/pincode",
-        element: <h1>pincode</h1>,
+        element: <PinCodePage />,
       },
       {
         path: "/questions",

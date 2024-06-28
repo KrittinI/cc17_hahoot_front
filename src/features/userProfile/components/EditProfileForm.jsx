@@ -25,33 +25,33 @@ export default function EditProfileForm({ onSuccess }) {
     setInput({ ...input, profileImage: el.src });
   };
 
-    const handleClickSave = async () => {
-        try {
-            const data = { ...input }
-            if (data.username === null || data?.username?.length < 6) {
-                return setError("invalid username")
-            }
-            if (data.password) {
-                if (data.password === "firstLogin" || data.password.length < 5) {
-                    return setError("invalid password")
-                }
-                if (data.password !== data.confirmPassword) {
-                    return setError("password and confirmpassword not match")
-                }
-                delete data.id
-                delete data.confirmPassword
-            }
-            const response = await userApi.update(data)
-            console.log(response);
-            if (response.response?.status !== 200) {
-                return setError(response?.response?.data.message)
-            }
-            onSuccess()
-            setAuthUser({ ...input })
-        } catch (error) {
-            console.log(error);
+  const handleClickSave = async () => {
+    try {
+      const data = { ...input }
+      if (data.username === null || data?.username?.length < 6) {
+        return setError("invalid username")
+      }
+      if (data.password) {
+        if (data.password === "firstLogin" || data.password.length < 5) {
+          return setError("invalid password")
         }
+        if (data.password !== data.confirmPassword) {
+          return setError("password and confirmpassword not match")
+        }
+        delete data.id
+        delete data.confirmPassword
+      }
+      const response = await userApi.update(data)
+      console.log(response);
+      if (response?.status !== 200) {
+        return setError(response?.data.message)
+      }
+      setAuthUser({ ...input })
+      onSuccess()
+    } catch (error) {
+      console.log(error);
     }
+  }
 
   const handleChangeInput = (e) => {
     setError("");
@@ -70,12 +70,14 @@ export default function EditProfileForm({ onSuccess }) {
       {authUser?.password === "firstLogin" && (
         <>
           <Input
+            type="password"
             value={input?.password}
             name={`password`}
             onChange={handleChangeInput}
             placeholder={`password`}
           />
           <Input
+            type="password"
             value={input?.confirmPassword}
             name={`confirmPassword`}
             onChange={handleChangeInput}
@@ -92,7 +94,7 @@ export default function EditProfileForm({ onSuccess }) {
           </Button>
         ))}
       </div>
-    
+
       <Button bg={`black`} width={`full`} onClick={handleClickSave}>
         Save
       </Button>

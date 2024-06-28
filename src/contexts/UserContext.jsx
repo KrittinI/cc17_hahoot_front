@@ -39,9 +39,9 @@ export default function UserContextProvider({ children }) {
     fetchUser();
     fetchAllEvent();
     fetchAllQuestion();
-  }, []);
+  }, [userId]);
 
-  const value = { updateProfileUser, profile, question, event };
+  const value = { updateProfileUser, profile, setProfile, question, event };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
