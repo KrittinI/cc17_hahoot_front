@@ -23,7 +23,8 @@ export default function SplitScreen({
     <>
       <div className="flex justify-center">
         <div
-          className={`${sizeMap[sizeRatio]} pl-12 pt-8 ${
+
+          className={`${sizeMap[sizeRatio]} pl-12 pt-8 mr-8 ${
             border ? "border-r" : ""
           }`}
         >

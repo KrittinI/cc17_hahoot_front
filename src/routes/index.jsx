@@ -8,6 +8,8 @@ import ProfilePage from "../pages/ProfilePage";
 import PlayGamePage from "../pages/PlaygamePage";
 import AllQuizPage from "../pages/AllQuizPage";
 import AllEventPage from "../pages/AllEventPage";
+import PlayPage from "../pages/PlayPage";
+import PinCodePage from "../pages/PinCodePage";
 
 const router = createBrowserRouter([
   // user
@@ -49,6 +51,10 @@ const router = createBrowserRouter([
         element: <h1>play</h1>,
       },
       {
+        path: "/play/:eventId",
+        element: <PlayPage />,
+      },
+      {
         path: "/playgame/:eventId",
         element: <PlayGamePage />,
       },
@@ -64,6 +70,10 @@ const router = createBrowserRouter([
         path: "/events",
         element: <AllEventPage />,
       },
+      {
+        path: "/pincode",
+        element: <PinCodePage />
+      }
     ],
   },
 
@@ -81,3 +91,5 @@ const router = createBrowserRouter([
 export default function Router() {
   return <RouterProvider router={router} />;
 }
+
+

@@ -25,33 +25,33 @@ export default function EditProfileForm({ onSuccess }) {
     setInput({ ...input, profileImage: el.src });
   };
 
-  const handleClickSave = async () => {
-    try {
-      const data = { ...input };
-      if (data.username === null || data?.username?.length < 6) {
-        return setError("invalid username");
-      }
-      if (data.password) {
-        if (data.password === "firstLogin" || data.password.length < 5) {
-          return setError("invalid password");
+    const handleClickSave = async () => {
+        try {
+            const data = { ...input }
+            if (data.username === null || data?.username?.length < 6) {
+                return setError("invalid username")
+            }
+            if (data.password) {
+                if (data.password === "firstLogin" || data.password.length < 5) {
+                    return setError("invalid password")
+                }
+                if (data.password !== data.confirmPassword) {
+                    return setError("password and confirmpassword not match")
+                }
+                delete data.id
+                delete data.confirmPassword
+            }
+            const response = await userApi.update(data)
+            console.log(response);
+            if (response.response?.status !== 200) {
+                return setError(response?.response?.data.message)
+            }
+            onSuccess()
+            setAuthUser({ ...input })
+        } catch (error) {
+            console.log(error);
         }
-        if (data.password !== data.confirmPassword) {
-          return setError("password and confirmpassword not match");
-        }
-        delete data.id;
-        delete data.confirmPassword;
-      }
-      const response = await userApi.update(data);
-      console.log(response);
-      if (response?.status !== 200) {
-        return setError(response?.data.message);
-      }
-      onSuccess();
-      setAuthUser({ ...input });
-    } catch (error) {
-      console.log(error);
     }
-  };
 
   const handleChangeInput = (e) => {
     setError("");
@@ -59,15 +59,7 @@ export default function EditProfileForm({ onSuccess }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <h1>Choose Avatar</h1>
-      <div className="grid grid-cols-3 gap-8" role="button">
-        {avatarMap.map((el) => (
-          <Button key={el.id} onClick={() => handleClickAvatar(el)}>
-            <Avatar src={el.src} size={100} select={select === el.id} />
-          </Button>
-        ))}
-      </div>
+    <div className="flex flex-col items-center justify-center gap-4 p-4 ">
       <Input
         value={input?.username}
         name={`username`}
@@ -92,6 +84,15 @@ export default function EditProfileForm({ onSuccess }) {
         </>
       )}
       {error && <h1 className="text-darkred">{error}</h1>}
+      <h1 className="text-font-title-card">Choose Avatar</h1>
+      <div className="grid grid-cols-3 gap-2" role="button">
+        {avatarMap.map((el) => (
+          <Button key={el.id} onClick={() => handleClickAvatar(el)}>
+            <Avatar src={el.src} size={100} select={select === el.id} />
+          </Button>
+        ))}
+      </div>
+    
       <Button bg={`black`} width={`full`} onClick={handleClickSave}>
         Save
       </Button>
