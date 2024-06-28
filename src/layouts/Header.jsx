@@ -8,7 +8,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ProfileDropdown } from "./Dropdown";
 
 const navigation = [
-  { name: "Play", href: "#", current: true },
+  { name: "Play", href: "/quiz", current: true },
   { name: "All Event", href: "#", current: false },
   { name: "All Quiz", href: "#", current: false },
 ];

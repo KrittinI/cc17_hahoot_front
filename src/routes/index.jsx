@@ -4,6 +4,7 @@ import MainContainer from "../layouts/MainContainer";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
+import QuizPage from "../pages/Quiz";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/quiz",
+        element: <QuizPage />,
       },
     ],
   },
