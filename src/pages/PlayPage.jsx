@@ -1,31 +1,27 @@
 import { useState, useEffect } from "react";
-import Button from "./Button";
-import LeftArrowIcon from "../icons/left-arrow";
-import RightArrowIcon from "../icons/right-arrow";
-
+import image from "../assets/hh-hero.png";
+import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 const quizData = [
   {
     question: "1 + 1 เท่ากับเท่าไหร่ ?",
     options: ["1", "2", "3", "4"],
     answer: "2",
-    image: "src/assets/hh-hero.png",
+    image: image,
   },
-  {
-    question: "A B C D E F ?",
-    options: ["G", "H", "I", "J"],
-    answer: "G",
-    image: "src/assets/c4.jpeg",
-  },
-
-  // (ใส่คำถามอื่นๆ ที่ยากในนี้)
 ];
 
-export default function QuizCard() {
+export default function PlayPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [score, setScore] = useState(0);
+  //   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(20);
+  const navigate = useNavigate();
+
+    const handleOnClickBackToHome = () => {
+      navigate("/");
+    };
 
   useEffect(() => {
     if (timeLeft > 0 && !showAnswer) {
@@ -41,57 +37,7 @@ export default function QuizCard() {
 
     setSelectedAnswer(option);
     setShowAnswer(true);
-
-    if (option === quizData[currentQuestionIndex].answer) {
-      setScore(score + 1);
-    }
   };
-
-  const handleNextQuestion = () => {
-    setSelectedAnswer(null);
-    setShowAnswer(false);
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-    setTimeLeft(20);
-  };
-
-  const handlePrevioQuestion = () => {
-    setSelectedAnswer(null);
-    setShowAnswer(false);
-    setCurrentQuestionIndex(currentQuestionIndex - 1);
-    setTimeLeft(20);
-  };
-
-  if (currentQuestionIndex >= quizData.length) {
-    return (
-      // Result your score
-      <div className="flex items-center justify-center h-[calc(100vh-12rem)]">
-        <div className="grid grid-1 gap-8 text-center w-[400px] h-[266px] bg-white rounded-lg p-6 ">
-          <h1 className="text-font-title">Your score</h1>
-          <h1 className="text-font-header text-blue">
-            {score}
-            {/* / {quizData.length} */}
-          </h1>
-          <div className="w-full grid grid-col gap-2 justify-center items-center ">
-            <Button
-              bg="black"
-              width="60"
-              // onClick={() => window.location.reload()}
-            >
-              Send to your E-mail
-            </Button>
-            <Button
-              bg="blue"
-              width="60"
-              onClick={() => window.location.reload()}
-            >
-              Play again
-            </Button>
-          </div>
-        </div>
-      </div>
-      // Result your score
-    );
-  }
 
   const { question, options, answer, image } = quizData[currentQuestionIndex];
 
@@ -115,23 +61,9 @@ export default function QuizCard() {
 
         {/* Quiz Cover */}
         <div className="flex justify-around items-center my-4">
-          <div
-            className="flex justify-center items-center bg-yellow w-[80px] h-[80px] rounded-full invisiable"
-            onClick={handlePrevioQuestion}
-          >
-            <LeftArrowIcon />
-          </div>
           <img className=" w-[420px] h-[250px] rounded-lg" src={image} />
-          <div
-            className="flex justify-center items-center bg-red w-[80px] h-[80px] rounded-full invisiable"
-            onClick={handleNextQuestion}
-          >
-            <RightArrowIcon />
-          </div>
         </div>
-        {/* Quiz Cover */}
 
-        {/* Answer Option */}
         <div className="grid grid-cols-2 gap-4 w-full">
           {options.map((option) => (
             <>
@@ -162,6 +94,9 @@ export default function QuizCard() {
             {answer} : เป็นคำตอบที่ถูกต้อง
           </div>
         )}
+        <div className="flex justify-end mt-4">
+          <Button bg={"black"}  onClick={handleOnClickBackToHome}>Back to Home</Button>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
-export default function Modal({ width, title, children, open, onClose }) {
+export default function ModalSecond({ width, title, children, openModal, onClose }) {
   useEffect(() => {
     const handleEscPress = (e) => {
       if (e.keyCode === 27) {
@@ -14,7 +14,7 @@ export default function Modal({ width, title, children, open, onClose }) {
 
   return (
     <>
-      {open
+      {openModal
         ? createPortal(
             <>
               <div className="fixed inset-0 bg-white opacity-40 z-30"></div>
@@ -37,7 +37,7 @@ export default function Modal({ width, title, children, open, onClose }) {
                 </div>
               </div>
             </>,
-            document.getElementById("modal")
+            document.getElementById("modalSecond")
           )
         : null}
     </>

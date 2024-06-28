@@ -17,7 +17,7 @@ export default function Input({
     <>
       <input
         type={type}
-        placeholder={placeholder}
+        placeholder= {placeholder}
         className={`w-full px-${size} py-${size / 2
           } border rounded-md focus:outline-none focus:ring-2 ${positionMap[position]
           } ${fontSize}
