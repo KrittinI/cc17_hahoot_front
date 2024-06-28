@@ -2,11 +2,11 @@ import Avatar from "../../../components/Avatar";
 import EditProfileBox from "./EditProfileBox";
 import useUser from "../../../hooks/useUser";
 import useAuth from "../../../hooks/useAuth";
-import { useEffect } from "react";
 
 export default function UserProfile() {
-    const { authUser } = useAuth()
-    const { profile, setProfile } = useUser()
+  const { authUser } = useAuth();
+  const { profile } = useUser();
+
 
     useEffect(() => {
         if (authUser?.id === profile?.id) {

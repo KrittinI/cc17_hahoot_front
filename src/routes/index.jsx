@@ -12,6 +12,23 @@ import PlayPage from "../pages/PlayPage";
 import PinCodePage from "../pages/PinCodePage";
 
 const router = createBrowserRouter([
+  // user
+  {
+    path: "/",
+    element: (
+      <>
+        <MainContainer />
+      </>
+    ),
+    children: [
+      {
+        path: "/users/:userId",
+        element: <ProfilePage />,
+      },
+    ],
+  },
+
+  // visitor + User
   {
     path: "/",
     element: (
@@ -30,8 +47,8 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: "/users/:userId",
-        element: <ProfilePage />,
+        path: "/play/:eventId",
+        element: <h1>play</h1>,
       },
       {
         path: "/play/:eventId",
@@ -40,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/playgame/:eventId",
         element: <PlayGamePage />,
+      },
+      {
+        path: "/pincode",
+        element: <h1>pincode</h1>,
       },
       {
         path: "/questions",
@@ -54,6 +75,17 @@ const router = createBrowserRouter([
         element: <PinCodePage />
       }
     ],
+  },
+
+  // Admin
+  {
+    path: "/admin",
+    element: (
+      <>
+        <MainContainer />
+      </>
+    ),
+    children: [{ path: "/admin", element: <h1>admin</h1> }],
   },
 ]);
 export default function Router() {

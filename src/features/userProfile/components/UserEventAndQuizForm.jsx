@@ -1,74 +1,34 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
 import BoxContain from "../../../components/BoxContain";
 import CardBoxInProfile from "../../../components/CardBoxInProfile";
 import image from "../../../assets/c4.jpeg";
-
-const eventData = [
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-];
+import useUser from "../../../hooks/useUser";
 
 export default function UserEventAndQuizForm() {
+  const { question, event } = useUser();
   const navigate = useNavigate();
 
   return (
     <div className="flex flex-col gap-7 ">
       <BoxContain title="My Event" onClick={() => navigate("/")}>
         <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto pt-4">
-          {eventData.map((eventData, index) => (
+          {event?.map((el, index) => (
             <CardBoxInProfile
               key={index}
-              title={eventData.title}
-              image={image}
+              title={el?.eventName}
+              image={el?.eventImage}
             />
           ))}
         </div>
       </BoxContain>
       <BoxContain title="My Quiz" hight={30} onClick={() => navigate("/")}>
         <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto pt-4">
-          {eventData.map((eventData, index) => (
+          {question.map((el, index) => (
             <CardBoxInProfile
               key={index}
-              title={eventData.title}
-              image={image}
+              title={el?.question}
+              image={el?.questionImage || image}
             />
           ))}
         </div>
