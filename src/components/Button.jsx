@@ -1,11 +1,12 @@
+
+
 const bgMap = {
   active: "bg-blue",
   disable: "bg-gray",
   // hh-button
   black: "bg-black text-white rounded-[8px] hover:bg-blue",
   blue: "bg-blue text-white rounded-[8px] hover:bg-darkblue",
-  outline: "hover:text-blue"
-
+  outline: "hover:text-blue",
 };
 
 const colorMap = {
@@ -24,11 +25,24 @@ const marginTopMap = {
   0: "",
   4: "mt-12",
 };
-export default function Button({ children, bg, color, width, onClick, mt }) {
 
+const selectMap = {
+  true: "bg-blue text-white",
+  false: "",
+};
+
+export default function Button({
+  children,
+  bg,
+  color,
+  width,
+  onClick,
+  mt,
+  select = false,
+}) {
   return (
     <button
-      className={`px-3 py-1 ${bgMap[bg]} ${colorMap[color]} rounded-md ${widthMap[width]} ${marginTopMap[mt]}`}
+      className={`px-3 py-1 ${bgMap[bg]} ${colorMap[color]} rounded-md ${widthMap[width]} ${marginTopMap[mt]} ${selectMap[select]}`}
       onClick={onClick}
     >
       {children}

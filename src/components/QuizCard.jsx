@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
-// import LeftArrowIcon from "../icons/left-arrow";
-// import RightArrowIcon from "../icons/right-arrow";
+import LeftArrowIcon from "../icons/left-arrow";
+import RightArrowIcon from "../icons/right-arrow";
 
 const quizData = [
   {
@@ -51,6 +51,13 @@ export default function QuizCard() {
     setSelectedAnswer(null);
     setShowAnswer(false);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setTimeLeft(20);
+  };
+
+  const handlePrevioQuestion = () => {
+    setSelectedAnswer(null);
+    setShowAnswer(false);
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
     setTimeLeft(20);
   };
 
@@ -108,18 +115,19 @@ export default function QuizCard() {
 
         {/* Quiz Cover */}
         <div className="flex justify-around items-center my-4">
-          {/* <div className="flex justify-center items-center bg-yellow w-[80px] h-[80px] rounded-full invisiable">
+          <div
+            className="flex justify-center items-center bg-yellow w-[80px] h-[80px] rounded-full invisiable"
+            onClick={handlePrevioQuestion}
+          >
             <LeftArrowIcon />
-          </div> */}
+          </div>
           <img className=" w-[420px] h-[250px] rounded-lg" src={image} />
-          {/* {showAnswer && (
-            <div
-              className="flex justify-center items-center bg-red w-[80px] h-[80px] rounded-full invisiable"
-              onClick={handleNextQuestion}
-            >
-              <RightArrowIcon />
-            </div>
-          )} */}
+          <div
+            className="flex justify-center items-center bg-red w-[80px] h-[80px] rounded-full invisiable"
+            onClick={handleNextQuestion}
+          >
+            <RightArrowIcon />
+          </div>
         </div>
         {/* Quiz Cover */}
 
@@ -142,19 +150,16 @@ export default function QuizCard() {
               </button>
             </>
           ))}
-
-          {/* {showAnswer && (
-            <div className="w=full flex justify-end items-center">
-              <Button onClick={handleNextQuestion} bg="black" width="60">
-                Next Quiz
-              </Button>
-            </div>
-          )} */}
         </div>
         {/* Answer Option */}
         {showAnswer && selectedAnswer !== answer && (
           <div className="mt-4 p-4 text-red text-2xl bg-white rounded-lg w-full text-center">
             เป็นคำตอบที่ผิด! คำตอบที่ถูกต้องคือ: {answer}
+          </div>
+        )}
+        {showAnswer && selectedAnswer === answer && (
+          <div className="mt-4 p-4 text-green text-2xl bg-white rounded-lg w-full text-center">
+            {answer} : เป็นคำตอบที่ถูกต้อง
           </div>
         )}
       </div>

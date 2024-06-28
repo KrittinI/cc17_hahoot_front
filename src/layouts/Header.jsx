@@ -7,9 +7,14 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ProfileDropdown } from "./Dropdown";
-import PinBox from "../features/playGames/PinBox";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
 
 export default function Header() {
+  const navigate = useNavigate();
+  const handleOnClickPlay = () => {
+    navigate("/pincode");
+  };
   return (
     <Disclosure
       as="nav"
@@ -40,13 +45,15 @@ export default function Header() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex items-center space-x-6">
-                    <PinBox />
-                    <a href="#" className="hover:text-blue">
+                    <Button bg="black" onClick={handleOnClickPlay}>
+                      Play
+                    </Button>
+                    <Link to="/events" className="hover:text-blue">
                       All Event
-                    </a>
-                    <a href="#" className="hover:text-blue">
+                    </Link>
+                    <Link to="/questions" className="hover:text-blue">
                       All Quiz
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -58,13 +65,15 @@ export default function Header() {
 
           <DisclosurePanel className="sm:hidden">
             <div className="flex flex-col space-y-1 px-2 pb-3 pt-2">
-              <PinBox />
-              <a href="#" className="hover:text-blue">
+              <Button bg="black" onClick={handleOnClickPlay}>
+                Play
+              </Button>
+              <Link to="/events" className="hover:text-blue">
                 All Event
-              </a>
-              <a href="#" className="hover:text-blue">
+              </Link>
+              <Link to="/questions" className="hover:text-blue">
                 All Quiz
-              </a>
+              </Link>
             </div>
           </DisclosurePanel>
         </>

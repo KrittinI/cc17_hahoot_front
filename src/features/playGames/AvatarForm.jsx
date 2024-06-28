@@ -1,18 +1,14 @@
 import Avatar from "../../components/Avatar";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import useAuth from "../../hooks/useAuth";
 import userImg from "../../assets/user.png";
 import { useState } from "react";
-import userApi from "../../api/user";
 import { useNavigate } from "react-router-dom";
 
-export default function EditProfileForm({ onSuccess }) {
+export default function AvatarForm() {
   const navigate = useNavigate();
-  const { authUser, setAuthUser } = useAuth();
-  const [input, setInput] = useState(authUser);
+  const [input, setInput] = useState();
   const [select, setSelect] = useState(1);
-  const [error, setError] = useState("");
   const avatarMap = [
     { id: 1, src: input?.googleImage },
     { id: 2, src: userImg },
@@ -27,66 +23,23 @@ export default function EditProfileForm({ onSuccess }) {
     setInput({ ...input, profileImage: el.src });
   };
 
-  const handleClickSave = async () => {
-    try {
-      const data = { ...input };
-      if (data.username === null || data?.username?.length < 6) {
-        return setError("invalid username");
-      }
-      if (data.password) {
-        if (data.password === "firstLogin" || data.password.length < 5) {
-          return setError("invalid password");
-        }
-        if (data.password !== data.confirmPassword) {
-          return setError("password and confirmpassword not match");
-        }
-        delete data.id;
-        delete data.confirmPassword;
-      }
-      const response = await userApi.update(data);
-      console.log(response);
-      if (response.response?.status !== 200) {
-        setError(response?.response?.data.message);
-      }
-      onSuccess();
-      navigate("/play");
-      setAuthUser({ ...input });
-    } catch (error) {
-      console.log(error);
-    }
+  const handleClickEnter = () => {
+    navigate("/playgame/:eventId");
   };
 
   const handleChangeInput = (e) => {
-    setError("");
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 p-4 ">
+    <div className="flex flex-col items-center justify-center gap-4 p-4 bg-white rounded-lg ">
       <Input
         value={input?.username}
         name={`username`}
         onChange={handleChangeInput}
         placeholder={`Username`}
+        position={"center"}
       />
-      {/* <Input value={input?.email} name={`email`} onChange={handleChangeInput} /> */}
-      {authUser?.password === "firstLogin" && (
-        <>
-          <Input
-            value={input?.password}
-            name={`password`}
-            onChange={handleChangeInput}
-            placeholder={`password`}
-          />
-          <Input
-            value={input?.confirmPassword}
-            name={`confirmPassword`}
-            onChange={handleChangeInput}
-            placeholder={`confirmpassword`}
-          />
-        </>
-      )}
-      {error && <h1 className="text-darkred">{error}</h1>}
       <h1 className="text-font-title-card">Choose Avatar</h1>
       <div className="grid grid-cols-3 gap-2" role="button">
         {avatarMap.map((el) => (
@@ -96,8 +49,8 @@ export default function EditProfileForm({ onSuccess }) {
         ))}
       </div>
 
-      <Button bg={`black`} width={`full`} onClick={handleClickSave}>
-        Save
+      <Button bg={`black`} width={`full`} onClick={handleClickEnter}>
+        Enter
       </Button>
     </div>
   );

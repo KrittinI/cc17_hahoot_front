@@ -1,61 +1,69 @@
+import { useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../../icons/Logo";
-// import AvatarBox from "../../playGames/AvatarBox";
-import AvatarForm from "../../playGames/AvatarForm";
-import { useState } from "react";
-import ModalSecond from "../../playGames/ModalSecond";
 
-export default function PinForm({ onSuccess }) {
-  const [openModal, setOpenModal] = useState(false);
+const initialInput = {
+  pincode: "",
+};
 
-  //   const [input, setInput] = useState();
-  //   const [error, setError] = useState("");
+export default function Pinform({ setPin }) {
+  const navigate = useNavigate();
+  const [input, setInput] = useState(initialInput);
 
-  //   const handleClickEnter = async () => {
-  //     try {
-  //       const data = { ...input };
-  //       if (data.pin === null) {
-  //         return setError("invalid PIN code");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   const handleChangeInput = (e) => {
-  //     setError("");
-  //     setInput({ ...input, [e.target.name]: e.target.value });
-  //   };
-  const handleClickSave = () => {
-    setOpenModal(true);
+  const onClickCloseForm = () => {
+    navigate("/");
   };
-  const handleSuccess = () => {
-    onSuccess();
-    // setOpenModal(false);
+
+  const onChangeInput = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    setPin(input);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 p-4 ">
-      <Input
-        // value={input?.pin}
-        name={`pin`}
-        // onChange={handleChangeInput}
-        placeholder={`Pin Code`}
-      />
-      {/* {error && <p className="text-darkred">{error}</p>} */}
-      {/* <div className="grid grid-cols-3 gap-2" role="button"></div> */}
-
-      {/* <Button bg={`black`} width={`full`} onClick={handleClickEnter}> */}
-      <Button bg={`black`} width={`full`} onClick={handleClickSave}>
-        Enter
-      </Button>
-      <ModalSecond
-        openModal={openModal}
-        title={<Logo />}
-        onClose={() => setOpenModal(false)}
+    <>
+      <form
+        className=" bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 relative"
+        onSubmit={handleSubmitForm}
       >
-        <AvatarForm onSuccess={handleSuccess} />
-      </ModalSecond>
-    </div>
+        <h2 className="text-center mb-2 font-bold text-black text-3xl">
+          <Logo />
+        </h2>
+        <div role="button" className="absolute top-1 right-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-5 text-red"
+            onClick={onClickCloseForm}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
+        </div>
+        <>
+          <Input
+            name="pincode"
+            placeholder="PIN Code"
+            position="center"
+            value={input.pincode}
+            onChange={onChangeInput}
+          />
+          <Button width="full" bg="black">
+            Enter
+          </Button>
+        </>
+      </form>
+    </>
   );
 }
