@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
+import Ranking from "./Ranking";
 
 const socket = io("http://localhost:4000");
 
@@ -16,6 +17,8 @@ const Quiz = () => {
   const [timeLeft, setTimeLeft] = useState(15);
   const [totalTimeLeft, setTotalTimeLeft] = useState(0);
   const [hasJoined, setHasJoined] = useState(false);
+  const [ranking, setRanking] = useState([]);
+  const [showRanking, setShowRanking] = useState(false);
 
   useEffect(() => {
     socket.on("isOwner", () => setIsOwner(true));
@@ -31,6 +34,7 @@ const Quiz = () => {
     socket.on("newQuestion", (questionData) => {
       setCurrentQuestion(questionData);
       setTimeLeft(15);
+      setShowRanking(false);
     });
     socket.on("answerResult", ({ correct, answer }) => {
       setShowAnswer(true);
@@ -38,7 +42,11 @@ const Quiz = () => {
       setTimeout(() => {
         setShowAnswer(false);
         setSelectedAnswer(null);
+        setShowRanking(true);
       }, 3000);
+    });
+    socket.on("updateRanking", (ranking) => {
+      setRanking(ranking);
     });
     socket.on("gameOver", () => {
       setCurrentQuestion(null);
@@ -51,6 +59,7 @@ const Quiz = () => {
       socket.off("gameStarted");
       socket.off("newQuestion");
       socket.off("answerResult");
+      socket.off("updateRanking");
       socket.off("gameOver");
     };
   }, []);
@@ -90,6 +99,11 @@ const Quiz = () => {
     if (selectedAnswer) return;
     setSelectedAnswer(option);
     socket.emit("submitAnswer", { roomId, answer: option });
+  };
+
+  const handleNextQuestion = () => {
+    setShowRanking(false);
+    socket.emit("nextQuestion", roomId);
   };
 
   return (
@@ -143,7 +157,7 @@ const Quiz = () => {
             </button>
           )}
         </div>
-      ) : currentQuestion ? (
+      ) : currentQuestion && !showRanking ? (
         <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
           <h2 className="text-2xl font-bold mb-6">
             {currentQuestion.question}
@@ -180,23 +194,13 @@ const Quiz = () => {
             ></div>
           </div>
           {showAnswer && currentQuestion && currentQuestion.answer && (
-            <div className="mt-8 text-red-500 font-bold">
+            <div className="mt-8 text-red font-bold">
               คำตอบที่ถูกต้องคือ: {currentQuestion.answer}
             </div>
           )}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center min-h-screen">
-          <h1 className="text-3xl font-bold mb-4">
-            {name} ได้คะแนน {score}
-          </h1>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-blue text-white px-4 py-2 rounded"
-          >
-            เล่นอีกครั้ง
-          </button>
-        </div>
+        <Ranking ranking={ranking} onNextQuestion={handleNextQuestion} />
       )}
     </div>
   );
