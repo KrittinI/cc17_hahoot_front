@@ -5,18 +5,17 @@ import RightArrowIcon from "../icons/right-arrow";
 
 const quizData = [
   {
-    question: "1 + 1 เท่ากับเท่าไหร่ ?",
+    question: "1 + 1 เท่ากับเท่าไหร่?",
     options: ["1", "2", "3", "4"],
     answer: "2",
     image: "src/assets/hh-hero.png",
   },
   {
-    question: "A B C D E F ?",
+    question: "A B C D E F?",
     options: ["G", "H", "I", "J"],
     answer: "G",
     image: "src/assets/c4.jpeg",
   },
-
   // (ใส่คำถามอื่นๆ ที่ยากในนี้)
 ];
 
@@ -48,52 +47,52 @@ export default function Quiz() {
   };
 
   const handleNextQuestion = () => {
+    if (currentQuestionIndex < quizData.length - 1) {
+      setSelectedAnswer(null);
+      setShowAnswer(false);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setTimeLeft(20);
+    } else {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handlePreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setSelectedAnswer(null);
+      setShowAnswer(false);
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      setTimeLeft(20);
+    }
+  };
+
+  const resetQuiz = () => {
+    setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
     setShowAnswer(false);
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setScore(0);
     setTimeLeft(20);
   };
 
-  const handlePrevioQuestion = () => {
-    setSelectedAnswer(null);
-    setShowAnswer(false);
-    if (currentQuestionIndex !== 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-    } else {
-      setCurrentQuestionIndex(quizData.length - 1);
-    }
-    setTimeLeft(20);
-  };
+  console.log("Current Question Index:", currentQuestionIndex);
+  console.log("Quiz Data Length:", quizData.length);
 
   if (currentQuestionIndex >= quizData.length) {
     return (
-      // Result your score
       <div className="flex items-center justify-center h-[calc(100vh-12rem)]">
-        <div className="grid grid-1 gap-8 text-center w-[400px] h-[266px] bg-white rounded-lg p-6 ">
+        <div className="grid grid-1 gap-8 text-center w-[400px] h-[266px] bg-white rounded-lg p-6">
           <h1 className="text-font-title">Your score</h1>
-          <h1 className="text-font-header text-blue">
-            {score}
-            {/* / {quizData.length} */}
-          </h1>
-          <div className="w-full grid grid-col gap-2 justify-center items-center ">
-            <Button
-              bg="black"
-              width="60"
-              // onClick={() => window.location.reload()}
-            >
+          <h1 className="text-font-header text-blue">{score}</h1>
+          <div className="w-full grid grid-col gap-2 justify-center items-center">
+            <Button bg="black" width="60">
               Send to your E-mail
             </Button>
-            <Button
-              bg="blue"
-              width="60"
-              onClick={() => window.location.reload()}
-            >
+            <Button bg="blue" width="60" onClick={resetQuiz}>
               Play again
             </Button>
           </div>
         </div>
       </div>
-      // Result your score
     );
   }
 
@@ -101,44 +100,34 @@ export default function Quiz() {
 
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[70%]">
-      {/* Quiz */}
       <div className="bg-white shadow-lg rounded-lg p-8 w-full">
         <h2 className="text-font-title text-center">{question}</h2>
       </div>
-      {/* Quiz */}
-
-      {/* Timer bar */}
-      <div className="relative h-8 rounded-full my-4 w-full bg-grey ">
+      <div className="relative h-8 rounded-full my-4 w-full bg-grey">
         <div
-          className="absolute top-0 left-0 h-8 bg-red rounded-full w-full "
+          className="absolute top-0 left-0 h-8 bg-red rounded-full w-full"
           style={{ width: `${(timeLeft / 20) * 100}%` }}
         ></div>
       </div>
-      {/* Timer bar */}
-
-      {/* Quiz Cover */}
       <div className="flex justify-around items-center my-4 gap-60">
         <div
-          className="flex justify-center items-center bg-yellow w-[80px] h-[80px] rounded-full invisiable"
-          onClick={handlePrevioQuestion}
+          className="flex justify-center items-center bg-yellow w-[80px] h-[80px] rounded-full"
+          onClick={handlePreviousQuestion}
         >
           <LeftArrowIcon />
         </div>
         <img
-          className=" w-[420px] h-[250px] rounded-lg"
+          className="w-[420px] h-[250px] rounded-lg"
           src={image}
           alt="Quiz Image"
         />
         <div
-          className="flex justify-center items-center bg-red w-[80px] h-[80px] rounded-full invisiable"
+          className="flex justify-center items-center bg-red w-[80px] h-[80px] rounded-full"
           onClick={handleNextQuestion}
         >
           <RightArrowIcon />
         </div>
       </div>
-      {/* Quiz Cover */}
-
-      {/* Answer Option */}
       <div className="grid grid-cols-2 gap-4 w-full">
         {options.map((option) => (
           <button
@@ -156,7 +145,6 @@ export default function Quiz() {
           </button>
         ))}
       </div>
-      {/* Answer Option */}
       {showAnswer && selectedAnswer !== answer && (
         <div className="mt-4 p-4 text-red text-2xl bg-white rounded-lg w-full text-center">
           เป็นคำตอบที่ผิด! คำตอบที่ถูกต้องคือ: {answer}
