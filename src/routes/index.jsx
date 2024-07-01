@@ -24,11 +24,11 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginPage />,
       },
-      {
-        path: "/quiz",
-        element: <QuizPage />,
-      },
     ],
+  },
+  {
+    path: "/quiz",
+    element: <QuizPage />,
   },
 ]);
 

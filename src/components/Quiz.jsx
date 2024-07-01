@@ -99,34 +99,17 @@ export default function Quiz() {
   const { question, options, answer, image } = quizData[currentQuestionIndex];
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[70%]">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12">
+      <div className="bg-white shadow-lg rounded-lg p-12 w-full">
         <h2 className="text-font-title text-center">{question}</h2>
       </div>
-      <div className="relative h-8 rounded-full my-4 w-full bg-grey">
-        <div
-          className="absolute top-0 left-0 h-8 bg-red rounded-full w-full"
-          style={{ width: `${(timeLeft / 20) * 100}%` }}
-        ></div>
-      </div>
+
       <div className="flex justify-around items-center my-4 gap-60">
-        <div
-          className="flex justify-center items-center bg-yellow w-[80px] h-[80px] rounded-full"
-          onClick={handlePreviousQuestion}
-        >
-          <LeftArrowIcon />
-        </div>
         <img
           className="w-[420px] h-[250px] rounded-lg"
           src={image}
           alt="Quiz Image"
         />
-        <div
-          className="flex justify-center items-center bg-red w-[80px] h-[80px] rounded-full"
-          onClick={handleNextQuestion}
-        >
-          <RightArrowIcon />
-        </div>
       </div>
       <div className="grid grid-cols-2 gap-4 w-full">
         {options.map((option) => (
@@ -145,16 +128,6 @@ export default function Quiz() {
           </button>
         ))}
       </div>
-      {showAnswer && selectedAnswer !== answer && (
-        <div className="mt-4 p-4 text-red text-2xl bg-white rounded-lg w-full text-center">
-          เป็นคำตอบที่ผิด! คำตอบที่ถูกต้องคือ: {answer}
-        </div>
-      )}
-      {showAnswer && selectedAnswer === answer && (
-        <div className="mt-4 p-4 text-green text-2xl bg-white rounded-lg w-full text-center">
-          {answer} : เป็นคำตอบที่ถูกต้อง
-        </div>
-      )}
     </div>
   );
 }
