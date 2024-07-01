@@ -6,12 +6,16 @@ export default {
       colors: {
         red: "#FB7185",
         darkred: "#FF3D5A",
+        darkredDarker: "#E33B50", // สีแดงที่เข้มขึ้นแต่ยังสดใส
         blue: "#60A5FA",
         darkblue: "#2587FF",
+        darkblueDarker: "#206BCC", // สีน้ำเงินที่เข้มขึ้นแต่ยังสดใส
         yellow: "#FFDA45",
         darkyellow: "#FFCC00",
+        darkyellowDarker: "#CCAA00", // สีเหลืองที่เข้มขึ้นแต่ยังสดใส
         green: "#4ADE80",
         darkgreen: "#00CB4A",
+        darkgreenDarker: "#00A93D", // สีเขียวที่เข้มขึ้นแต่ยังสดใส
         black: "#171717",
         grey: "#D9D9D9",
         darkgrey: "#969A9D",

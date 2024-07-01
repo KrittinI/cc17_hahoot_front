@@ -20,6 +20,18 @@ const quizData = [
 ];
 
 const symbols = ["▲", "◆", "●", "■"];
+const buttonColors = [
+  "bg-darkred",
+  "bg-darkblue",
+  "bg-darkyellow",
+  "bg-darkgreen",
+];
+const hoverColors = [
+  "hover:bg-darkredDarker",
+  "hover:bg-darkblueDarker",
+  "hover:bg-darkyellowDarker",
+  "hover:bg-darkgreenDarker",
+];
 
 export default function Quiz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -113,23 +125,30 @@ export default function Quiz() {
           alt="Quiz Image"
         />
       </div>
-      <div className="grid grid-cols-2 gap-4 w-full">
+      <div className="grid grid-cols-2 gap-2 w-full">
         {options.map((option, index) => (
           <button
             key={option}
             onClick={() => handleAnswerClick(option)}
-            className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${
-              option === selectedAnswer
-                ? option === answer
+            className={`px-8 py-8 text-white text-font-title text-start ${
+              showAnswer
+                ? option === quizData[currentQuestionIndex].answer
                   ? "bg-green"
                   : "bg-red"
-                : "bg-blue hover:bg-darkblue"
+                : `${buttonColors[index]} ${hoverColors[index]}`
             }`}
           >
             {symbols[index]}&nbsp;&nbsp;{option}
           </button>
         ))}
       </div>
+      {/* {showAnswer && (
+        <div className="flex justify-center mt-4">
+          <Button onClick={handleNextQuestion} bg="blue" width="60">
+            Next
+          </Button>
+        </div>
+      )} */}
     </div>
   );
 }
