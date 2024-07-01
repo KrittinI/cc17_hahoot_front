@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
-import LeftArrowIcon from "../icons/left-arrow";
-import RightArrowIcon from "../icons/right-arrow";
+// import LeftArrowIcon from "../icons/left-arrow";
+// import RightArrowIcon from "../icons/right-arrow";
 
 const quizData = [
   {
@@ -18,6 +18,8 @@ const quizData = [
   },
   // (ใส่คำถามอื่นๆ ที่ยากในนี้)
 ];
+
+const symbols = ["▲", "◆", "●", "■"];
 
 export default function Quiz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -112,7 +114,7 @@ export default function Quiz() {
         />
       </div>
       <div className="grid grid-cols-2 gap-4 w-full">
-        {options.map((option) => (
+        {options.map((option, index) => (
           <button
             key={option}
             onClick={() => handleAnswerClick(option)}
@@ -124,7 +126,7 @@ export default function Quiz() {
                 : "bg-blue hover:bg-darkblue"
             }`}
           >
-            {option}
+            {symbols[index]}&nbsp;&nbsp;{option}
           </button>
         ))}
       </div>
