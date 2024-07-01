@@ -1,7 +1,17 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import Button from "./Button";
 // import LeftArrowIcon from "../icons/left-arrow";
 // import RightArrowIcon from "../icons/right-arrow";
+import {
+  CheckTrue,
+  CheckFalse,
+  Square,
+  Circle,
+  Dimond,
+  Triangle,
+} from "../icons/kahoot";
 
 const quizData = [
   {
@@ -19,7 +29,7 @@ const quizData = [
   // (ใส่คำถามอื่นๆ ที่ยากในนี้)
 ];
 
-const symbols = ["▲", "◆", "●", "■"];
+const icons = [<Triangle />, <Dimond />, <Circle />, <Square />];
 const buttonColors = [
   "bg-darkred",
   "bg-darkblue",
@@ -130,15 +140,28 @@ export default function Quiz() {
           <button
             key={option}
             onClick={() => handleAnswerClick(option)}
-            className={`px-8 py-8 text-white text-font-title text-start ${
+            className={`px-10 py-10 text-white text-font-title text-start ${
               showAnswer
                 ? option === quizData[currentQuestionIndex].answer
-                  ? "bg-green"
-                  : "bg-red"
+                  ? "bg-darkgreen"
+                  : selectedAnswer === option
+                  ? "bg-darkred"
+                  : "bg-red opacity-85"
                 : `${buttonColors[index]} ${hoverColors[index]}`
-            }`}
+            } flex justify-between items-center`}
           >
-            {symbols[index]}&nbsp;&nbsp;{option}
+            <div className="flex items-center">
+              {icons[index]}&nbsp;&nbsp;{option}
+            </div>
+            {showAnswer && (
+              <div className="ml-2">
+                {option === quizData[currentQuestionIndex].answer ? (
+                  <CheckTrue />
+                ) : (
+                  <CheckFalse />
+                )}
+              </div>
+            )}
           </button>
         ))}
       </div>
