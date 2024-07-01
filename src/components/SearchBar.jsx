@@ -1,57 +1,88 @@
-
 import useAuth from "../hooks/useAuth";
+import useTopic from "../hooks/useTopic";
 import { HeartIconHover } from "../icons/heart";
 import Button from "./Button";
 import Input from "./Input";
+import { useState } from "react";
+import { useEffect } from "react";
 
-const topicMenu = [
-  { id: 0, topicName: "All Topic" },
-  { id: 1, topicName: "Mathematis" },
-  { id: 2, topicName: "Coding" },
-  { id: 3, topicName: "English" },
-  { id: 4, topicName: "Sports" },
-  { id: 5, topicName: "Science" },
-  { id: 6, topicName: "Manga" },
-  { id: 7, topicName: "Movie" },
-  { id: 8, topicName: "Geography" },
-  { id: 9, topicName: "Music" },
-  { id: 10, topicName: "Common" },
-  { id: 11, topicName: "Science" },
-  { id: 12, topicName: "Manga" },
-  { id: 13, topicName: "Movie" },
-  { id: 14, topicName: "Geography" },
-  { id: 15, topicName: "Music" },
-  { id: 16, topicName: "Common" },
-];
+export default function SearchBar({
+  buttonText,
+  setSeeAll,
+  setSearch,
+  getTopic,
+  setTitle,
+}) {
+  const { authUser } = useAuth();
+  const { topic } = useTopic();
+  const [input, setInput] = useState("");
 
-export default function SearchBar({ buttonText }) {
-  const { authUser } = useAuth()
+  const handleClickTopic = (id, name) => {
+    getTopic(id);
+    setTitle(name);
+    setSeeAll(false);
+    setSearch("");
+  };
+
+  useEffect(() => {
+    const resultSearch = setTimeout(() => {
+      setSearch(input);
+    }, 1000);
+    return () => {
+      clearTimeout(resultSearch);
+    };
+  }, [input]);
+
   return (
     <div className="flex flex-col h-[auto] gap-8 bg-white p-8 rounded-lg mb-6 ">
       <div className="flex flex-col gap-4 border-b border-gray-300 pb-4">
-        {authUser &&
+        {authUser && (
           <Button bg={`black`} width={`full`}>
             {buttonText}
           </Button>
-        }
-        <Input placeholder={"Search"} />
+        )}
+        <Input
+          placeholder={"Search"}
+          onChange={(e) => {
+            setInput(e.target.value);
+          }}
+          value={input}
+        />
 
-        {authUser &&
+        {authUser && (
           <Button bg={`red`} width={`full`}>
             <div className="flex justify-center gap-2">
               <HeartIconHover />
               <h1>My Favorite</h1>
             </div>
           </Button>
-        }
+        )}
       </div>
       <div className="flex flex-col gap-2 max-h-[80vh] overflow-auto">
         <h1 className="sticky top-0 w-full text-font-title bg-white">Topics</h1>
-        {topicMenu.map((topic) => (
-          <Button key={topic.id} bg={`gray`}>
+        <Button onClick={() => (setSeeAll(true), setTitle("All Topic"))}>
+          <div className="flex ">
+            <img
+              src="../src/assets/icon-hh.png"
+              alt="logo"
+              className="w-8 mr-6"
+            />
+            All Topic
+          </div>
+        </Button>
+        {topic?.map((el) => (
+          <Button
+            key={el?.id}
+            bg={`gray`}
+            onClick={() => handleClickTopic(el?.id, el?.topicName)}
+          >
             <div className="flex ">
-              <img src="../src/assets/icon-hh.png" alt="logo" className="w-8 mr-6" />
-              {topic?.topicName}
+              <img
+                src="../src/assets/icon-hh.png"
+                alt="logo"
+                className="w-8 mr-6"
+              />
+              {el?.topicName}
             </div>
           </Button>
         ))}

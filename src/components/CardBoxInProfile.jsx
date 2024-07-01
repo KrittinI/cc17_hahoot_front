@@ -1,13 +1,17 @@
 import DeleteIcon from "../icons/delete";
 import EditIcon from "../icons/edit";
 import PreviewIcon from "../icons/preview";
+import { useNavigate } from "react-router-dom";
 
 export default function CardBoxInProfile({
   image,
   width = 20,
   onClick,
   title,
+  id,
+  name,
 }) {
+  const navigate = useNavigate();
   return (
     <div
       className={`bg-white flex flex-col justify-center shadow-xl rounded-lg w-[${width}%]`}
@@ -24,11 +28,11 @@ export default function CardBoxInProfile({
           <div
             role="button"
             className="flex justify-center items-center w-7 h-7 shadow bg-white rounded-md hover:bg-grey"
-            onClick={onClick}
+            onClick={() => navigate(`/${name}/${id}`)}
           >
             <PreviewIcon />
           </div>
-          
+
           {/* useAuth  */}
           <div
             role="button"

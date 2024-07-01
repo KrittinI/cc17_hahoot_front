@@ -1,100 +1,45 @@
 import CardBoxInProfile from "../../components/CardBoxInProfile";
 import image from "../../assets/c4.jpeg";
 import CardContainer from "./CardContainer";
+import useQuestion from "../../hooks/useQuestion";
+import { useState } from "react";
+import { useEffect } from "react";
 
-const eventData = [
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ? 1 + 1 เท่ากับเท่าไหร่ ? ",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่rrrrrrrrrr ?",
-    image: "src/assets/hh-hero.png",
-  },
-];
+export default function QuizForm({ seeAll, search, title }) {
+  const { question, quizTopic } = useQuestion();
+  const [showQuestion, setShowQuestion] = useState([]);
 
-export default function QuizForm() {
+  useEffect(() => {
+    if (seeAll) {
+      if (search) {
+        setShowQuestion(
+          question?.filter((el) => el.question.toLowerCase().includes(search))
+        );
+      } else {
+        setShowQuestion(question);
+      }
+    } else {
+      if (search) {
+        setShowQuestion(
+          quizTopic?.filter((el) => el.question.toLowerCase().includes(search))
+        );
+      } else {
+        setShowQuestion(quizTopic);
+      }
+    }
+  }, [seeAll, question, quizTopic, search]);
+
   return (
     <div className="flex flex-col mb-7">
-      <CardContainer title="All Quiz">
+      <CardContainer title={title}>
         <div className="flex flex-wrap justify-center h-auto gap-10 pt-4 mb-6">
-          {eventData.map((eventData, index) => (
+          {showQuestion?.map((el, index) => (
             <CardBoxInProfile
               key={index}
-              title={eventData.title}
-              image={image}
+              title={el?.question}
+              image={el?.questionPicture || image}
+              id={el?.id}
+              name="questions"
             />
           ))}
         </div>

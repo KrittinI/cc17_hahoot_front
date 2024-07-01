@@ -10,28 +10,13 @@ import AllQuizPage from "../pages/AllQuizPage";
 import AllEventPage from "../pages/AllEventPage";
 import PlayPage from "../pages/PlayPage";
 import PinCodePage from "../pages/PinCodePage";
+import RedirectLogin from "../features/authentication/components/RedirecLogin";
+import ProtectRoute from "../features/authentication/components/ProtectRoute";
+import AdminRoute from "../features/authentication/components/AdminRoute";
+import QuestionPage from "../pages/QuestionPage";
+import EventPage from "../pages/EventPage";
 
 const router = createBrowserRouter([
-  // user
-  {
-    path: "/",
-    element: (
-      <>
-        <MainContainer />
-      </>
-    ),
-    children: [
-      {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/users/:userId",
-        element: <ProfilePage />,
-      },
-    ],
-  },
-
   // visitor + User
   {
     path: "/",
@@ -48,7 +33,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <LoginPage />,
+        element: (
+          <RedirectLogin>
+            <LoginPage />
+          </RedirectLogin>
+        ),
       },
       {
         path: "/play/:eventId",
@@ -64,16 +53,48 @@ const router = createBrowserRouter([
       },
       {
         path: "/questions",
-        element: <AllQuizPage />,
+        element: (
+          <ProtectRoute>
+            <AllQuizPage />,
+          </ProtectRoute>
+        ),
+      },
+      {
+        path: "/questions/:questionId",
+        element: (
+          <ProtectRoute>
+            <QuestionPage />,
+          </ProtectRoute>
+        ),
       },
       {
         path: "/events",
-        element: <AllEventPage />,
+        element: (
+          <ProtectRoute>
+            <AllEventPage />,
+          </ProtectRoute>
+        ),
+      },
+      {
+        path: "/events/:eventId",
+        element: (
+          <ProtectRoute>
+            <EventPage />,
+          </ProtectRoute>
+        ),
       },
       {
         path: "/pincode",
-        element: <PinCodePage />
-      }
+        element: <PinCodePage />,
+      },
+      {
+        path: "/users/:userId",
+        element: (
+          <ProtectRoute>
+            <ProfilePage />,
+          </ProtectRoute>
+        ),
+      },
     ],
   },
 
@@ -81,9 +102,9 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <>
+      <AdminRoute>
         <MainContainer />
-      </>
+      </AdminRoute>
     ),
     children: [{ path: "/admin", element: <h1>admin</h1> }],
   },
@@ -91,5 +112,3 @@ const router = createBrowserRouter([
 export default function Router() {
   return <RouterProvider router={router} />;
 }
-
-
