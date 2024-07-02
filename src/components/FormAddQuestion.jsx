@@ -2,9 +2,9 @@ import Select from "../components/Select";
 import Input from "./Input";
 import { useState } from "react";
 import { useRef } from "react";
-import { useEffect } from "react";
 import questionApi from "../api/question";
 import useTopic from "../hooks/useTopic";
+import Button from "./Button";
 const arr = [];
 
 const initialError = {
@@ -35,16 +35,7 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
 
   const [file, setFile] = useState(null);
   const [error, setError] = useState(initialError);
-  const [input, setInput] = useState(initialInput);
-
-  useEffect(() => {
-    if (foundQuestion) {
-      setInput(foundQuestion);
-      console.log("changeeeeeeeeeeeeeeee");
-    }
-  }, [foundQuestion]);
-
-  console.log(input.answer);
+  const [input, setInput] = useState(foundQuestion || initialInput);
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -53,6 +44,8 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
 
   const handleClickAnswer = (choice) => {
     setInput((prev) => ({ ...prev, answer: choice }))
+    setError((prev) => ({ ...prev, answer: "" }));
+
   }
 
   const formatQuestion = () => {
@@ -60,7 +53,7 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
 
     if (file) {
       console.log("this is file", file);
-      formData.append("questionPicture", file);
+      formData.append("questionImages", file);
     }
     if (input) {
       console.log("this is input", input);
@@ -88,6 +81,37 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
     return formData;
   };
 
+  const handleClickSave = () => {
+    if (!input.question) {
+      setError((prev) => ({ ...prev, question: "Question is required" }));
+    }
+    if (!input.choice1) {
+      setError((prev) => ({ ...prev, choice1: "choice1 is required" }));
+    }
+    if (!input.choice2) {
+      setError((prev) => ({ ...prev, choice2: "choice2 is required" }));
+    }
+    if (input.answer === "C" && !input.choice3) {
+      setError((prev) => ({ ...prev, choice3: "choice3 is required" }));
+    }
+    if (input.answer === "D" && (!input.choice3 || !input.choice4)) {
+      setError((prev) => ({ ...prev, choice3: "choice3 is required", choice4: "choice4 is required" }));
+    }
+    if (!input.topicId || input.topicId === "0") {
+      setError((prev) => ({ ...prev, topicId: "topic is required" }));
+    }
+    if (!input.answer) {
+      setError((prev) => ({ ...prev, answer: "answer is required" }));
+    }
+    if (!input.answer || !input.choice1 || !input.choice2 || (!input.topicId || input.topicId === "0") || !input.question || (input.answer === "C" && !input.choice3) || input.answer === "D" && (!input.choice3 || !input.choice4)) {
+      return
+    }
+    const formdata = formatQuestion()
+    console.log(formdata['answer']);
+    setQuestions(prev => [...prev, input])
+    onSuccess()
+  }
+
   const handleSubmit = (index) => {
     // console.log(input, "i am input");
 
@@ -100,12 +124,12 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
     if (!input.choice2) {
       setError((prev) => ({ ...prev, choice2: "choice2 is required" }));
     }
-    if (!input.choice3) {
-      setError((prev) => ({ ...prev, choice3: "choice3 is required" }));
-    }
-    if (!input.choice4) {
-      setError((prev) => ({ ...prev, choice4: "choice4 is required" }));
-    }
+    // if (!input.choice3) {
+    //   setError((prev) => ({ ...prev, choice3: "choice3 is required" }));
+    // }
+    // if (!input.choice4) {
+    //   setError((prev) => ({ ...prev, choice4: "choice4 is required" }));
+    // }
     if (!file) {
       setError((prev) => ({ ...prev, questionPicture: "questionPicture is required" }));
       console.log("i am questionPicture", input.questionPicture);
@@ -154,11 +178,12 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
   };
 
   const handleClickCreate = async (indexxx) => {
+    // e.preventDefault()
     try {
       const formData = formatQuestion();
       console.log(...formData, "itsme");
-      const questionCreated = await questionApi.createQuestion(formData);
-      console.log("this is your question", questionCreated);
+      // const questionCreated = await questionApi.createQuestion(formData);
+      // console.log("this is your question", questionCreated);
       const filteredArr = arr.filter((el, index) => index !== indexxx);
       console.log(filteredArr);
       setQuestions(filteredArr);
@@ -169,13 +194,8 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
   // console.log(input.questionPicture, "pictureeee");
 
   return (
-    <form
-      action=""
+    <div
       className="w-[60rem] grid grid-cols-5  p-4 gap-4"
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(foundQuestion?.index);
-      }}
     >
       <div className="col-span-4">
         <Input
@@ -188,13 +208,15 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
           placeholder={`Enter Your Question...`}
         />
       </div>
-      <Select id="topic" className="text-center shadow-md mt-5" onChange={handleChange} name="topicId" error={error.topic} header={`Select Topic`}>
-        {topic?.map((topic) => (
-          <option value={topic.id} key={topic.id} selected={input?.topicId == topic.id}>
-            {topic.topicName}
-          </option>
-        ))}
-      </Select>
+      <div>
+        <Select id="topic" className="text-center shadow-md mt-5" onChange={handleChange} name="topicId" error={error.topicId} header={`Select Topic`}>
+          {topic?.map((topic) => (
+            <option value={topic.id} key={topic.id} >
+              {topic.topicName}
+            </option>
+          ))}
+        </Select>
+      </div>
       <div className="grid col-span-2 bg-orange-300">
         {/* <label htmlFor="question">question</label> */}
         <label htmlFor="questionPicture">insert the picture of this question</label>
@@ -215,8 +237,8 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
           }}
         />
       </div>
-      <div className="flex col-span-3 flex-col gap-4">
-        <div className="flex gap-2">
+      <div className="grid col-span-3 grid-cols-5 gap-4">
+        <div className="col-span-4 gap-2">
           <Input
             type="text"
             name="choice1"
@@ -225,15 +247,21 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
             error={error.choice1}
             placeholder={`Choice A`}
           />
+        </div>
+        <div className="flex flex-col items-center justify-center">
           <span
+            name="answer"
             onClick={() => handleClickAnswer("A")}
             role="button"
-            className="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-xl"
+            className="w-[40px] h-[40px] flex justify-center items-center bg-blue rounded-xl"
           >
             {input.answer === "A" ? "T" : "F"}
           </span>
+          {error.answer ? <small className="text-red">{error.answer}</small> : null}
+
         </div>
-        <div className="flex gap-2 justify-between">
+
+        <div className="col-span-4 gap-2 ">
           <Input
             type="text"
             name="choice2"
@@ -242,52 +270,65 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
             error={error.choice2}
             placeholder={`Choice B`}
           />
+        </div>
+        <div className="flex flex-col items-center justify-center">
           <span
+            name="answer"
             onClick={() => handleClickAnswer("B")}
             role="button"
-            className="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-xl"
+            className="w-[40px] h-[40px] flex justify-center items-center bg-blue rounded-xl"
           >
             {input.answer === "B" ? "T" : "F"}
           </span>
+          {error.answer ? <small className="text-red">{error.answer}</small> : null}
 
         </div>
-        <div className="flex gap-2 justify-between">
+        <div className="col-span-4 gap-2 ">
           <Input
             type="text"
             name="choice3"
             value={input.choice3}
             onChange={handleChange}
             error={error.choice3}
-            placeholder={`Choice C`}
+            placeholder={`Choice C (Optional)`}
           />
+        </div>
+        <div className="flex flex-col items-center justify-center">
           <span
+            name="answer"
             onClick={() => handleClickAnswer("C")}
             role="button"
-            className="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-xl"
+            className="w-[40px] h-[40px] flex justify-center items-center bg-blue rounded-xl"
           >
             {input.answer === "C" ? "T" : "F"}
           </span>
+          {error.answer ? <small className="text-red">{error.answer}</small> : null}
+
         </div>
-        <div className="flex gap-2 justify-between">
+        <div className="col-span-4 gap-2">
           <Input
             type="text"
             name="choice4"
             value={input.choice4}
             onChange={handleChange}
             error={error.choice4}
-            placeholder={`Choice D`}
+            placeholder={`Choice D (Optional)`}
           />
+        </div>
+        <div className="flex flex-col items-center justify-center">
           <span
+            name="answer"
             onClick={() => handleClickAnswer("D")}
             role="button"
-            className="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-xl "
+            className="w-[40px] h-[40px] flex justify-center items-center bg-blue rounded-xl"
           >
             {input.answer === "D" ? "T" : "F"}
           </span>
+          {error.answer ? <small className="text-red">{error.answer}</small> : null}
+
         </div>
       </div>
-      <div className="flex flex-col items-center gap-4">
-      </div>
+
       {/* 
       <Select id="isPublic" className="text-center shadow-md mt-3" onChange={handleChange} name="isPublic" error={error.isPublic}>
         <option value={true} selected={input?.isPublic == 0}>
@@ -297,16 +338,14 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
           private
         </option>
       </Select> */}
-      <button>save</button>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          handleClickCreate(foundQuestion?.index);
-        }}
+      <Button bg={`blue`} onClick={handleClickSave}>save</Button>
+      <Button
+        bg={`black`}
+        onClick={() => handleClickCreate(foundQuestion?.index)}
       >
         create
-      </button>
-    </form>
+      </Button>
+    </div>
   );
 }
 
