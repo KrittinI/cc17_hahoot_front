@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-key */
-import { useState, useEffect } from "react";
 // import Button from "./Button";
+import { useState, useEffect } from "react";
 import Scoreboard from "./Scoreboard";
 import {
   CheckTrue,
