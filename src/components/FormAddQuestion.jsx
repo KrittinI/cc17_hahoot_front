@@ -1,25 +1,40 @@
 import Select from "../components/Select";
 import Input from "./Input";
 import { useState } from "react";
-import useQuestion from "../hooks/useQuestion";
 import { useRef } from "react";
 import { useEffect } from "react";
 import questionApi from "../api/question";
+import useTopic from "../hooks/useTopic";
 const arr = [];
 
-export default function FormAddQuestion({ foundQuestion }) {
+const initialError = {
+  questionPicture: "",
+  question: "",
+  choice1: "",
+  choice2: "",
+  choice3: "",
+  choice4: "",
+  answer: "",
+  isPublic: false
+};
+
+const initialInput = {
+  questionPicture: "",
+  question: "",
+  choice1: "",
+  choice2: "",
+  choice3: "",
+  choice4: "",
+  answer: "",
+  isPublic: false
+};
+
+export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess }) {
+  const { topic } = useTopic()
   const fileEl = useRef();
 
-  const initialError = { questionPicture: "", question: "", choice1: "", choice2: "", choice3: "", choice4: "", answer: "", isPublic: "" };
-
+  const [file, setFile] = useState(null);
   const [error, setError] = useState(initialError);
-
-  const { file, setFile, edit, allTopic, question, setQuestions } = useQuestion();
-
-  console.log("this is all topic", allTopic);
-
-  const initialInput = { questionPicture: "", question: "", choice1: "", choice2: "", choice3: "", choice4: "", answer: "", isPublic: "", topicId: "" };
-
   const [input, setInput] = useState(initialInput);
 
   useEffect(() => {
@@ -29,13 +44,16 @@ export default function FormAddQuestion({ foundQuestion }) {
     }
   }, [foundQuestion]);
 
+  console.log(input.answer);
+
   const handleChange = (e) => {
-    console.log("this is me", e.target.name);
-    console.log(input[e.target.name]);
-    console.log(e.target.value);
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     setError((prev) => ({ ...prev, [e.target.name]: "" }));
   };
+
+  const handleClickAnswer = (choice) => {
+    setInput((prev) => ({ ...prev, answer: choice }))
+  }
 
   const formatQuestion = () => {
     const formData = new FormData();
@@ -114,25 +132,25 @@ export default function FormAddQuestion({ foundQuestion }) {
 
     arr.push({ ...input, questionPicture: file });
 
-    if (edit) {
-      console.log(index, "indexx");
-      console.log(input, "innnnn");
-      const editedData = { ...input, questionPicture: file };
+    // if (edit) {
+    //   console.log(index, "indexx");
+    //   console.log(input, "innnnn");
+    //   const editedData = { ...input, questionPicture: file };
 
-      const editedArr = arr.map((q, idx) => (idx === index ? editedData : q));
-      setQuestions(editedArr);
+    //   const editedArr = arr.map((q, idx) => (idx === index ? editedData : q));
+    //   setQuestions(editedArr);
 
-      console.log(input, "innnnn");
-      console.log(question, "innnnn");
-      // const formData = formatQuestion();
-      // await questionApi.editQuestionById(foundQuestion.id, formData);
-    } else {
-      console.log(edit, "edit");
-      console.log("hahaha");
-      console.log(arr, "arr");
-      setQuestions(arr);
-      console.log("gong");
-    }
+    //   console.log(input, "innnnn");
+    //   // console.log(questions, "innnnn");
+    //   // const formData = formatQuestion();
+    //   // await questionApi.editQuestionById(foundQuestion.id, formData);
+    // } else {
+    //   console.log(edit, "edit");
+    //   console.log("hahaha");
+    //   console.log(arr, "arr");
+    //   setQuestions(arr);
+    //   console.log("gong");
+    // }
   };
 
   const handleClickCreate = async (indexxx) => {
@@ -148,98 +166,147 @@ export default function FormAddQuestion({ foundQuestion }) {
       alert("failed");
     }
   };
-  console.log(input.questionPicture, "pictureeee");
+  // console.log(input.questionPicture, "pictureeee");
 
   return (
-    <>
-      <div>
-        <form
-          action=""
-          className="flex flex-col gap-2"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(foundQuestion?.index);
-          }}
-        >
-          <div className="flex flex-col">
-            {/* <label htmlFor="question">question</label> */}
-            <label htmlFor="questionPicture">insert the picture of this question</label>
-            <input
-              type="file"
-              ref={fileEl}
-              name="questionPicture"
-              id="questionPicture"
-              // value={file}
-              onChange={(e) => {
-                if (e.target.files[0]) {
-                  console.log("hello", e.target.files[0]);
-                  setFile(e.target.files[0]);
-                  // setInput((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
-                  // console.log("helloooo", e.target.files[0].filename);
-                  // console.log(e.target.files);
-                }
-              }}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="question">question</label>
-            <Input type="text" name="question" id="question" value={input.question} onChange={handleChange} error={error.question} />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="choice1">choice A</label>
-            <Input type="text" name="choice1" id="choice1" value={input.choice1} onChange={handleChange} error={error.choice1} />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="choice2">choice B</label>
-            <Input type="text" name="choice2" id="choice2" value={input.choice2} onChange={handleChange} error={error.choice2} />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="choice3">choice C</label>
-            <Input type="text" name="choice3" id="choice3" value={input.choice3} onChange={handleChange} error={error.choice3} />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="choice4">choice D</label>
-            <Input type="text" name="choice4" id="choice4" value={input.choice4} onChange={handleChange} error={error.choice4} />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="answer">Answer</label>
-            <Input type="text" name="answer" id="answer" value={input.answer} onChange={handleChange} error={error.answer} />
-          </div>
-
-          <Select id="isPublic" className="text-center shadow-md mt-3" onChange={handleChange} name="isPublic" error={error.isPublic}>
-            <option value="" disabled selected>
-              กรุณาเลือกสถานะ
-            </option>
-            <option value={0} selected={input?.isPublic == 0}>
-              public
-            </option>
-            <option value={1} selected={input?.isPublic == 1}>
-              private
-            </option>
-          </Select>
-
-          <Select id="topic" className="text-center shadow-md mt-5" onChange={handleChange} name="topicId" error={error.topic}>
-            <option value="" disabled selected>
-              กรุณาเลือกหัวข้อคําถาม
-            </option>
-            {allTopic?.map((topic) => (
-              <option value={topic.id} key={topic.id} selected={input?.topicId == topic.id}>
-                {topic.topicName}
-              </option>
-            ))}
-          </Select>
-          {edit ? <button>edit</button> : <button>save</button>}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              handleClickCreate(foundQuestion?.index);
-            }}
-          >
-            create
-          </button>
-        </form>
+    <form
+      action=""
+      className="w-[60rem] grid grid-cols-5  p-4 gap-4"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(foundQuestion?.index);
+      }}
+    >
+      <div className="col-span-4">
+        <Input
+          type="text"
+          name="question"
+          id="question"
+          value={input.question}
+          onChange={handleChange}
+          error={error.question}
+          placeholder={`Enter Your Question...`}
+        />
       </div>
-    </>
+      <Select id="topic" className="text-center shadow-md mt-5" onChange={handleChange} name="topicId" error={error.topic} header={`Select Topic`}>
+        {topic?.map((topic) => (
+          <option value={topic.id} key={topic.id} selected={input?.topicId == topic.id}>
+            {topic.topicName}
+          </option>
+        ))}
+      </Select>
+      <div className="grid col-span-2 bg-orange-300">
+        {/* <label htmlFor="question">question</label> */}
+        <label htmlFor="questionPicture">insert the picture of this question</label>
+        <input
+          type="file"
+          ref={fileEl}
+          name="questionPicture"
+          id="questionPicture"
+          // value={file}
+          onChange={(e) => {
+            if (e.target.files[0]) {
+              console.log("hello", e.target.files[0]);
+              setFile(e.target.files[0]);
+              // setInput((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
+              // console.log("helloooo", e.target.files[0].filename);
+              // console.log(e.target.files);
+            }
+          }}
+        />
+      </div>
+      <div className="flex col-span-3 flex-col gap-4">
+        <div className="flex gap-2">
+          <Input
+            type="text"
+            name="choice1"
+            value={input.choice1}
+            onChange={handleChange}
+            error={error.choice1}
+            placeholder={`Choice A`}
+          />
+          <span
+            onClick={() => handleClickAnswer("A")}
+            role="button"
+            className="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-xl"
+          >
+            {input.answer === "A" ? "T" : "F"}
+          </span>
+        </div>
+        <div className="flex gap-2 justify-between">
+          <Input
+            type="text"
+            name="choice2"
+            value={input.choice2}
+            onChange={handleChange}
+            error={error.choice2}
+            placeholder={`Choice B`}
+          />
+          <span
+            onClick={() => handleClickAnswer("B")}
+            role="button"
+            className="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-xl"
+          >
+            {input.answer === "B" ? "T" : "F"}
+          </span>
+
+        </div>
+        <div className="flex gap-2 justify-between">
+          <Input
+            type="text"
+            name="choice3"
+            value={input.choice3}
+            onChange={handleChange}
+            error={error.choice3}
+            placeholder={`Choice C`}
+          />
+          <span
+            onClick={() => handleClickAnswer("C")}
+            role="button"
+            className="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-xl"
+          >
+            {input.answer === "C" ? "T" : "F"}
+          </span>
+        </div>
+        <div className="flex gap-2 justify-between">
+          <Input
+            type="text"
+            name="choice4"
+            value={input.choice4}
+            onChange={handleChange}
+            error={error.choice4}
+            placeholder={`Choice D`}
+          />
+          <span
+            onClick={() => handleClickAnswer("D")}
+            role="button"
+            className="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-xl "
+          >
+            {input.answer === "D" ? "T" : "F"}
+          </span>
+        </div>
+      </div>
+      <div className="flex flex-col items-center gap-4">
+      </div>
+      {/* 
+      <Select id="isPublic" className="text-center shadow-md mt-3" onChange={handleChange} name="isPublic" error={error.isPublic}>
+        <option value={true} selected={input?.isPublic == 0}>
+          public
+        </option>
+        <option value={false} selected={input?.isPublic == 1}>
+          private
+        </option>
+      </Select> */}
+      <button>save</button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          handleClickCreate(foundQuestion?.index);
+        }}
+      >
+        create
+      </button>
+    </form>
   );
 }
 

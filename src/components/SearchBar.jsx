@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useTopic from "../hooks/useTopic";
 import { HeartIconHover } from "../icons/heart";
@@ -12,10 +13,12 @@ export default function SearchBar({
   setSearch,
   getTopic,
   setTitle,
+  create
 }) {
   const { authUser } = useAuth();
   const { topic } = useTopic();
   const [input, setInput] = useState("");
+  const navigate = useNavigate()
 
   const handleClickTopic = (id, name) => {
     getTopic(id);
@@ -37,7 +40,7 @@ export default function SearchBar({
     <div className="flex flex-col h-[auto] gap-8 bg-white p-8 rounded-lg mb-6 ">
       <div className="flex flex-col gap-4 border-b border-gray-300 pb-4">
         {authUser && (
-          <Button bg={`black`} width={`full`}>
+          <Button bg={`black`} width={`full`} onClick={() => navigate(create)}>
             {buttonText}
           </Button>
         )}

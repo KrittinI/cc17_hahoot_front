@@ -1,7 +1,6 @@
 import Option from "./Option";
 
-export default function Select({ children, onChange, name, error, id, value }) {
-  console.log("iamerrorselect   ", error);
+export default function Select({ children, onChange, name, error, id, value, header }) {
   return (
     <select
       id={id}
@@ -11,7 +10,7 @@ export default function Select({ children, onChange, name, error, id, value }) {
       value={value}
       onChange={onChange}
     >
-      <Option selected hidden={true} />
+      <Option selected hidden={true} name={header} />
       {children}
     </select>
   );

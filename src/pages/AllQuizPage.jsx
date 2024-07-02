@@ -18,6 +18,7 @@ export default function AllQuizPage() {
           setSearch={setSearch}
           getTopic={getQuestionByTopicId}
           setTitle={setTitle}
+          create={`/questions/create-question`}
         />
       </SplitScreen>
     </div>

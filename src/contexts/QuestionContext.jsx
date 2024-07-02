@@ -7,17 +7,14 @@ import useAuth from "../hooks/useAuth";
 export const QuestionContext = createContext();
 
 export default function QuestionContextProvider({ children }) {
+
+  const { authUser } = useAuth();
+
   const [question, setQuestion] = useState([]);
   const [quizTopic, setQuizTopic] = useState([]);
   const [seeAll, setSeeAll] = useState(true);
   const [search, setSearch] = useState("");
   const [showQuestion, setShowQuestion] = useState([]);
-  const { authUser } = useAuth();
-  const [open, setOpen] = useState(false);
-  const [questions, setQuestions] = useState([]);
-  const [allTopic, setAllTopic] = useState([]);
-  const [file, setFile] = useState(null);
-  const [edit, setEdit] = useState(false);
 
   const getAllQuestion = async () => {
     const res = await questionApi.getAllQuestion();
@@ -43,11 +40,11 @@ export default function QuestionContextProvider({ children }) {
   };
 
   const createQuestion = async (body) => {
-    await questionApi.create(body);
+    await questionApi.createQuestion(body);
   };
 
   const editQuestion = async (id, body) => {
-    await questionApi.edit(id, body);
+    await questionApi.editQuestionById(id, body);
   };
 
   const isSeeAll = () => {
@@ -91,23 +88,8 @@ export default function QuestionContextProvider({ children }) {
     getFavQuestion,
     createQuestion,
     editQuestion,
-    open, setOpen, questions, setQuestions, file, setFile, edit, setEdit, allTopic
   };
 
-
-  const getAllTopic = async () => {
-    try {
-      const fetchTopic = await topicApi.getAllTopic();
-      console.log(fetchTopic.data.topics, "i am ironman");
-      setAllTopic(fetchTopic.data.topics);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getAllTopic();
-  }, []);
 
   return (
     <QuestionContext.Provider value={value}>
@@ -115,31 +97,3 @@ export default function QuestionContextProvider({ children }) {
     </QuestionContext.Provider>
   );
 }
-
-import topicApi from "../api/topic";
-
-
-
-// const mockQuestion = [
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-//   { image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbosTKI2WfU58KMf8Y0hskeEhEWxBBDYnsjw&s", question: "where is my name" },
-// ];

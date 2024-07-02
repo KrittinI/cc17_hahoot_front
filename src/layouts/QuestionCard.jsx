@@ -43,8 +43,8 @@ export default function QuestionCard({ question, image, index, creatorId, id }) 
 
   return (
     <>
-      <div className="bg-white h-80 w-72 overflow-scroll relative rounded-xl shadow-lg">
-        <div className="w-full h-52">{image && <img className="object-cover aspect-[16/9] " src={URL.createObjectURL(image)} alt="รูป" />}</div>
+      <div className="bg-white h-64 w-full overflow-scroll relative rounded-xl shadow-lg">
+        <div className="w-full h-64">{image && <img className="object-cover aspect-[16/9] " src={URL.createObjectURL(image)} alt="รูป" />}</div>
         <div className="absolute top-2 right-2 bg-white rounded-full p-1">
           <Fav />
         </div>
