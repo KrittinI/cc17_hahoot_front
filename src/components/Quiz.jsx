@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
+//BeforeAnimation
 import { useState, useEffect } from "react";
 import Button from "./Button";
 import Scoreboard from "./Scoreboard";
