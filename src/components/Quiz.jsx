@@ -64,16 +64,17 @@ export default function Quiz() {
     setShowAnswer(true);
 
     if (option === quizData[currentQuestionIndex].answer) {
-      setScore(score + 1);
+      setScore(score + timeLeft * 80);
     }
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < quizData.length - 1) {
+    if (showScoreboard && currentQuestionIndex < quizData.length - 1) {
       setSelectedAnswer(null);
       setShowAnswer(false);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setTimeLeft(20);
+      setShowScoreboard(false);
     }
   };
 
@@ -88,7 +89,9 @@ export default function Quiz() {
 
   const handleShowScoreboard = () => {
     setShowScoreboard(true);
-    alert("Show ScoreBoard");
+    //alert("Show ScoreBoard");
+  };
+  if (showScoreboard) {
     return (
       <Scoreboard
         score={score}
@@ -98,18 +101,18 @@ export default function Quiz() {
         handleNextQuestion={handleNextQuestion}
       />
     );
-  };
+  }
 
   const { question, options, answer, image } = quizData[currentQuestionIndex];
 
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12 transition-all duration-500 ease-in-out transform">
       <div className="bg-white shadow-lg rounded-lg p-12 w-full transition-transform duration-500 ease-in-out transform hover:scale-105">
-        <h2 className="text-font-title text-center">{question}</h2>
+        <h2 className="text-font-title text-center animate-none">{question}</h2>
       </div>
-      <div className="flex flex-row justify-between items-center my-4 gap-60">
+      <div className="flex flex-row justify-between items-center my-4 gap-60 animate-fade-in">
         <span
-          className="flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32 animate-pulse"
+          className="flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32"
           style={{ minWidth: "40px" }}
         >
           {timeLeft}
@@ -122,7 +125,7 @@ export default function Quiz() {
         <button
           className={`rounded-lg w-32 h-12 shadow-lg text-lg font-bold ${
             selectedAnswer || showAnswer
-              ? "bg-white text-black"
+              ? "bg-white text-black animate-bounce"
               : "bg-grey text-white"
           } transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl`}
           onClick={handleShowScoreboard}
@@ -136,7 +139,7 @@ export default function Quiz() {
           <button
             key={option}
             onClick={() => handleAnswerClick(option)}
-            className={`px-10 py-10 text-white text-font-title text-start ${
+            className={`px-10 py-10 text-white text-font-title text-start animate-pop ${
               showAnswer
                 ? option === quizData[currentQuestionIndex].answer
                   ? "bg-darkgreen"

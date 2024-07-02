@@ -13,9 +13,10 @@ export default function Scoreboard({
 }) {
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
-      <div className="grid grid-1 gap-8 text-center w-[400px] h-[300px] bg-white rounded-lg p-6 shadow-lg animate-pop">
+      <div className="grid grid-1 gap-8 text-center w-[400px] h-[320px] bg-white rounded-lg p-6 shadow-lg animate-pop">
         <h1 className="text-font-title">Your score</h1>
         <h1 className="text-font-header text-blue">{score}</h1>
+        <p>points</p>
         <div className="w-full grid grid-col gap-2 justify-center items-center">
           {isLastQuestion ? (
             <>
