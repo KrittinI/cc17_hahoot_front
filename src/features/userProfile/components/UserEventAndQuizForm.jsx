@@ -15,7 +15,7 @@ export default function UserEventAndQuizForm() {
       <Cardcontainer
         title="My Event"
         showSeeAll
-        onClick={() => navigate(`/events/${profile?.id}`)}
+        onClick={() => navigate(`/events/users/${profile?.id}`)}
       >
         <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto pt-4">
           {event?.map((el, index) => (
@@ -31,7 +31,7 @@ export default function UserEventAndQuizForm() {
         title="My Quiz"
         hight={30}
         showSeeAll
-        onClick={() => navigate(`/questions/${profile?.id}`)}
+        onClick={() => navigate(`/questions/users/${profile?.id}`)}
       >
         <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto pt-4">
           {question?.map((el, index) => (

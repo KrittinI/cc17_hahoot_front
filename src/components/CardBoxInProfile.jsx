@@ -15,6 +15,7 @@ export default function CardBoxInProfile({
   return (
     <div
       className={`bg-white flex flex-col justify-center shadow-xl rounded-lg w-[${width}%]`}
+      onClick={() => navigate(`/${name}/${id}`)}
     >
       <div className="h-[50%] rounded-t-lg">
         <img className="rounded-t-lg" src={image} alt="Profile" />
