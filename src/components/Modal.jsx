@@ -20,11 +20,7 @@ export default function Modal({ width = 30, title, children, open, onClose }) {
               <div className="fixed inset-0 bg-white opacity-40 z-30"></div>
               <div className="fixed inset-0 z-40" onMouseDown={onClose}>
                 <div className="flex justify-center items-center min-h-screen">
-                  <div
-                    className="bg-white rounded-lg shadow-lg"
-                    style={{ width: `${width}rem` }}
-                    onMouseDown={(e) => e.stopPropagation()}
-                  >
+                  <div className="bg-white rounded-lg shadow-lg" style={{ width: `${width}rem` }} onMouseDown={(e) => e.stopPropagation()}>
                     <div className="flex justify-between items-center p-4">
                       <button className="invisible">&#10005;</button>
                       <h5 className="text-2xl font-semibold">{title}</h5>
@@ -42,5 +38,4 @@ export default function Modal({ width = 30, title, children, open, onClose }) {
         : null}
     </>
   );
-
 }

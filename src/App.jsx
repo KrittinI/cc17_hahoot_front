@@ -1,11 +1,14 @@
 import AuthContextProvider from "./contexts/AuthContext";
+import QuestionContextProvider from "./contexts/QuestionContext";
 import Router from "./routes";
 
 function App() {
   return (
     <>
       <AuthContextProvider>
-        <Router />
+        <QuestionContextProvider>
+          <Router />
+        </QuestionContextProvider>
       </AuthContextProvider>
     </>
   );
