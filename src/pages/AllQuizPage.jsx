@@ -1,17 +1,24 @@
+import { useState } from "react";
 import SearchBar from "../components/SearchBar";
+import QuizForm from "../features/form/QuizForm";
 import SplitScreen from "../layouts/SplitScreen";
-import { useNavigate } from "react-router-dom";
+import useQuestion from "../hooks/useQuestion";
 
 export default function AllQuizPage() {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/quiz-list");
-  };
+  const [title, setTitle] = useState("All Quiz");
+  const { getQuestionByTopicId, setSeeAll, setSearch } = useQuestion();
+
   return (
-    <div className="w-[80%] mx-auto">
+    <div className="w-[68%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={70}>
-        <div>Left</div>
-        <SearchBar buttonText={`Create NewQuestion`} onClick={handleClick} />
+        <QuizForm title={title} />
+        <SearchBar
+          buttonText={`Create New Question`}
+          setSeeAll={setSeeAll}
+          setSearch={setSearch}
+          getTopic={getQuestionByTopicId}
+          setTitle={setTitle}
+        />
       </SplitScreen>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
-// import LeftArrowIcon from "../icons/left-arrow";
-// import RightArrowIcon from "../icons/right-arrow";
+import LeftArrowIcon from "../icons/left-arrow";
+import RightArrowIcon from "../icons/right-arrow";
 
 const quizData = [
   {
@@ -12,6 +12,18 @@ const quizData = [
   },
   {
     question: "A B C D E F ?",
+    options: ["G", "H", "I", "J"],
+    answer: "G",
+    image: "src/assets/c4.jpeg",
+  },
+  {
+    question: "1 + 2 เท่ากับเท่าไหร่ ?",
+    options: ["1", "2", "3", "4"],
+    answer: "2",
+    image: "src/assets/hh-hero.png",
+  },
+  {
+    question: "1 + 3 เท่ากับเท่าไหร่ ?",
     options: ["G", "H", "I", "J"],
     answer: "G",
     image: "src/assets/c4.jpeg",
@@ -54,6 +66,17 @@ export default function QuizCard() {
     setTimeLeft(20);
   };
 
+  const handlePrevioQuestion = () => {
+    setSelectedAnswer(null);
+    setShowAnswer(false);
+    if (currentQuestionIndex !== 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    } else {
+      setCurrentQuestionIndex(quizData.length - 1)
+    }
+    setTimeLeft(20);
+  };
+
   if (currentQuestionIndex >= quizData.length) {
     return (
       // Result your score
@@ -68,7 +91,7 @@ export default function QuizCard() {
             <Button
               bg="black"
               width="60"
-              // onClick={() => window.location.reload()}
+            // onClick={() => window.location.reload()}
             >
               Send to your E-mail
             </Button>
@@ -108,53 +131,48 @@ export default function QuizCard() {
 
         {/* Quiz Cover */}
         <div className="flex justify-around items-center my-4">
-          {/* <div className="flex justify-center items-center bg-yellow w-[80px] h-[80px] rounded-full invisiable">
+          <div
+            className="flex justify-center items-center bg-yellow w-[80px] h-[80px] rounded-full invisiable"
+            onClick={handlePrevioQuestion}
+          >
             <LeftArrowIcon />
-          </div> */}
+          </div>
           <img className=" w-[420px] h-[250px] rounded-lg" src={image} />
-          {/* {showAnswer && (
-            <div
-              className="flex justify-center items-center bg-red w-[80px] h-[80px] rounded-full invisiable"
-              onClick={handleNextQuestion}
-            >
-              <RightArrowIcon />
-            </div>
-          )} */}
+          <div
+            className="flex justify-center items-center bg-red w-[80px] h-[80px] rounded-full invisiable"
+            onClick={handleNextQuestion}
+          >
+            <RightArrowIcon />
+          </div>
         </div>
         {/* Quiz Cover */}
 
         {/* Answer Option */}
         <div className="grid grid-cols-2 gap-4 w-full">
           {options.map((option) => (
-            <>
-              <button
-                key={option}
-                onClick={() => handleAnswerClick(option)}
-                className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${
-                  option === selectedAnswer
-                    ? option === answer
-                      ? "bg-green"
-                      : "bg-red"
-                    : "bg-blue hover:bg-darkblue"
+            <button
+              key={option}
+              onClick={() => handleAnswerClick(option)}
+              className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${option === selectedAnswer
+                ? option === answer
+                  ? "bg-green"
+                  : "bg-red"
+                : "bg-blue hover:bg-darkblue"
                 }`}
-              >
-                {option}
-              </button>
-            </>
+            >
+              {option}
+            </button>
           ))}
-
-          {/* {showAnswer && (
-            <div className="w=full flex justify-end items-center">
-              <Button onClick={handleNextQuestion} bg="black" width="60">
-                Next Quiz
-              </Button>
-            </div>
-          )} */}
         </div>
         {/* Answer Option */}
         {showAnswer && selectedAnswer !== answer && (
           <div className="mt-4 p-4 text-red text-2xl bg-white rounded-lg w-full text-center">
             เป็นคำตอบที่ผิด! คำตอบที่ถูกต้องคือ: {answer}
+          </div>
+        )}
+        {showAnswer && selectedAnswer === answer && (
+          <div className="mt-4 p-4 text-green text-2xl bg-white rounded-lg w-full text-center">
+            {answer} : เป็นคำตอบที่ถูกต้อง
           </div>
         )}
       </div>

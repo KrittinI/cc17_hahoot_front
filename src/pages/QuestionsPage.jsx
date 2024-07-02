@@ -3,8 +3,8 @@ import AddQuestionCard from "../layouts/AddQuestionCard";
 import QuestionCard from "../layouts/QuestionCard";
 
 export default function QuestionsPage() {
-  const { question } = useQuestion();
-  console.log(question, "thisss");
+  const { questions } = useQuestion();
+  console.log(questions, "thisss");
   // console.log(question?.questionPicture, "i am question");
 
   return (
@@ -15,8 +15,8 @@ export default function QuestionsPage() {
         </div>
         <div className="grid grid-cols-4  gap-4">
           <AddQuestionCard />
-          {question?.map((ques, index) => {
-            return <QuestionCard questions={ques.question} image={ques.questionPicture} key={index} index={index} />;
+          {questions?.map((ques, index) => {
+            return <QuestionCard question={ques.question} image={ques.questionPicture} key={index} index={index} />;
           })}
         </div>
       </div>

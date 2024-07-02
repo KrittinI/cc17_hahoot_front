@@ -11,6 +11,8 @@ export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -20,6 +22,8 @@ export default function AuthContextProvider({ children }) {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsAuthLoading(false);
       }
     };
 
@@ -28,6 +32,10 @@ export default function AuthContextProvider({ children }) {
 
   const login = async (body) => {
     const res = await authApi.login(body);
+    if (res.status !== 200) {
+      return res.data.message;
+    }
+
     setAccessToken(res.data.accessToken);
 
     const resGetAuthUser = await authApi.getAuthUser();
@@ -43,7 +51,8 @@ export default function AuthContextProvider({ children }) {
     login,
     logout,
     authUser,
-    setAuthUser
+    setAuthUser,
+    isAuthLoading,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

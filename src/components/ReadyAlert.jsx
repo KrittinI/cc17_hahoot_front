@@ -6,7 +6,7 @@ export default function ReadyAlert({ onClose }) {
 
   const navigate = useNavigate()
   const onClickConfirm = () => {
-    navigate('#/')
+    navigate('/play/:eventId')
     console.log('Confirm');
   }
 

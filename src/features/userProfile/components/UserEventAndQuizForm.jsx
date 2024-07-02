@@ -1,78 +1,48 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
-import BoxContain from "../../../components/BoxContain";
 import CardBoxInProfile from "../../../components/CardBoxInProfile";
 import image from "../../../assets/c4.jpeg";
-
-const eventData = [
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-];
+import useUser from "../../../hooks/useUser";
+import Cardcontainer from "../../form/CardContainer";
 
 export default function UserEventAndQuizForm() {
+  const { profile, question, event } = useUser();
   const navigate = useNavigate();
+  console.log(event);
 
   return (
     <div className="flex flex-col gap-7 ">
-      <BoxContain title="My Event" onClick={() => navigate("/")}>
+      <Cardcontainer
+        title="My Event"
+        showSeeAll
+        onClick={() => navigate(`/events/users/${profile?.id}`)}
+      >
         <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto pt-4">
-          {eventData.map((eventData, index) => (
+          {event?.map((el, index) => (
             <CardBoxInProfile
               key={index}
-              title={eventData.title}
-              image={image}
+              title={el?.eventName}
+              image={el?.eventImage || image}
             />
           ))}
         </div>
-      </BoxContain>
-      <BoxContain title="My Quiz" hight={30} onClick={() => navigate("/")}>
+      </Cardcontainer>
+      <Cardcontainer
+        title="My Quiz"
+        hight={30}
+        showSeeAll
+        onClick={() => navigate(`/questions/users/${profile?.id}`)}
+      >
         <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto pt-4">
-          {eventData.map((eventData, index) => (
+          {question?.map((el, index) => (
             <CardBoxInProfile
               key={index}
-              title={eventData.title}
-              image={image}
+              title={el?.question}
+              image={el?.questionImage || image}
             />
           ))}
         </div>
-      </BoxContain>
+      </Cardcontainer>
     </div>
   );
 }

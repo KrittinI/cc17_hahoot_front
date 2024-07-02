@@ -8,9 +8,17 @@ import ProfilePage from "../pages/ProfilePage";
 import PlayGamePage from "../pages/PlaygamePage";
 import AllQuizPage from "../pages/AllQuizPage";
 import AllEventPage from "../pages/AllEventPage";
+import PlayPage from "../pages/PlayPage";
+import PinCodePage from "../pages/PinCodePage";
+import RedirectLogin from "../features/authentication/components/RedirecLogin";
+import ProtectRoute from "../features/authentication/components/ProtectRoute";
+import AdminRoute from "../features/authentication/components/AdminRoute";
+import QuestionPage from "../pages/QuestionPage";
+import EventPage from "../pages/EventPage";
 import QuestionsPage from "../pages/QuestionsPage";
 
 const router = createBrowserRouter([
+  // visitor + User
   {
     path: "/",
     element: (
@@ -26,29 +34,86 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <LoginPage />,
+        element: (
+          <RedirectLogin>
+            <LoginPage />
+          </RedirectLogin>
+        ),
       },
       {
-        path: "/users/:userId",
-        element: <ProfilePage />,
+        path: "/play/:eventId",
+        element: <PlayPage />,
       },
       {
-        path: "/playgame",
+        path: "/playgame/:eventId",
         element: <PlayGamePage />,
       },
       {
+        path: "/pincode",
+        element: <PinCodePage />,
+      },
+      {
         path: "/questions",
-        element: <AllQuizPage />,
+        element: (
+          <ProtectRoute>
+            <AllQuizPage />,
+          </ProtectRoute>
+        ),
+      },
+      {
+        path: "/quiz-lists",
+        element: <QuestionsPage />,
+      },
+      {
+        path: "/questions/:questionId",
+        element: (
+          <ProtectRoute>
+            <QuestionPage />,
+          </ProtectRoute>
+        ),
       },
       {
         path: "/events",
-        element: <AllEventPage />,
+        element: (
+          <ProtectRoute>
+            <AllEventPage />,
+          </ProtectRoute>
+        ),
       },
       {
-        path: "/quiz-list",
-        element: <QuestionsPage />,
+        path: "/events/:eventId",
+        element: (
+          <ProtectRoute>
+            <EventPage />,
+          </ProtectRoute>
+        ),
       },
+      {
+        path: "/pincode",
+        element: <PinCodePage />,
+      },
+      {
+        path: "/users/:userId",
+        element: (
+          <ProtectRoute>
+            <ProfilePage />,
+          </ProtectRoute>
+        ),
+      },
+
+
     ],
+  },
+
+  // Admin
+  {
+    path: "/admin",
+    element: (
+      <AdminRoute>
+        <MainContainer />
+      </AdminRoute>
+    ),
+    children: [{ path: "/admin", element: <h1>admin</h1> }],
   },
 ]);
 export default function Router() {

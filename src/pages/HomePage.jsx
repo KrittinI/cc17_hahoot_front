@@ -4,7 +4,7 @@ import ContianerCardQuiz from "../layouts/ContainerCardQuiz";
 import HeroContianer from "../layouts/Hero";
 import Modal from "../components/Modal";
 import { useState } from "react";
-import PlayGameBox from "../components/PlayGameBox";
+// import PlayGameBox from "../components/PlayGameBox";
 import EditProfileForm from "../features/userProfile/components/EditProfileForm";
 
 export default function HomePage() {

@@ -8,8 +8,8 @@ import questionApi from "../api/question";
 import useAuth from "../hooks/useAuth";
 import Fav from "../icons/Fav";
 
-export default function QuestionCard({ questions, image, index, creatorId, id }) {
-  const { file, question, setQuestion, setEdit } = useQuestion();
+export default function QuestionCard({ question, image, index, creatorId, id }) {
+  const { file, questions, setQuestions, setEdit } = useQuestion();
   const { authUser } = useAuth();
   // console.log(image, "imggg");
   // console.log(authUser);
@@ -33,7 +33,7 @@ export default function QuestionCard({ questions, image, index, creatorId, id })
   };
 
   const handleEdit = (id) => {
-    const foundQuestion = question.find((el, index) => index === id);
+    const foundQuestion = questions.find((el, index) => index === id);
     // console.log(foundQuestion);
     setFoundQuestion({ ...foundQuestion, index });
     // setOpen(true);
@@ -50,7 +50,7 @@ export default function QuestionCard({ questions, image, index, creatorId, id })
         </div>
 
         <div className="px-3 py-1">
-          <p>{questions}</p>
+          <p>{question}</p>
         </div>
 
         {/* {authUser?.id === creatorId && ( */}

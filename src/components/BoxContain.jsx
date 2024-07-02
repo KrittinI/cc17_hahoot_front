@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-export default function BoxContain({ title, onClick, children, hight }) {
+export default function BoxContain({ title, onClick, children, hight,  }) {
   return (
     <div
       className={`bg-white flex flex-col p-6 shadow-xl rounded-lg h-[calc(100vh-${hight}rem)]`}
@@ -10,7 +10,7 @@ export default function BoxContain({ title, onClick, children, hight }) {
           {title}
         </div>
         <div>
-          <Button bg="black" width={20} onClick={onClick}>
+          <Button bg="black" width={20} onClick={onClick} >
             See All
           </Button>
         </div>

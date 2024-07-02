@@ -14,7 +14,7 @@ export default function FormAddQuestion({ foundQuestion }) {
 
   const [error, setError] = useState(initialError);
 
-  const { file, setFile, edit, allTopic, question, setQuestion } = useQuestion();
+  const { file, setFile, edit, allTopic, question, setQuestions } = useQuestion();
 
   console.log("this is all topic", allTopic);
 
@@ -120,7 +120,7 @@ export default function FormAddQuestion({ foundQuestion }) {
       const editedData = { ...input, questionPicture: file };
 
       const editedArr = arr.map((q, idx) => (idx === index ? editedData : q));
-      setQuestion(editedArr);
+      setQuestions(editedArr);
 
       console.log(input, "innnnn");
       console.log(question, "innnnn");
@@ -130,7 +130,7 @@ export default function FormAddQuestion({ foundQuestion }) {
       console.log(edit, "edit");
       console.log("hahaha");
       console.log(arr, "arr");
-      setQuestion(arr);
+      setQuestions(arr);
       console.log("gong");
     }
   };
@@ -143,7 +143,7 @@ export default function FormAddQuestion({ foundQuestion }) {
       console.log("this is your question", questionCreated);
       const filteredArr = arr.filter((el, index) => index !== indexxx);
       console.log(filteredArr);
-      setQuestion(filteredArr);
+      setQuestions(filteredArr);
     } catch (err) {
       alert("failed");
     }

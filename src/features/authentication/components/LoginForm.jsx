@@ -6,7 +6,6 @@ import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
-import authApi from "../../../api/auth";
 
 const initialInput = {
   email: "",
@@ -23,6 +22,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
+  const [failLoginGoogle, setFailLoginGoogle] = useState("");
   const clientId =
     "363481062777-mcp0obbajfl7cga0sua955vko0rprrsu.apps.googleusercontent.com";
 
@@ -41,16 +41,18 @@ export default function LoginForm() {
       if (errorMassage) {
         return setInputError(errorMassage);
       }
-      const res = await authApi.login(input);
-      if (res.request.status === 400) {
-        setInputError((pre) => ({
+
+      setInputError({ ...initialInputError });
+
+      const res = await login(input);
+      if (res) {
+        return setInputError((pre) => ({
           ...pre,
-          email: "Email or password incorrect",
-          password: "Email or password incorrect",
+          email: res,
+          password: res,
         }));
       }
-      setInputError({ ...initialInputError });
-      await login(input);
+
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -70,9 +72,12 @@ export default function LoginForm() {
   const onSuccessLoginGoogle = async (res) => {
     const data = {};
     data.email = res.profileObj.email;
-    // data.password = res.profileObj.googleId;
     data.googlePassword = res.profileObj.googleId;
-    await login(data);
+    const res2 = await login(data);
+    if (res2) {
+      return setFailLoginGoogle("Google email is invalid, please sign up");
+    }
+
     navigate("/");
   };
 
@@ -130,7 +135,6 @@ export default function LoginForm() {
             onChange={onChangeInput}
             error={inputError.password}
           />
-
           <Button width="full" bg="black">
             Login
           </Button>
@@ -142,6 +146,9 @@ export default function LoginForm() {
             cookiePolicy={"single_host_origin"}
             className="flex justify-center w-full"
           />
+          {failLoginGoogle ? (
+            <small className="text-red">{failLoginGoogle}</small>
+          ) : null}
           <hr className="shadow-2 w-full" />
           <Button
             width="full"
