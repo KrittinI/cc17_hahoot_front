@@ -146,7 +146,7 @@ export default function Quiz() {
                   ? "bg-darkgreen"
                   : selectedAnswer === option
                   ? "bg-darkred"
-                  : "bg-red opacity-85"
+                  : "bg-red opacity-80"
                 : `${buttonColors[index]} ${hoverColors[index]}`
             } flex justify-between items-center`}
           >
