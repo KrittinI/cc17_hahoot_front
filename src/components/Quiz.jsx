@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import Button from "./Button";
+import Scoreboard from "./Scoreboard";
 import {
   CheckTrue,
   CheckFalse,
@@ -47,6 +48,7 @@ export default function Quiz() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(20);
+  const [showScoreboard, setShowScoreboard] = useState(false);
 
   useEffect(() => {
     if (timeLeft > 0 && !showAnswer) {
@@ -64,27 +66,19 @@ export default function Quiz() {
     setShowAnswer(true);
 
     if (option === quizData[currentQuestionIndex].answer) {
-      setScore(score + 1);
+      setScore(score + timeLeft * 75);
     }
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < quizData.length - 1) {
-      setSelectedAnswer(null);
-      setShowAnswer(false);
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setTimeLeft(20);
-    } else {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  };
+    setShowScoreboard(true);
 
-  const handlePreviousQuestion = () => {
-    if (currentQuestionIndex > 0) {
+    if (showScoreboard && currentQuestionIndex < quizData.length - 1) {
       setSelectedAnswer(null);
       setShowAnswer(false);
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
       setTimeLeft(20);
+      setShowScoreboard(false);
     }
   };
 
@@ -94,31 +88,22 @@ export default function Quiz() {
     setShowAnswer(false);
     setScore(0);
     setTimeLeft(20);
+    setShowScoreboard(false);
   };
 
-  console.log("Current Question Index:", currentQuestionIndex);
-  console.log("Quiz Data Length:", quizData.length);
+  const { question, options, answer, image } = quizData[currentQuestionIndex];
 
-  if (currentQuestionIndex >= quizData.length) {
+  if (showScoreboard) {
     return (
-      <div className="flex items-center justify-center h-[calc(100vh-12rem)]">
-        <div className="grid grid-1 gap-8 text-center w-[400px] h-[266px] bg-white rounded-lg p-6">
-          <h1 className="text-font-title">Your score</h1>
-          <h1 className="text-font-header text-blue">{score}</h1>
-          <div className="w-full grid grid-col gap-2 justify-center items-center">
-            <Button bg="black" width="60">
-              Send to your E-mail
-            </Button>
-            <Button bg="blue" width="60" onClick={resetQuiz}>
-              Play again
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Scoreboard
+        score={score}
+        totalQuestions={quizData.length}
+        resetQuiz={resetQuiz}
+        isLastQuestion={currentQuestionIndex >= quizData.length - 1}
+        handleNextQuestion={handleNextQuestion}
+      />
     );
   }
-
-  const { question, options, answer, image } = quizData[currentQuestionIndex];
 
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12">
