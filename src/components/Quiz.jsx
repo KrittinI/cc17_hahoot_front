@@ -133,14 +133,23 @@ export default function Quiz() {
         >
           {timeLeft}
         </span>
+
         <img
           className="w-[420px] h-[250px] rounded-lg"
           src={image}
           alt="Quiz Image"
         />
-        <Button bg="black" width="20" onClick={handleNextQuestion}>
+        <button
+          className={`rounded-lg w-24 h-12 shadow-lg text-xl ${
+            selectedAnswer || showAnswer
+              ? "bg-white text-black"
+              : "bg-grey text-white"
+          }`}
+          onClick={handleNextQuestion}
+          disabled={!selectedAnswer && !showAnswer}
+        >
           Next
-        </Button>
+        </button>
       </div>
       <div className="grid grid-cols-2 gap-2 w-full">
         {options.map((option, index) => (
