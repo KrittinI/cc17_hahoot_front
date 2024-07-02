@@ -1,8 +1,7 @@
-// ### Update `Scoreboard.jsx`
-// Add animations to the Scoreboard component.
-// **`Scoreboard.jsx`**
-// ```jsx
+/* eslint-disable no-unused-vars */
 import Button from "./Button";
+import { useEffect } from "react";
+import confetti from "canvas-confetti";
 
 export default function Scoreboard({
   score,
@@ -11,6 +10,16 @@ export default function Scoreboard({
   isLastQuestion,
   handleNextQuestion,
 }) {
+  useEffect(() => {
+    if (isLastQuestion) {
+      // Trigger the confetti explosion
+      confetti({
+        particleCount: 600,
+        spread: 120,
+        origin: { y: 0.6 },
+      });
+    }
+  }, [isLastQuestion]);
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
       <div className="grid grid-1 gap-8 text-center w-[400px] h-[320px] bg-white rounded-lg p-6 shadow-lg animate-pop">

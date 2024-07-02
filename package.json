@@ -13,6 +13,7 @@
     "@headlessui/react": "^2.1.0",
     "@heroicons/react": "^2.1.4",
     "axios": "^1.7.2",
+    "canvas-confetti": "^1.9.3",
     "gapi-script": "^1.2.0",
     "joi": "^17.13.3",
     "react": "^18.2.0",
@@ -34,5 +35,6 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "vite": "^5.2.0"
-  }
+  },
+  "packageManager": "pnpm@9.4.0+sha256.b6fd0bfda555e7e584ad7e56b30c68b01d5a04f9ee93989f4b93ca8473c49c74"
 }
