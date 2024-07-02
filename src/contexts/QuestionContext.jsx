@@ -3,11 +3,15 @@ import authQuestion from "../api/question";
 import { useEffect } from "react";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
+
 export const QuestionContext = createContext();
 
 export default function QuestionContextProvider({ children }) {
   const [question, setQuestion] = useState([]);
   const [quizTopic, setQuizTopic] = useState([]);
+  const [seeAll, setSeeAll] = useState(true);
+  const [search, setSearch] = useState("");
+  const [showQuestion, setShowQuestion] = useState([]);
   const { authUser } = useAuth();
 
   const getAllQuestion = async () => {
@@ -15,10 +19,8 @@ export default function QuestionContextProvider({ children }) {
     setQuestion(res.data.questions);
   };
 
-  const getQuestionByUserId = async (id) => {
-    const res = await authQuestion.getQuestionByUserId(id);
-    return res.data.questions;
-  };
+  const getQuestionByUserId = async (id) =>
+    await authQuestion.getQuestionByUserId(id);
 
   const getQuestionByQuestionId = async (id) => {
     const res = await authQuestion.getQuestionByQuestionId(id);
@@ -43,13 +45,41 @@ export default function QuestionContextProvider({ children }) {
     await authQuestion.edit(id, body);
   };
 
+  const isSeeAll = () => {
+    if (seeAll) {
+      if (search) {
+        setShowQuestion(
+          question?.filter((el) => el.question.toLowerCase().includes(search))
+        );
+      } else {
+        setShowQuestion(question);
+      }
+    } else {
+      if (search) {
+        setShowQuestion(
+          quizTopic?.filter((el) => el.question.toLowerCase().includes(search))
+        );
+      } else {
+        setShowQuestion(quizTopic);
+      }
+    }
+  };
+
   useEffect(() => {
     getAllQuestion();
   }, [authUser]);
 
+  useEffect(() => {
+    isSeeAll();
+  }, [seeAll, question, quizTopic, search]);
+
   const value = {
     question,
     quizTopic,
+    showQuestion,
+    setSearch,
+    setSeeAll,
+    setShowQuestion,
     getQuestionByTopicId,
     getQuestionByUserId,
     getQuestionByQuestionId,

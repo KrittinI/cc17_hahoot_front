@@ -2,34 +2,9 @@ import CardBoxInProfile from "../../components/CardBoxInProfile";
 import CardContainer from "./CardContainer";
 import image from "../../assets/c4.jpeg";
 import useEvent from "../../hooks/useEvent";
-import { useState } from "react";
-import { useEffect } from "react";
 
-export default function EventForm({ seeAll, search, title }) {
-  const { event, eventTopic } = useEvent();
-  const [showEvent, setShowEvent] = useState([]);
-
-  useEffect(() => {
-    if (seeAll) {
-      if (search) {
-        setShowEvent(
-          event?.filter((el) => el.eventName.toLowerCase().includes(search))
-        );
-      } else {
-        setShowEvent(event);
-      }
-    } else {
-      if (search) {
-        setShowEvent(
-          eventTopic?.filter((el) =>
-            el.eventName.toLowerCase().includes(search)
-          )
-        );
-      } else {
-        setShowEvent(eventTopic);
-      }
-    }
-  }, [event, eventTopic, search, seeAll]);
+export default function EventForm({ title }) {
+  const { showEvent } = useEvent();
 
   return (
     <div className="mb-7">

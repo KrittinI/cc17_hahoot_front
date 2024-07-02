@@ -2,32 +2,9 @@ import CardBoxInProfile from "../../components/CardBoxInProfile";
 import image from "../../assets/c4.jpeg";
 import CardContainer from "./CardContainer";
 import useQuestion from "../../hooks/useQuestion";
-import { useState } from "react";
-import { useEffect } from "react";
 
-export default function QuizForm({ seeAll, search, title }) {
-  const { question, quizTopic } = useQuestion();
-  const [showQuestion, setShowQuestion] = useState([]);
-
-  useEffect(() => {
-    if (seeAll) {
-      if (search) {
-        setShowQuestion(
-          question?.filter((el) => el.question.toLowerCase().includes(search))
-        );
-      } else {
-        setShowQuestion(question);
-      }
-    } else {
-      if (search) {
-        setShowQuestion(
-          quizTopic?.filter((el) => el.question.toLowerCase().includes(search))
-        );
-      } else {
-        setShowQuestion(quizTopic);
-      }
-    }
-  }, [seeAll, question, quizTopic, search]);
+export default function QuizForm({ title }) {
+  const { showQuestion } = useQuestion();
 
   return (
     <div className="flex flex-col mb-7">

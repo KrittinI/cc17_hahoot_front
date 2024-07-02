@@ -5,15 +5,13 @@ import SplitScreen from "../layouts/SplitScreen";
 import useQuestion from "../hooks/useQuestion";
 
 export default function AllQuizPage() {
-  const [seeAll, setSeeAll] = useState(true);
-  const [search, setSearch] = useState("");
   const [title, setTitle] = useState("All Quiz");
-  const { getQuestionByTopicId } = useQuestion();
+  const { getQuestionByTopicId, setSeeAll, setSearch } = useQuestion();
 
   return (
     <div className="w-[68%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={70}>
-        <QuizForm seeAll={seeAll} search={search} title={title} />
+        <QuizForm title={title} />
         <SearchBar
           buttonText={`Create New Question`}
           setSeeAll={setSeeAll}
