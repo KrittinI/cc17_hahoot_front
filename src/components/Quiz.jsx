@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-key */
 import { useState, useEffect } from "react";
-import Button from "./Button";
+// import Button from "./Button";
 import Scoreboard from "./Scoreboard";
 import {
   CheckTrue,
@@ -64,7 +66,7 @@ export default function Quiz() {
     setShowAnswer(true);
 
     if (option === quizData[currentQuestionIndex].answer) {
-      setScore(score + timeLeft * 80);
+      setScore(score + timeLeft * 75);
     }
   };
 
@@ -126,7 +128,7 @@ export default function Quiz() {
           className={`rounded-lg w-32 h-12 shadow-lg text-lg font-bold ${
             selectedAnswer || showAnswer
               ? "bg-white text-black animate-bounce"
-              : "bg-grey text-white"
+              : "bg-grey text-white invisible"
           } transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl`}
           onClick={handleShowScoreboard}
           disabled={!selectedAnswer && !showAnswer}
