@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable no-unused-vars */
-//BeforeAnimation
 import { useState, useEffect } from "react";
 import Button from "./Button";
 import Scoreboard from "./Scoreboard";
@@ -67,19 +64,16 @@ export default function Quiz() {
     setShowAnswer(true);
 
     if (option === quizData[currentQuestionIndex].answer) {
-      setScore(score + timeLeft * 75);
+      setScore(score + 1);
     }
   };
 
   const handleNextQuestion = () => {
-    setShowScoreboard(true);
-
-    if (showScoreboard && currentQuestionIndex < quizData.length - 1) {
+    if (currentQuestionIndex < quizData.length - 1) {
       setSelectedAnswer(null);
       setShowAnswer(false);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setTimeLeft(20);
-      setShowScoreboard(false);
     }
   };
 
@@ -92,9 +86,9 @@ export default function Quiz() {
     setShowScoreboard(false);
   };
 
-  const { question, options, answer, image } = quizData[currentQuestionIndex];
-
-  if (showScoreboard) {
+  const handleShowScoreboard = () => {
+    setShowScoreboard(true);
+    alert("Show ScoreBoard");
     return (
       <Scoreboard
         score={score}
@@ -104,22 +98,24 @@ export default function Quiz() {
         handleNextQuestion={handleNextQuestion}
       />
     );
-  }
+  };
+
+  const { question, options, answer, image } = quizData[currentQuestionIndex];
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12">
-      <div className="bg-white shadow-lg rounded-lg p-12 w-full">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12 transition-all duration-500 ease-in-out transform">
+      <div className="bg-white shadow-lg rounded-lg p-12 w-full transition-transform duration-500 ease-in-out transform hover:scale-105">
         <h2 className="text-font-title text-center">{question}</h2>
       </div>
       <div className="flex flex-row justify-between items-center my-4 gap-60">
         <span
-          className="flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32"
+          className="flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32 animate-pulse"
           style={{ minWidth: "40px" }}
         >
           {timeLeft}
         </span>
         <img
-          className="w-[420px] h-[250px] rounded-lg"
+          className="w-[420px] h-[250px] rounded-lg transition-transform duration-500 ease-in-out transform hover:scale-105"
           src={image}
           alt="Quiz Image"
         />
@@ -128,8 +124,8 @@ export default function Quiz() {
             selectedAnswer || showAnswer
               ? "bg-white text-black"
               : "bg-grey text-white"
-          }`}
-          onClick={handleNextQuestion}
+          } transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl`}
+          onClick={handleShowScoreboard}
           disabled={!selectedAnswer && !showAnswer}
         >
           Next
@@ -148,7 +144,7 @@ export default function Quiz() {
                   ? "bg-darkred"
                   : "bg-red opacity-80"
                 : `${buttonColors[index]} ${hoverColors[index]}`
-            } flex justify-between items-center`}
+            } flex justify-between items-center transition-all duration-500 ease-in-out transform hover:scale-105`}
             disabled={showAnswer || selectedAnswer}
           >
             <div className="flex items-center">

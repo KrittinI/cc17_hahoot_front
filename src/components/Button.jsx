@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const bgMap = {
   blue: "border border-blue-500 bg-blue-500 hover:bg-blue-600",
   sky: "border border-blue-400 bg-blue-400 hover:bg-blue-500",
@@ -28,20 +29,12 @@ const widthMap = {
 const marginTopMap = {
   4: "mt-12",
 };
-export default function Button({
-  children,
-  bg,
-  color,
-  width,
-  onClick,
-  mt,
-  disabled,
-}) {
+
+export default function Button({ bg, width, children, onClick }) {
   return (
     <button
-      className={`px-3 py-1.5 ${bgMap[bg]} ${colorMap[color]} rounded-xl ${widthMap[width]} ${marginTopMap[mt]}`}
       onClick={onClick}
-      disabled={disabled}
+      className={`bg-${bg} text-white py-2 px-4 rounded-lg w-${width} text-lg font-bold transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-${bg} focus:ring-opacity-50`}
     >
       {children}
     </button>
