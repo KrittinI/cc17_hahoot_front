@@ -125,7 +125,6 @@ export default function Quiz() {
       <div className="bg-white shadow-lg rounded-lg p-12 w-full">
         <h2 className="text-font-title text-center">{question}</h2>
       </div>
-
       <div className="flex flex-row justify-between items-center my-4 gap-60">
         <span
           className="flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32"
@@ -133,7 +132,6 @@ export default function Quiz() {
         >
           {timeLeft}
         </span>
-
         <img
           className="w-[420px] h-[250px] rounded-lg"
           src={image}
@@ -165,6 +163,7 @@ export default function Quiz() {
                   : "bg-red opacity-80"
                 : `${buttonColors[index]} ${hoverColors[index]}`
             } flex justify-between items-center`}
+            disabled={showAnswer || selectedAnswer}
           >
             <div className="flex items-center">
               {icons[index]}&nbsp;&nbsp;{option}
