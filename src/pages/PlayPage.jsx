@@ -19,9 +19,9 @@ export default function PlayPage() {
   const [timeLeft, setTimeLeft] = useState(20);
   const navigate = useNavigate();
 
-    const handleOnClickBackToHome = () => {
-      navigate("/");
-    };
+  const handleOnClickBackToHome = () => {
+    navigate("/");
+  };
 
   useEffect(() => {
     if (timeLeft > 0 && !showAnswer) {
@@ -95,7 +95,9 @@ export default function PlayPage() {
           </div>
         )}
         <div className="flex justify-end mt-4">
-          <Button bg={"black"}  onClick={handleOnClickBackToHome}>Back to Home</Button>
+          <Button bg={"black"} onClick={handleOnClickBackToHome}>
+            Back to Home
+          </Button>
         </div>
       </div>
     </div>

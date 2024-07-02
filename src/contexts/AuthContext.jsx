@@ -11,6 +11,7 @@ export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,6 +22,8 @@ export default function AuthContextProvider({ children }) {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsAuthLoading(false);
       }
     };
 
@@ -49,6 +52,7 @@ export default function AuthContextProvider({ children }) {
     logout,
     authUser,
     setAuthUser,
+    isAuthLoading,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

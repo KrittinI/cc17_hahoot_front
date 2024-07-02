@@ -27,12 +27,12 @@ export default function UserContextProvider({ children }) {
 
   const fetchAllQuestion = async () => {
     const res = await getQuestionByUserId(+userId);
-    setQuestion(res);
+    setQuestion(res.data.questions);
   };
 
   const fetchAllEvent = async () => {
     const res = await getEventByUserId(+userId);
-    setEvent(res);
+    setEvent(res.data.events);
   };
 
   useEffect(() => {

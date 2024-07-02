@@ -1,100 +1,22 @@
 import CardBoxInProfile from "../../components/CardBoxInProfile";
 import image from "../../assets/c4.jpeg";
 import CardContainer from "./CardContainer";
+import useQuestion from "../../hooks/useQuestion";
 
-const eventData = [
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ? 1 + 1 เท่ากับเท่าไหร่ ? ",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 1 เท่ากับเท่าไหร่ ?",
-    image: "src/assets/hh-hero.png",
-  },
-  {
-    title: "1 + 8 เท่ากับเท่าไหร่rrrrrrrrrr ?",
-    image: "src/assets/hh-hero.png",
-  },
-];
+export default function QuizForm({ title }) {
+  const { showQuestion } = useQuestion();
 
-export default function QuizForm() {
   return (
     <div className="flex flex-col mb-7">
-      <CardContainer title="All Quiz">
+      <CardContainer title={title}>
         <div className="flex flex-wrap justify-center h-auto gap-10 pt-4 mb-6">
-          {eventData.map((eventData, index) => (
+          {showQuestion?.map((el, index) => (
             <CardBoxInProfile
               key={index}
-              title={eventData.title}
-              image={image}
+              title={el?.question}
+              image={el?.questionPicture || image}
+              id={el?.id}
+              name="questions"
             />
           ))}
         </div>
