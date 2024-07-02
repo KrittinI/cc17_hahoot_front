@@ -2,8 +2,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import Button from "./Button";
-// import LeftArrowIcon from "../icons/left-arrow";
-// import RightArrowIcon from "../icons/right-arrow";
 import {
   CheckTrue,
   CheckFalse,
@@ -128,12 +126,21 @@ export default function Quiz() {
         <h2 className="text-font-title text-center">{question}</h2>
       </div>
 
-      <div className="flex justify-around items-center my-4 gap-60">
+      <div className="flex flex-row justify-between items-center my-4 gap-60">
+        <span
+          className="flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32"
+          style={{ minWidth: "40px" }}
+        >
+          {timeLeft}
+        </span>
         <img
           className="w-[420px] h-[250px] rounded-lg"
           src={image}
           alt="Quiz Image"
         />
+        <Button bg="black" width="20" onClick={handleNextQuestion}>
+          Next
+        </Button>
       </div>
       <div className="grid grid-cols-2 gap-2 w-full">
         {options.map((option, index) => (
@@ -165,13 +172,6 @@ export default function Quiz() {
           </button>
         ))}
       </div>
-      {/* {showAnswer && (
-        <div className="flex justify-center mt-4">
-          <Button onClick={handleNextQuestion} bg="blue" width="60">
-            Next
-          </Button>
-        </div>
-      )} */}
     </div>
   );
 }

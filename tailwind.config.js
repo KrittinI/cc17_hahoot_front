@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        timeLeft: "rgb(0, 34, 101)",
         red: "#FB7185",
         darkred: "#FF3D5A",
         darkredDarker: "#E33B50", // สีแดงที่เข้มขึ้นแต่ยังสดใส
