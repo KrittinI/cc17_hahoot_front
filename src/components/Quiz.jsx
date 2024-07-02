@@ -140,7 +140,7 @@ export default function Quiz() {
           alt="Quiz Image"
         />
         <button
-          className={`rounded-lg w-24 h-12 shadow-lg text-xl ${
+          className={`rounded-lg w-32 h-12 shadow-lg text-lg font-bold ${
             selectedAnswer || showAnswer
               ? "bg-white text-black"
               : "bg-grey text-white"
