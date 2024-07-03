@@ -5,7 +5,6 @@ import useQuestion from "../../hooks/useQuestion";
 
 export default function QuizForm({ title }) {
   const { showQuestion } = useQuestion();
-
   return (
     <div className="flex flex-col mb-7">
       <CardContainer title={title}>

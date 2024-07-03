@@ -3,8 +3,13 @@ import AddQuestionCard from "../layouts/AddQuestionCard";
 import QuestionCard from "../layouts/QuestionCard";
 import Button from "../components/Button";
 import questionApi from "../api/question";
+import useQuestion from "../hooks/useQuestion";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateQuestionPage() {
+  const { setShowQuestion } = useQuestion()
+  const navigate = useNavigate()
+
   const [questions, setQuestions] = useState([]);
   const [files, setFiles] = useState([]);
 
@@ -15,14 +20,12 @@ export default function CreateQuestionPage() {
         formData.append(`questionImage`, file)
       })
       formData.append("questions", JSON.stringify(questions))
-      console.log(...formData)
-      // console.log(formData.getAll('questionImage'));
-      // console.log('files', files)
-      // console.log(questions, "thisss");
-      // console.log(JSON.stringify(questions));
-      // console.log(JSON.parse(JSON.stringify(questions)));
       const res = await questionApi.createQuestion(formData);
-      console.log(res);
+      if (res.status !== 200) {
+        return
+      }
+      setShowQuestion(prev => [...prev, ...res.data.questions])
+      navigate(`/questions`)
     } catch (error) {
       console.log(error);
     }
