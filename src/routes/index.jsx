@@ -15,7 +15,10 @@ import ProtectRoute from "../features/authentication/components/ProtectRoute";
 import AdminRoute from "../features/authentication/components/AdminRoute";
 import EventPage from "../pages/EventPage";
 import CreateQuestionPage from "../pages/CreateQuestionPage";
-import QuestionPage from "../pages/QuestionPage"
+import QuestionPage from "../pages/QuestionPage";
+import MyAllEventPage from "../pages/MyAllEventPage";
+import MyAllQuizPage from "../pages/MyAllQuizPage";
+import MyFavoritePage from "../pages/MyFavoritePage";
 
 const router = createBrowserRouter([
   // visitor + User
@@ -79,7 +82,8 @@ const router = createBrowserRouter([
             <AllEventPage />,
           </ProtectRoute>
         ),
-      }, {
+      },
+      {
         path: "/events/create-event",
         element: (
           <ProtectRoute>
@@ -107,8 +111,30 @@ const router = createBrowserRouter([
           </ProtectRoute>
         ),
       },
-
-
+      {
+        path: "/events/users/:userId",
+        element: (
+          <ProtectRoute>
+            <MyAllEventPage />,
+          </ProtectRoute>
+        ),
+      },
+      {
+        path: "/questions/users/:userId",
+        element: (
+          <ProtectRoute>
+            <MyAllQuizPage />
+          </ProtectRoute>
+        ),
+      },
+      {
+        path: "/myfavorite/users/:userId",
+        element: (
+          <ProtectRoute>
+            <MyFavoritePage />
+          </ProtectRoute>
+        ),
+      },
     ],
   },
 
