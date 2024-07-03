@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import QuizPage from "../pages/Quiz";
+import MultiPlayerPage from "../pages/MultiPlayerPage";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/quiz",
     element: <QuizPage />,
+  },
+  {
+    path: "/multiplayer",
+    element: <MultiPlayerPage />,
   },
 ]);
 
