@@ -23,13 +23,17 @@ export default function CardQuizHome({ imageSrc, title, bg }) {
           `}
     >
       <div className="px-6 py-4">
-        <p className="text-white text-font-body">Hahoot</p>
-        <div className="text-font-title mb-2 text-white">{title}</div>
+        
+          <div className="text-white text-font-body">Hahoot</div>
+          <div className="text-font-title mb-2 text-white max-h-full">
+            {title}
+        </div>
+
         <div>
           <img className="w-full" src={imageSrc} alt={title} />
         </div>
       </div>
-      <Modal title="Are you ready" open={open} >
+      <Modal title="Are you ready" open={open}>
         <ReadyAlert onClose={() => setOpen(false)} />
       </Modal>
     </div>

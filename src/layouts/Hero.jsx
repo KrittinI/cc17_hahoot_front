@@ -9,7 +9,7 @@ const heroCard = [
 
 export default function HeroContianer() {
   return (
-    <div className="mt-20 mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-10 px-4 py-10 sm:px-6 sm:py-10 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+    <div className="mt-20 mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-10 px-4 py-10 sm:px-6 sm:py-10 lg:max-w-7xl lg:grid-cols-2">
       {/* **************************** left container ************************* */}
       <div className="bg-white p-10 h-full rounded-lg">
         {heroCard.map((heroCard, index) => (
