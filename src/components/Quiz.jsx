@@ -113,7 +113,7 @@ export default function Quiz() {
         selectedAnswer || showAnswer ? "bg-opacity-80 bg-black" : ""
       }`}
     >
-      <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12 transition-all duration-300 ease-in-out transform">
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-full gap-12 transition-all duration-300 ease-in-out transform">
         <div className="bg-white shadow-lg rounded-lg p-12 w-full transition-transform duration-500 ease-in-out transform hover:scale-105">
           <h2 className="text-font-title text-center animate-none">
             {question}
