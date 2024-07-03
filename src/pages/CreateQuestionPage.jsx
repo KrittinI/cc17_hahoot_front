@@ -2,16 +2,31 @@ import { useState } from "react";
 import AddQuestionCard from "../layouts/AddQuestionCard";
 import QuestionCard from "../layouts/QuestionCard";
 import Button from "../components/Button";
+import questionApi from "../api/question";
 
 export default function CreateQuestionPage() {
   const [questions, setQuestions] = useState([]);
   const [files, setFiles] = useState([]);
 
-  const handleClickSave = () => {
-    console.log('files', files)
-    console.log(questions, "thisss");
-    console.log(JSON.stringify(questions));
-    console.log(JSON.parse(JSON.stringify(questions)));
+  const handleClickSave = async () => {
+    try {
+      const formData = new FormData()
+      files.forEach((file) => {
+        formData.append(`questionImage`, file)
+      })
+      formData.append("questions", JSON.stringify(questions))
+      console.log(...formData)
+      // console.log(formData.getAll('questionImage'));
+      // console.log('files', files)
+      // console.log(questions, "thisss");
+      // console.log(JSON.stringify(questions));
+      // console.log(JSON.parse(JSON.stringify(questions)));
+      const res = await questionApi.createQuestion(formData);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   return (
@@ -24,7 +39,7 @@ export default function CreateQuestionPage() {
           <div className="grid grid-cols-4 gap-4 w-full">
             <AddQuestionCard setQuestions={setQuestions} setFiles={setFiles} />
             {questions?.map((ques, index) =>
-              <QuestionCard question={ques.question} image={ques.questionPicture} key={index} index={index} />
+              <QuestionCard question={ques.question} image={files[index]} key={index} index={index} />
             )}
           </div>
         </div>
