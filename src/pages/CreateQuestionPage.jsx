@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import questionApi from "../api/question";
 import useQuestion from "../hooks/useQuestion";
 import { useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
 
 export default function CreateQuestionPage() {
   const { setShowQuestion } = useQuestion()
@@ -12,6 +13,7 @@ export default function CreateQuestionPage() {
 
   const [questions, setQuestions] = useState([]);
   const [files, setFiles] = useState([]);
+
 
   const handleClickSave = async () => {
     try {
@@ -41,8 +43,15 @@ export default function CreateQuestionPage() {
         <div className="w-full bg-red overflow-auto max-h-[100%]">
           <div className="grid grid-cols-4 gap-4 w-full">
             <AddQuestionCard setQuestions={setQuestions} setFiles={setFiles} />
-            {questions?.map((ques, index) =>
-              <QuestionCard question={ques.question} image={files[index]} key={index} index={index} />
+            {questions?.map((quesion, index) =>
+              <QuestionCard
+                key={index}
+                index={index}
+                question={quesion}
+                setQuestions={setQuestions}
+                setFiles={setFiles}
+                image={files[index]}
+              />
             )}
           </div>
         </div>

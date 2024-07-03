@@ -13,6 +13,7 @@ const initialError = {
   choice3: "",
   choice4: "",
   answer: "",
+  topicId: "",
   isPublic: false
 };
 
@@ -24,16 +25,17 @@ const initialInput = {
   choice3: "",
   choice4: "",
   answer: "",
+  topicId: 0,
   isPublic: false
 };
 
-export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess, setFiles }) {
+export default function FormAddQuestion({ question, onSuccess, onClose }) {
   const { topic } = useTopic()
   const fileEl = useRef();
 
   const [file, setFile] = useState(null);
   const [error, setError] = useState(initialError);
-  const [input, setInput] = useState(foundQuestion || initialInput);
+  const [input, setInput] = useState(question || initialInput);
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -76,13 +78,7 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
     if (!input.answer || !input.choice1 || !input.choice2 || (!input.topicId || input.topicId === "0") || !input.question || (input.answer === "C" && !input.choice3) || input.answer === "D" && (!input.choice3 || !input.choice4)) {
       return
     }
-    setQuestions(prev => [...prev, input])
-    if (file) {
-      setFiles(prev => [...prev, file])
-    } else {
-      setFiles(prev => [...prev, null])
-    }
-    onSuccess()
+    onSuccess(input, file)
   }
 
   return (
@@ -101,9 +97,9 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
         />
       </div>
       <div>
-        <Select id="topic" className="text-center shadow-md mt-5" onChange={handleChange} name="topicId" error={error.topicId} header={`Select Topic`}>
+        <Select id="topic" className="text-center shadow-md mt-5" value={+input.topicId} onChange={handleChange} name="topicId" error={error.topicId} header={`Select Topic`}>
           {topic?.map((topic) => (
-            <option value={topic.id} key={topic.id} >
+            <option value={+topic.id} key={topic.id} >
               {topic.topicName}
             </option>
           ))}
@@ -216,7 +212,7 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
       <div></div>
       <Button bg={`blue`} onClick={handleClickSave}>save</Button>
       <div></div>
-      <Button bg={'black'} onClick={() => onSuccess()}>Cancel</Button>
+      <Button bg={'black'} onClick={() => onClose()} >Cancel</Button>
     </div>
   );
 }
