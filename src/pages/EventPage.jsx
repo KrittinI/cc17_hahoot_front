@@ -4,6 +4,7 @@ import { useState } from "react";
 import SplitScreen from "../layouts/SplitScreen";
 import useEvent from "../hooks/useEvent";
 import EventForm from "../features/oneQuiz-Event/components/EventForm";
+import QuizForm from "../features/form/QuizForm";
 
 export default function EventPage() {
   const { eventId } = useParams();
@@ -25,10 +26,10 @@ export default function EventPage() {
   console.log(oneEvent);
 
   return (
-    <div className="w-[68%] mx-auto h-[auto]">
+    <div className="w-[66%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={30}>
         <EventForm data={oneEvent} id={+eventId} />
-        <div>left</div>
+        <QuizForm title={"Quizs of Event"} />
       </SplitScreen>
     </div>
   );
