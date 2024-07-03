@@ -13,7 +13,7 @@ export default function AddQuestionCard({ setQuestions, setFiles }) {
     } else {
       setFiles(prev => [...prev, null])
     }
-    setOpen(false)
+    // setOpen(false)
   }
 
   return (

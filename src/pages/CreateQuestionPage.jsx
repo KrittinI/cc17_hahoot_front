@@ -5,7 +5,6 @@ import Button from "../components/Button";
 import questionApi from "../api/question";
 import useQuestion from "../hooks/useQuestion";
 import { useNavigate } from "react-router-dom";
-import Modal from "../components/Modal";
 
 export default function CreateQuestionPage() {
   const { setShowQuestion } = useQuestion()
@@ -13,8 +12,6 @@ export default function CreateQuestionPage() {
 
   const [questions, setQuestions] = useState([]);
   const [files, setFiles] = useState([]);
-
-
   const handleClickSave = async () => {
     try {
       const formData = new FormData()

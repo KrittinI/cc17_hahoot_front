@@ -3,30 +3,41 @@ import FormAddQuestion from "../components/FormAddQuestion";
 import Modal from "../components/Modal";
 import DeleteIcon from "../icons/delete";
 import EditIcon from "../icons/edit";
-import questionApi from "../api/question";
 import Fav from "../icons/Fav";
 import Button from "../components/Button";
 
 export default function QuestionCard({ question, image, index, setQuestions, setFiles }) {
   const [open, setOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-
   const handleDelete = (id) => {
-    console.log(id);
-    setQuestions(prev => prev.filter((question, index) => index !== id))
-    setFiles(prev => prev.filter((question, index) => index !== id))
+    setQuestions(prev => prev.filter((q, i) => i !== id))
+    setFiles(prev => prev.filter((q, i) => i !== id))
     setIsDelete(false)
   }
 
-  const handleEdit = (id) => {
-    console.log(id);
-    setOpen(true);
+  const handleEdit = (index, input, file) => {
+    setQuestions(prev => {
+      const questions = [...prev]
+      questions.splice(index, 1, input)
+      return questions
+    })
+    setFiles(prev => {
+      const files = [...prev]
+      files.splice(index, 1, file)
+      return files
+    })
+    setOpen(false);
   };
+
+  const onSuccess = (input, file) => {
+    handleEdit(index, input, file)
+  }
+
 
   return (
     <div className="flex flex-col gap-2">
       <div className="bg-white h-64 w-full relative rounded-xl shadow-lg" >
-        <div className="w-full overflow-hidden rounded-t-xl relative">{image && <img className="overflow-hidden object-cover aspect-[16/9] " src={URL.createObjectURL(image)} alt="รูป" />}</div>
+        <div className="w-full overflow-hidden rounded-t-xl relative">{(image) && <img className="overflow-hidden object-cover aspect-[16/9] " src={URL.createObjectURL(image)} alt="รูป" />}</div>
         {/* <div className="absolute top-2 right-2 bg-white rounded-full p-1">
           <Fav />
         </div> */}
@@ -52,7 +63,7 @@ export default function QuestionCard({ question, image, index, setQuestions, set
         </div>
       </Modal>
       <Modal open={open} onClose={() => setOpen(false)} title="Edit your question">
-        <FormAddQuestion question={question} onClose={() => setOpen(false)} onSuccess={() => handleEdit(index)} />
+        <FormAddQuestion question={question} onClose={() => setOpen(false)} onSuccess={onSuccess} image={image} />
       </Modal>
 
     </div>

@@ -29,11 +29,11 @@ const initialInput = {
   isPublic: false
 };
 
-export default function FormAddQuestion({ question, onSuccess, onClose }) {
+export default function FormAddQuestion({ question, onSuccess, onClose, image }) {
   const { topic } = useTopic()
   const fileEl = useRef();
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(image || null);
   const [error, setError] = useState(initialError);
   const [input, setInput] = useState(question || initialInput);
 
