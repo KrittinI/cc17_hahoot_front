@@ -29,7 +29,7 @@ const initialInput = {
   isPublic: false
 };
 
-export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess }) {
+export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess, setFiles }) {
   const { topic } = useTopic()
   const fileEl = useRef();
 
@@ -45,41 +45,50 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
   const handleClickAnswer = (choice) => {
     setInput((prev) => ({ ...prev, answer: choice }))
     setError((prev) => ({ ...prev, answer: "" }));
-
   }
 
-  const formatQuestion = () => {
-    const formData = new FormData();
-
-    if (file) {
-      console.log("this is file", file);
-      formData.append("questionImages", file);
+  const handleChooseFile = (e) => {
+    if (e.target.files[0]) {
+      console.log("hello", e.target.files[0]);
+      setFile(e.target.files[0]);
     }
-    if (input) {
-      console.log("this is input", input);
+  }
 
-      for (const key in input) {
-        if (key === "questionPicture") {
-          continue;
-        }
-        if (key === "index") {
-          continue;
-        }
-        console.log(key);
-        formData.append(key, input[key]);
+  // const formatQuestion = () => {
+  //   const formData = new FormData();
 
-        // if (key == "id") {
-        //   console.log("eiei", key);
-        //   formData.append(key, +input[key]);
-        // } else {
-        //   console.log(key);
-        //   formData.append(key, input[key]);
-        // }
-      }
-    }
-    console.log(...formData);
-    return formData;
-  };
+  //   if (file) {
+  //     console.log("this is file", file);
+  //     formData.append("questionImages", file);
+  //   } else {
+  //     formData.append("questionImages", null);
+
+  //   }
+  //   if (input) {
+  //     console.log("this is input", input);
+
+  //     for (const key in input) {
+  //       if (key === "questionPicture") {
+  //         continue;
+  //       }
+  //       if (key === "index") {
+  //         continue;
+  //       }
+  //       console.log(key);
+  //       formData.append(key, input[key]);
+
+  // if (key == "id") {
+  //   console.log("eiei", key);
+  //   formData.append(key, +input[key]);
+  // } else {
+  //   console.log(key);
+  //   formData.append(key, input[key]);
+  // }
+  // }
+  //     }
+  // console.log(...formData);
+  // return formData;
+  //   };
 
   const handleClickSave = () => {
     if (!input.question) {
@@ -106,14 +115,16 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
     if (!input.answer || !input.choice1 || !input.choice2 || (!input.topicId || input.topicId === "0") || !input.question || (input.answer === "C" && !input.choice3) || input.answer === "D" && (!input.choice3 || !input.choice4)) {
       return
     }
-    const formdata = formatQuestion()
-    console.log(formdata['answer']);
     setQuestions(prev => [...prev, input])
+    if (file) {
+      setFiles(prev => [...prev, file])
+    } else {
+      setFiles(prev => [...prev, null])
+    }
     onSuccess()
   }
 
-  const handleSubmit = (index) => {
-    // console.log(input, "i am input");
+  const handleSubmit = (e) => {
 
     if (!input.question) {
       setError((prev) => ({ ...prev, question: "Question is required" }));
@@ -137,7 +148,6 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
     if (!input.answer) {
       setError((prev) => ({ ...prev, answer: "answer is required" }));
     }
-    // console.log(input.isPublic);
     if (!input.isPublic) {
       setError((prev) => ({ ...prev, isPublic: "isPublic is required" }));
       console.log("first");
@@ -177,20 +187,20 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
     // }
   };
 
-  const handleClickCreate = async (indexxx) => {
-    // e.preventDefault()
-    try {
-      const formData = formatQuestion();
-      console.log(...formData, "itsme");
-      // const questionCreated = await questionApi.createQuestion(formData);
-      // console.log("this is your question", questionCreated);
-      const filteredArr = arr.filter((el, index) => index !== indexxx);
-      console.log(filteredArr);
-      setQuestions(filteredArr);
-    } catch (err) {
-      alert("failed");
-    }
-  };
+  // const handleClickCreate = async (indexxx) => {
+  //   // e.preventDefault()
+  //   try {
+  //     const formData = formatQuestion();
+  //     console.log(...formData, "itsme");
+  //     // const questionCreated = await questionApi.createQuestion(formData);
+  //     // console.log("this is your question", questionCreated);
+  //     const filteredArr = arr.filter((el, index) => index !== indexxx);
+  //     console.log(filteredArr);
+  //     setQuestions(filteredArr);
+  //   } catch (err) {
+  //     alert("failed");
+  //   }
+  // };
   // console.log(input.questionPicture, "pictureeee");
 
   return (
@@ -218,23 +228,12 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
         </Select>
       </div>
       <div className="grid col-span-2 bg-orange-300">
-        {/* <label htmlFor="question">question</label> */}
-        <label htmlFor="questionPicture">insert the picture of this question</label>
         <input
           type="file"
           ref={fileEl}
           name="questionPicture"
           id="questionPicture"
-          // value={file}
-          onChange={(e) => {
-            if (e.target.files[0]) {
-              console.log("hello", e.target.files[0]);
-              setFile(e.target.files[0]);
-              // setInput((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
-              // console.log("helloooo", e.target.files[0].filename);
-              // console.log(e.target.files);
-            }
-          }}
+          onChange={handleChooseFile}
         />
       </div>
       <div className="grid col-span-3 grid-cols-5 gap-4">
@@ -258,9 +257,7 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
             {input.answer === "A" ? "T" : "F"}
           </span>
           {error.answer ? <small className="text-red">{error.answer}</small> : null}
-
         </div>
-
         <div className="col-span-4 gap-2 ">
           <Input
             type="text"
@@ -281,7 +278,6 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
             {input.answer === "B" ? "T" : "F"}
           </span>
           {error.answer ? <small className="text-red">{error.answer}</small> : null}
-
         </div>
         <div className="col-span-4 gap-2 ">
           <Input
@@ -303,7 +299,6 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
             {input.answer === "C" ? "T" : "F"}
           </span>
           {error.answer ? <small className="text-red">{error.answer}</small> : null}
-
         </div>
         <div className="col-span-4 gap-2">
           <Input
@@ -325,10 +320,8 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
             {input.answer === "D" ? "T" : "F"}
           </span>
           {error.answer ? <small className="text-red">{error.answer}</small> : null}
-
         </div>
       </div>
-
       {/* 
       <Select id="isPublic" className="text-center shadow-md mt-3" onChange={handleChange} name="isPublic" error={error.isPublic}>
         <option value={true} selected={input?.isPublic == 0}>
@@ -338,31 +331,16 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
           private
         </option>
       </Select> */}
+      <div></div>
       <Button bg={`blue`} onClick={handleClickSave}>save</Button>
-      <Button
+      <div></div>
+      <Button bg={'black'} onClick={() => onSuccess()}>Cancel</Button>
+      {/* <Button
         bg={`black`}
         onClick={() => handleClickCreate(foundQuestion?.index)}
       >
         create
-      </Button>
+      </Button> */}
     </div>
   );
 }
-
-// const formData = formatQuestion();
-// console.log(...formData, "gong");
-// try {
-// const questionCreated = await questionApi.createQuestion(formData);
-// console.log(questionCreated, "i am question unique");
-// console.log("beforePush", question);
-// console.log(input);
-// const Arr = [];
-// Arr.push({ ...input, questionPicture: questionCreated.data.questions[0].questionPicture, creatorId: questionCreated.data.questions[0].creatorId });
-// Arr.push({ ...input, questionPicture: file });
-// console.log(Arr, "after push");
-// console.log(questionCreated.data.questions[0].questionPicture, "quesssssssssssss");
-// fetchQuestion();
-// } catch (err) {
-//   console.log("failed");
-//   alert("failed");
-// }

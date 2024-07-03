@@ -3,9 +3,8 @@ import FormAddQuestion from "../components/FormAddQuestion";
 import Add from "../icons/add";
 import { useState } from "react";
 
-export default function AddQuestionCard({ setQuestions }) {
+export default function AddQuestionCard({ setQuestions, setFiles }) {
   const [open, setOpen] = useState(false);
-
   return (
     <>
       <div className="bg-white h-64 overflow-hidden w-full rounded-xl shadow-lg">
@@ -13,7 +12,7 @@ export default function AddQuestionCard({ setQuestions }) {
           <Add />
         </div>
         <Modal open={open} onClose={() => setOpen(false)} title="Add your question">
-          <FormAddQuestion onSuccess={() => setOpen(false)} setQuestions={setQuestions} />
+          <FormAddQuestion onSuccess={() => setOpen(false)} setQuestions={setQuestions} setFiles={setFiles} />
         </Modal>
       </div>
     </>
