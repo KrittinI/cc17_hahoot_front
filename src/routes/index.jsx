@@ -112,7 +112,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/events/:userId",
+        path: "/events/users/:userId",
         element: (
           <ProtectRoute>
             <MyAllEventPage />,
@@ -120,7 +120,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/questions/:userId",
+        path: "/questions/users/:userId",
         element: (
           <ProtectRoute>
             <MyAllQuizPage />
@@ -128,7 +128,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/myfavorite/:userId",
+        path: "/myfavorite/users/:userId",
         element: (
           <ProtectRoute>
             <MyFavoritePage />
