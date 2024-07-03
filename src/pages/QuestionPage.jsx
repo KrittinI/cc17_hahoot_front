@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import SplitScreen from "../layouts/SplitScreen";
 import QuestionForm from "../features/oneQuiz-Event/components/QuestionForm";
+import CommentContainer from "../features/form/CommentContainer";
 
 export default function QuestionPage() {
   const { questionId } = useParams();
@@ -23,10 +24,10 @@ export default function QuestionPage() {
   }, [questionId]);
 
   return (
-    <div className="w-[68%] mx-auto h-[auto]">
-      <SplitScreen sizeRatio={30}>
+    <div className="w-[66%] mx-auto min-h-[78vh]">
+      <SplitScreen sizeRatio={70}>
         <QuestionForm data={oneQuestion} id={+questionId} />
-        <div>left</div>
+        <CommentContainer />
       </SplitScreen>
     </div>
   );
