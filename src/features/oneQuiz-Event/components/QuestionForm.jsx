@@ -55,12 +55,18 @@ export default function QuestionForm({ data, id }) {
           >
             <LeftArrowIcon />
           </div>
-          <div className="max-w-[300px] h-[300px] flex justify-center items-center">
+          <div className="max-w-[240px] h-[300px] flex justify-center items-center gap-x-2">
             <img
-              className="bg-white p-4 rounded-lg"
+              className="rounded-lg max-h-[180px]"
               src={data?.questionPicture || image}
               alt="questionPicture"
             />
+            <div className="grid gap-y-2">
+              <div className="flex justify-start items-center p-4 w-[250px] h-[30px] bg-green shadow-xl rounded-lg ">answer</div>
+              <div className="flex justify-start items-center p-4 w-[250px] h-[30px] bg-blue shadow-xl rounded-lg ">answer</div>
+              <div className="flex justify-start items-center p-4 w-[250px] h-[30px] bg-blue shadow-xl rounded-lg ">answer</div>
+              <div className="flex justify-start items-center p-4 w-[250px] h-[30px] bg-blue shadow-xl rounded-lg ">answer</div>
+            </div>
           </div>
           <div
             className="flex justify-center items-center bg-red w-[60px] h-[60px] rounded-full invisiable hover:bg-grey"

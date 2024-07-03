@@ -87,8 +87,9 @@ export function ProfileDropdown() {
       to: `/users/${authUser?.id}`,
       name: "your-profile",
     },
-    { title: "Your Quiz", to: "/your-quiz", name: "your-quiz" },
-    { title: "Your Event", to: "/your-event", name: "your-event" },
+    { title: "Your Quiz", to: "/questions/:userId", name: "your-quiz" },
+    { title: "Your Event", to: "/events/:userId", name: "your-event" },
+    { title: "Your Favorite", to: "/myfavorite/:userId", name: "your-favorite"},
     { title: "Log out", to: "/login", name: "logout" },
   ];
 
