@@ -18,8 +18,11 @@ export default function AllEventPage() {
           setSearch={setSearch}
           getTopic={getEventByTopic}
           setTitle={setTitle}
+          create={`/events/create-event`}
         />
       </SplitScreen>
     </div>
   );
 }
+
+//กด button link ไปหน้า quiz

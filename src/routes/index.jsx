@@ -13,8 +13,9 @@ import PinCodePage from "../pages/PinCodePage";
 import RedirectLogin from "../features/authentication/components/RedirecLogin";
 import ProtectRoute from "../features/authentication/components/ProtectRoute";
 import AdminRoute from "../features/authentication/components/AdminRoute";
-import QuestionPage from "../pages/QuestionPage";
 import EventPage from "../pages/EventPage";
+import CreateQuestionPage from "../pages/CreateQuestionPage";
+import QuestionPage from "../pages/QuestionPage"
 
 const router = createBrowserRouter([
   // visitor + User
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/questions/create-question",
+        element: <CreateQuestionPage />,
+      },
+      {
         path: "/questions/:questionId",
         element: (
           <ProtectRoute>
@@ -72,6 +77,13 @@ const router = createBrowserRouter([
         element: (
           <ProtectRoute>
             <AllEventPage />,
+          </ProtectRoute>
+        ),
+      }, {
+        path: "/events/create-event",
+        element: (
+          <ProtectRoute>
+            <h1>Create Event Page</h1>
           </ProtectRoute>
         ),
       },
@@ -95,6 +107,8 @@ const router = createBrowserRouter([
           </ProtectRoute>
         ),
       },
+
+
     ],
   },
 

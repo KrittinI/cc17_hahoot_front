@@ -1,28 +1,33 @@
 import axios from "../config/axios";
-const authQuestion = {};
+const questionApi = {};
 
-authQuestion.create = async (body) => axios.post("/questions", body);
-authQuestion.edit = async (id, body) => axios.patch(`/questions/${id}`, body);
+questionApi.createQuestion = (data) => axios.post("/questions", data);
+questionApi.editQuestionById = (questionId, dataChange) => axios.patch(`/questions/${questionId}`, dataChange);
 
-authQuestion.getAllQuestion = async () => axios.get("/questions");
-authQuestion.getQuestionByQuestionId = async (id) =>
+
+questionApi.getAllQuestion = async () => axios.get("/questions");
+questionApi.getQuestionByQuestionId = async (id) =>
   axios.get(`/questions/${id}`);
-authQuestion.getQuestionByTopicId = async (topicId) =>
+questionApi.getQuestionByTopicId = async (topicId) =>
   axios.get(`/questions/topic/${topicId}`);
-authQuestion.getQuestionByUserId = async (id) =>
+questionApi.getQuestionByUserId = async (id) =>
   axios.get(`/questions/users/${id}`);
 
 // Favorite
-authQuestion.getFavQuestion = async (id) =>
+questionApi.getFavQuestion = async (id) =>
   axios.get("/questions/favorite", id);
-authQuestion.createFev = async (id) => axios.post(`/questions/${id}/favorite`);
-authQuestion.deleteFev = async (id) =>
+questionApi.createFev = async (id) => axios.post(`/questions/${id}/favorite`);
+questionApi.deleteFev = async (id) =>
   axios.delete(`/questions/${id}/favorite`);
 
 // Comment
-authQuestion.comment = async (id) => axios.post(`/questions/${id}/comment`);
-authQuestion.deleteComment = async (questionId, commentId) =>
+questionApi.comment = async (id) => axios.post(`/questions/${id}/comment`);
+questionApi.deleteComment = async (questionId, commentId) =>
   axios.delete(`/questions/${questionId}/comment/${commentId}`);
-authQuestion.editComment = async (questionId, commentId, body) =>
+questionApi.editComment = async (questionId, commentId, body) =>
   axios.patch(`/questions/${questionId}/comment/${commentId}`, body);
-export default authQuestion;
+
+
+// questionApi.deleteQuestionById = (questionId) => axios.delete(`/questions/${questionId}`);
+
+export default questionApi;
