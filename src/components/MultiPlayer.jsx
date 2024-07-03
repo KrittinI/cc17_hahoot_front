@@ -2,17 +2,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
-import {
-  CheckTrue,
-  CheckFalse,
-  Square,
-  Circle,
-  Dimond,
-  Triangle,
-} from "../icons/kahoot";
+import { Square, Circle, Dimond, Triangle } from "../icons/kahoot";
 
 const socket = io("http://localhost:4000");
-const icons = [<Triangle />, <Dimond />, <Circle />, <Square />];
+const icons = [
+  <Triangle size="24vmin" />,
+  <Dimond size="24vmin" />,
+  <Circle size="24vmin" />,
+  <Square size="24vmin" />,
+];
 const buttonColors = [
   "bg-darkred",
   "bg-darkblue",
@@ -181,15 +179,15 @@ const MultiPlayer = () => {
       ) : currentQuestion ? (
         <>
           {
-            //console.log("currentQuestion = ", currentQuestion)}}}
+            //console.log("currentQuestion = ", currentQuestion)
           }
           <div className="w-[80vw] h-[80vh] bg-transparent">
             <div className="grid grid-cols-2 gap-2 w-full h-full">
               {currentQuestion.options.map((option, index) => (
                 <button
                   key={option}
-                  onClick={() => alert("Clicked")}
-                  className={`px-10 py-10 text-white animate-pop ${buttonColors[index]} ${hoverColors[index]} flex justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105`}
+                  onClick={() => alert(option)}
+                  className={`w-[473px] h-[294px] px-10 py-10 text-white animate-pop ${buttonColors[index]} ${hoverColors[index]} flex justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105`}
                 >
                   {icons[index]}
                 </button>

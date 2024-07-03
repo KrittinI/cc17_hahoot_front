@@ -65,7 +65,7 @@ export function CheckFalse() {
   );
 }
 
-export function Triangle() {
+export function Triangle({ size = "5.95733vmin" }) {
   return (
     <span
       className="icon__Icon-sc-xvsbpg-0 ejCBnJ card-icon__icon"
@@ -73,19 +73,17 @@ export function Triangle() {
       style={{
         display: "inline-block",
         verticalAlign: "middle",
-        width: "5.95733vmin",
-        height: "5.95733vmin",
       }}
     >
       <svg
         viewBox="0 0 32 32"
         focusable="false"
         stroke="rgba(0, 0, 0, 0.15)"
-        strokeWidth="1.3px"
+        strokeWidth="2px"
         aria-labelledby="label-a149cdfd-d500-48ab-82c9-ce8f80f8656e"
         aria-hidden="true"
         className="icon__Svg-sc-xvsbpg-1 ipIYNE"
-        style={{ paintOrder: "stroke" }}
+        style={{ paintOrder: "stroke", width: size, height: size }}
       >
         <path
           d="M27,24.559972 L5,24.559972 L16,7 L27,24.559972 Z"
@@ -96,7 +94,7 @@ export function Triangle() {
   );
 }
 
-export function Dimond() {
+export function Dimond({ size = "5.95733vmin" }) {
   return (
     <span
       className="icon__Icon-sc-xvsbpg-0 ejCBnJ card-icon__icon"
@@ -104,19 +102,17 @@ export function Dimond() {
       style={{
         display: "inline-block",
         verticalAlign: "middle",
-        width: "5.95733vmin",
-        height: "5.95733vmin",
       }}
     >
       <svg
         viewBox="0 0 32 32"
         focusable="false"
         stroke="rgba(0, 0, 0, 0.15)"
-        strokeWidth="1.3px"
+        strokeWidth="2px"
         aria-labelledby="label-781155b4-826c-4cd7-a360-9b04915ef98d"
         aria-hidden="true"
         className="icon__Svg-sc-xvsbpg-1 ipIYNE"
-        style={{ paintOrder: "stroke" }}
+        style={{ paintOrder: "stroke", width: size, height: size }}
       >
         <path
           d="M4,16.0038341 L16,4 L28,16.0007668 L16,28 L4,16.0038341 Z"
@@ -127,7 +123,7 @@ export function Dimond() {
   );
 }
 
-export function Circle() {
+export function Circle({ size = "5.95733vmin" }) {
   return (
     <span
       className="icon__Icon-sc-xvsbpg-0 ejCBnJ card-icon__icon"
@@ -135,19 +131,17 @@ export function Circle() {
       style={{
         display: "inline-block",
         verticalAlign: "middle",
-        width: "5.95733vmin",
-        height: "5.95733vmin",
       }}
     >
       <svg
         viewBox="0 0 32 32"
         focusable="false"
         stroke="rgba(0, 0, 0, 0.15)"
-        strokeWidth="1.3px"
+        strokeWidth="2px"
         aria-labelledby="label-c0599796-4596-4dbe-bcc2-e8ed9d0f2e9f"
         aria-hidden="true"
         className="icon__Svg-sc-xvsbpg-1 ipIYNE"
-        style={{ paintOrder: "stroke" }}
+        style={{ paintOrder: "stroke", width: size, height: size }}
       >
         <path
           d="M16,27 C9.92486775,27 5,22.0751322 5,16 C5,9.92486775 9.92486775,5 16,5 C22.0751322,5 27,9.92486775 27,16 C27,22.0751322 22.0751322,27 16,27 Z"
@@ -157,7 +151,7 @@ export function Circle() {
     </span>
   );
 }
-export function Square() {
+export function Square({ size = "5.95733vmin" }) {
   return (
     <span
       className="icon__Icon-sc-xvsbpg-0 ejCBnJ card-icon__icon"
@@ -165,19 +159,17 @@ export function Square() {
       style={{
         display: "inline-block",
         verticalAlign: "middle",
-        width: "5.95733vmin",
-        height: "5.95733vmin",
       }}
     >
       <svg
         viewBox="0 0 32 32"
         focusable="false"
         stroke="rgba(0, 0, 0, 0.15)"
-        strokeWidth="1.3px"
+        strokeWidth="2px"
         aria-labelledby="label-21f46f6a-a0d3-4a52-b216-21541425fb95"
         aria-hidden="true"
         className="icon__Svg-sc-xvsbpg-1 ipIYNE"
-        style={{ paintOrder: "stroke" }}
+        style={{ paintOrder: "stroke", width: size, height: size }}
       >
         <path
           d="M7,7 L25,7 L25,25 L7,25 L7,7 Z"
