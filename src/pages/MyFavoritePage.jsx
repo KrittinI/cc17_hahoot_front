@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SearchBar from "../components/SearchBar";
 import QuizForm from "../features/form/QuizForm";
 import SplitScreen from "../layouts/SplitScreen";
 import useEvent from "../hooks/useEvent";
