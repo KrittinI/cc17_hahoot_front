@@ -7,6 +7,7 @@ import EditIcon from "../icons/edit";
 import Button from "../components/Button";
 import Avatar from "../components/Avatar";
 import { HeartIcon, HeartIconHover } from "../icons/heart";
+import QuestionIcon from "../icons/Question";
 
 export default function QuestionCard({
   question,
@@ -83,10 +84,14 @@ export default function QuestionCard({
           <EditIcon />
         </span>
       </div>
-      <Modal open={isDelete} title={`Delete This Question?`}>
-        <div className="w-full flex flex-col justify-center items-center gap-4">
-          <h1>Delete</h1>
-          <div className="w-full flex justify-around">
+      <Modal open={isDelete}>
+        <div className="w-full flex flex-col justify-center items-center gap-4 p-6">
+          <div className=" text-font-title">Are you sure to delete</div>
+          <div className=" text-font-title"> this quiz</div>
+          <div>
+            <QuestionIcon />
+          </div>
+          <div className="w-full flex justify-around pt-6">
             <Button bg={`red`} width={20} onClick={() => handleDelete(index)}>
               Delete
             </Button>

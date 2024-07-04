@@ -22,7 +22,7 @@ export default function AddQuestionCard({ setQuestions, setFiles }) {
         <div className="w-full h-64 flex justify-center items-center" role="button" onClick={() => setOpen(true)}>
           <Add />
         </div>
-        <Modal open={open} onClose={() => setOpen(false)} title="Add your question">
+        <Modal open={open} onClose={() => setOpen(false)} >
           <FormAddQuestion onSuccess={onSuccess} onClose={() => setOpen(false)} />
         </Modal>
       </div>
