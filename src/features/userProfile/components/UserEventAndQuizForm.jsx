@@ -8,24 +8,21 @@ import CardContainerInProfile from "../../form/CardContainerInProfile";
 export default function UserEventAndQuizForm({
   setIsQuizForm,
   setIsEventForm,
-  setSeeAllProfileData,
 }) {
   const { question, event } = useUser();
 
   const handleClickEvent = () => {
     setIsEventForm(true);
-    setSeeAllProfileData(true);
   };
 
   const handleClickQuiz = () => {
     setIsQuizForm(true);
-    setSeeAllProfileData(true);
   };
 
   return (
     <div className="flex flex-col gap-7 ">
       <CardContainerInProfile
-        title="My Event"
+        title="Events"
         showSeeAll
         onClick={handleClickEvent}
       >
@@ -42,7 +39,7 @@ export default function UserEventAndQuizForm({
         </div>
       </CardContainerInProfile>
       <CardContainerInProfile
-        title="My Quiz"
+        title="Quizzes"
         hight={30}
         showSeeAll
         onClick={handleClickQuiz}

@@ -4,12 +4,12 @@ import Button from "../../../components/Button";
 import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
 import { HeartIconHover } from "../../../icons/heart";
-import EditProfileBox from "../../userProfile/components/EditProfileBox";
+import EditProfileBox from "./EditProfileBox";
 import { useNavigate } from "react-router-dom";
 
-export default function ActiveMyQuizEvent({
-  isCreateEventOrQuiz,
-  profileData,
+export default function ProfileRight({
+  isQuizForm,
+  isEventForm,
 }) {
   const { authUser } = useAuth();
   const { profile, setProfile } = useUser();
@@ -19,8 +19,7 @@ export default function ActiveMyQuizEvent({
     if (authUser?.id === profile?.id) {
       setProfile(authUser);
     }
-  }, [authUser]);
-
+  }, [authUser, profile]);
   return (
     <div className="flex flex-col items-center gap-4 h-[auto] w-full bg-white rounded-lg p-6">
       <h2 className="text-font-title">{profile?.username}</h2>
@@ -30,17 +29,17 @@ export default function ActiveMyQuizEvent({
       {authUser?.id === profile?.id && (
         <>
           <EditProfileBox />
-          {profileData ? (
+          {isEventForm || isQuizForm ? (
             <>
-              {isCreateEventOrQuiz ? (
-                <Button
-                  bg={"blue"}
-                  width={"full"}
-                  onClick={() => navigate("/questions/create-question")}
-                >
-                  Add New Quiz
-                </Button>
-              ) : (
+              {isQuizForm && <Button
+                bg={"blue"}
+                width={"full"}
+                onClick={() => navigate("/questions/create-question")}
+              >
+                Add New Quiz
+              </Button>
+              }
+              {isEventForm &&
                 <Button
                   bg={"blue"}
                   width={"full"}
@@ -48,7 +47,7 @@ export default function ActiveMyQuizEvent({
                 >
                   Add New Event
                 </Button>
-              )}
+              }
               <Button bg={"red"} width={"full"}>
                 <div className="flex w-full justify-center items-center gap-x-2">
                   <HeartIconHover />

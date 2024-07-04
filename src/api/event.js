@@ -1,15 +1,15 @@
 import axios from "../config/axios";
-const authEvent = {};
+const eventApi = {};
 
-authEvent.create = async (body) => axios.post("/events", body);
-authEvent.edit = async (id, body) => axios.patch(`/events/${id}`, body);
-authEvent.delete = async (id) => axios.delete(`/events/${id}`);
+eventApi.create = async (body) => axios.post("/events", body);
+eventApi.edit = async (id, body) => axios.patch(`/events/${id}`, body);
+eventApi.delete = async (id) => axios.delete(`/events/${id}`);
 
-authEvent.getAllEvent = async () => axios.get("/events");
-authEvent.getEventByUserId = async (id) => axios.get(`/events/users/${id}`);
-authEvent.getEventByTopic = async (topicId) =>
+eventApi.getAllEvent = async () => axios.get("/events");
+eventApi.getEventByUserId = async (id) => axios.get(`/events/users/${id}`);
+eventApi.getEventByTopic = async (topicId) =>
   axios.get(`/events/topic/${topicId}`);
-authEvent.getFavEvent = async () => axios.get("/events/favorite");
-authEvent.getEventByEventId = async (id) => axios.get(`/events/${id}`);
+eventApi.getFavEvent = async () => axios.get("/events/favorite");
+eventApi.getEventByEventId = async (id) => axios.get(`/events/${id}`);
 
-export default authEvent;
+export default eventApi;
