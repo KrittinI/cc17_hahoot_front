@@ -2,16 +2,33 @@ import { useState } from "react";
 import AddQuestionCard from "../layouts/AddQuestionCard";
 import QuestionCard from "../layouts/QuestionCard";
 import Button from "../components/Button";
+import questionApi from "../api/question";
+import useQuestion from "../hooks/useQuestion";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateQuestionPage() {
+  const { setShowQuestion } = useQuestion()
+  const navigate = useNavigate()
+
   const [questions, setQuestions] = useState([]);
   const [files, setFiles] = useState([]);
+  const handleClickSave = async () => {
+    try {
+      const formData = new FormData()
+      files.forEach((file) => {
+        formData.append(`questionImage`, file)
+      })
+      formData.append("questions", JSON.stringify(questions))
+      const res = await questionApi.createQuestion(formData);
+      if (res.status !== 200) {
+        return
+      }
+      setShowQuestion(prev => [...prev, ...res.data.questions])
+      navigate(`/questions`)
+    } catch (error) {
+      console.log(error);
+    }
 
-  const handleClickSave = () => {
-    console.log('files', files)
-    console.log(questions, "thisss");
-    console.log(JSON.stringify(questions));
-    console.log(JSON.parse(JSON.stringify(questions)));
   }
 
   return (
@@ -23,8 +40,15 @@ export default function CreateQuestionPage() {
         <div className="w-full bg-red overflow-auto max-h-[100%]">
           <div className="grid grid-cols-4 gap-4 w-full">
             <AddQuestionCard setQuestions={setQuestions} setFiles={setFiles} />
-            {questions?.map((ques, index) =>
-              <QuestionCard question={ques.question} image={ques.questionPicture} key={index} index={index} />
+            {questions?.map((quesion, index) =>
+              <QuestionCard
+                key={index}
+                index={index}
+                question={quesion}
+                setQuestions={setQuestions}
+                setFiles={setFiles}
+                image={files[index]}
+              />
             )}
           </div>
         </div>

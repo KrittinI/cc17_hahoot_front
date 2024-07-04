@@ -2,10 +2,8 @@ import Select from "../components/Select";
 import Input from "./Input";
 import { useState } from "react";
 import { useRef } from "react";
-import questionApi from "../api/question";
 import useTopic from "../hooks/useTopic";
 import Button from "./Button";
-const arr = [];
 
 const initialError = {
   questionPicture: "",
@@ -15,6 +13,7 @@ const initialError = {
   choice3: "",
   choice4: "",
   answer: "",
+  topicId: "",
   isPublic: false
 };
 
@@ -26,16 +25,17 @@ const initialInput = {
   choice3: "",
   choice4: "",
   answer: "",
+  topicId: 0,
   isPublic: false
 };
 
-export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess, setFiles }) {
+export default function FormAddQuestion({ question, onSuccess, onClose, image }) {
   const { topic } = useTopic()
   const fileEl = useRef();
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(image || null);
   const [error, setError] = useState(initialError);
-  const [input, setInput] = useState(foundQuestion || initialInput);
+  const [input, setInput] = useState(question || initialInput);
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -49,46 +49,9 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
 
   const handleChooseFile = (e) => {
     if (e.target.files[0]) {
-      console.log("hello", e.target.files[0]);
       setFile(e.target.files[0]);
     }
   }
-
-  // const formatQuestion = () => {
-  //   const formData = new FormData();
-
-  //   if (file) {
-  //     console.log("this is file", file);
-  //     formData.append("questionImages", file);
-  //   } else {
-  //     formData.append("questionImages", null);
-
-  //   }
-  //   if (input) {
-  //     console.log("this is input", input);
-
-  //     for (const key in input) {
-  //       if (key === "questionPicture") {
-  //         continue;
-  //       }
-  //       if (key === "index") {
-  //         continue;
-  //       }
-  //       console.log(key);
-  //       formData.append(key, input[key]);
-
-  // if (key == "id") {
-  //   console.log("eiei", key);
-  //   formData.append(key, +input[key]);
-  // } else {
-  //   console.log(key);
-  //   formData.append(key, input[key]);
-  // }
-  // }
-  //     }
-  // console.log(...formData);
-  // return formData;
-  //   };
 
   const handleClickSave = () => {
     if (!input.question) {
@@ -115,93 +78,8 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
     if (!input.answer || !input.choice1 || !input.choice2 || (!input.topicId || input.topicId === "0") || !input.question || (input.answer === "C" && !input.choice3) || input.answer === "D" && (!input.choice3 || !input.choice4)) {
       return
     }
-    setQuestions(prev => [...prev, input])
-    if (file) {
-      setFiles(prev => [...prev, file])
-    } else {
-      setFiles(prev => [...prev, null])
-    }
-    onSuccess()
+    onSuccess(input, file)
   }
-
-  const handleSubmit = (e) => {
-
-    if (!input.question) {
-      setError((prev) => ({ ...prev, question: "Question is required" }));
-    }
-    if (!input.choice1) {
-      setError((prev) => ({ ...prev, choice1: "choice1 is required" }));
-    }
-    if (!input.choice2) {
-      setError((prev) => ({ ...prev, choice2: "choice2 is required" }));
-    }
-    // if (!input.choice3) {
-    //   setError((prev) => ({ ...prev, choice3: "choice3 is required" }));
-    // }
-    // if (!input.choice4) {
-    //   setError((prev) => ({ ...prev, choice4: "choice4 is required" }));
-    // }
-    if (!file) {
-      setError((prev) => ({ ...prev, questionPicture: "questionPicture is required" }));
-      console.log("i am questionPicture", input.questionPicture);
-    }
-    if (!input.answer) {
-      setError((prev) => ({ ...prev, answer: "answer is required" }));
-    }
-    if (!input.isPublic) {
-      setError((prev) => ({ ...prev, isPublic: "isPublic is required" }));
-      console.log("first");
-    }
-
-    for (const key in error) {
-      if (Object.hasOwnProperty.call(error, key)) {
-        const element = error[key];
-
-        if (element) return console.log(element);
-      }
-    }
-
-    // console.log(foundQuestion?.id, "idddd");
-    // console.log(edit);
-
-    arr.push({ ...input, questionPicture: file });
-
-    // if (edit) {
-    //   console.log(index, "indexx");
-    //   console.log(input, "innnnn");
-    //   const editedData = { ...input, questionPicture: file };
-
-    //   const editedArr = arr.map((q, idx) => (idx === index ? editedData : q));
-    //   setQuestions(editedArr);
-
-    //   console.log(input, "innnnn");
-    //   // console.log(questions, "innnnn");
-    //   // const formData = formatQuestion();
-    //   // await questionApi.editQuestionById(foundQuestion.id, formData);
-    // } else {
-    //   console.log(edit, "edit");
-    //   console.log("hahaha");
-    //   console.log(arr, "arr");
-    //   setQuestions(arr);
-    //   console.log("gong");
-    // }
-  };
-
-  // const handleClickCreate = async (indexxx) => {
-  //   // e.preventDefault()
-  //   try {
-  //     const formData = formatQuestion();
-  //     console.log(...formData, "itsme");
-  //     // const questionCreated = await questionApi.createQuestion(formData);
-  //     // console.log("this is your question", questionCreated);
-  //     const filteredArr = arr.filter((el, index) => index !== indexxx);
-  //     console.log(filteredArr);
-  //     setQuestions(filteredArr);
-  //   } catch (err) {
-  //     alert("failed");
-  //   }
-  // };
-  // console.log(input.questionPicture, "pictureeee");
 
   return (
     <div
@@ -219,9 +97,9 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
         />
       </div>
       <div>
-        <Select id="topic" className="text-center shadow-md mt-5" onChange={handleChange} name="topicId" error={error.topicId} header={`Select Topic`}>
+        <Select id="topic" className="text-center shadow-md mt-5" value={+input.topicId} onChange={handleChange} name="topicId" error={error.topicId} header={`Select Topic`}>
           {topic?.map((topic) => (
-            <option value={topic.id} key={topic.id} >
+            <option value={+topic.id} key={topic.id} >
               {topic.topicName}
             </option>
           ))}
@@ -334,13 +212,7 @@ export default function FormAddQuestion({ foundQuestion, setQuestions, onSuccess
       <div></div>
       <Button bg={`blue`} onClick={handleClickSave}>save</Button>
       <div></div>
-      <Button bg={'black'} onClick={() => onSuccess()}>Cancel</Button>
-      {/* <Button
-        bg={`black`}
-        onClick={() => handleClickCreate(foundQuestion?.index)}
-      >
-        create
-      </Button> */}
+      <Button bg={'black'} onClick={() => onClose()} >Cancel</Button>
     </div>
   );
 }
