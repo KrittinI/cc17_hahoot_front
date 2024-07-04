@@ -3,7 +3,7 @@ import Cardcontainer from "../../../components/CardContainer";
 
 export default function OneEventRight({ questions }) {
     return (
-        <div>
+        <div className="h-full">
             <Cardcontainer title={`Question in Events`}>
                 {questions?.map(question =>
                     <CardBoxInProfile

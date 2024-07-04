@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import SplitScreen from "../layouts/SplitScreen";
-import OneQuestionRight from "../features/questions/components/OneQuestionRight";
+import OneQuestionLeft from "../features/questions/components/OneQuestionLeft";
 import CommentContainer from "../features/form/CommentContainer";
 import questionApi from "../api/question";
 
@@ -40,7 +40,7 @@ export default function QuestionPage() {
   return (
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
       <SplitScreen>
-        <OneQuestionRight
+        <OneQuestionLeft
           data={oneQuestion}
           id={+questionId}
           favorite={favorite}
