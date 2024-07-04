@@ -16,8 +16,6 @@ import AdminRoute from "../features/authentication/components/AdminRoute";
 import EventPage from "../pages/EventPage";
 import CreateQuestionPage from "../pages/CreateQuestionPage";
 import QuestionPage from "../pages/QuestionPage";
-import MyAllEventPage from "../pages/MyAllEventPage";
-import MyAllQuizPage from "../pages/MyAllQuizPage";
 import MyFavoritePage from "../pages/MyFavoritePage";
 import CreateEventPage from "../pages/CreateEventPage";
 
@@ -38,7 +36,7 @@ const router = createBrowserRouter([
           <RedirectLogin>
             <RegisterPage />
           </RedirectLogin>
-        )
+        ),
       },
       {
         path: "/login",
@@ -50,15 +48,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/play/:eventId",
-        element: <PlayPage />
+        element: <PlayPage />,
       },
       {
         path: "/playgame/:eventId",
-        element: <PlayGamePage />
+        element: <PlayGamePage />,
       },
       {
         path: "/pincode",
-        element: <PinCodePage />
+        element: <PinCodePage />,
       },
       {
         path: "/questions",
@@ -70,7 +68,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/questions/create-question",
-        element: <CreateQuestionPage />
+        element: (
+          <ProtectRoute>
+            <CreateQuestionPage />
+          </ProtectRoute>
+        ),
       },
       {
         path: "/questions/:questionId",
@@ -106,29 +108,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/pincode",
-        element: <PinCodePage />
+        element: <PinCodePage />,
       },
       {
         path: "/users/:userId",
         element: (
           <ProtectRoute>
             <ProfilePage />
-          </ProtectRoute>
-        ),
-      },
-      {
-        path: "/events/users/:userId",
-        element: (
-          <ProtectRoute>
-            <MyAllEventPage />
-          </ProtectRoute>
-        ),
-      },
-      {
-        path: "/questions/users/:userId",
-        element: (
-          <ProtectRoute>
-            <MyAllQuizPage />
           </ProtectRoute>
         ),
       },

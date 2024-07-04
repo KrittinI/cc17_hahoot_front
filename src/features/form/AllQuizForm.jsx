@@ -1,13 +1,14 @@
 import CardBoxInProfile from "../../components/CardBoxInProfile";
 import image from "../../assets/c4.jpeg";
-import CardContainer from "./CardContainer";
 import useQuestion from "../../hooks/useQuestion";
+import Cardcontainer from "../../components/CardContainer";
 
-export default function QuizForm({ title }) {
+export default function AllQuizForm({ title }) {
   const { showQuestion } = useQuestion();
+
   return (
-    <div className="flex flex-col mb-7">
-      <CardContainer title={title}>
+    <div className="mb-7">
+      <Cardcontainer title={title}>
         <div className="flex flex-wrap justify-center h-auto gap-10 pt-4 mb-6">
           {showQuestion?.map((el, index) => (
             <CardBoxInProfile
@@ -19,7 +20,7 @@ export default function QuizForm({ title }) {
             />
           ))}
         </div>
-      </CardContainer>
+      </Cardcontainer>
     </div>
   );
 }

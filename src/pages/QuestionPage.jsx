@@ -12,27 +12,28 @@ export default function QuestionPage() {
   const { getQuestionByQuestionId } = useQuestion();
 
   const [oneQuestion, setOneQuestion] = useState(null);
-  const [favorite, setFavorite] = useState(false)
+
+  const [favorite, setFavorite] = useState(false);
 
   const handleClickFavorite = async () => {
     try {
       if (favorite) {
-        await questionApi.deleteFav(oneQuestion?.id)
+        await questionApi.deleteFav(oneQuestion?.id);
       } else {
-        await questionApi.createFav(oneQuestion?.id)
+        await questionApi.createFav(oneQuestion?.id);
       }
-      setFavorite(prev => !prev)
+      setFavorite((prev) => !prev);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
         const res = await getQuestionByQuestionId(+questionId);
         setOneQuestion(res);
-        setFavorite(Boolean(res.QuestionFavorite.length))
+        setFavorite(Boolean(res.QuestionFavorite.length));
       } catch (error) {
         console.log(error);
       }
@@ -42,8 +43,13 @@ export default function QuestionPage() {
 
   return (
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
-      <SplitScreen >
-        <QuestionForm data={oneQuestion} id={+questionId} favorite={favorite} handleClickFavorite={handleClickFavorite} />
+      <SplitScreen>
+        <QuestionForm
+          data={oneQuestion}
+          id={+questionId}
+          favorite={favorite}
+          handleClickFavorite={handleClickFavorite}
+        />
         <CommentContainer />
       </SplitScreen>
     </div>

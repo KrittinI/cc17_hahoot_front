@@ -1,14 +1,15 @@
-const displayMap = {
-    grid: 'px-8 pb-8 grid grid-cols-5',
-    grid4: 'px-4 pb-4 grid grid-cols-4',
-    flex: 'px-4 py-2 flex flex-nowrap',
-    flexCol: 'flex flex-col'
-}
-
-export default function CardContainer({ children, display = "grid" }) {
-    return (
-        <div className={`${displayMap[display]} gap-4 `}>
-            {children}
+export default function Cardcontainer({ title, children, hight }) {
+  return (
+    <div
+      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg h-[calc(100vh-${hight}rem)]`}
+    >
+      <div className="flex justify-between items-center mb-4">
+        <div className="text-center mb-2 font-bold text-black text-3xl">
+          {title}
         </div>
-    )
+      </div>
+      <hr className="shadow-2 w-full" />
+      <div>{children}</div>
+    </div>
+  );
 }
