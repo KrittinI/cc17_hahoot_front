@@ -6,7 +6,7 @@ export default function AllQuizForm({ title }) {
   const { showQuestion } = useQuestion();
 
   return (
-    <div className="mb-7">
+    <div className="h-full">
       <Cardcontainer title={title}>
         {showQuestion?.map((question) => (
           <CardBoxInProfile

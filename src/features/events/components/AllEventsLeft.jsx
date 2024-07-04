@@ -6,7 +6,7 @@ export default function AllEventsLeft({ title }) {
   const { showEvent } = useEvent();
 
   return (
-    <div className="">
+    <div className="h-full">
       <Cardcontainer title={title}>
         {showEvent?.map((event) => (
           <CardBoxInProfile
