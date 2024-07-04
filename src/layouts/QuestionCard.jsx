@@ -5,7 +5,8 @@ import DeleteIcon from "../icons/delete";
 import EditIcon from "../icons/edit";
 // import Fav from "../icons/Fav";
 import Button from "../components/Button";
-import Avatar from "../components/Avatar"
+import Avatar from "../components/Avatar";
+import { HeartIcon, HeartIconHover } from "../icons/heart";
 
 export default function QuestionCard({
   question,
@@ -46,21 +47,24 @@ export default function QuestionCard({
         <div className="w-full overflow-hidden rounded-t-xl relative">
           {image && (
             <img
-              className="overflow-hidden object-cover aspect-[16/11] "
+              className="overflow-hidden object-cover aspect-[16/11] relative "
               src={URL.createObjectURL(image)}
               alt="photo"
             />
           )}
+          <div className="absolute top-2 right-2 bg-white rounded-full p-1">
+            <HeartIconHover />
+          </div>
         </div>
-        {/* <div className="absolute top-2 right-2 bg-white rounded-full p-1">
-          <Fav />
-        </div> */}
+
         <div className="px-2 py-3 w-full grid gap-y-6">
-          <p className="overflow-hidden text-ellipsis whitespace-nowrap">{question?.question}</p>
+          <p className="overflow-hidden text-ellipsis whitespace-nowrap">
+            {question?.question}
+          </p>
           <div className="flex justify-between items-center">
-          <Avatar />
-          <div className="text-font-title-card text-blue">Mathematis</div>
-        </div>
+            <Avatar />
+            <div className="text-font-title-card text-blue">Mathematis</div>
+          </div>
         </div>
       </div>
       <div className="flex justify-evenly w-[190px]">
