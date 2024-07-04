@@ -1,8 +1,8 @@
 import { useState } from "react";
-import QuizForm from "../features/form/QuizForm";
 import SplitScreen from "../layouts/SplitScreen";
 import useEvent from "../hooks/useEvent";
 import SearchFavorite from "../features/myQuiz-Event/components/SearchFavorite";
+import QuizForm from "../features/userProfile/components/QuizForm";
 
 export default function MyFavoritePage() {
   const [title, setTitle] = useState("All Event");

@@ -12,6 +12,7 @@ export default function CardBoxInProfile({
   name,
 }) {
   const navigate = useNavigate();
+
   return (
     <div
       className={`bg-white flex flex-col justify-center shadow-xl rounded-lg w-[${width}%]`}
