@@ -35,11 +35,11 @@ export default function QuestionForm({ data, id }) {
 
   return (
     <div
-      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg h-[calc(100vh})]`}
+      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg`}
     >
       <div className="flex justify-between items-center mb-4">
         <div className="text-center mb-2 text-font-title">
-          Quiz : {data?.id}
+          Quiz : {data?.question}
         </div>
       </div>
       <hr className="shadow-2 w-full" />

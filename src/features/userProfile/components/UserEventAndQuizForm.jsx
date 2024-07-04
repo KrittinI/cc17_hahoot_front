@@ -17,7 +17,7 @@ export default function UserEventAndQuizForm() {
         showSeeAll
         onClick={() => navigate(`/events/users/${profile?.id}`)}
       >
-        <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto pt-4">
+        <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto ">
           {event?.map((el, index) => (
             <CardBoxInProfile
               key={index}

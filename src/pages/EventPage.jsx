@@ -26,7 +26,7 @@ export default function EventPage() {
   console.log(oneEvent);
 
   return (
-    <div className="w-[66%] mx-auto h-[auto]">
+    <div className="w-[66%] mx-auto h-[calc(100vh-164px)]">
       <SplitScreen sizeRatio={30}>
         <EventForm data={oneEvent} id={+eventId} />
         <QuizForm title={"Quizs of Event"} />
