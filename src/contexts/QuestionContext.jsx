@@ -19,6 +19,7 @@ export default function QuestionContextProvider({ children }) {
   const getAllQuestion = async () => {
     const res = await questionApi.getAllQuestion();
     setQuestion(res.data.questions);
+    setShowQuestion(res.data.questions)
   };
 
   const getQuestionByUserId = async (id) =>

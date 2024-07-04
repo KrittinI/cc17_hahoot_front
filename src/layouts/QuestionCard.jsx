@@ -3,7 +3,6 @@ import FormAddQuestion from "../components/FormAddQuestion";
 import Modal from "../components/Modal";
 import DeleteIcon from "../icons/delete";
 import EditIcon from "../icons/edit";
-import Fav from "../icons/Fav";
 import Button from "../components/Button";
 
 export default function QuestionCard({ question, image, index, setQuestions, setFiles }) {
@@ -38,9 +37,6 @@ export default function QuestionCard({ question, image, index, setQuestions, set
     <div className="flex flex-col gap-2">
       <div className="bg-white h-64 w-full relative rounded-xl shadow-lg" >
         <div className="w-full overflow-hidden rounded-t-xl relative">{(image) && <img className="overflow-hidden object-cover aspect-[16/9] " src={URL.createObjectURL(image)} alt="รูป" />}</div>
-        {/* <div className="absolute top-2 right-2 bg-white rounded-full p-1">
-          <Fav />
-        </div> */}
         <div className="px-3 py-1">
           <p>{question?.question}</p>
         </div>
