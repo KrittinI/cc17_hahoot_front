@@ -5,13 +5,15 @@ import EditIcon from "../../../icons/edit";
 import LeftArrowIcon from "../../../icons/left-arrow";
 import RightArrowIcon from "../../../icons/right-arrow";
 import useQuestion from "../../../hooks/useQuestion";
-import { useEffect } from "react";
 import Avatar from "../../../components/Avatar";
-import { HeartIcon } from "../../../icons/heart";
+import { HeartIcon, HeartIconUnfav } from "../../../icons/heart";
+import useAuth from "../../../hooks/useAuth";
 
-export default function QuestionForm({ data, id }) {
+export default function QuestionForm({ data, id, favorite, handleClickFavorite }) {
   const navigate = useNavigate();
   const { showQuestion } = useQuestion();
+  const { authUser } = useAuth()
+
   const index = showQuestion.findIndex((el) => el.id === id);
 
   const handleClickNext = () => {
@@ -27,82 +29,83 @@ export default function QuestionForm({ data, id }) {
     } else navigate(`/questions/${showQuestion[index - 1].id}`);
   };
 
-  useEffect(() => {
-    if (showQuestion.length === 0) {
-      navigate(`/questions/`);
-    }
-  }, [showQuestion]);
-
   return (
     <div
-      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg`}
+      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg gap-8`}
     >
-      <div className="flex justify-between items-center mb-4">
-        <div className="text-center mb-2 text-font-title">
-          Quiz : {data?.question}
+      <div className="flex justify-between items-center">
+        <div className="text-center text-font-title-card w-full">
+          {data?.question}
         </div>
       </div>
       <hr className="shadow-2 w-full" />
-      <div className="grid gap-4 mt-8">
-        <div className="bg-white p-3 shadow rounded-lg text-center text-font-title-card">
-          {data?.question}
+      <div className="grid grid-cols-10 gap-4">
+        <div
+          className="flex justify-center items-center self-center bg-yellow w-[60px] h-[60px] rounded-full col-span-1 invisiable hover:bg-grey"
+          role="button"
+          onClick={handleClickPrevious}
+        >
+          <LeftArrowIcon />
         </div>
-        <div className="flex justify-around items-center">
-          <div
-            className="flex justify-center items-center bg-yellow w-[60px] h-[60px] rounded-full invisiable hover:bg-grey"
-            role="button"
-            onClick={handleClickPrevious}
-          >
-            <LeftArrowIcon />
-          </div>
-          <div className="max-w-[240px] h-[300px] flex justify-center items-center gap-x-2">
+        <div className="h-[450px] flex flex-col col-span-8 justify-center items-center gap-2">
+          <div className="bg-gray-300 p-2 w-full h-[80%] flex justify-center items-center">
             <img
-              className="rounded-lg max-h-[180px]"
+              className="rounded-lg w-auto h-auto max-h-[100%] max-w-[100%]"
               src={data?.questionPicture || image}
               alt="questionPicture"
             />
-            <div className="grid gap-y-2">
-              <div className="flex justify-start items-center p-4 w-[250px] h-[30px] bg-green shadow-xl rounded-lg ">answer</div>
-              <div className="flex justify-start items-center p-4 w-[250px] h-[30px] bg-blue shadow-xl rounded-lg ">answer</div>
-              <div className="flex justify-start items-center p-4 w-[250px] h-[30px] bg-blue shadow-xl rounded-lg ">answer</div>
-              <div className="flex justify-start items-center p-4 w-[250px] h-[30px] bg-blue shadow-xl rounded-lg ">answer</div>
-            </div>
           </div>
-          <div
-            className="flex justify-center items-center bg-red w-[60px] h-[60px] rounded-full invisiable hover:bg-grey"
-            role="button"
-            onClick={handleClickNext}
-          >
-            <RightArrowIcon />
+          <div className="grid w-full grid-cols-2 gap-2">
+            <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "A" ? 'bg-green' : 'bg-red'} shadow-xl rounded-lg `}>{data?.choice1}</div>
+            <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "B" ? 'bg-green' : 'bg-red'} shadow-xl rounded-lg `}>{data?.choice2}</div>
+            {data?.choice3 &&
+              <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "C" ? 'bg-green' : 'bg-red'} shadow-xl rounded-lg `}>{data?.choice3}</div>
+            }
+            {data?.choice4 &&
+              <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "D" ? 'bg-green' : 'bg-red'} shadow-xl rounded-lg `}>{data?.choice4}</div>
+            }
           </div>
         </div>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-x-4 text-font-title-card">
-            <div>
-              <Avatar />
-            </div>
-            <div>Username</div>
+        <div
+          className="flex justify-center items-center col-span-1 self-center bg-red w-[60px] h-[60px] rounded-full invisiable hover:bg-grey"
+          role="button"
+          onClick={handleClickNext}
+        >
+          <RightArrowIcon />
+        </div>
+      </div>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-x-4 text-font-title-card">
+          <div role="button" onClick={() => navigate(`../../users/${data?.user.id}`)}>
+            <Avatar src={data?.user.googleImage || data?.user.profileImage} />
           </div>
-          <div className="flex gap-x-6">
-            <div
-              role="button"
-              className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
-            >
-              <HeartIcon />
-            </div>
-            <div
-              role="button"
-              className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
-            >
-              <EditIcon />
-            </div>
-            <div
-              role="button"
-              className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
-            >
-              <DeleteIcon />
-            </div>
+          <div>{data?.user.username}</div>
+        </div>
+        <div className="flex gap-x-6">
+          <div
+            role="button"
+            className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
+            onClick={handleClickFavorite}
+          >
+            {favorite ? <HeartIcon /> : <HeartIconUnfav />}
           </div>
+          {data?.creatorId === authUser?.id
+            ? <>
+              <div
+                role="button"
+                className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
+              >
+                <EditIcon />
+              </div>
+              <div
+                role="button"
+                className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
+              >
+                <DeleteIcon />
+              </div>
+            </>
+            : null
+          }
         </div>
       </div>
     </div>

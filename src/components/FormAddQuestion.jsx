@@ -105,8 +105,9 @@ export default function FormAddQuestion({ question, onSuccess, onClose, image })
           ))}
         </Select>
       </div>
-      <div className="grid col-span-2 bg-orange-300">
+      <div className="grid col-span-2 bg-orange-300" >
         <input
+          className=""
           type="file"
           ref={fileEl}
           name="questionPicture"
