@@ -1,7 +1,7 @@
-export default function Cardcontainer({ title, children, hight }) {
+export default function Cardcontainer({ title, children }) {
   return (
     <div
-      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg h-[calc(100vh-${hight}rem)]`}
+      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg min-h-[80vh] `}
     >
       <div className="flex justify-between items-center gap-4 ">
         <div className="text-center  font-bold text-black text-3xl">
