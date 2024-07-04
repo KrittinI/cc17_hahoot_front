@@ -10,6 +10,7 @@ export default function QuestionPage() {
   const { questionId } = useParams();
   const [oneQuestion, setOneQuestion] = useState(null);
   const { getQuestionByQuestionId } = useQuestion();
+  console.log(oneQuestion);
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -24,7 +25,7 @@ export default function QuestionPage() {
   }, [questionId]);
 
   return (
-    <div className="w-[66%] mx-auto h-[calc(100vh-164px)] bg-black">
+    <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
       <SplitScreen >
         <QuestionForm data={oneQuestion} id={+questionId} />
         <CommentContainer />
