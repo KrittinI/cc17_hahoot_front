@@ -42,9 +42,14 @@ const MultiPlayer = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(15);
+  const [timeLeft, setTimeLeft] = useState(20);
   const [totalTimeLeft, setTotalTimeLeft] = useState(0);
   const [hasJoined, setHasJoined] = useState(false);
+
+  useEffect(() => {
+    //Reset state when component mounts or reload page
+    resetState();
+  }, []);
 
   useEffect(() => {
     socket.on("isOwner", () => setIsOwner(true));
@@ -55,20 +60,26 @@ const MultiPlayer = () => {
     socket.on("updatePlayers", (players) => setPlayers(players));
     socket.on("gameStarted", () => {
       setIsStarted(true);
-      setTotalTimeLeft(players.length * 20);
+      //setTotalTimeLeft(players.length * 20);
     });
     socket.on("newQuestion", (questionData) => {
       setCurrentQuestion(questionData);
       setTimeLeft(20);
       console.log("questionData = ", questionData);
     });
+
+    socket.on("showAnswer", () => {
+      setShowAnswer(true);
+    });
     socket.on("answerResult", ({ correct, answer }) => {
       setShowAnswer(true);
+      //alert("answerResult received");
       if (correct) setScore((prevScore) => prevScore + 1);
-      setTimeout(() => {
-        setShowAnswer(false);
-        setSelectedAnswer(null);
-      }, 3000);
+
+      // setTimeout(() => {
+      //   setShowAnswer(false);
+      //   setSelectedAnswer(null);
+      // }, 3000);
     });
     socket.on("gameOver", () => {
       setCurrentQuestion(null);
@@ -86,7 +97,8 @@ const MultiPlayer = () => {
       socket.off("updatePlayers");
       socket.off("gameStarted");
       socket.off("newQuestion");
-      socket.off("answerResult");
+      socket.off("show");
+      socket.off("showAnswer");
       socket.off("gameOver");
       socket.off("roomNotFound");
       socket.off("joinedRoom");
@@ -101,6 +113,22 @@ const MultiPlayer = () => {
       setShowAnswer(true);
     }
   }, [timeLeft, showAnswer]);
+
+  const resetState = () => {
+    setName("");
+    setRoomId("");
+    setIsOwner(false);
+    setIsStarted(false);
+    setPlayers([]);
+    setCurrentQuestion(null);
+    setSelectedAnswer(null);
+    setShowAnswer(false);
+    setScore(0);
+    setTimeLeft(20);
+    setTotalTimeLeft(0);
+    setHasJoined(false);
+    //alert("Reset-State");
+  };
 
   const handleCreateRoom = () => {
     if (name.trim()) {
@@ -126,6 +154,7 @@ const MultiPlayer = () => {
     //setShowAnswer(false);
 
     socket.emit("submitAnswer", { roomId, answer: option });
+    console.log("submitAnswer is Working in Frontend");
   };
 
   //const { question, options, answer, image } = currentQuestion;
@@ -209,7 +238,7 @@ const MultiPlayer = () => {
               {console.log("SRC = ", currentQuestion.image)}
               <button
                 className={`rounded-lg w-32 h-12 shadow-lg text-lg font-bold ${
-                  selectedAnswer || showAnswer
+                  showAnswer
                     ? "bg-white text-black animate-bounce"
                     : "bg-grey text-white invisible"
                 } transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl`}
@@ -229,8 +258,6 @@ const MultiPlayer = () => {
                     showAnswer
                       ? option === currentQuestion.answer
                         ? "bg-darkgreen"
-                        : selectedAnswer === option
-                        ? "bg-darkred"
                         : "bg-red opacity-80"
                       : `${buttonColors[index]} ${hoverColors[index]}`
                   } flex justify-between items-center transition-all duration-500 ease-in-out transform hover:scale-105`}
@@ -257,17 +284,19 @@ const MultiPlayer = () => {
             {
               //console.log("currentQuestion = ", currentQuestion)
             }
-            <div className="w-[80vw] h-[80vh] bg-transparent">
-              <div className="grid grid-cols-2 gap-2 w-full h-full">
-                {currentQuestion.options.map((option, index) => (
-                  <button
-                    key={option}
-                    onClick={() => handleAnswerClick}
-                    className={`w-[473px] h-[294px] px-10 py-10 text-white animate-pop ${buttonColors[index]} ${hoverColors[index]} flex justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105`}
-                  >
-                    {iconsCustom[index]}
-                  </button>
-                ))}
+            <div className="h-screen w-screen bg-transparent flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center">
+                <div className="grid grid-cols-2 gap-2 w-full h-full">
+                  {currentQuestion.options.map((option, index) => (
+                    <button
+                      key={option}
+                      onClick={() => handleAnswerClick(option)}
+                      className={`w-[473px] h-[294px] px-10 py-10 text-white animate-pop ${buttonColors[index]} ${hoverColors[index]} flex justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105`}
+                    >
+                      {iconsCustom[index]}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </>
