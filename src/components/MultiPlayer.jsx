@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
+import Loading from "./Loading";
 import {
   Square,
   Circle,
@@ -301,7 +302,7 @@ const MultiPlayer = () => {
             </div>
           </>
         ) : (
-          "Loading Questions ..."
+          <Loading />
         )}
       </div>
     </div>

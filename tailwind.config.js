@@ -78,6 +78,9 @@ export default {
         "blue-bottom-solid-2": ["2px solid blue", "0 0 2px 0"],
       },
       animation: {
+        bounce: "bounce 1s infinite",
+        "bounce-delay-75": "bounce 1s infinite 0.75s",
+        "bounce-delay-150": "bounce 1s infinite 1.5s",
         "fade-in": "fadeIn 1s ease-out",
         pop: "pop 0.3s ease-out",
       },
