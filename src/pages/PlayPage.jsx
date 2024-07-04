@@ -42,7 +42,7 @@ export default function PlayPage() {
   const { question, options, answer, image } = quizData[currentQuestionIndex];
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)]">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-164px)]">
       <div className="w-[60%]">
         {/* Quiz */}
         <div className="bg-white shadow-lg rounded-lg p-8 w-full">
@@ -70,13 +70,12 @@ export default function PlayPage() {
               <button
                 key={option}
                 onClick={() => handleAnswerClick(option)}
-                className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${
-                  option === selectedAnswer
-                    ? option === answer
-                      ? "bg-green"
-                      : "bg-red"
-                    : "bg-blue hover:bg-darkblue"
-                }`}
+                className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${option === selectedAnswer
+                  ? option === answer
+                    ? "bg-green"
+                    : "bg-red"
+                  : "bg-blue hover:bg-darkblue"
+                  }`}
               >
                 {option}
               </button>

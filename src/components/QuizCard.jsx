@@ -80,7 +80,7 @@ export default function QuizCard() {
   if (currentQuestionIndex >= quizData.length) {
     return (
       // Result your score
-      <div className="flex items-center justify-center h-[calc(100vh-12rem)]">
+      <div className="flex items-center justify-center h-[calc(100vh-164px)]">
         <div className="grid grid-1 gap-8 text-center w-[400px] h-[266px] bg-white rounded-lg p-6 ">
           <h1 className="text-font-title">Your score</h1>
           <h1 className="text-font-header text-blue">
@@ -112,7 +112,7 @@ export default function QuizCard() {
   const { question, options, answer, image } = quizData[currentQuestionIndex];
 
   return (
-    <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)]">
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-164px)]">
       <div className="w-[60%]">
         {/* Quiz */}
         <div className="bg-white shadow-lg rounded-lg p-8 w-full">

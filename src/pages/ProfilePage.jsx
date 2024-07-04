@@ -5,9 +5,9 @@ import SplitScreen from "../layouts/SplitScreen";
 
 export default function ProfilePage() {
   return (
-    <div className="w-[68%] mx-auto h-[calc(100vh-12rem)]">
+    <div className="w-[68%] mx-auto h-[calc(100vh-164px)]">
       <UserContextProvider>
-        <SplitScreen sizeRatio={70}>
+        <SplitScreen >
           <UserEventAndQuizForm />
           <UserProfile />
         </SplitScreen>

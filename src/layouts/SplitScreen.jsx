@@ -21,18 +21,16 @@ export default function SplitScreen({
   const [left, right] = children;
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-4">
         <div
-          className={`${sizeMap[sizeRatio]} pt-8 mr-8 ${
-            border ? "border-r" : ""
-          }`}
+          className={`${sizeMap[sizeRatio]} pt-8  ${border ? "border-r" : ""
+            }`}
         >
           {left}
         </div>
         <div
-          className={`${sizeMap[100 - sizeRatio]} pt-8 ${
-            border ? "border-l" : ""
-          }`}
+          className={`${sizeMap[100 - sizeRatio]} pt-8 ${border ? "border-l" : ""
+            }`}
         >
           {right}
         </div>

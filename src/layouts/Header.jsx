@@ -48,10 +48,10 @@ export default function Header() {
                     <Button bg="black" onClick={handleOnClickPlay}>
                       Play
                     </Button>
-                    <Link to="/events" className="hover:text-blue">
+                    <Link to="/events" className="px-3 py-1 rounded-lg hover:bg-blue hover:text-white">
                       All Event
                     </Link>
-                    <Link to="/questions" className="hover:text-blue">
+                    <Link to="/questions" className="px-3 py-1 rounded-lg hover:bg-blue hover:text-white">
                       All Quiz
                     </Link>
                   </div>
