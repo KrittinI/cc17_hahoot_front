@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import useQuestion from "../hooks/useQuestion";
 import { useEffect } from "react";
 import { useState } from "react";
 import SplitScreen from "../layouts/SplitScreen";
@@ -9,12 +8,9 @@ import questionApi from "../api/question";
 
 export default function QuestionPage() {
   const { questionId } = useParams();
-  const { getQuestionByQuestionId } = useQuestion();
 
   const [oneQuestion, setOneQuestion] = useState(null);
-
   const [favorite, setFavorite] = useState(false);
-
   const handleClickFavorite = async () => {
     try {
       if (favorite) {
@@ -31,9 +27,9 @@ export default function QuestionPage() {
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const res = await getQuestionByQuestionId(+questionId);
-        setOneQuestion(res);
-        setFavorite(Boolean(res.QuestionFavorite.length));
+        const res = await questionApi.getQuestionByQuestionId(+questionId);
+        setOneQuestion(res.data.question);
+        setFavorite(Boolean(res.data.question.QuestionFavorite?.length));
       } catch (error) {
         console.log(error);
       }
