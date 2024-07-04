@@ -9,7 +9,7 @@ import Avatar from "../../../components/Avatar";
 import { HeartIcon, HeartIconUnfav } from "../../../icons/heart";
 import useAuth from "../../../hooks/useAuth";
 
-export default function QuestionForm({ data, id, favorite, handleClickFavorite }) {
+export default function OneQuestionRight({ data, id, favorite, handleClickFavorite }) {
   const navigate = useNavigate();
   const { showQuestion } = useQuestion();
   const { authUser } = useAuth()

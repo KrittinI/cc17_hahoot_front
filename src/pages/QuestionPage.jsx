@@ -3,7 +3,7 @@ import useQuestion from "../hooks/useQuestion";
 import { useEffect } from "react";
 import { useState } from "react";
 import SplitScreen from "../layouts/SplitScreen";
-import QuestionForm from "../features/oneQuiz-Event/components/QuestionForm";
+import OneQuestionRight from "../features/questions/components/OneQuestionRight";
 import CommentContainer from "../features/form/CommentContainer";
 import questionApi from "../api/question";
 
@@ -44,7 +44,7 @@ export default function QuestionPage() {
   return (
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
       <SplitScreen>
-        <QuestionForm
+        <OneQuestionRight
           data={oneQuestion}
           id={+questionId}
           favorite={favorite}
