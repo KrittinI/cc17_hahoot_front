@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Loading from "./Loading";
+import ClientAnswerResult from "./ClientAnswerResult";
 import {
   Square,
   Circle,
@@ -46,6 +47,8 @@ const MultiPlayer = () => {
   const [timeLeft, setTimeLeft] = useState(20);
   const [totalTimeLeft, setTotalTimeLeft] = useState(0);
   const [hasJoined, setHasJoined] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [clientAnswerResult, setClientAnswerResult] = useState(null);
 
   useEffect(() => {
     //Reset state when component mounts or reload page
@@ -75,8 +78,12 @@ const MultiPlayer = () => {
     socket.on("answerResult", ({ correct, answer }) => {
       setShowAnswer(true);
       //alert("answerResult received");
+      //alert(correct);
       if (correct) setScore((prevScore) => prevScore + 1);
 
+      setLoading(false);
+      setClientAnswerResult(correct);
+      handleCheck();
       // setTimeout(() => {
       //   setShowAnswer(false);
       //   setSelectedAnswer(null);
@@ -128,6 +135,9 @@ const MultiPlayer = () => {
     setTimeLeft(20);
     setTotalTimeLeft(0);
     setHasJoined(false);
+    setLoading(false);
+    setClientAnswerResult(null);
+
     //alert("Reset-State");
   };
 
@@ -150,12 +160,18 @@ const MultiPlayer = () => {
 
   const handleAnswerClick = (option) => {
     if (selectedAnswer) return;
-
-    //setSelectedAnswer(option);
+    setSelectedAnswer(option);
     //setShowAnswer(false);
+    // แสดงหน้า Loading
+    setLoading(true);
 
     socket.emit("submitAnswer", { roomId, answer: option });
     console.log("submitAnswer is Working in Frontend");
+    return (
+      <>
+        <Loading />
+      </>
+    );
   };
 
   //const { question, options, answer, image } = currentQuestion;
@@ -163,7 +179,9 @@ const MultiPlayer = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-full gap-12 transition-all duration-300 ease-in-out transform">
-        {!hasJoined ? (
+        {loading ? (
+          <Loading />
+        ) : !hasJoined ? (
           <div className="flex flex-col items-center justify-center">
             <p className="text-3xl">Hahoot!</p>
             <input
@@ -280,10 +298,17 @@ const MultiPlayer = () => {
               ))}
             </div>
           </div>
+        ) : clientAnswerResult !== null ? (
+          clientAnswerResult ? (
+            <div>Client Answer Result is True</div>
+          ) : (
+            <div>Client Answer Result is False</div>
+          )
         ) : !isOwner && currentQuestion ? (
           <>
             {
               //console.log("currentQuestion = ", currentQuestion)
+              //alert("This render Component for Clients")
             }
             <div className="h-screen w-screen bg-transparent flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
@@ -302,7 +327,7 @@ const MultiPlayer = () => {
             </div>
           </>
         ) : (
-          <Loading />
+          ""
         )}
       </div>
     </div>
