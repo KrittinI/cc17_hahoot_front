@@ -13,7 +13,7 @@ import {
   CheckFalse,
 } from "../icons/kahoot";
 
-const socket = io("http://localhost:4000");
+//const socket = io("http://localhost:4000");
 const iconsDefault = [<Triangle />, <Dimond />, <Circle />, <Square />];
 const iconsCustom = [
   <Triangle size="24vmin" />,
@@ -73,10 +73,10 @@ const MultiPlayer = () => {
     });
 
     socket.on("showAnswer", () => {
-      setShowAnswer(true);
+      setShowAnswer(false);
     });
     socket.on("answerResult", ({ correct, answer }) => {
-      setShowAnswer(true);
+      //setShowAnswer(true);
       //alert("answerResult received");
       //alert(correct);
       if (correct) setScore((prevScore) => prevScore + 1);
