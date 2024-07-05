@@ -15,7 +15,6 @@ export default function UserContextProvider({ children }) {
   const [profile, setProfile] = useState(null);
   const [question, setQuestion] = useState([]);
   const [event, setEvent] = useState([]);
-
   const updateProfileUser = async (body) => {
     await userApi.update(body);
   };

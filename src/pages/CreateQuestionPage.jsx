@@ -32,13 +32,14 @@ export default function CreateQuestionPage() {
   }
 
   return (
-    <div className="h-[calc(100vh-164px)] w-[80%] bg-gray-300 mx-auto flex flex-col justify-between items-center p-4">
-      <div className="bg-blue w-full flex flex-col gap-2 h-[calc(100%-40px)]">
-        <div className="bg-white w-44 h-20 rounded-xl flex items-center justify-center self-center text-3xl">
-          <h1>New Quiz</h1>
+    <div className="h-[calc(100vh-164px)] w-[70%] mx-auto flex flex-col justify-between items-center p-4">
+      <div className="bg-white w-full flex flex-col gap-4 h-[calc(100%-40px)] rounded-xl p-4">
+        <div className="bg-white w-44 h-10 rounded-xl flex items-center justify-center">
+          <h1 className="text-font-title">New Quiz</h1>
         </div>
-        <div className="w-full bg-red overflow-auto max-h-[100%]">
-          <div className="grid grid-cols-4 gap-4 w-full">
+        <hr className="shadow-2 text-grey " />
+        <div className="w-full overflow-auto max-h-[100%]">
+          <div className="grid grid-cols-5 gap-4 w-full">
             <AddQuestionCard setQuestions={setQuestions} setFiles={setFiles} />
             {questions?.map((quesion, index) =>
               <QuestionCard
@@ -53,8 +54,8 @@ export default function CreateQuestionPage() {
           </div>
         </div>
       </div>
-      <div className="bg-green w-full">
-        <Button bg={`black`} width={40} onClick={handleClickSave}>Save</Button>
+      <div className="w-full flex justify-end items-end">
+        <Button bg={`black`} width={60} onClick={handleClickSave}>Save</Button>
       </div>
     </div>
   );

@@ -1,21 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useNavigate } from "react-router-dom";
+
 import CardBoxInProfile from "../../../components/CardBoxInProfile";
 import image from "../../../assets/c4.jpeg";
 import useUser from "../../../hooks/useUser";
-import Cardcontainer from "../../form/CardContainer";
+import CardContainerInProfile from "../../form/CardContainerInProfile";
 
-export default function UserEventAndQuizForm() {
-  const { profile, question, event } = useUser();
-  const navigate = useNavigate();
-  console.log(event);
+export default function UserEventAndQuizForm({
+  setIsQuizForm,
+  setIsEventForm,
+  setSeeAllProfileData,
+}) {
+  const { question, event } = useUser();
+
+  const handleClickEvent = () => {
+    setIsEventForm(true);
+    setSeeAllProfileData(true);
+  };
+
+  const handleClickQuiz = () => {
+    setIsQuizForm(true);
+    setSeeAllProfileData(true);
+  };
 
   return (
     <div className="flex flex-col gap-7 ">
-      <Cardcontainer
+      <CardContainerInProfile
         title="My Event"
         showSeeAll
-        onClick={() => navigate(`/events/users/${profile?.id}`)}
+        onClick={handleClickEvent}
       >
         <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto ">
           {event?.map((el, index) => (
@@ -23,15 +35,17 @@ export default function UserEventAndQuizForm() {
               key={index}
               title={el?.eventName}
               image={el?.eventImage || image}
+              id={el?.id}
+              name="events"
             />
           ))}
         </div>
-      </Cardcontainer>
-      <Cardcontainer
+      </CardContainerInProfile>
+      <CardContainerInProfile
         title="My Quiz"
         hight={30}
         showSeeAll
-        onClick={() => navigate(`/questions/users/${profile?.id}`)}
+        onClick={handleClickQuiz}
       >
         <div className="flex flex-col flex-wrap justify-center h-60 gap-6 overflow-y-auto pt-4">
           {question?.map((el, index) => (
@@ -39,10 +53,12 @@ export default function UserEventAndQuizForm() {
               key={index}
               title={el?.question}
               image={el?.questionImage || image}
+              id={el?.id}
+              name="questions"
             />
           ))}
         </div>
-      </Cardcontainer>
+      </CardContainerInProfile>
     </div>
   );
 }

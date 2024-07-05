@@ -1,28 +1,66 @@
+import { useEffect } from "react";
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
+import useAuth from "../../../hooks/useAuth";
+import useUser from "../../../hooks/useUser";
 import { HeartIconHover } from "../../../icons/heart";
+import EditProfileBox from "../../userProfile/components/EditProfileBox";
+import { useNavigate } from "react-router-dom";
 
-export default function ActiveMyQuizEvent() {
+export default function ActiveMyQuizEvent({
+  isCreateEventOrQuiz,
+  profileData,
+}) {
+  const { authUser } = useAuth();
+  const { profile, setProfile } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authUser?.id === profile?.id) {
+      setProfile(authUser);
+    }
+  }, [authUser]);
+
   return (
     <div className="flex flex-col items-center gap-4 h-[auto] w-full bg-white rounded-lg p-6">
-      <h2 className="text-font-title">username</h2>
-      <Avatar size={100} />
-      <h2 className="text-center mb-2 text-font-title-card">E-mail:</h2>
+      <h2 className="text-font-title">{profile?.username}</h2>
+      <Avatar size={100} src={profile?.profileImage} />
+      <h2 className="text-center mb-2 text-font-title-card">{`E-mail : ${profile?.email}`}</h2>
       <hr className="mt-2 shadow-md w-[80%]" />
-      <Button bg={"black"} width={"full"}>
-        Edit Profile
-      </Button>
-
-      <Button bg={"blue"} width={"full"}>
-        Add New Event
-      </Button>
-
-      <Button bg={"red"} width={"full"}>
-        <div className="flex w-full justify-center items-center gap-x-2">
-          <HeartIconHover />
-          My Favorite
-        </div>
-      </Button>
+      {authUser?.id === profile?.id && (
+        <>
+          <EditProfileBox />
+          {profileData ? (
+            <>
+              {isCreateEventOrQuiz ? (
+                <Button
+                  bg={"blue"}
+                  width={"full"}
+                  onClick={() => navigate("/questions/create-question")}
+                >
+                  Add New Quiz
+                </Button>
+              ) : (
+                <Button
+                  bg={"blue"}
+                  width={"full"}
+                  onClick={() => navigate("/events/create-event")}
+                >
+                  Add New Event
+                </Button>
+              )}
+              <Button bg={"red"} width={"full"}>
+                <div className="flex w-full justify-center items-center gap-x-2">
+                  <HeartIconHover />
+                  My Favorite
+                </div>
+              </Button>
+            </>
+          ) : (
+            <></>
+          )}
+        </>
+      )}
     </div>
   );
 }
