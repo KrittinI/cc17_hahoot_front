@@ -1,15 +1,16 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import ReadyAlert from "./ReadyAlert";
+import hhHero from "../assets/hh-hero.png"
 
 const bgMap = {
-  red: " bg-red hover:bg-darkred",
-  blue: " bg-blue hover:bg-darkblue",
-  yellow: " bg-yellow hover:bg-darkyellow",
-  green: " bg-green hover:bg-darkgreen",
+  0: " bg-red hover:bg-darkred",
+  1: " bg-blue hover:bg-darkblue",
+  2: " bg-yellow hover:bg-darkyellow",
+  3: " bg-green hover:bg-darkgreen",
 };
 
-export default function CardQuizHome({ imageSrc, title, bg }) {
+export default function CardQuizHome({ bg, data }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,14 +24,12 @@ export default function CardQuizHome({ imageSrc, title, bg }) {
           `}
     >
       <div className="px-6 py-4">
-        
-          <div className="text-white text-font-body">Hahoot</div>
-          <div className="text-font-title mb-2 text-white max-h-full">
-            {title}
+        <div className="text-white text-font-body">Hahoot</div>
+        <div className="text-font-title text-white max-h-full">
+          {data?.question}
         </div>
-
         <div>
-          <img className="w-full" src={imageSrc} alt={title} />
+          <img className="w-full" src={data?.questionPicture || hhHero} alt={data?.question} />
         </div>
       </div>
       <Modal title="Are you ready" open={open}>

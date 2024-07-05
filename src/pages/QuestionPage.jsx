@@ -1,20 +1,16 @@
 import { useParams } from "react-router-dom";
-import useQuestion from "../hooks/useQuestion";
 import { useEffect } from "react";
 import { useState } from "react";
 import SplitScreen from "../layouts/SplitScreen";
-import QuestionForm from "../features/oneQuiz-Event/components/QuestionForm";
+import OneQuestionLeft from "../features/questions/components/OneQuestionLeft";
 import CommentContainer from "../features/form/CommentContainer";
 import questionApi from "../api/question";
 
 export default function QuestionPage() {
   const { questionId } = useParams();
-  const { getQuestionByQuestionId } = useQuestion();
 
   const [oneQuestion, setOneQuestion] = useState(null);
-
   const [favorite, setFavorite] = useState(false);
-
   const handleClickFavorite = async () => {
     try {
       if (favorite) {
@@ -31,9 +27,9 @@ export default function QuestionPage() {
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const res = await getQuestionByQuestionId(+questionId);
-        setOneQuestion(res);
-        setFavorite(Boolean(res.QuestionFavorite.length));
+        const res = await questionApi.getQuestionByQuestionId(+questionId);
+        setOneQuestion(res.data.question);
+        setFavorite(Boolean(res.data.question.QuestionFavorite?.length));
       } catch (error) {
         console.log(error);
       }
@@ -44,7 +40,7 @@ export default function QuestionPage() {
   return (
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
       <SplitScreen>
-        <QuestionForm
+        <OneQuestionLeft
           data={oneQuestion}
           id={+questionId}
           favorite={favorite}

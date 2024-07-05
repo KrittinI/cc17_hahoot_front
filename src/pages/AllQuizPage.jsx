@@ -2,7 +2,7 @@ import { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import SplitScreen from "../layouts/SplitScreen";
 import useQuestion from "../hooks/useQuestion";
-import AllQuizForm from "../features/form/AllQuizForm";
+import AllQuizzesLeft from "../features/questions/components/AllQuizzesLeft";
 
 export default function AllQuizPage() {
   const [title, setTitle] = useState("All Quiz");
@@ -11,7 +11,7 @@ export default function AllQuizPage() {
   return (
     <div className="w-[68%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={70}>
-        <AllQuizForm title={title} />
+        <AllQuizzesLeft title={title} />
         <SearchBar
           buttonText={`Create New Question`}
           setSeeAll={setSeeAll}

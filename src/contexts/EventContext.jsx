@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import authEvent from "../api/event";
+import eventApi from "../api/event";
 import { useEffect } from "react";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
@@ -16,34 +16,34 @@ export default function EventContextProvider({ children }) {
   const [open, setOpen] = useState(false);
   const { authUser } = useAuth();
   const getAllEvent = async () => {
-    const res = await authEvent.getAllEvent();
+    const res = await eventApi.getAllEvent();
     setEvent(res.data.events);
   };
 
-  const getEventByUserId = async (id) => await authEvent.getEventByUserId(id);
+  const getEventByUserId = async (id) => await eventApi.getEventByUserId(id);
 
   const getEventByTopic = async (topicId) => {
-    const res = await authEvent.getEventByTopic(topicId);
+    const res = await eventApi.getEventByTopic(topicId);
     setEventTopic(res.data.events);
   };
 
-  const getEvent = async (id) => await authEvent.getEventByEventId(id);
+  const getEvent = async (id) => await eventApi.getEventByEventId(id);
 
   const getFevEvent = async () => {
-    const res = await authEvent.getFevEvent();
+    const res = await eventApi.getFevEvent();
     return res.data.events;
   };
 
   const createEvent = async (body) => {
-    return await authEvent.create(body);
+    return await eventApi.create(body);
   };
 
   const editEvent = async (id, body) => {
-    await authEvent.edit(id, body);
+    await eventApi.edit(id, body);
   };
 
   const deleteEvent = async (id) => {
-    await authEvent.delete(id);
+    await eventApi.delete(id);
   };
 
   const isSeeAll = () => {

@@ -9,7 +9,7 @@ import Avatar from "../../../components/Avatar";
 import { HeartIcon, HeartIconUnfav } from "../../../icons/heart";
 import useAuth from "../../../hooks/useAuth";
 
-export default function QuestionForm({ data, id, favorite, handleClickFavorite }) {
+export default function OneQuestionRight({ data, id, favorite, handleClickFavorite }) {
   const navigate = useNavigate();
   const { showQuestion } = useQuestion();
   const { authUser } = useAuth()
@@ -41,7 +41,7 @@ export default function QuestionForm({ data, id, favorite, handleClickFavorite }
       <hr className="shadow-2 w-full" />
       <div className="grid grid-cols-10 gap-4">
         <div
-          className="flex justify-center items-center self-center bg-yellow w-[60px] h-[60px] rounded-full col-span-1 invisiable hover:bg-grey"
+          className="flex justify-center items-center self-center bg-yellow w-full aspect-[1/1] rounded-full col-span-1 invisiable hover:bg-grey"
           role="button"
           onClick={handleClickPrevious}
         >
@@ -67,7 +67,7 @@ export default function QuestionForm({ data, id, favorite, handleClickFavorite }
           </div>
         </div>
         <div
-          className="flex justify-center items-center col-span-1 self-center bg-red w-[60px] h-[60px] rounded-full invisiable hover:bg-grey"
+          className="flex justify-center items-center col-span-1 self-center bg-red w-full aspect-[1/1] rounded-full invisiable hover:bg-grey"
           role="button"
           onClick={handleClickNext}
         >
@@ -77,9 +77,9 @@ export default function QuestionForm({ data, id, favorite, handleClickFavorite }
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-x-4 text-font-title-card">
           <div role="button" onClick={() => navigate(`../../users/${data?.user.id}`)}>
-            <Avatar src={data?.user.googleImage || data?.user.profileImage} />
+            <Avatar src={data?.user?.googleImage || data?.user?.profileImage} />
           </div>
-          <div>{data?.user.username}</div>
+          <div>{data?.user?.username}</div>
         </div>
         <div className="flex gap-x-6">
           <div

@@ -1,45 +1,23 @@
-const heroCard = [
-  {
-    heroTitle: "We are  Hahoot !",
-    heroDescription:
-      " The walnut wood card tray is precision milled to perfectly fit a stack of Focus cards. The powder coated steel divider separates active cards from new ones, or can be used to archive important task lists.",
-    heroImage: "src/assets/hh-hero.png",
-  },
-];
+import hhHero from "../assets/hh-hero.png"
 
-export default function HeroContianer() {
+export default function HeroContianer({ hero }) {
   return (
-    <div className="mt-20 mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-10 px-4 py-10 sm:px-6 sm:py-10 lg:max-w-7xl lg:grid-cols-2">
+    <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-10 px-4 py-10 sm:px-6 sm:py-10 lg:max-w-7xl lg:grid-cols-2">
       {/* **************************** left container ************************* */}
-      <div className="bg-white p-10 h-full rounded-lg">
-        {heroCard.map((heroCard, index) => (
-          <div key={index}>
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-              {heroCard.heroTitle}
-            </h2>
-            <p className="mt-4 text-gray-500">{heroCard.heroDescription}</p>
-          </div>
-        ))}
-        {/* button see all */}
-        {/* <div className="flex w-full items-center justify-start rounded-md border border-transparent py-3 text-base font-medium">
-          <Button bg="black" width="60" mt="4">
-            See All
-          </Button>
-        </div> */}
+      <div className="bg-white p-4 h-full rounded-lg flex flex-col gap-4">
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+          {hero?.title}
+        </h2>
+        <p className="px-2 text-gray-500">{hero?.detail}</p>
       </div>
       {/* **************************** left container ************************* */}
-
       {/* **************************** right container ************************* */}
       <div className="bg-white p-4 h-full rounded-lg">
-        {heroCard.map((heroCard, index) => (
-          <div key={index}>
-            <img
-              src={heroCard.heroImage}
-              alt="hero-image"
-              className="h-[240px] w-[800px]"
-            />
-          </div>
-        ))}
+        <img
+          src={hero?.eventPicture || hhHero}
+          alt="hero-image"
+          className="h-[240px] w-[800px]"
+        />
       </div>
       {/* **************************** right container ************************* */}
     </div>

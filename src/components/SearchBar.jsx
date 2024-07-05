@@ -32,7 +32,7 @@ export default function SearchBar({ buttonText, setSeeAll, setSearch, getTopic, 
   }, [input]);
 
   return (
-    <div className="flex flex-col h-[auto] gap-8 bg-white p-8 rounded-lg mb-6 ">
+    <div className="flex flex-col max-h-[80vh] gap-8 bg-white p-8 rounded-lg shadow-xl">
       <div className="flex flex-col gap-4 border-b border-gray-300 pb-4">
         {authUser && (
           <Button
