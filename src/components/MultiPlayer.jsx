@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Loading from "./Loading";
-import ClientAnswerResult from "./ClientAnswerResult";
+// import ClientAnswerResult from "./ClientAnswerResult";
+import ScoreboardMultiplayer from "./ScoreboardMultiplayer";
 import {
   Square,
   Circle,
@@ -51,6 +52,7 @@ const MultiPlayer = () => {
   const [hasJoined, setHasJoined] = useState(false);
   const [loading, setLoading] = useState(false);
   const [clientAnswerResult, setClientAnswerResult] = useState(null);
+  const [showScoreboard, setShowScoreboard] = useState(false);
 
   useEffect(() => {
     //Reset state when component mounts or reload page
@@ -77,14 +79,15 @@ const MultiPlayer = () => {
     });
 
     socket.on("showAnswer", () => {
-      //setShowAnswer(true) เป็นstateที่เซ็ทเมื่อผู้เล่นทุกคนกดคำตอบทุกคนแล้วจะโชว์คำตอบที่จอ Owner
+      //setShowAnswer เป็นstateที่เซ็ทเมื่อผู้เล่นทุกคนกดคำตอบทุกคนแล้วจะโชว์คำตอบที่จอ Owner
       setShowAnswer(true);
       setLoading(false);
     });
-    socket.on("answerResult", ({ correct, answer }) => {
+    socket.on("answerResult", ({ correct, score }) => {
       //setShowAnswer(true);
       //alert("answerResult received");
       //alert(correct);
+      setScore(score);
       if (correct) setScore((prevScore) => prevScore + 1);
 
       setLoading(true);
@@ -156,6 +159,7 @@ const MultiPlayer = () => {
     setHasJoined(false);
     setLoading(false);
     setClientAnswerResult(null);
+    setShowScoreboard(false);
 
     //alert("Reset State");
   };
@@ -186,6 +190,9 @@ const MultiPlayer = () => {
 
     socket.emit("submitAnswer", { roomId, answer: option });
     console.log("submitAnswer is Working in Frontend");
+  };
+  const handleShowScoreboard = () => {
+    setShowScoreboard(true);
   };
 
   //const { question, options, answer, image } = currentQuestion;
@@ -275,9 +282,7 @@ const MultiPlayer = () => {
                     ? "bg-white text-black animate-bounce"
                     : "bg-grey text-white invisible"
                 } transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl`}
-                onClick={() => {
-                  alert("OK!");
-                }}
+                onClick={handleShowScoreboard}
                 disabled={!showAnswer}
               >
                 Next
@@ -314,9 +319,15 @@ const MultiPlayer = () => {
           </div>
         ) : clientAnswerResult !== null ? (
           clientAnswerResult ? (
-            <div>Client Answer Result is True</div>
+            <div>
+              <div>Client Answer Result is True</div>
+              <div>You score: {score}</div>
+            </div>
           ) : (
-            <div>Client Answer Result is False</div>
+            <div>
+              <div>Client Answer Result is False</div>
+              <div>You score: {score}</div>
+            </div>
           )
         ) : !isOwner && currentQuestion ? (
           <>
