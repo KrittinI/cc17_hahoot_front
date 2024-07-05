@@ -3,14 +3,17 @@ import eventApi from "../api/event";
 import { useEffect } from "react";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
+
 export const EventContext = createContext();
 
 export default function EventContextProvider({ children }) {
   const [event, setEvent] = useState([]);
+  const [singleEvent, setSingleEvent] = useState(null);
   const [eventTopic, setEventTopic] = useState([]);
   const [seeAll, setSeeAll] = useState(true);
   const [search, setSearch] = useState("");
   const [showEvent, setShowEvent] = useState([]);
+  const [open, setOpen] = useState(false);
   const { authUser } = useAuth();
   const getAllEvent = async () => {
     const res = await eventApi.getAllEvent();
@@ -32,7 +35,7 @@ export default function EventContextProvider({ children }) {
   };
 
   const createEvent = async (body) => {
-    await eventApi.create(body);
+    return await eventApi.create(body);
   };
 
   const editEvent = async (id, body) => {
@@ -46,19 +49,13 @@ export default function EventContextProvider({ children }) {
   const isSeeAll = () => {
     if (seeAll) {
       if (search) {
-        setShowEvent(
-          event?.filter((el) => el.eventName.toLowerCase().includes(search))
-        );
+        setShowEvent(event?.filter((el) => el.eventName.toLowerCase().includes(search)));
       } else {
         setShowEvent(event);
       }
     } else {
       if (search) {
-        setShowEvent(
-          eventTopic?.filter((el) =>
-            el.eventName.toLowerCase().includes(search)
-          )
-        );
+        setShowEvent(eventTopic?.filter((el) => el.eventName.toLowerCase().includes(search)));
       } else {
         setShowEvent(eventTopic);
       }
@@ -86,8 +83,16 @@ export default function EventContextProvider({ children }) {
     createEvent,
     editEvent,
     deleteEvent,
+    open,
+    setOpen,
+    singleEvent,
+    setSingleEvent,
   };
-  return (
-    <EventContext.Provider value={value}>{children}</EventContext.Provider>
-  );
+  return <EventContext.Provider value={value}>{children}</EventContext.Provider>;
 }
+
+/*  singleEvent,
+    setSingleEvent, 
+    #####เพื่อ รับ event ที่พึ่งสร้าง
+    
+    */

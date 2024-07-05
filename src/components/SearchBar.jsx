@@ -6,19 +6,14 @@ import Button from "./Button";
 import Input from "./Input";
 import { useState } from "react";
 import { useEffect } from "react";
+import useEvent from "../hooks/useEvent";
 
-export default function SearchBar({
-  buttonText,
-  setSeeAll,
-  setSearch,
-  getTopic,
-  setTitle,
-  create
-}) {
+export default function SearchBar({ buttonText, setSeeAll, setSearch, getTopic, setTitle, create }) {
   const { authUser } = useAuth();
   const { topic } = useTopic();
   const [input, setInput] = useState("");
-  const navigate = useNavigate()
+  const { setOpen } = useEvent();
+  const navigate = useNavigate();
 
   const handleClickTopic = (id, name) => {
     getTopic(id);
@@ -40,7 +35,14 @@ export default function SearchBar({
     <div className="flex flex-col max-h-[80vh] gap-8 bg-white p-8 rounded-lg shadow-xl">
       <div className="flex flex-col gap-4 border-b border-gray-300 pb-4">
         {authUser && (
-          <Button bg={`black`} width={`full`} onClick={() => navigate(create)}>
+          <Button
+            bg={`black`}
+            width={`full`}
+            onClick={() => {
+              setOpen(true);
+              navigate(create);
+            }}
+          >
             {buttonText}
           </Button>
         )}
@@ -65,26 +67,14 @@ export default function SearchBar({
         <h1 className="sticky top-0 w-full text-font-title bg-white">Topics</h1>
         <Button onClick={() => (setSeeAll(true), setTitle("All Topic"))}>
           <div className="flex ">
-            <img
-              src="../src/assets/icon-hh.png"
-              alt="logo"
-              className="w-8 mr-6"
-            />
+            <img src="../src/assets/icon-hh.png" alt="logo" className="w-8 mr-6" />
             All Topic
           </div>
         </Button>
         {topic?.map((el) => (
-          <Button
-            key={el?.id}
-            bg={`gray`}
-            onClick={() => handleClickTopic(el?.id, el?.topicName)}
-          >
+          <Button key={el?.id} bg={`gray`} onClick={() => handleClickTopic(el?.id, el?.topicName)}>
             <div className="flex ">
-              <img
-                src="../src/assets/icon-hh.png"
-                alt="logo"
-                className="w-8 mr-6"
-              />
+              <img src="../src/assets/icon-hh.png" alt="logo" className="w-8 mr-6" />
               {el?.topicName}
             </div>
           </Button>
