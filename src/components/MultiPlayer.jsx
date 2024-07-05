@@ -44,7 +44,7 @@ const MultiPlayer = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(null);
   const [totalTimeLeft, setTotalTimeLeft] = useState(0);
   const [hasJoined, setHasJoined] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -81,9 +81,10 @@ const MultiPlayer = () => {
       //alert(correct);
       if (correct) setScore((prevScore) => prevScore + 1);
 
-      setLoading(false);
+      setLoading(true);
       setClientAnswerResult(correct);
-      handleCheck();
+
+      //handleCheck();
       // setTimeout(() => {
       //   setShowAnswer(false);
       //   setSelectedAnswer(null);
@@ -99,6 +100,12 @@ const MultiPlayer = () => {
       setHasJoined(true);
     });
 
+    socket.on("ownerDisconnected", () => {
+      //alert("The owner has disconnected. The game will restart.");
+      window.location.reload();
+      //resetState();
+    });
+
     return () => {
       socket.off("isOwner");
       socket.off("roomCreated");
@@ -110,17 +117,22 @@ const MultiPlayer = () => {
       socket.off("gameOver");
       socket.off("roomNotFound");
       socket.off("joinedRoom");
+      socket.off("ownerDisconnected");
     };
   }, []);
 
   useEffect(() => {
-    if (timeLeft > 0 && !showAnswer) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeLeft === 0) {
-      setShowAnswer(true);
+    if (isStarted) {
+      if (timeLeft > 0 && !showAnswer) {
+        const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+        return () => clearTimeout(timer);
+      } else if (timeLeft === 0) {
+        setShowAnswer(true);
+        //set Client ans -> (false)
+        setClientAnswerResult(false);
+      }
     }
-  }, [timeLeft, showAnswer]);
+  }, [timeLeft, showAnswer, isStarted]);
 
   const resetState = () => {
     setName("");
@@ -132,13 +144,13 @@ const MultiPlayer = () => {
     setSelectedAnswer(null);
     setShowAnswer(false);
     setScore(0);
-    setTimeLeft(20);
+    setTimeLeft(null);
     setTotalTimeLeft(0);
     setHasJoined(false);
     setLoading(false);
     setClientAnswerResult(null);
 
-    //alert("Reset-State");
+    alert("Reset State");
   };
 
   const handleCreateRoom = () => {
@@ -167,11 +179,6 @@ const MultiPlayer = () => {
 
     socket.emit("submitAnswer", { roomId, answer: option });
     console.log("submitAnswer is Working in Frontend");
-    return (
-      <>
-        <Loading />
-      </>
-    );
   };
 
   //const { question, options, answer, image } = currentQuestion;
