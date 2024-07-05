@@ -11,13 +11,7 @@ export default function AllEventForm({ title }) {
       <Cardcontainer title={title}>
         <div className="flex flex-wrap justify-center h-auto gap-10 pt-4 mb-6">
           {showEvent?.map((el, index) => (
-            <CardBoxInProfile
-              key={index}
-              title={el?.eventName}
-              image={el?.eventImage || image}
-              id={el?.id}
-              name="events"
-            />
+            <CardBoxInProfile key={index} title={el?.eventName} image={el?.eventImage || image} id={el?.id} name="events" />
           ))}
         </div>
       </Cardcontainer>
