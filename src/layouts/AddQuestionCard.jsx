@@ -18,8 +18,8 @@ export default function AddQuestionCard({ setQuestions, setFiles }) {
 
   return (
     <>
-      <div className="bg-grey relative text-left inline-block cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-xl">
-        <div className="w-full h-64 flex justify-center items-center" role="button" onClick={() => setOpen(true)}>
+      <div className="bg-grey relative flex text-left cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-xl">
+        <div className="w-full flex justify-center items-center" role="button" onClick={() => setOpen(true)}>
           <Add />
         </div>
         <Modal open={open} onClose={() => setOpen(false)} >
