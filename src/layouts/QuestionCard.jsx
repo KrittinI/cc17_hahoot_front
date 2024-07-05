@@ -3,10 +3,9 @@ import FormAddQuestion from "../components/FormAddQuestion";
 import Modal from "../components/Modal";
 import DeleteIcon from "../icons/delete";
 import EditIcon from "../icons/edit";
-// import Fav from "../icons/Fav";
 import Button from "../components/Button";
 import Avatar from "../components/Avatar";
-import { HeartIcon, HeartIconHover } from "../icons/heart";
+import { HeartIcon } from "../icons/heart";
 import QuestionIcon from "../icons/Question";
 
 export default function QuestionCard({
@@ -54,7 +53,7 @@ export default function QuestionCard({
             />
           )}
           <div className="absolute top-2 right-2 bg-white rounded-full p-1">
-            <HeartIconHover />
+            <HeartIcon />
           </div>
         </div>
 

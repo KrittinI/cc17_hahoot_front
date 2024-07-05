@@ -16,9 +16,8 @@ import AdminRoute from "../features/authentication/components/AdminRoute";
 import EventPage from "../pages/EventPage";
 import CreateQuestionPage from "../pages/CreateQuestionPage";
 import QuestionPage from "../pages/QuestionPage";
-import MyAllEventPage from "../pages/MyAllEventPage";
-import MyAllQuizPage from "../pages/MyAllQuizPage";
 import MyFavoritePage from "../pages/MyFavoritePage";
+import CreateEventPage from "../pages/CreateEventPage";
 
 const router = createBrowserRouter([
   // visitor + User
@@ -33,7 +32,11 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       {
         path: "/register",
-        element: <RegisterPage />,
+        element: (
+          <RedirectLogin>
+            <RegisterPage />
+          </RedirectLogin>
+        ),
       },
       {
         path: "/login",
@@ -59,19 +62,23 @@ const router = createBrowserRouter([
         path: "/questions",
         element: (
           <ProtectRoute>
-            <AllQuizPage />,
+            <AllQuizPage />
           </ProtectRoute>
         ),
       },
       {
         path: "/questions/create-question",
-        element: <CreateQuestionPage />,
+        element: (
+          <ProtectRoute>
+            <CreateQuestionPage />
+          </ProtectRoute>
+        ),
       },
       {
         path: "/questions/:questionId",
         element: (
           <ProtectRoute>
-            <QuestionPage />,
+            <QuestionPage />
           </ProtectRoute>
         ),
       },
@@ -79,7 +86,7 @@ const router = createBrowserRouter([
         path: "/events",
         element: (
           <ProtectRoute>
-            <AllEventPage />,
+            <AllEventPage />
           </ProtectRoute>
         ),
       },
@@ -87,7 +94,7 @@ const router = createBrowserRouter([
         path: "/events/create-event",
         element: (
           <ProtectRoute>
-            <h1>Create Event Page</h1>
+            <CreateEventPage />
           </ProtectRoute>
         ),
       },
@@ -95,7 +102,7 @@ const router = createBrowserRouter([
         path: "/events/:eventId",
         element: (
           <ProtectRoute>
-            <EventPage />,
+            <EventPage />
           </ProtectRoute>
         ),
       },
@@ -107,23 +114,7 @@ const router = createBrowserRouter([
         path: "/users/:userId",
         element: (
           <ProtectRoute>
-            <ProfilePage />,
-          </ProtectRoute>
-        ),
-      },
-      {
-        path: "/events/users/:userId",
-        element: (
-          <ProtectRoute>
-            <MyAllEventPage />,
-          </ProtectRoute>
-        ),
-      },
-      {
-        path: "/questions/users/:userId",
-        element: (
-          <ProtectRoute>
-            <MyAllQuizPage />
+            <ProfilePage />
           </ProtectRoute>
         ),
       },

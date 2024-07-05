@@ -52,7 +52,7 @@ export default function EditProfileForm({ onSuccess }) {
         delete data.confirmPassword;
       }
       const response = await userApi.update(data);
-      console.log(response);
+
       if (response?.status !== 200) {
         return setError(response?.data.message);
       }

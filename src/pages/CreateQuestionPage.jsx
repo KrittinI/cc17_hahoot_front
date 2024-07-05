@@ -32,7 +32,7 @@ export default function CreateQuestionPage() {
   }
 
   return (
-    <div className="h-[calc(100vh-160px)] w-[70%] mx-auto flex flex-col justify-between items-center p-4">
+    <div className="h-[calc(100vh-164px)] w-[70%] mx-auto flex flex-col justify-between items-center p-4">
       <div className="bg-white w-full flex flex-col gap-4 h-[calc(100%-40px)] rounded-xl p-4">
         <div className="bg-white w-44 h-10 rounded-xl flex items-center justify-center">
           <h1 className="text-font-title">New Quiz</h1>

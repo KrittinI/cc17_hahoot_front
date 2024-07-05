@@ -16,8 +16,8 @@ questionApi.getQuestionByUserId = async (id) =>
 // Favorite
 questionApi.getFavQuestion = async (id) =>
   axios.get("/questions/favorite", id);
-questionApi.createFev = async (id) => axios.post(`/questions/${id}/favorite`);
-questionApi.deleteFev = async (id) =>
+questionApi.createFav = async (id) => axios.post(`/questions/${id}/favorite`);
+questionApi.deleteFav = async (id) =>
   axios.delete(`/questions/${id}/favorite`);
 
 // Comment
