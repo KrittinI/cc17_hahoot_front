@@ -14,6 +14,8 @@ import {
 } from "../icons/kahoot";
 
 //const socket = io("http://localhost:4000");
+let socket;
+
 const iconsDefault = [<Triangle />, <Dimond />, <Circle />, <Square />];
 const iconsCustom = [
   <Triangle size="24vmin" />,
@@ -56,6 +58,8 @@ const MultiPlayer = () => {
   }, []);
 
   useEffect(() => {
+    socket = io("http://localhost:4000");
+
     socket.on("isOwner", () => setIsOwner(true));
     socket.on("roomCreated", (roomId) => {
       setRoomId(roomId);
@@ -73,7 +77,9 @@ const MultiPlayer = () => {
     });
 
     socket.on("showAnswer", () => {
-      setShowAnswer(false);
+      //setShowAnswer(true) เป็นstateที่เซ็ทเมื่อผู้เล่นทุกคนกดคำตอบทุกคนแล้วจะโชว์คำตอบที่จอ Owner
+      setShowAnswer(true);
+      setLoading(false);
     });
     socket.on("answerResult", ({ correct, answer }) => {
       //setShowAnswer(true);
@@ -83,6 +89,7 @@ const MultiPlayer = () => {
 
       setLoading(true);
       setClientAnswerResult(correct);
+      // setLoading(false);
 
       //handleCheck();
       // setTimeout(() => {
@@ -150,7 +157,7 @@ const MultiPlayer = () => {
     setLoading(false);
     setClientAnswerResult(null);
 
-    alert("Reset State");
+    //alert("Reset State");
   };
 
   const handleCreateRoom = () => {
