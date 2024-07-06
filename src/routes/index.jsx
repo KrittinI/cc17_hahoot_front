@@ -4,7 +4,7 @@ import MainContainer from "../layouts/MainContainer";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
-import QuizPage from "../pages/Quiz";
+import QuizPage from "../pages/QuizPage";
 import MultiPlayerPage from "../pages/MultiPlayerPage";
 import ProfilePage from "../pages/ProfilePage";
 import PlayGamePage from "../pages/PlaygamePage";

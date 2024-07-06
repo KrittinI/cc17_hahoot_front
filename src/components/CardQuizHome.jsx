@@ -3,6 +3,7 @@ import Modal from "./Modal";
 import ReadyAlert from "./ReadyAlert";
 import hhHero from "../assets/hh-hero.png"
 import { useNavigate } from "react-router-dom";
+import useQuestion from "../hooks/useQuestion";
 
 const bgMap = {
   0: " bg-red hover:bg-darkred",
@@ -13,9 +14,12 @@ const bgMap = {
 
 export default function CardQuizHome({ bg, data }) {
   const [open, setOpen] = useState(false);
+
+  const { setPlayQuestion } = useQuestion()
   const navigate = useNavigate()
   const onClickConfirm = () => {
-    navigate(`/quiz/${data.id}`)
+    setPlayQuestion([data, data])
+    navigate(`/quiz`)
   }
   return (
     <div
