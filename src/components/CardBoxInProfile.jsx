@@ -33,7 +33,7 @@ export default function CardBoxInProfile({ data, name, type }) {
       <div className="flex p-2 justify-between items-center gap-2 ">
         <Avatar />
         <div className="text-font-title-card text-blue w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-          {data?.topicId}
+          {data?.topic.topicName}
         </div>
       </div>
       {type && (

@@ -85,7 +85,7 @@ export default function CreateEventForm() {
   return (
     <>
       <div className="w-full px-4">
-        <hr className="shadow-2" />
+        <hr className="shadow-2 text-grey" />
       </div>
 
       <form onSubmit={handleSubmit} className="w-full p-4">

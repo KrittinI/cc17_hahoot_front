@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useRef } from "react";
 import useTopic from "../hooks/useTopic";
 import Button from "./Button";
+import { ImageIcon } from "../icons/Image";
+import CorrectIcon from "../icons/correct";
+import CloseIcon from "../icons/close";
 
 const initialError = {
   questionPicture: "",
@@ -100,11 +103,12 @@ export default function FormAddQuestion({
   };
 
   return (
-    <div className=" grid gap-4 p-4">
-      <div className="text-font-title ">Add your quiz</div>
-      <hr className="shadow-2 text-grey" />
-      <div className="w-[40rem] grid grid-cols-5 p-4 gap-4 item">
-        <div className="col-span-3">
+    <>
+      <div className="w-full px-4">
+        <hr className="shadow-2 text-grey" />
+      </div>
+      <div className="w-[39rem] grid grid-cols-5 p-4 gap-4 item">
+        <div className="col-span-3 ">
           <Input
             type="text"
             name="question"
@@ -118,12 +122,11 @@ export default function FormAddQuestion({
         <div className="col-span-2 ">
           <Select
             id="topic"
-            className="text-center shadow-md"
             value={+input.topicId}
             onChange={handleChange}
             name="topicId"
             error={error.topicId}
-            header={`Select Topic`}
+            header="Select Topic"
           >
             {topic?.map((topic) => (
               <option value={+topic.id} key={topic.id}>
@@ -132,14 +135,51 @@ export default function FormAddQuestion({
             ))}
           </Select>
         </div>
-        <div className="grid col-span-2 bg-orange-300">
+        <div className="grid col-span-2 bg-grey hover:bg-darkgrey rounded-lg items-center justify-center">
           <input
             type="file"
             ref={fileEl}
             name="questionPicture"
             id="questionPicture"
             onChange={handleChooseFile}
+            className="hidden"
           />
+          {file ? (
+            <div
+              role="button"
+              className="bg-gray-100 relative"
+              onClick={() => fileEl.current?.click()}
+            >
+              <img
+                src={URL.createObjectURL(file)}
+                alt="post"
+                className="mx-auto"
+              />
+              <button
+                className="absolute top-1 right-1"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFile(null);
+                }}
+              >
+                &#10005;
+              </button>
+            </div>
+          ) : (
+            <div
+              role="button"
+              className="flex flex-col justify-center items-center gap-2 rounded-lg py-8  h-full w-full"
+              onClick={() => fileEl.current?.click()}
+            >
+              <div
+                className="bg-white
+                w-10 h-10 rounded-full flex justify-center items-center"
+              >
+                <ImageIcon />
+              </div>
+              <span>Add Photo</span>
+            </div>
+          )}
         </div>
         <div className="grid col-span-3 grid-cols-5 gap-4">
           <div className="col-span-4 gap-2">
@@ -157,9 +197,17 @@ export default function FormAddQuestion({
               name="answer"
               onClick={() => handleClickAnswer("A")}
               role="button"
-              className="w-[40px] h-[40px] flex justify-center items-center bg-blue rounded-xl"
+              className="w-[40px] h-[40px] flex justify-center items-center bg-grey  rounded-xl"
             >
-              {input.answer === "A" ? "T" : "F"}
+              {input.answer === "A" ? (
+                <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-green">
+                  <CorrectIcon />
+                </div>
+              ) : (
+                <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-red">
+                  <CloseIcon />
+                </div>
+              )}
             </span>
             {error.answer ? (
               <small className="text-red">{error.answer}</small>
@@ -180,9 +228,17 @@ export default function FormAddQuestion({
               name="answer"
               onClick={() => handleClickAnswer("B")}
               role="button"
-              className="w-[40px] h-[40px] flex justify-center items-center bg-blue rounded-xl"
+              className="w-[40px] h-[40px] flex justify-center items-center bg-grey  rounded-xl"
             >
-              {input.answer === "B" ? "T" : "F"}
+              {input.answer === "B" ? (
+                <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-green">
+                  <CorrectIcon />
+                </div>
+              ) : (
+                <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-red">
+                  <CloseIcon />
+                </div>
+              )}
             </span>
             {error.answer ? (
               <small className="text-red">{error.answer}</small>
@@ -203,9 +259,17 @@ export default function FormAddQuestion({
               name="answer"
               onClick={() => handleClickAnswer("C")}
               role="button"
-              className="w-[40px] h-[40px] flex justify-center items-center bg-blue rounded-xl"
+              className="w-[40px] h-[40px] flex justify-center items-center bg-grey  rounded-xl"
             >
-              {input.answer === "C" ? "T" : "F"}
+              {input.answer === "C" ? (
+                <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-green">
+                  <CorrectIcon />
+                </div>
+              ) : (
+                <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-red">
+                  <CloseIcon />
+                </div>
+              )}
             </span>
             {error.answer ? (
               <small className="text-red">{error.answer}</small>
@@ -226,9 +290,17 @@ export default function FormAddQuestion({
               name="answer"
               onClick={() => handleClickAnswer("D")}
               role="button"
-              className="w-[40px] h-[40px] flex justify-center items-center bg-blue rounded-xl"
+              className="w-[40px] h-[40px] flex justify-center items-center bg-grey rounded-xl"
             >
-              {input.answer === "D" ? "T" : "F"}
+              {input.answer === "D" ? (
+                <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-green">
+                  <CorrectIcon />
+                </div>
+              ) : (
+                <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-red">
+                  <CloseIcon />
+                </div>
+              )}
             </span>
             {error.answer ? (
               <small className="text-red">{error.answer}</small>
@@ -244,15 +316,15 @@ export default function FormAddQuestion({
           private
         </option>
       </Select> */}
-        <div></div>
-        <Button bg={`blue`} onClick={handleClickSave}>
-          save
-        </Button>
-        <div></div>
-        <Button bg={"black"} onClick={() => onClose()}>
+      </div>
+      <div className="flex justify-between px-4 pb-4">
+        <Button width={"40"} bg={"black"} onClick={() => onClose()}>
           Cancel
         </Button>
+        <Button width={"40"} bg={`blue`} onClick={handleClickSave}>
+          Done
+        </Button>
       </div>
-    </div>
+    </>
   );
 }

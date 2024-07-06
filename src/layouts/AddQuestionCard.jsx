@@ -22,7 +22,11 @@ export default function AddQuestionCard({ setQuestions, setFiles }) {
         <div className="w-full flex justify-center items-center" role="button" onClick={() => setOpen(true)}>
           <Add />
         </div>
-        <Modal open={open} onClose={() => setOpen(false)} >
+        <Modal  open={open} onClose={() => setOpen(false)}  
+        title="Add Your Quiz"
+        width={40}
+        p={'4'}
+        j="start" >
           <FormAddQuestion onSuccess={onSuccess} onClose={() => setOpen(false)} />
         </Modal>
       </div>
