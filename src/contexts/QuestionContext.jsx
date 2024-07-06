@@ -7,19 +7,14 @@ import useAuth from "../hooks/useAuth";
 export const QuestionContext = createContext();
 
 export default function QuestionContextProvider({ children }) {
-
   const { authUser } = useAuth();
-
   const [question, setQuestion] = useState([]);
-  const [quizTopic, setQuizTopic] = useState([]);
-  const [seeAll, setSeeAll] = useState(true);
-  const [search, setSearch] = useState("");
   const [showQuestion, setShowQuestion] = useState([]);
 
   const getAllQuestion = async () => {
     const res = await questionApi.getAllQuestion();
     setQuestion(res.data.questions);
-    setShowQuestion(res.data.questions)
+    setShowQuestion(res.data.questions);
   };
 
   const getQuestionByUserId = async (id) =>
@@ -30,15 +25,8 @@ export default function QuestionContextProvider({ children }) {
     return res.data.question;
   };
 
-  const getQuestionByTopicId = async (topicId) => {
-    const res = await questionApi.getQuestionByTopicId(topicId);
-    setQuizTopic(res.data.questions);
-  };
-
-  const getFavQuestion = async (id) => {
-    const res = await questionApi.getFavQuestion(id);
-    return res.data.questions;
-  };
+  const getQuestionByTopicId = async (topicId) =>
+    await questionApi.getQuestionByTopicId(topicId);
 
   const createQuestion = async (body) => {
     await questionApi.createQuestion(body);
@@ -48,49 +36,20 @@ export default function QuestionContextProvider({ children }) {
     await questionApi.editQuestionById(id, body);
   };
 
-  const isSeeAll = () => {
-    if (seeAll) {
-      if (search) {
-        setShowQuestion(
-          question?.filter((el) => el.question.toLowerCase().includes(search))
-        );
-      } else {
-        setShowQuestion(question);
-      }
-    } else {
-      if (search) {
-        setShowQuestion(
-          quizTopic?.filter((el) => el.question.toLowerCase().includes(search))
-        );
-      } else {
-        setShowQuestion(quizTopic);
-      }
-    }
-  };
-
   useEffect(() => {
     getAllQuestion();
   }, [authUser]);
 
-  useEffect(() => {
-    isSeeAll();
-  }, [seeAll, question, quizTopic, search]);
-
   const value = {
     question,
-    quizTopic,
     showQuestion,
-    setSearch,
-    setSeeAll,
     setShowQuestion,
     getQuestionByTopicId,
     getQuestionByUserId,
     getQuestionByQuestionId,
-    getFavQuestion,
     createQuestion,
     editQuestion,
   };
-
 
   return (
     <QuestionContext.Provider value={value}>
