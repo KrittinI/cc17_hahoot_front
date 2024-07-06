@@ -21,7 +21,7 @@ export default function CardBoxInProfile({ data, name, type }) {
         <HeartIcon />
       </div>
       <img
-        className="rounded-t-lg w-full"
+        className="h-3/6 w-full rounded-t-[8px]"
         src={data?.questionPicture || data?.eventImage || image}
         alt={name}
       />
@@ -32,7 +32,9 @@ export default function CardBoxInProfile({ data, name, type }) {
       </div>
       <div className="flex p-2 justify-between items-center gap-2 ">
         <Avatar />
-        <div className="text-font-title-card text-blue w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">{data?.eventName}</div>
+        <div className="text-font-title-card text-blue w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+          {data?.topicId}
+        </div>
       </div>
       {type && (
         <div className="grid grid-cols-1 gap-3 p-1 rounded-lg">

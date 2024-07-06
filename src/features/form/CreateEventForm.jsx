@@ -153,7 +153,7 @@ export default function CreateEventForm() {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-3 h-56 w-3/6 justify-center">
+            <div className="flex flex-col gap-3 h-50 w-3/6 justify-center">
               <Select
                 header="Topic"
                 value={input.topicId}
