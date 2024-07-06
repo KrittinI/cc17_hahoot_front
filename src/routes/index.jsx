@@ -4,6 +4,8 @@ import MainContainer from "../layouts/MainContainer";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
+import QuizPage from "../pages/Quiz";
+import MultiPlayerPage from "../pages/MultiPlayerPage";
 import ProfilePage from "../pages/ProfilePage";
 import PlayGamePage from "../pages/PlaygamePage";
 import AllQuizPage from "../pages/AllQuizPage";
@@ -127,6 +129,14 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/quiz",
+    element: <QuizPage />,
+  },
+  {
+    path: "/multiplayer",
+    element: <MultiPlayerPage />,
   },
 
   // Admin
