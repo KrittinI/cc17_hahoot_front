@@ -53,6 +53,7 @@ const MultiPlayer = () => {
   const [loading, setLoading] = useState(false);
   const [clientAnswerResult, setClientAnswerResult] = useState(null);
   const [showScoreboard, setShowScoreboard] = useState(false);
+  const [playerInfo, setPlayerInfo] = useState([]);
 
   useEffect(() => {
     //Reset state when component mounts or reload page
@@ -87,7 +88,7 @@ const MultiPlayer = () => {
       //setShowAnswer(true);
       //alert("answerResult received");
       //alert(correct);
-      setScore(score);
+      //setScore(score); //100 from server
       if (correct) setScore((prevScore) => prevScore + 1);
 
       setLoading(true);
@@ -116,6 +117,10 @@ const MultiPlayer = () => {
       //resetState();
     });
 
+    socket.on("updateScores", (players) => {
+      setPlayerInfo(players);
+    });
+
     return () => {
       socket.off("isOwner");
       socket.off("roomCreated");
@@ -128,6 +133,7 @@ const MultiPlayer = () => {
       socket.off("roomNotFound");
       socket.off("joinedRoom");
       socket.off("ownerDisconnected");
+      socket.off("updateScores");
     };
   }, []);
 
@@ -252,6 +258,8 @@ const MultiPlayer = () => {
               </button>
             )}
           </div>
+        ) : showScoreboard ? (
+          <ScoreboardMultiplayer players={playerInfo} />
         ) : isOwner && currentQuestion ? (
           <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12 transition-all duration-300 ease-in-out transform">
             <div className="bg-white shadow-lg rounded-lg p-12 w-full transition-transform duration-500 ease-in-out transform hover:scale-105">
