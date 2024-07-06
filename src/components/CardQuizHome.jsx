@@ -22,34 +22,31 @@ export default function CardQuizHome({ bg, data }) {
     navigate(`/quiz`)
   }
 
-  const handleClose = () => {
-    console.log('click');
-    console.log(open);
-    setOpen(false)
-  }
-
   return (
-    <div
-      role="button"
-      onClick={() => setOpen(true)}
-      className={`
+    <>
+      <div
+        role="button"
+        onClick={() => setOpen(true)}
+        className={`
           flex 
           ${bgMap[bg]} 
           max-w-sm rounded overflow-hidden shadow-lg
           `}
-    >
-      <div className="px-6 py-4">
-        <div className="text-white text-font-body">Hahoot</div>
-        <div className="text-font-title text-white max-h-full">
-          {data?.question}
-        </div>
-        <div className="">
-          <img className="w-full" src={data?.questionPicture || hhHero} alt={data?.question} />
+      >
+        <div className="px-6 py-4">
+          <div className="text-white text-font-body">Hahoot</div>
+          <div className="text-font-title text-white max-h-full">
+            {data?.question}
+          </div>
+          <div className="">
+            <img className="w-full" src={data?.questionPicture || hhHero} alt={data?.question} />
+          </div>
         </div>
       </div>
       <Modal title="Are you ready" open={open}>
-        <ReadyAlert onClose={() => window.location.reload()} onClickConfirm={onClickConfirm} />
+        <ReadyAlert onClose={() => setOpen(false)} onClickConfirm={onClickConfirm} />
       </Modal>
-    </div>
+    </>
+
   );
 }
