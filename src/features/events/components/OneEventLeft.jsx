@@ -5,6 +5,7 @@ import EditIcon from "../../../icons/edit";
 import Button from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import useQuestion from "../../../hooks/useQuestion";
 import Avatar from "../../../components/Avatar";
 import Input from "../../../components/Input";
 
@@ -14,6 +15,7 @@ export default function OneEventLeft({
   handleClickFavorite,
   edit,
   setClickEdit,
+  handleClickSinglePlay
 }) {
   const navigate = useNavigate();
   const { authUser } = useAuth();
@@ -92,7 +94,14 @@ export default function OneEventLeft({
         </div>
 
         {edit ? (
-          <div className="grid gap-y-4">
+          <div className="grid gap-y-2">
+            <Button
+              bg="blue"
+              width={"full"}
+              onClick={handleClickSinglePlay}
+            >
+              Single Play
+            </Button>
             <Button
               bg="blue"
               width={"full"}
