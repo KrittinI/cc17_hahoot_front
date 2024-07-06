@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Avatar from "../../../components/Avatar";
 import Input from "../../../components/Input";
+import Modal from "../../../components/Modal";
+import ReadyAlert from "../../../components/ReadyAlert";
+import { useState } from "react";
 
 export default function OneEventLeft({
   event,
@@ -18,6 +21,7 @@ export default function OneEventLeft({
 }) {
   const navigate = useNavigate();
   const { authUser } = useAuth();
+  const [open, setOpen] = useState(false)
 
   return (
     <div>
@@ -97,7 +101,7 @@ export default function OneEventLeft({
             <Button
               bg="blue"
               width={"full"}
-              onClick={handleClickSinglePlay}
+              onClick={() => setOpen(true)}
             >
               Single Play
             </Button>
@@ -126,6 +130,9 @@ export default function OneEventLeft({
             </Button>
           </div>
         )}
+        <Modal title="Are you ready" open={open}>
+          <ReadyAlert onClose={() => setOpen(false)} onClickConfirm={handleClickSinglePlay} />
+        </Modal>
       </div>
     </div>
   );

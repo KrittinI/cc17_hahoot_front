@@ -41,7 +41,7 @@ export default function CardQuizHome({ bg, data }) {
         </div>
       </div>
       <Modal title="Are you ready" open={open}>
-        <ReadyAlert onClose={() => setOpen(false)} onClickConfirm={onClickConfirm} />
+        <ReadyAlert onClose={() => window.location.reload()} onClickConfirm={onClickConfirm} />
       </Modal>
     </div>
   );
