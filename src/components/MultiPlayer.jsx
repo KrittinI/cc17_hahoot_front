@@ -82,27 +82,30 @@ const MultiPlayer = () => {
     socket.on("newQuestion", (questionData) => {
       //setCurrentQuestion(null);
       setShowScoreboard(false);
+      setClientAnswerResult(null);
       setCurrentQuestion(questionData);
       setTimeLeft(20);
-      setClientAnswerResult(null);
 
       console.log("newQuestion has received =>", questionData);
-      alert("newQuestion has received");
+      //alert("newQuestion has received");
     });
 
     socket.on("showAnswer", () => {
       //setShowAnswer เป็นstateที่เซ็ทเมื่อผู้เล่นทุกคนกดคำตอบทุกคนแล้วจะโชว์คำตอบที่จอ Owner
-      setShowAnswer(true);
       setLoading(false);
+      setShowAnswer(true);
     });
     socket.on("answerResult", ({ correct, score }) => {
       //setShowAnswer(true);
       //alert("answerResult received");
       //alert(correct);
       //setScore(score); //100 from server
+
+      // socket นี้จะทำงานเมื่อผู้เล่นทุกคนกดตอบจะshowในส่วนหน้าClient
+
       if (correct) setScore((prevScore) => prevScore + 1);
 
-      setLoading(true);
+      //setLoading(true);
       setClientAnswerResult(correct);
       // setLoading(false);
 
@@ -211,20 +214,18 @@ const MultiPlayer = () => {
     if (selectedAnswer) return;
     setSelectedAnswer(option);
     //setShowAnswer(false);
-    // แสดงหน้า Loading
-    setLoading(true);
+    // แสดงหน้า Loading ตอนที่ player กดคำตอบ
 
     socket.emit("submitAnswer", { roomId, answer: option });
+    setSelectedAnswer(null); //reset SelectedAnswer for next Question
+    setLoading(true);
     console.log("submitAnswer is Working in Frontend");
   };
   const handleShowScoreboard = () => {
-    setShowScoreboard(true);
+    setShowAnswer(false);
     setCurrentQuestion(null);
-  };
-
-  const handleNextQuestion = () => {
-    socket.emit("nextQuestion");
-    console.log("This is handleNextQuestion");
+    //setSelectedAnswer(null); it not works
+    setShowScoreboard(true);
   };
 
   //const { question, options, answer, image } = currentQuestion;

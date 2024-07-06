@@ -5,7 +5,7 @@ import Button from "./Button";
 const ScoreboardMultiplayer = ({ players, newSocket, newRoomId }) => {
   const handleNextQuestion = () => {
     newSocket.emit("nextQuestion", newRoomId);
-    alert("handleNextQuestion is working");
+    //alert("handleNextQuestion is working");
   };
 
   return (
