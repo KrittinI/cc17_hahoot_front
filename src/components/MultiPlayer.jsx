@@ -57,6 +57,7 @@ const MultiPlayer = () => {
   const [nextQuestion, setNextQuestion] = useState(false);
   const [newSocket, setNewSocket] = useState(null);
   const [newRoomId, setNewRoomId] = useState("");
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     //Reset state when component mounts or reload page
@@ -67,6 +68,9 @@ const MultiPlayer = () => {
     socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setNewSocket(socket);
+    socket.on("gameOver", () => {
+      setIsGameOver(true);
+    });
 
     socket.on("isOwner", () => setIsOwner(true));
     socket.on("roomCreated", (roomId) => {
@@ -116,7 +120,7 @@ const MultiPlayer = () => {
       // }, 3000);
     });
     socket.on("gameOver", () => {
-      setCurrentQuestion(null);
+      setCurrentQuestion("over");
     });
     socket.on("roomNotFound", () => {
       alert("Room ID not found");
@@ -127,7 +131,7 @@ const MultiPlayer = () => {
 
     socket.on("ownerDisconnected", () => {
       //alert("The owner has disconnected. The game will restart.");
-      window.location.reload();
+      window.location.reload(true);
       //resetState();
     });
 
@@ -136,7 +140,7 @@ const MultiPlayer = () => {
     });
 
     socket.on("nextQuestion", () => {
-      setNextQuestion(true);
+      setNextQuestion(true); //Dummy state
     });
 
     return () => {
@@ -186,9 +190,9 @@ const MultiPlayer = () => {
     setClientAnswerResult(null);
     setShowScoreboard(false);
     setNextQuestion(false);
-    setNextQuestion(false);
     setNewSocket(null);
     setNewRoomId("");
+    setIsGameOver(false);
 
     //alert("Reset State");
   };
@@ -225,6 +229,9 @@ const MultiPlayer = () => {
     setShowAnswer(false);
     setCurrentQuestion(null);
     //setSelectedAnswer(null); it not works
+    setTimeLeft(null);
+    //check to send roomId to Event->ShowScoreboard
+    socket.emit("ShowScoreboard", roomId);
     setShowScoreboard(true);
   };
 
@@ -285,11 +292,14 @@ const MultiPlayer = () => {
               </button>
             )}
           </div>
-        ) : showScoreboard ? (
+        ) : (isOwner && showScoreboard) ||
+          (!currentQuestion && showScoreboard) ? (
           <ScoreboardMultiplayer
             players={playerInfo}
             newSocket={newSocket}
             newRoomId={newRoomId}
+            isGameOver={isGameOver}
+            setIsGameOver={setIsGameOver}
           />
         ) : isOwner && currentQuestion ? (
           <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12 transition-all duration-300 ease-in-out transform">
@@ -391,7 +401,7 @@ const MultiPlayer = () => {
             </div>
           </>
         ) : (
-          ""
+          <div className="text-4xl">Oops! something wrong!</div>
         )}
       </div>
     </div>
