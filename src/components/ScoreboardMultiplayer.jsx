@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
+import Button from "./Button";
 //import io from "socket.io-client";
 
-const ScoreboardMultiplayer = ({ players }) => {
-  //const [scores, setScores] = useState([]);
-  //console.log("socket = ", socket);
-  // useEffect(() => {
-  //   setScores(players);
-  // }, [players]);
+const ScoreboardMultiplayer = ({ players, newSocket, newRoomId }) => {
+  const handleNextQuestion = () => {
+    newSocket.emit("nextQuestion", newRoomId);
+    alert("handleNextQuestion is working");
+  };
 
   return (
     <div className="bg-white shadow-md rounded-lg p-4 m-4">
@@ -20,6 +20,9 @@ const ScoreboardMultiplayer = ({ players }) => {
           </li>
         ))}
       </ul>
+      <Button bg="blue" width="60" onClick={handleNextQuestion}>
+        Next Question
+      </Button>
     </div>
   );
 };

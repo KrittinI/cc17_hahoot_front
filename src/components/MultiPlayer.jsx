@@ -54,6 +54,9 @@ const MultiPlayer = () => {
   const [clientAnswerResult, setClientAnswerResult] = useState(null);
   const [showScoreboard, setShowScoreboard] = useState(false);
   const [playerInfo, setPlayerInfo] = useState([]);
+  const [nextQuestion, setNextQuestion] = useState(false);
+  const [newSocket, setNewSocket] = useState(null);
+  const [newRoomId, setNewRoomId] = useState("");
 
   useEffect(() => {
     //Reset state when component mounts or reload page
@@ -62,10 +65,13 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     socket = io("http://localhost:4000");
+    // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
+    setNewSocket(socket);
 
     socket.on("isOwner", () => setIsOwner(true));
     socket.on("roomCreated", (roomId) => {
       setRoomId(roomId);
+      setNewRoomId(roomId);
       setHasJoined(true);
     });
     socket.on("updatePlayers", (players) => setPlayers(players));
@@ -74,9 +80,14 @@ const MultiPlayer = () => {
       //setTotalTimeLeft(players.length * 20);
     });
     socket.on("newQuestion", (questionData) => {
+      //setCurrentQuestion(null);
+      setShowScoreboard(false);
       setCurrentQuestion(questionData);
       setTimeLeft(20);
-      console.log("questionData = ", questionData);
+      setClientAnswerResult(null);
+
+      console.log("newQuestion has received =>", questionData);
+      alert("newQuestion has received");
     });
 
     socket.on("showAnswer", () => {
@@ -121,6 +132,10 @@ const MultiPlayer = () => {
       setPlayerInfo(players);
     });
 
+    socket.on("nextQuestion", () => {
+      setNextQuestion(true);
+    });
+
     return () => {
       socket.off("isOwner");
       socket.off("roomCreated");
@@ -134,6 +149,7 @@ const MultiPlayer = () => {
       socket.off("joinedRoom");
       socket.off("ownerDisconnected");
       socket.off("updateScores");
+      socket.off("nextQuestion");
     };
   }, []);
 
@@ -166,6 +182,10 @@ const MultiPlayer = () => {
     setLoading(false);
     setClientAnswerResult(null);
     setShowScoreboard(false);
+    setNextQuestion(false);
+    setNextQuestion(false);
+    setNewSocket(null);
+    setNewRoomId("");
 
     //alert("Reset State");
   };
@@ -199,6 +219,12 @@ const MultiPlayer = () => {
   };
   const handleShowScoreboard = () => {
     setShowScoreboard(true);
+    setCurrentQuestion(null);
+  };
+
+  const handleNextQuestion = () => {
+    socket.emit("nextQuestion");
+    console.log("This is handleNextQuestion");
   };
 
   //const { question, options, answer, image } = currentQuestion;
@@ -259,7 +285,11 @@ const MultiPlayer = () => {
             )}
           </div>
         ) : showScoreboard ? (
-          <ScoreboardMultiplayer players={playerInfo} />
+          <ScoreboardMultiplayer
+            players={playerInfo}
+            newSocket={newSocket}
+            newRoomId={newRoomId}
+          />
         ) : isOwner && currentQuestion ? (
           <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12 transition-all duration-300 ease-in-out transform">
             <div className="bg-white shadow-lg rounded-lg p-12 w-full transition-transform duration-500 ease-in-out transform hover:scale-105">
