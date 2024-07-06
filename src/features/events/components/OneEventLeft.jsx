@@ -5,7 +5,6 @@ import EditIcon from "../../../icons/edit";
 import Button from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import useQuestion from "../../../hooks/useQuestion";
 import Avatar from "../../../components/Avatar";
 import Input from "../../../components/Input";
 
