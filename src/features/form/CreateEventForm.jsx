@@ -19,7 +19,7 @@ export default function CreateEventForm() {
     topicId: "",
     description: "",
   };
-  const { setOpen, singleEvent, setSingleEvent } = useEvent();
+  const { setOpen, setSingleEvent } = useEvent();
   //ใช้้handleCHange จัดการ value ใน input
   const [input, setInput] = useState(initialInput);
   const [file, setFile] = useState("");
@@ -81,13 +81,26 @@ export default function CreateEventForm() {
       setOpen(false);
     }
   };
-  console.log(singleEvent, "i am single");
+  // console.log(singleEvent, "i am single");
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full ">
+      <div className="w-full px-4">
+        <hr className="shadow-2" />
+      </div>
+
+      <form onSubmit={handleSubmit} className="w-full p-4">
         <div className="flex flex-col gap-4">
           <div>
-            <Input type="text" name="eventName" id="" value={input.eventName} placeholder="Title" onChange={handleChange} error={error.eventName} />
+            <Input
+              type="text"
+              name="eventName"
+              id=""
+              value={input.eventName}
+              placeholder="Enter Your Title"
+              onChange={handleChange}
+              error={error.eventName}
+              position={'center'}
+            />
           </div>
           <div className="flex gap-3 ">
             <div className="w-3/6 h-56">
@@ -104,8 +117,16 @@ export default function CreateEventForm() {
                 }}
               />
               {file ? (
-                <div role="button" className="bg-gray-100 relative" onClick={() => fileEl.current?.click()}>
-                  <img src={URL.createObjectURL(file)} alt="post" className="mx-auto" />
+                <div
+                  role="button"
+                  className="bg-gray-100 relative"
+                  onClick={() => fileEl.current?.click()}
+                >
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="post"
+                    className="mx-auto"
+                  />
                   <button
                     className="absolute top-1 right-1"
                     onClick={(e) => {
@@ -117,7 +138,11 @@ export default function CreateEventForm() {
                   </button>
                 </div>
               ) : (
-                <div role="button" className="flex flex-col items-center gap-2 bg-gray-300 rounded-lg py-8 hover:bg-gray-200 w-full h-full" onClick={() => fileEl.current?.click()}>
+                <div
+                  role="button"
+                  className="flex flex-col justify-center items-center gap-2 bg-grey rounded-lg py-8 hover:bg-darkgrey w-full h-full"
+                  onClick={() => fileEl.current?.click()}
+                >
                   <div
                     className="bg-white
                 w-10 h-10 rounded-full flex justify-center items-center"
@@ -128,8 +153,14 @@ export default function CreateEventForm() {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-3 h-56 w-3/6">
-              <Select header="topic" value={input.topicId} onChange={handleChange} name="topicId" error={error.topicId}>
+            <div className="flex flex-col gap-3 h-56 w-3/6 justify-center">
+              <Select
+                header="Topic"
+                value={input.topicId}
+                onChange={handleChange}
+                name="topicId"
+                error={error.topicId}
+              >
                 {topic?.map((el, index) => (
                   <option value={el.id} key={index}>
                     {el.topicName}
@@ -142,16 +173,25 @@ export default function CreateEventForm() {
                 id="description"
                 value={input.description}
                 onChange={handleChange}
-                placeholder="description"
-                className={error.description ? "h-full border border-red" : "h-full w-full"}
+                placeholder="Enter Description"
+                className={
+                `  border-grey p-2 rounded-md h-full
+                  error.description
+                    ? "h-full border border-red"
+                    : "h-full w-full"`
+                }
               ></textarea>
-              {error.description ? <small className="text-red">{error.description}</small> : null}
+              {error.description ? (
+                <small className="text-red">{error.description}</small>
+              ) : null}
             </div>
           </div>
         </div>
 
-        <div className="flex justify-center p-3">
-          <Button bg="black">submit</Button>
+        <div className="flex justify-end pt-7">
+          <Button bg="black" width={"40"}>
+            OK
+          </Button>
         </div>
       </form>
     </>

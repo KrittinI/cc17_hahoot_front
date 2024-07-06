@@ -14,7 +14,7 @@ export default function CardBoxInProfile({ data, name, type }) {
     <div
       role="button"
       // className={`${sizeMap[width]} bg-white flex flex-col shadow-xl rounded-lg`}
-      className="relative text-left inline-block cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-xl"
+      className="relative text-left inline-block cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-xl z-80"
       onClick={() => navigate(`/${name}/${data?.id}`)}
     >
       <div className="bg-white w-[30px] h-[30px] rounded-full absolute right-2 top-2 flex justify-center items-center text-[#D7D7D7]">
