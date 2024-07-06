@@ -11,7 +11,7 @@ const justifyMap = {
   between: 'justify-between'
 }
 
-export default function Modal({ width, title, children, open, onClose,p = 4, j = 'between' }) {
+export default function Modal({ width, title, children, open, onClose, p = 4, j = 'between' }) {
   useEffect(() => {
     const handleEscPress = (e) => {
       if (e.keyCode === 27) {
