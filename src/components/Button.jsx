@@ -1,5 +1,3 @@
-
-
 const bgMap = {
   active: "bg-blue",
   disable: "bg-gray",

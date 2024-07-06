@@ -7,14 +7,11 @@ import useAuth from "../hooks/useAuth";
 export const EventContext = createContext();
 
 export default function EventContextProvider({ children }) {
+  const { authUser } = useAuth();
+
   const [event, setEvent] = useState([]);
   const [singleEvent, setSingleEvent] = useState(null);
-  const [eventTopic, setEventTopic] = useState([]);
-  const [seeAll, setSeeAll] = useState(true);
-  const [search, setSearch] = useState("");
-  const [showEvent, setShowEvent] = useState([]);
   const [open, setOpen] = useState(false);
-  const { authUser } = useAuth();
   const getAllEvent = async () => {
     const res = await eventApi.getAllEvent();
     setEvent(res.data.events);
@@ -22,17 +19,10 @@ export default function EventContextProvider({ children }) {
 
   const getEventByUserId = async (id) => await eventApi.getEventByUserId(id);
 
-  const getEventByTopic = async (topicId) => {
-    const res = await eventApi.getEventByTopic(topicId);
-    setEventTopic(res.data.events);
-  };
+  const getEventByTopic = async (topicId) =>
+    await eventApi.getEventByTopic(topicId);
 
   const getEvent = async (id) => await eventApi.getEventByEventId(id);
-
-  const getFevEvent = async () => {
-    const res = await eventApi.getFevEvent();
-    return res.data.events;
-  };
 
   const createEvent = async (body) => {
     return await eventApi.create(body);
@@ -46,40 +36,15 @@ export default function EventContextProvider({ children }) {
     await eventApi.delete(id);
   };
 
-  const isSeeAll = () => {
-    if (seeAll) {
-      if (search) {
-        setShowEvent(event?.filter((el) => el.eventName.toLowerCase().includes(search)));
-      } else {
-        setShowEvent(event);
-      }
-    } else {
-      if (search) {
-        setShowEvent(eventTopic?.filter((el) => el.eventName.toLowerCase().includes(search)));
-      } else {
-        setShowEvent(eventTopic);
-      }
-    }
-  };
-
   useEffect(() => {
     getAllEvent();
   }, [authUser]);
 
-  useEffect(() => {
-    isSeeAll();
-  }, [seeAll, event, eventTopic, search]);
-
   const value = {
     event,
-    eventTopic,
-    showEvent,
-    setSeeAll,
-    setSearch,
     getEventByUserId,
     getEventByTopic,
     getEvent,
-    getFevEvent,
     createEvent,
     editEvent,
     deleteEvent,
@@ -88,7 +53,9 @@ export default function EventContextProvider({ children }) {
     singleEvent,
     setSingleEvent,
   };
-  return <EventContext.Provider value={value}>{children}</EventContext.Provider>;
+  return (
+    <EventContext.Provider value={value}>{children}</EventContext.Provider>
+  );
 }
 
 /*  singleEvent,

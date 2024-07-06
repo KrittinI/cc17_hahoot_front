@@ -9,10 +9,15 @@ import Avatar from "../../../components/Avatar";
 import { HeartIcon, HeartIconUnfav } from "../../../icons/heart";
 import useAuth from "../../../hooks/useAuth";
 
-export default function OneQuestionRight({ data, id, favorite, handleClickFavorite }) {
+export default function OneQuestionRight({
+  data,
+  id,
+  favorite,
+  handleClickFavorite,
+}) {
   const navigate = useNavigate();
   const { showQuestion } = useQuestion();
-  const { authUser } = useAuth()
+  const { authUser } = useAuth();
 
   const index = showQuestion.findIndex((el) => el.id === id);
 
@@ -30,9 +35,7 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
   };
 
   return (
-    <div
-      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg gap-8`}
-    >
+    <div className={`bg-white flex flex-col p-6 shadow-xl rounded-lg gap-8`}>
       <div className="flex justify-between items-center">
         <div className="text-center text-font-title-card w-full">
           {data?.question}
@@ -56,14 +59,38 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
             />
           </div>
           <div className="grid w-full grid-cols-2 gap-2">
-            <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "A" ? 'bg-green' : 'bg-red'} shadow-xl rounded-lg `}>{data?.choice1}</div>
-            <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "B" ? 'bg-green' : 'bg-red'} shadow-xl rounded-lg `}>{data?.choice2}</div>
-            {data?.choice3 &&
-              <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "C" ? 'bg-green' : 'bg-red'} shadow-xl rounded-lg `}>{data?.choice3}</div>
-            }
-            {data?.choice4 &&
-              <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "D" ? 'bg-green' : 'bg-red'} shadow-xl rounded-lg `}>{data?.choice4}</div>
-            }
+            <div
+              className={`flex justify-start items-center p-4 w-full  ${
+                data?.answer === "A" ? "bg-green" : "bg-red"
+              } shadow-xl rounded-lg `}
+            >
+              {data?.choice1}
+            </div>
+            <div
+              className={`flex justify-start items-center p-4 w-full  ${
+                data?.answer === "B" ? "bg-green" : "bg-red"
+              } shadow-xl rounded-lg `}
+            >
+              {data?.choice2}
+            </div>
+            {data?.choice3 && (
+              <div
+                className={`flex justify-start items-center p-4 w-full  ${
+                  data?.answer === "C" ? "bg-green" : "bg-red"
+                } shadow-xl rounded-lg `}
+              >
+                {data?.choice3}
+              </div>
+            )}
+            {data?.choice4 && (
+              <div
+                className={`flex justify-start items-center p-4 w-full  ${
+                  data?.answer === "D" ? "bg-green" : "bg-red"
+                } shadow-xl rounded-lg `}
+              >
+                {data?.choice4}
+              </div>
+            )}
           </div>
         </div>
         <div
@@ -76,7 +103,10 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-x-4 text-font-title-card">
-          <div role="button" onClick={() => navigate(`../../users/${data?.user.id}`)}>
+          <div
+            role="button"
+            onClick={() => navigate(`../../users/${data?.user.id}`)}
+          >
             <Avatar src={data?.user?.googleImage || data?.user?.profileImage} />
           </div>
           <div>{data?.user?.username}</div>
@@ -89,8 +119,8 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
           >
             {favorite ? <HeartIcon /> : <HeartIconUnfav />}
           </div>
-          {data?.creatorId === authUser?.id
-            ? <>
+          {data?.creatorId === authUser?.id ? (
+            <>
               <div
                 role="button"
                 className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
@@ -104,8 +134,7 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
                 <DeleteIcon />
               </div>
             </>
-            : null
-          }
+          ) : null}
         </div>
       </div>
     </div>

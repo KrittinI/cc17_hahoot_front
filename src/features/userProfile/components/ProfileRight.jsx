@@ -7,10 +7,7 @@ import { HeartIconHover } from "../../../icons/heart";
 import EditProfileBox from "./EditProfileBox";
 import { useNavigate } from "react-router-dom";
 
-export default function ProfileRight({
-  isQuizForm,
-  isEventForm,
-}) {
+export default function ProfileRight({ isQuizForm, isEventForm }) {
   const { authUser } = useAuth();
   const { profile, setProfile } = useUser();
   const navigate = useNavigate();
@@ -31,15 +28,16 @@ export default function ProfileRight({
           <EditProfileBox />
           {isEventForm || isQuizForm ? (
             <>
-              {isQuizForm && <Button
-                bg={"blue"}
-                width={"full"}
-                onClick={() => navigate("/questions/create-question")}
-              >
-                Add New Quiz
-              </Button>
-              }
-              {isEventForm &&
+              {isQuizForm && (
+                <Button
+                  bg={"blue"}
+                  width={"full"}
+                  onClick={() => navigate("/questions/create-question")}
+                >
+                  Add New Quiz
+                </Button>
+              )}
+              {isEventForm && (
                 <Button
                   bg={"blue"}
                   width={"full"}
@@ -47,8 +45,12 @@ export default function ProfileRight({
                 >
                   Add New Event
                 </Button>
-              }
-              <Button bg={"red"} width={"full"}>
+              )}
+              <Button
+                bg={"red"}
+                width={"full"}
+                onClick={() => navigate(`/myfavorite/users/${profile?.id}`)}
+              >
                 <div className="flex w-full justify-center items-center gap-x-2">
                   <HeartIconHover />
                   My Favorite
