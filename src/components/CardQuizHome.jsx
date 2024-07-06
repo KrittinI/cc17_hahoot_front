@@ -14,13 +14,20 @@ const bgMap = {
 
 export default function CardQuizHome({ bg, data }) {
   const [open, setOpen] = useState(false);
-
   const { setPlayQuestion } = useQuestion()
+
   const navigate = useNavigate()
   const onClickConfirm = () => {
-    setPlayQuestion([data, data])
+    setPlayQuestion([data])
     navigate(`/quiz`)
   }
+
+  const handleClose = () => {
+    console.log('click');
+    console.log(open);
+    setOpen(false)
+  }
+
   return (
     <div
       role="button"
@@ -36,7 +43,7 @@ export default function CardQuizHome({ bg, data }) {
         <div className="text-font-title text-white max-h-full">
           {data?.question}
         </div>
-        <div>
+        <div className="">
           <img className="w-full" src={data?.questionPicture || hhHero} alt={data?.question} />
         </div>
       </div>
