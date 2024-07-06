@@ -3,10 +3,40 @@ import SearchBar from "../components/SearchBar";
 import SplitScreen from "../layouts/SplitScreen";
 import useQuestion from "../hooks/useQuestion";
 import AllQuizzesLeft from "../features/questions/components/AllQuizzesLeft";
+import { useEffect } from "react";
 
 export default function AllQuizPage() {
   const [title, setTitle] = useState("All Quiz");
-  const { getQuestionByTopicId, setSeeAll, setSearch } = useQuestion();
+  const [seeAll, setSeeAll] = useState(true);
+  const [search, setSearch] = useState("");
+  const [topicId, setTopicId] = useState(null);
+  const { getQuestionByTopicId, setShowQuestion, question } = useQuestion();
+
+  useEffect(() => {
+    const isSeeAll = async () => {
+      if (seeAll) {
+        if (search) {
+          setShowQuestion(
+            question?.filter((el) => el.question.toLowerCase().includes(search))
+          );
+        } else {
+          setShowQuestion(question);
+        }
+      } else {
+        const quizTopic = (await getQuestionByTopicId(topicId)).data.questions;
+        if (search) {
+          setShowQuestion(
+            quizTopic?.filter((el) =>
+              el.question.toLowerCase().includes(search)
+            )
+          );
+        } else {
+          setShowQuestion(quizTopic);
+        }
+      }
+    };
+    isSeeAll();
+  }, [seeAll, question, topicId, search]);
 
   return (
     <div className="w-[68%] mx-auto h-[auto]">
@@ -16,7 +46,7 @@ export default function AllQuizPage() {
           buttonText={`Create New Question`}
           setSeeAll={setSeeAll}
           setSearch={setSearch}
-          getTopic={getQuestionByTopicId}
+          topicId={setTopicId}
           setTitle={setTitle}
           create={`/questions/create-question`}
         />

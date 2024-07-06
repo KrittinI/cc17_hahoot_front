@@ -11,5 +11,7 @@ eventApi.getEventByTopic = async (topicId) =>
   axios.get(`/events/topic/${topicId}`);
 eventApi.getFavEvent = async () => axios.get("/events/favorite");
 eventApi.getEventByEventId = async (id) => axios.get(`/events/${id}`);
+eventApi.createFev = async (id) => axios.post(`/events/${id}/favorite`);
+eventApi.deleteFav = async (id) => axios.delete(`/events/${id}/favorite`);
 
 export default eventApi;

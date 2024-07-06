@@ -87,9 +87,21 @@ export function ProfileDropdown() {
       to: `/users/${authUser?.id}`,
       name: "your-profile",
     },
-    { title: "Your Quiz", to: "/questions/users/:userId", name: "your-quiz" },
-    { title: "Your Event", to: "/events/users/:userId", name: "your-event" },
-    { title: "Your Favorite", to: "/myfavorite/users/:userId", name: "your-favorite"},
+    {
+      title: "Your Quiz",
+      to: `/questions/users/${authUser?.id}`,
+      name: "your-quiz",
+    },
+    {
+      title: "Your Event",
+      to: `/events/users/${authUser?.id}`,
+      name: "your-event",
+    },
+    {
+      title: "Your Favorite",
+      to: `/myfavorite/users/${authUser?.id}`,
+      name: "your-favorite",
+    },
     { title: "Log out", to: "/login", name: "logout" },
   ];
 
