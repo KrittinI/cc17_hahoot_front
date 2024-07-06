@@ -5,12 +5,12 @@ import Scoreboard from "../features/quiz/components/Scoreboard";
 import { useEffect } from "react";
 
 export default function QuizPage() {
+  const { playQuestion } = useQuestion()
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(playQuestion[0]?.timeLimit || 20);
   const [showScoreboard, setShowScoreboard] = useState(false);
-  const { playQuestion } = useQuestion()
 
   useEffect(() => {
     if (timeLeft > 0 && !selectedAnswer) {
@@ -32,7 +32,7 @@ export default function QuizPage() {
     if (showScoreboard && currentQuestionIndex < playQuestion.length - 1) {
       setSelectedAnswer(null);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setTimeLeft(20);
+      setTimeLeft(playQuestion[currentQuestionIndex + 1]?.timeLimit || 20);
       setShowScoreboard(false);
     }
   };
@@ -40,7 +40,7 @@ export default function QuizPage() {
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
     setScore(0);
-    setTimeLeft(20);
+    setTimeLeft(playQuestion[0]?.timeLimit || 20);
     setShowScoreboard(false);
   };
   const handleShowScoreboard = () => {
