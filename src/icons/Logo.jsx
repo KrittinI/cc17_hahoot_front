@@ -1,10 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import logo from '../assets/icon-hh.png'
 
 export default function Logo() {
-  const navigate = useNavigate()
   return (
-    <div className="flex items-end w-[162px]" onClick={() => navigate('/')}>
+    <div className="flex items-end w-[162px]">
       <img
         className="w-[38px] h-[36px]"
         src={logo}
