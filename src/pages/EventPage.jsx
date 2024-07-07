@@ -10,10 +10,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function EventPage() {
   const { eventId } = useParams();
-  const { setPlayQuestion } = useQuestion()
+  const { setPlayQuestion } = useQuestion([])
   const navigate = useNavigate()
   const [event, setEvent] = useState(null);
   const [questions, setQuestions] = useState([]);
+  const [newQuestion, setNewQuestion] = useState([]);
+  const [files, setFiles] = useState([]);
   const [favorite, setFavorite] = useState(false);
   const [clickEdit, setClickEdit] = useState(true);
 
@@ -58,8 +60,17 @@ export default function EventPage() {
           handleClickSinglePlay={handleClickSinglePlay}
           setClickEdit={setClickEdit}
           edit={clickEdit}
+          setNewQuestion={setNewQuestion}
+          setFiles={setFiles}
         />
-        <OneEventRight questions={questions} edit={clickEdit} />
+        <OneEventRight
+          questions={questions}
+          newQuestion={newQuestion}
+          edit={clickEdit}
+          setNewQuestion={setNewQuestion}
+          setFiles={setFiles}
+          files={files}
+        />
       </SplitScreen>
     </div>
   );

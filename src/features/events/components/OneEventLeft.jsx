@@ -10,6 +10,7 @@ import Input from "../../../components/Input";
 import Modal from "../../../components/Modal";
 import ReadyAlert from "../../../components/ReadyAlert";
 import { useState } from "react";
+import FormAddQuestion from "../../../components/FormAddQuestion";
 
 export default function OneEventLeft({
   event,
@@ -17,11 +18,22 @@ export default function OneEventLeft({
   handleClickFavorite,
   edit,
   setClickEdit,
-  handleClickSinglePlay
+  handleClickSinglePlay,
+  setNewQuestion,
+  setFiles,
 }) {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   const { authUser } = useAuth();
-  const [open, setOpen] = useState(false)
+
+  const onSuccess = (input, file) => {
+    setNewQuestion((prev) => [...prev, input]);
+    if (file) {
+      setFiles((prev) => [...prev, file]);
+    } else {
+      setFiles((prev) => [...prev, null]);
+    }
+  };
 
   return (
     <div>
@@ -122,9 +134,15 @@ export default function OneEventLeft({
           </div>
         ) : (
           <div className="grid gap-y-4">
-            <Button bg="blue" width={"full"}>
+            <Button bg="blue" width={"full"} onClick={() => setOpen(true)}>
               Add New Quiz
             </Button>
+            <Modal open={open} onClose={() => setOpen(false)}>
+              <FormAddQuestion
+                onSuccess={onSuccess}
+                onClose={() => setOpen(false)}
+              />
+            </Modal>
             <Button bg={"black"} width={"full"}>
               Save
             </Button>

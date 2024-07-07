@@ -175,7 +175,7 @@ export default function CreateEventForm() {
                 onChange={handleChange}
                 placeholder="Enter Description"
                 className={
-                `  border-grey p-2 rounded-md h-full
+                  `  border-grey p-2 rounded-md h-full
                   error.description
                     ? "h-full border border-red"
                     : "h-full w-full"`

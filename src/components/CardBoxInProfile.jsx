@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import image from "../assets/c4.jpeg";
-import { HeartIcon } from "../icons/heart";
+import { HeartIcon, HeartIconUnfav } from "../icons/heart";
 import Avatar from "../components/Avatar";
 
 // const sizeMap = {
@@ -9,6 +9,7 @@ import Avatar from "../components/Avatar";
 // };
 
 export default function CardBoxInProfile({ data, name, type }) {
+  console.log(data);
   const navigate = useNavigate();
   return (
     <div
@@ -18,7 +19,7 @@ export default function CardBoxInProfile({ data, name, type }) {
       onClick={() => navigate(`/${name}/${data?.id}`)}
     >
       <div className="bg-white w-[30px] h-[30px] rounded-full absolute right-2 top-2 flex justify-center items-center text-[#D7D7D7]">
-        <HeartIcon />
+        {data?.QuestionFavorite?.length || data?.EventFavorites?.length ? <HeartIcon /> : <HeartIconUnfav />}
       </div>
       <img
         className="h-3/6 w-full rounded-t-[8px]"
@@ -31,9 +32,9 @@ export default function CardBoxInProfile({ data, name, type }) {
         </div>
       </div>
       <div className="flex p-2 justify-between items-center gap-2 ">
-        <Avatar />
+        <Avatar src={data?.user?.profileImage || data?.user?.googleImage} />
         <div className="text-font-title-card text-blue w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
-          {data?.topic.topicName}
+          {data?.topic?.topicName}
         </div>
       </div>
       {type && (

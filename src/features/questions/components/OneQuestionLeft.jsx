@@ -8,16 +8,21 @@ import useQuestion from "../../../hooks/useQuestion";
 import Avatar from "../../../components/Avatar";
 import { HeartIcon, HeartIconUnfav } from "../../../icons/heart";
 import useAuth from "../../../hooks/useAuth";
+import { useState } from "react";
+import Modal from "../../../components/Modal";
+import FormAddQuestion from "../../../components/FormAddQuestion";
 
 export default function OneQuestionRight({
   data,
   id,
   favorite,
   handleClickFavorite,
+  onSuccess,
 }) {
   const navigate = useNavigate();
   const { showQuestion } = useQuestion();
   const { authUser } = useAuth();
+  const [open, setOpen] = useState(false);
 
   const index = showQuestion.findIndex((el) => el.id === id);
 
@@ -60,33 +65,29 @@ export default function OneQuestionRight({
           </div>
           <div className="grid w-full grid-cols-2 gap-2">
             <div
-              className={`flex justify-start items-center p-4 w-full  ${
-                data?.answer === "A" ? "bg-green" : "bg-red"
-              } shadow-xl rounded-lg `}
+              className={`flex justify-start items-center p-4 w-full  ${data?.answer === "A" ? "bg-green" : "bg-red"
+                } shadow-xl rounded-lg `}
             >
               {data?.choice1}
             </div>
             <div
-              className={`flex justify-start items-center p-4 w-full  ${
-                data?.answer === "B" ? "bg-green" : "bg-red"
-              } shadow-xl rounded-lg `}
+              className={`flex justify-start items-center p-4 w-full  ${data?.answer === "B" ? "bg-green" : "bg-red"
+                } shadow-xl rounded-lg `}
             >
               {data?.choice2}
             </div>
             {data?.choice3 && (
               <div
-                className={`flex justify-start items-center p-4 w-full  ${
-                  data?.answer === "C" ? "bg-green" : "bg-red"
-                } shadow-xl rounded-lg `}
+                className={`flex justify-start items-center p-4 w-full  ${data?.answer === "C" ? "bg-green" : "bg-red"
+                  } shadow-xl rounded-lg `}
               >
                 {data?.choice3}
               </div>
             )}
             {data?.choice4 && (
               <div
-                className={`flex justify-start items-center p-4 w-full  ${
-                  data?.answer === "D" ? "bg-green" : "bg-red"
-                } shadow-xl rounded-lg `}
+                className={`flex justify-start items-center p-4 w-full  ${data?.answer === "D" ? "bg-green" : "bg-red"
+                  } shadow-xl rounded-lg `}
               >
                 {data?.choice4}
               </div>
@@ -124,9 +125,18 @@ export default function OneQuestionRight({
               <div
                 role="button"
                 className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
+                onClick={() => setOpen(true)}
               >
                 <EditIcon />
               </div>
+              <Modal open={open} onClose={() => setOpen(false)} title={`Edit Yourw Question`}>
+                <FormAddQuestion
+                  onSuccess={onSuccess}
+                  data={data}
+                  onClose={() => setOpen(false)}
+                  setOpen={setOpen}
+                />
+              </Modal>
               <div
                 role="button"
                 className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"

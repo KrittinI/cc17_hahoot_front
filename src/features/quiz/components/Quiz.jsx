@@ -53,20 +53,20 @@ export default function Quiz({ question, handleShowScoreboard, handleAnswerClick
             correctAnswer={"B" === question?.answer}
             selectedAnswer={selectedAnswer}
           />
-          <QuizButton
+          {question?.choice3 && <QuizButton
             index={"C"}
             onClick={() => handleAnswerClick("C")}
             choice={question?.choice3}
             correctAnswer={"C" === question?.answer}
             selectedAnswer={selectedAnswer}
-          />
-          <QuizButton
+          />}
+          {question?.choice4 && <QuizButton
             index={"D"}
             onClick={() => handleAnswerClick("D")}
             choice={question?.choice4}
             correctAnswer={"D" === question?.answer}
             selectedAnswer={selectedAnswer}
-          />
+          />}
         </div>
       </div>
     </div>
