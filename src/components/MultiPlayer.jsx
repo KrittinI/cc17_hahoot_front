@@ -61,6 +61,8 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     //Reset state when component mounts or reload page
+    localStorage.clear();
+    sessionStorage.clear();
     resetState();
   }, []);
 
@@ -163,13 +165,15 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     if (isStarted) {
-      if (timeLeft > 0 && !showAnswer) {
+      if (timeLeft && timeLeft > 0 && !showAnswer) {
         const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
         return () => clearTimeout(timer);
       } else if (timeLeft === 0) {
+        socket.emit("submitAnswer", { roomId, answer: false, isTimeout: true });
         setShowAnswer(true);
         //set Client ans -> (false)
-        setClientAnswerResult(false);
+        //socket.emit("",false)
+        //setClientAnswerResult(false);
       }
     }
   }, [timeLeft, showAnswer, isStarted]);
@@ -221,7 +225,7 @@ const MultiPlayer = () => {
     //setShowAnswer(false);
     // แสดงหน้า Loading ตอนที่ player กดคำตอบ
 
-    socket.emit("submitAnswer", { roomId, answer: option });
+    socket.emit("submitAnswer", { roomId, answer: option, isTimeout: false });
     setSelectedAnswer(null); //reset SelectedAnswer for next Question
     setLoading(true);
     console.log("submitAnswer is Working in Frontend");
@@ -368,14 +372,16 @@ const MultiPlayer = () => {
           </div>
         ) : clientAnswerResult !== null ? (
           clientAnswerResult ? (
-            <div>
-              <div>Client Answer Result is True</div>
-              <div>You score: {score}</div>
+            <div className="bg-purple-800 text-white text-center p-6 rounded-lg shadow-lg">
+              <div className="text-3xl mb-4 text-darkgreen">Correct</div>
+              <div className="text-5xl mb-4 text-darkgreen">✔️</div>
+              <div className="mt-2 text-2xl text-white">score:{score}</div>
             </div>
           ) : (
-            <div>
-              <div>Client Answer Result is False</div>
-              <div>You score: {score}</div>
+            <div className="bg-purple-800 text-white text-center p-6 rounded-lg shadow-lg">
+              <div className="text-3xl mb-4 text-darkred">Incorrect</div>
+              <div className="text-5xl mb-4 text-darkred">❌</div>
+              <div className="mt-2 text-2xl text-white">score:{score}</div>
             </div>
           )
         ) : !isOwner && currentQuestion ? (
