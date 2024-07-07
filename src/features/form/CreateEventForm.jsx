@@ -81,13 +81,21 @@ export default function CreateEventForm() {
       setOpen(false);
     }
   };
-  console.log(singleEvent, "i am single");
+  // console.log(singleEvent, "i am single");
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full ">
         <div className="flex flex-col gap-4">
           <div>
-            <Input type="text" name="eventName" id="" value={input.eventName} placeholder="Title" onChange={handleChange} error={error.eventName} />
+            <Input
+              type="text"
+              name="eventName"
+              id=""
+              value={input.eventName}
+              placeholder="Title"
+              onChange={handleChange}
+              error={error.eventName}
+            />
           </div>
           <div className="flex gap-3 ">
             <div className="w-3/6 h-56">
@@ -104,8 +112,16 @@ export default function CreateEventForm() {
                 }}
               />
               {file ? (
-                <div role="button" className="bg-gray-100 relative" onClick={() => fileEl.current?.click()}>
-                  <img src={URL.createObjectURL(file)} alt="post" className="mx-auto" />
+                <div
+                  role="button"
+                  className="bg-gray-100 relative"
+                  onClick={() => fileEl.current?.click()}
+                >
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="post"
+                    className="mx-auto"
+                  />
                   <button
                     className="absolute top-1 right-1"
                     onClick={(e) => {
@@ -117,7 +133,11 @@ export default function CreateEventForm() {
                   </button>
                 </div>
               ) : (
-                <div role="button" className="flex flex-col items-center gap-2 bg-gray-300 rounded-lg py-8 hover:bg-gray-200 w-full h-full" onClick={() => fileEl.current?.click()}>
+                <div
+                  role="button"
+                  className="flex flex-col items-center gap-2 bg-gray-300 rounded-lg py-8 hover:bg-gray-200 w-full h-full"
+                  onClick={() => fileEl.current?.click()}
+                >
                   <div
                     className="bg-white
                 w-10 h-10 rounded-full flex justify-center items-center"
@@ -129,7 +149,13 @@ export default function CreateEventForm() {
               )}
             </div>
             <div className="flex flex-col gap-3 h-56 w-3/6">
-              <Select header="topic" value={input.topicId} onChange={handleChange} name="topicId" error={error.topicId}>
+              <Select
+                header="topic"
+                value={input.topicId}
+                onChange={handleChange}
+                name="topicId"
+                error={error.topicId}
+              >
                 {topic?.map((el, index) => (
                   <option value={el.id} key={index}>
                     {el.topicName}
@@ -143,9 +169,15 @@ export default function CreateEventForm() {
                 value={input.description}
                 onChange={handleChange}
                 placeholder="description"
-                className={error.description ? "h-full border border-red" : "h-full w-full"}
+                className={
+                  error.description
+                    ? "h-full border border-red"
+                    : "h-full w-full"
+                }
               ></textarea>
-              {error.description ? <small className="text-red">{error.description}</small> : null}
+              {error.description ? (
+                <small className="text-red">{error.description}</small>
+              ) : null}
             </div>
           </div>
         </div>

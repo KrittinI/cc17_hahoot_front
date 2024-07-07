@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import useTopic from "../hooks/useTopic";
 import Button from "./Button";
+import img from "../assets/c4.jpeg";
 
 const initialError = {
   questionPicture: "",
@@ -34,13 +35,15 @@ export default function FormAddQuestion({
   onSuccess,
   onClose,
   image,
+  data,
+  setOpen,
 }) {
   const { topic } = useTopic();
   const fileEl = useRef();
 
   const [file, setFile] = useState(image || null);
   const [error, setError] = useState(initialError);
-  const [input, setInput] = useState(question || initialInput);
+  const [input, setInput] = useState(question || data || initialInput);
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -97,11 +100,14 @@ export default function FormAddQuestion({
       return;
     }
     onSuccess(input, file);
+    setOpen(false);
   };
 
   return (
     <div className=" grid gap-4 p-4">
-      <div className="text-font-title ">Add your quiz</div>
+      <div className="text-font-title ">
+        {data ? "Edit your quiz" : "Add your quiz"}
+      </div>
       <hr className="shadow-2 text-grey" />
       <div className="w-[40rem] grid grid-cols-5 p-4 gap-4 item">
         <div className="col-span-3">
@@ -139,6 +145,12 @@ export default function FormAddQuestion({
             name="questionPicture"
             id="questionPicture"
             onChange={handleChooseFile}
+          />
+          <img
+            src={
+              file ? URL.createObjectURL(file) : data?.questionPicture || img
+            }
+            className="h-full w-full"
           />
         </div>
         <div className="grid col-span-3 grid-cols-5 gap-4">

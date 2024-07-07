@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Avatar from "../../../components/Avatar";
 import Input from "../../../components/Input";
+import { useState } from "react";
+import Modal from "../../../components/Modal";
+import FormAddQuestion from "../../../components/FormAddQuestion";
 
 export default function OneEventLeft({
   event,
@@ -14,9 +17,21 @@ export default function OneEventLeft({
   handleClickFavorite,
   edit,
   setClickEdit,
+  setNewQuestion,
+  setFiles,
 }) {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   const { authUser } = useAuth();
+
+  const onSuccess = (input, file) => {
+    setNewQuestion((prev) => [...prev, input]);
+    if (file) {
+      setFiles((prev) => [...prev, file]);
+    } else {
+      setFiles((prev) => [...prev, null]);
+    }
+  };
 
   return (
     <div>
@@ -110,9 +125,15 @@ export default function OneEventLeft({
           </div>
         ) : (
           <div className="grid gap-y-4">
-            <Button bg="blue" width={"full"}>
+            <Button bg="blue" width={"full"} onClick={() => setOpen(true)}>
               Add New Quiz
             </Button>
+            <Modal open={open} onClose={() => setOpen(false)}>
+              <FormAddQuestion
+                onSuccess={onSuccess}
+                onClose={() => setOpen(false)}
+              />
+            </Modal>
             <Button bg={"black"} width={"full"}>
               Save
             </Button>

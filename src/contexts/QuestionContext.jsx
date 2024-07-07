@@ -28,14 +28,6 @@ export default function QuestionContextProvider({ children }) {
   const getQuestionByTopicId = async (topicId) =>
     await questionApi.getQuestionByTopicId(topicId);
 
-  const createQuestion = async (body) => {
-    await questionApi.createQuestion(body);
-  };
-
-  const editQuestion = async (id, body) => {
-    await questionApi.editQuestionById(id, body);
-  };
-
   useEffect(() => {
     getAllQuestion();
   }, [authUser]);
@@ -47,8 +39,6 @@ export default function QuestionContextProvider({ children }) {
     getQuestionByTopicId,
     getQuestionByUserId,
     getQuestionByQuestionId,
-    createQuestion,
-    editQuestion,
   };
 
   return (

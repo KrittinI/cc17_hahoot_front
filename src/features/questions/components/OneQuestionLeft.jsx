@@ -8,16 +8,21 @@ import useQuestion from "../../../hooks/useQuestion";
 import Avatar from "../../../components/Avatar";
 import { HeartIcon, HeartIconUnfav } from "../../../icons/heart";
 import useAuth from "../../../hooks/useAuth";
+import { useState } from "react";
+import Modal from "../../../components/Modal";
+import FormAddQuestion from "../../../components/FormAddQuestion";
 
 export default function OneQuestionRight({
   data,
   id,
   favorite,
   handleClickFavorite,
+  onSuccess,
 }) {
   const navigate = useNavigate();
   const { showQuestion } = useQuestion();
   const { authUser } = useAuth();
+  const [open, setOpen] = useState(false);
 
   const index = showQuestion.findIndex((el) => el.id === id);
 
@@ -124,9 +129,18 @@ export default function OneQuestionRight({
               <div
                 role="button"
                 className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"
+                onClick={() => setOpen(true)}
               >
                 <EditIcon />
               </div>
+              <Modal open={open} onClose={() => setOpen(false)}>
+                <FormAddQuestion
+                  onSuccess={onSuccess}
+                  data={data}
+                  onClose={() => setOpen(false)}
+                  setOpen={setOpen}
+                />
+              </Modal>
               <div
                 role="button"
                 className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey"

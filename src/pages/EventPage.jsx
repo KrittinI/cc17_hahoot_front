@@ -10,6 +10,8 @@ export default function EventPage() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [questions, setQuestions] = useState([]);
+  const [newQuestion, setNewQuestion] = useState([]);
+  const [files, setFiles] = useState([]);
   const [favorite, setFavorite] = useState(false);
   const [clickEdit, setClickEdit] = useState(true);
 
@@ -49,8 +51,17 @@ export default function EventPage() {
           handleClickFavorite={handleClickFavorite}
           setClickEdit={setClickEdit}
           edit={clickEdit}
+          setNewQuestion={setNewQuestion}
+          setFiles={setFiles}
         />
-        <OneEventRight questions={questions} edit={clickEdit} />
+        <OneEventRight
+          questions={questions}
+          newQuestion={newQuestion}
+          edit={clickEdit}
+          setNewQuestion={setNewQuestion}
+          setFiles={setFiles}
+          files={files}
+        />
       </SplitScreen>
     </div>
   );
