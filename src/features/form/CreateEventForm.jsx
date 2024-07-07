@@ -19,7 +19,7 @@ export default function CreateEventForm() {
     topicId: "",
     description: "",
   };
-  const { setOpen, singleEvent, setSingleEvent } = useEvent();
+  const { setOpen, setSingleEvent } = useEvent();
   //ใช้้handleCHange จัดการ value ใน input
   const [input, setInput] = useState(initialInput);
   const [file, setFile] = useState("");
@@ -84,7 +84,11 @@ export default function CreateEventForm() {
   // console.log(singleEvent, "i am single");
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full ">
+      <div className="w-full px-4">
+        <hr className="shadow-2 text-grey" />
+      </div>
+
+      <form onSubmit={handleSubmit} className="w-full p-4">
         <div className="flex flex-col gap-4">
           <div>
             <Input
@@ -92,9 +96,10 @@ export default function CreateEventForm() {
               name="eventName"
               id=""
               value={input.eventName}
-              placeholder="Title"
+              placeholder="Enter Your Title"
               onChange={handleChange}
               error={error.eventName}
+              position={'center'}
             />
           </div>
           <div className="flex gap-3 ">
@@ -135,7 +140,7 @@ export default function CreateEventForm() {
               ) : (
                 <div
                   role="button"
-                  className="flex flex-col items-center gap-2 bg-gray-300 rounded-lg py-8 hover:bg-gray-200 w-full h-full"
+                  className="flex flex-col justify-center items-center gap-2 bg-grey rounded-lg py-8 hover:bg-darkgrey w-full h-full"
                   onClick={() => fileEl.current?.click()}
                 >
                   <div
@@ -148,9 +153,9 @@ export default function CreateEventForm() {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-3 h-56 w-3/6">
+            <div className="flex flex-col gap-3 h-50 w-3/6 justify-center">
               <Select
-                header="topic"
+                header="Topic"
                 value={input.topicId}
                 onChange={handleChange}
                 name="topicId"
@@ -168,11 +173,12 @@ export default function CreateEventForm() {
                 id="description"
                 value={input.description}
                 onChange={handleChange}
-                placeholder="description"
+                placeholder="Enter Description"
                 className={
+                  `  border-grey p-2 rounded-md h-full
                   error.description
                     ? "h-full border border-red"
-                    : "h-full w-full"
+                    : "h-full w-full"`
                 }
               ></textarea>
               {error.description ? (
@@ -182,8 +188,10 @@ export default function CreateEventForm() {
           </div>
         </div>
 
-        <div className="flex justify-center p-3">
-          <Button bg="black">submit</Button>
+        <div className="flex justify-end pt-7">
+          <Button bg="black" width={"40"}>
+            OK
+          </Button>
         </div>
       </form>
     </>

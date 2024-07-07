@@ -5,9 +5,13 @@ import SplitScreen from "../layouts/SplitScreen";
 import OneEventLeft from "../features/events/components/OneEventLeft";
 import OneEventRight from "../features/events/components/OneEventRight";
 import eventApi from "../api/event";
+import useQuestion from "../hooks/useQuestion";
+import { useNavigate } from "react-router-dom";
 
 export default function EventPage() {
   const { eventId } = useParams();
+  const { setPlayQuestion } = useQuestion()
+  const navigate = useNavigate()
   const [event, setEvent] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [newQuestion, setNewQuestion] = useState([]);
@@ -15,6 +19,10 @@ export default function EventPage() {
   const [favorite, setFavorite] = useState(false);
   const [clickEdit, setClickEdit] = useState(true);
 
+  const handleClickSinglePlay = () => {
+    setPlayQuestion(questions)
+    navigate("/quiz")
+  }
   const handleClickFavorite = async () => {
     try {
       if (favorite) {
@@ -49,6 +57,7 @@ export default function EventPage() {
           event={event}
           favorite={favorite}
           handleClickFavorite={handleClickFavorite}
+          handleClickSinglePlay={handleClickSinglePlay}
           setClickEdit={setClickEdit}
           edit={clickEdit}
           setNewQuestion={setNewQuestion}

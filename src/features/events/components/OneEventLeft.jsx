@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Avatar from "../../../components/Avatar";
 import Input from "../../../components/Input";
-import { useState } from "react";
 import Modal from "../../../components/Modal";
-import FormAddQuestion from "../../../components/FormAddQuestion";
+import ReadyAlert from "../../../components/ReadyAlert";
+import { useState } from "react";
 
 export default function OneEventLeft({
   event,
@@ -17,6 +17,7 @@ export default function OneEventLeft({
   handleClickFavorite,
   edit,
   setClickEdit,
+  handleClickSinglePlay
   setNewQuestion,
   setFiles,
 }) {
@@ -107,7 +108,14 @@ export default function OneEventLeft({
         </div>
 
         {edit ? (
-          <div className="grid gap-y-4">
+          <div className="grid gap-y-2">
+            <Button
+              bg="blue"
+              width={"full"}
+              onClick={() => setOpen(true)}
+            >
+              Single Play
+            </Button>
             <Button
               bg="blue"
               width={"full"}
@@ -139,6 +147,9 @@ export default function OneEventLeft({
             </Button>
           </div>
         )}
+        <Modal title="Are you ready" open={open}>
+          <ReadyAlert onClose={() => setOpen(false)} onClickConfirm={handleClickSinglePlay} />
+        </Modal>
       </div>
     </div>
   );

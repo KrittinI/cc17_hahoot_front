@@ -10,6 +10,7 @@ export default function QuestionContextProvider({ children }) {
   const { authUser } = useAuth();
   const [question, setQuestion] = useState([]);
   const [showQuestion, setShowQuestion] = useState([]);
+  const [playQuestion, setPlayQuestion] = useState([])
 
   const getAllQuestion = async () => {
     const res = await questionApi.getAllQuestion();
@@ -39,6 +40,8 @@ export default function QuestionContextProvider({ children }) {
     getQuestionByTopicId,
     getQuestionByUserId,
     getQuestionByQuestionId,
+    setPlayQuestion,
+    playQuestion
   };
 
   return (

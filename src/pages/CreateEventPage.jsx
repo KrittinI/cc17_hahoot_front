@@ -9,10 +9,17 @@ export default function CreateEventPage() {
   return (
     <div className="h-[calc(100vh-164px)]">
       <SplitScreen>
-        <div>eie</div>
-        <div>eiei</div>
+        <div></div>
+        <div></div>
       </SplitScreen>
-      <Modal open={open} onClose={() => setOpen(false)} title="Create Event" width={40}>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Create Event"
+        width={40}
+        p={'4'}
+        j="start"
+      >
         <CreateEventForm />
       </Modal>
     </div>
