@@ -10,7 +10,6 @@ import Avatar from "../components/Avatar";
 
 export default function CardBoxInProfile({ data, name, type }) {
   console.log(data);
-  console.log(Boolean(data?.QuestionFavorite?.length || data?.EventFavorite?.length));
   const navigate = useNavigate();
   return (
     <div
@@ -33,7 +32,7 @@ export default function CardBoxInProfile({ data, name, type }) {
         </div>
       </div>
       <div className="flex p-2 justify-between items-center gap-2 ">
-        <Avatar />
+        <Avatar src={data?.user?.profileImage || data?.user?.googleImage} />
         <div className="text-font-title-card text-blue w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
           {data?.topic?.topicName}
         </div>
