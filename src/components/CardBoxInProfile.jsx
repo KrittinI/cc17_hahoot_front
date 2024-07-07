@@ -9,7 +9,6 @@ import Avatar from "../components/Avatar";
 // };
 
 export default function CardBoxInProfile({ data, name, type }) {
-  console.log(data);
   const navigate = useNavigate();
   return (
     <div
