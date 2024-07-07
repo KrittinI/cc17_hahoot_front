@@ -19,11 +19,13 @@ export default function CreateQuestionPage() {
         formData.append(`questionImage`, file);
       });
       formData.append("questions", JSON.stringify(questions));
-      const res = await questionApi.createQuestion(formData);
-      if (res.status !== 200) {
-        return;
+      if (questions || files) {
+        const res = await questionApi.createQuestion(formData);
+        if (res.status !== 200) {
+          return;
+        }
+        setShowQuestion((prev) => [...prev, ...res.data.questions]);
       }
-      setShowQuestion((prev) => [...prev, ...res.data.questions]);
       navigate(`/questions`);
     } catch (error) {
       console.log(error);

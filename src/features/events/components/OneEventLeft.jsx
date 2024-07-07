@@ -10,6 +10,7 @@ import Input from "../../../components/Input";
 import Modal from "../../../components/Modal";
 import ReadyAlert from "../../../components/ReadyAlert";
 import { useState } from "react";
+import FormAddQuestion from "../../../components/FormAddQuestion";
 
 export default function OneEventLeft({
   event,

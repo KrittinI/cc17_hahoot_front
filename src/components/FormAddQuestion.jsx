@@ -109,9 +109,6 @@ export default function FormAddQuestion({
   return (
     <>
       <div className="w-full px-4">
-        <div className="text-font-title ">
-          {data ? "Edit your quiz" : "Add your quiz"}
-        </div>
         <hr className="shadow-2 text-grey" />
         <div className="w-[40rem] grid grid-cols-5 p-4 gap-4 item">
           <div className="col-span-3">
