@@ -157,6 +157,7 @@ const MultiPlayer = () => {
       socket.off("ownerDisconnected");
       socket.off("updateScores");
       socket.off("nextQuestion");
+      socket.off("ShowScoreboard");
     };
   }, []);
 
@@ -292,8 +293,7 @@ const MultiPlayer = () => {
               </button>
             )}
           </div>
-        ) : (isOwner && showScoreboard) ||
-          (!currentQuestion && showScoreboard) ? (
+        ) : isOwner && showScoreboard ? (
           <ScoreboardMultiplayer
             players={playerInfo}
             newSocket={newSocket}
