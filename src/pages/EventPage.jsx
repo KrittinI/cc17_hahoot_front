@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function EventPage() {
   const { eventId } = useParams();
-  const { setPlayQuestion } = useQuestion()
+  const { setPlayQuestion } = useQuestion([])
   const navigate = useNavigate()
   const [event, setEvent] = useState(null);
   const [questions, setQuestions] = useState([]);

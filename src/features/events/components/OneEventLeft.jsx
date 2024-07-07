@@ -17,7 +17,7 @@ export default function OneEventLeft({
   handleClickFavorite,
   edit,
   setClickEdit,
-  handleClickSinglePlay
+  handleClickSinglePlay,
   setNewQuestion,
   setFiles,
 }) {
