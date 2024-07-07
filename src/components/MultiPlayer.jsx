@@ -13,6 +13,9 @@ import {
   CheckTrue,
   CheckFalse,
 } from "../icons/kahoot";
+import Button from "./Button";
+import Input from "./Input";
+import Logo from "../icons/Logo";
 
 //const socket = io("http://localhost:4000");
 let socket;
@@ -210,6 +213,8 @@ const MultiPlayer = () => {
 
   const handleJoinRoom = (event) => {
     event.preventDefault();
+    if (!name) alert("Please Enter nickname");
+    if (!roomId) alert("Please Enter PIN");
     if (name.trim() && roomId.trim()) {
       socket.emit("joinRoom", { roomId, name });
     }
@@ -248,40 +253,52 @@ const MultiPlayer = () => {
         {loading ? (
           <Loading />
         ) : !hasJoined ? (
-          <div className="flex flex-col items-center justify-center">
-            <p className="text-3xl">Hahoot!</p>
+          <div className="bg-white w-72 shadow-xl rounded-lg p-5 flex justify-center items-center flex-col gap-3 relative">
+            <h2 className="text-center mb-2 font-bold text-black text-3xl">
+              <Logo />
+            </h2>
+            <div role="button" className="absolute top-1 right-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-5 text-red"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter Nickname"
-              className="w-full px-4 py-2 border rounded mb-4"
+              placeholder="Enter nickname"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 mb-4 mt-4 text-center"
             />
-            <button
-              onClick={handleCreateRoom}
-              className="bg-blue text-white px-4 py-2 rounded"
-            >
+            <Button width="full" bg="black" onClick={handleCreateRoom}>
               Create Room
-            </button>
-            <form onSubmit={handleJoinRoom} className="w-full flex flex-col">
+            </Button>
+            <form onSubmit={handleJoinRoom}>
               <input
                 type="text"
                 value={roomId}
                 onChange={(e) => setRoomId(e.target.value)}
-                placeholder="Room ID"
-                className="w-full px-4 py-2 border rounded mb-4 mt-4"
+                placeholder="Game PIN"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 mb-4 mt-4 text-center"
               />
-              <button
-                type="submit"
-                className="bg-blue text-white px-4 py-2 rounded"
-              >
-                Join Room
-              </button>
+              <Button width="full" bg="black">
+                Enter
+              </Button>
             </form>
           </div>
         ) : !isStarted ? (
-          <div className="flex flex-col items-center">
-            <h2 className="text-2xl font-bold mb-4">Room ID: {roomId}</h2>
+          <div className="bg-white w-3/4 h-5/6 rounded-lg shadow-xl gap-3 flex flex-col items-center justify-center">
+            <h2 className="text-2xl font-bold mb-4">PIN ID: {roomId}</h2>
             <h3 className="text-xl mb-4">Players:</h3>
             <ul className="mb-4">
               {players.map((player, index) => (
@@ -289,12 +306,9 @@ const MultiPlayer = () => {
               ))}
             </ul>
             {isOwner && (
-              <button
-                onClick={handleStartGame}
-                className="bg-green text-white px-4 py-2 rounded"
-              >
-                Start Game
-              </button>
+              <Button width="60" bg="green" onClick={handleStartGame}>
+                Start Game!
+              </Button>
             )}
           </div>
         ) : isOwner && showScoreboard ? (
