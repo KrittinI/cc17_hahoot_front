@@ -22,7 +22,6 @@ export default function EventQuestionCard({ index, question, setEventQuestions, 
       const data = await getQuestionByQuestionId(id);
       console.log(data);
       setCurrentData(data);
-      console.log(data, "data");
     } catch (err) {
       console.log(err.message);
     }

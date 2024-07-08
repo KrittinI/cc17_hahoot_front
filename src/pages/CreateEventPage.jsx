@@ -13,7 +13,6 @@ export default function CreateEventPage() {
   const [open, setOpen] = useState(true);
 
   const { singleEvent } = useEvent();
-  console.log('singleEvent', singleEvent)
   const navigate = useNavigate();
 
   return (
