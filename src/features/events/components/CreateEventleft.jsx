@@ -35,7 +35,6 @@ export default function CreateEventleft({ event }) {
       }
       const data = formatData();
       const res = await eventApi.create(data);
-      console.log(res.data, "res");
       const count = eventQuestions.length;
       setEventQuestions([]);
       setIsSave(false);
