@@ -28,7 +28,7 @@ export default function ProfileLeft({ setIsQuizForm, setIsEventForm, isEventForm
 
 
     return (
-        <div className='overflow-auto h-full'>
+        <div className='h-full'>
             {(isEventForm && !isQuizForm) && (
                 <EventForm
                     title={"Events"}
