@@ -5,11 +5,13 @@ import SplitScreen from "../layouts/SplitScreen";
 import OneQuestionLeft from "../features/questions/components/OneQuestionLeft";
 import CommentContainer from "../features/form/CommentContainer";
 import questionApi from "../api/question";
+import Spinner from "../components/Spinner";
 
 export default function QuestionPage() {
   const { questionId } = useParams();
   const [oneQuestion, setOneQuestion] = useState(null);
   const [favorite, setFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClickFavorite = async () => {
     try {
@@ -35,21 +37,25 @@ export default function QuestionPage() {
       }
     };
     fetchQuestion();
-  }, [questionId]);
+  }, [questionId, loading]);
 
   const onSuccess = async (input, file) => {
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("questionPicture", file);
       formData.append("questions", JSON.stringify(input));
       await questionApi.editQuestionById(questionId, formData);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
+      {loading && <Spinner transparent />}
       <SplitScreen>
         <OneQuestionLeft
           data={oneQuestion}

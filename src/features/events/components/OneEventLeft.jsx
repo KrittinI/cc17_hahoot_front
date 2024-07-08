@@ -110,11 +110,7 @@ export default function OneEventLeft({
 
         {edit ? (
           <div className="grid gap-y-2">
-            <Button
-              bg="blue"
-              width={"full"}
-              onClick={() => setOpen(true)}
-            >
+            <Button bg="blue" width={"full"} onClick={() => setOpen(true)}>
               Single Play
             </Button>
             <Button
@@ -143,13 +139,23 @@ export default function OneEventLeft({
                 onClose={() => setOpen(false)}
               />
             </Modal>
-            <Button bg={"black"} width={"full"}>
+            <Button bg={"blue"} width={"full"}>
               Save
+            </Button>
+            <Button
+              bg={"black"}
+              width={"full"}
+              onClick={() => setClickEdit(true)}
+            >
+              Back
             </Button>
           </div>
         )}
         <Modal title="Are you ready" open={open}>
-          <ReadyAlert onClose={() => setOpen(false)} onClickConfirm={handleClickSinglePlay} />
+          <ReadyAlert
+            onClose={() => setOpen(false)}
+            onClickConfirm={handleClickSinglePlay}
+          />
         </Modal>
       </div>
     </div>

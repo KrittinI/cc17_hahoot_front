@@ -5,7 +5,7 @@ import Scoreboard from "../features/quiz/components/Scoreboard";
 import { useEffect } from "react";
 
 export default function QuizPage() {
-  const { playQuestion } = useQuestion()
+  const { playQuestion } = useQuestion();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
@@ -47,23 +47,25 @@ export default function QuizPage() {
     setShowScoreboard(true);
     //alert("Show ScoreBoard");
   };
+
   return (
     <>
-      {showScoreboard
-        ? <Scoreboard
+      {showScoreboard ? (
+        <Scoreboard
           score={score}
           isLastQuestion={currentQuestionIndex >= playQuestion.length - 1}
           handleNextQuestion={handleNextQuestion}
           resetQuiz={resetQuiz}
         />
-        : <Quiz
+      ) : (
+        <Quiz
           question={playQuestion[currentQuestionIndex]}
           handleShowScoreboard={handleShowScoreboard}
           handleAnswerClick={handleAnswerClick}
           selectedAnswer={selectedAnswer}
           timeLeft={timeLeft}
         />
-      }
+      )}
     </>
   );
 }

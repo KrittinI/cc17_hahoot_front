@@ -154,7 +154,7 @@ export default function FormAddQuestion({
                 onClick={() => fileEl.current?.click()}
               >
                 <img
-                  src={file ? URL.createObjectURL(file) : data?.questionPicture || img}
+                  src={file ? URL.createObjectURL(file) : img}
                   alt="post"
                   className="mx-auto"
                 />
@@ -174,13 +174,27 @@ export default function FormAddQuestion({
                 className="flex flex-col justify-center items-center gap-2 rounded-lg py-8  h-full w-full"
                 onClick={() => fileEl.current?.click()}
               >
-                <div
-                  className="bg-white
+                {data?.questionPicture ? (
+                  <img
+                    src={
+                      file
+                        ? URL.createObjectURL(file)
+                        : data?.questionPicture || img
+                    }
+                    alt="post"
+                    className="mx-auto"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center">
+                    <div
+                      className="bg-white
                 w-10 h-10 rounded-full flex justify-center items-center"
-                >
-                  <ImageIcon />
-                </div>
-                <span>Add Photo</span>
+                    >
+                      <ImageIcon />
+                    </div>
+                    <span>Add Photo</span>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -330,5 +344,5 @@ export default function FormAddQuestion({
         </div>
       </div>
     </>
-  )
+  );
 }

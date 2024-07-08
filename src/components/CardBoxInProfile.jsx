@@ -9,7 +9,6 @@ import Avatar from "../components/Avatar";
 // };
 
 export default function CardBoxInProfile({ data, name, type }) {
-  console.log(data);
   const navigate = useNavigate();
   return (
     <div
@@ -19,7 +18,12 @@ export default function CardBoxInProfile({ data, name, type }) {
       onClick={() => navigate(`/${name}/${data?.id}`)}
     >
       <div className="bg-white w-[30px] h-[30px] rounded-full absolute right-2 top-2 flex justify-center items-center text-[#D7D7D7]">
-        {data?.QuestionFavorite?.length || data?.EventFavorites?.length ? <HeartIcon /> : <HeartIconUnfav />}
+        {/* {favorite ? <HeartIcon /> : <HeartIconUnfav />} */}
+        {data?.QuestionFavorite?.length || data?.EventFavorites?.length ? (
+          <HeartIcon />
+        ) : (
+          <HeartIconUnfav />
+        )}
       </div>
       <img
         className="h-3/6 w-full rounded-t-[8px]"
