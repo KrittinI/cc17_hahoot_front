@@ -60,10 +60,14 @@ export default function CreateEventForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full ">
+      <div className="w-full px-4">
+        <hr className="shadow-2 text-grey" />
+      </div>
+
+      <form onSubmit={handleSubmit} className="w-full p-4">
         <div className="flex flex-col gap-4">
           <div>
-            <Input type="text" name="eventName" id="" value={input.eventName} placeholder="Title" onChange={handleChange} error={error.eventName} />
+            <Input type="text" name="eventName" id="" value={input.eventName} placeholder="Enter Your Title" onChange={handleChange} error={error.eventName} position={"center"} />
           </div>
           <div className="flex gap-3 ">
             <div className="w-3/6 h-56">
@@ -93,7 +97,7 @@ export default function CreateEventForm() {
                   </button>
                 </div>
               ) : (
-                <div role="button" className="flex flex-col items-center gap-2 bg-gray-300 rounded-lg py-8 hover:bg-gray-200 w-full h-full" onClick={() => fileEl.current?.click()}>
+                <div role="button" className="flex flex-col justify-center items-center gap-2 bg-grey rounded-lg py-8 hover:bg-darkgrey w-full h-full" onClick={() => fileEl.current?.click()}>
                   <div
                     className="bg-white
                 w-10 h-10 rounded-full flex justify-center items-center"
@@ -104,8 +108,8 @@ export default function CreateEventForm() {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-3 h-56 w-3/6">
-              <Select header="topic" value={input.topicId} onChange={handleChange} name="topicId" error={error.topicId}>
+            <div className="flex flex-col gap-3 h-50 w-3/6 justify-center">
+              <Select header="Topic" value={input.topicId} onChange={handleChange} name="topicId" error={error.topicId}>
                 {topic?.map((el, index) => (
                   <option value={el.id} key={index}>
                     {el.topicName}
@@ -118,8 +122,11 @@ export default function CreateEventForm() {
                 id="description"
                 value={input.description}
                 onChange={handleChange}
-                placeholder="description"
-                className={error.description ? "h-full border border-red" : "h-full w-full"}
+                placeholder="Enter Description"
+                className={`  border-grey p-2 rounded-md h-full
+                  error.description
+                    ? "h-full border border-red"
+                    : "h-full w-full"`}
               ></textarea>
               {error.description ? <small className="text-red">{error.description}</small> : null}
             </div>

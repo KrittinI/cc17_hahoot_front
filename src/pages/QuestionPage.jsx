@@ -8,9 +8,9 @@ import questionApi from "../api/question";
 
 export default function QuestionPage() {
   const { questionId } = useParams();
-
   const [oneQuestion, setOneQuestion] = useState(null);
   const [favorite, setFavorite] = useState(false);
+
   const handleClickFavorite = async () => {
     try {
       if (favorite) {
@@ -37,6 +37,17 @@ export default function QuestionPage() {
     fetchQuestion();
   }, [questionId]);
 
+  const onSuccess = async (input, file) => {
+    try {
+      const formData = new FormData();
+      formData.append("questionPicture", file);
+      formData.append("questions", JSON.stringify(input));
+      await questionApi.editQuestionById(questionId, formData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
       <SplitScreen>
@@ -45,6 +56,7 @@ export default function QuestionPage() {
           id={+questionId}
           favorite={favorite}
           handleClickFavorite={handleClickFavorite}
+          onSuccess={onSuccess}
         />
         <CommentContainer />
       </SplitScreen>

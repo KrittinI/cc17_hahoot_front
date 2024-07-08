@@ -1,8 +1,19 @@
+import CardBoxInProfile from "../../../components/CardBoxInProfile";
+import Cardcontainer from "../../../components/CardContainer";
 
-export default function MyFavoriteQuizEvent() {
+export default function MyFavoriteQuizEvent({ title, showCard }) {
   return (
-    <div>
-      MyFavoriteQuizEvent
+    <div className="h-full">
+      <Cardcontainer title={title}>
+        {showCard?.map((el, index) => (
+          <CardBoxInProfile
+            key={index}
+            data={el}
+            name={el.eventName ? "events" : "questions"}
+            type
+          />
+        ))}
+      </Cardcontainer>
     </div>
-  )
+  );
 }

@@ -13,7 +13,6 @@ export default function HomePage() {
   const { authUser } = useAuth()
   const [open, setOpen] = useState(false)
   const [hero, setHero] = useState(null)
-  console.log(hero);
   useEffect(() => {
     const fetchHero = async () => {
       const res = await axios.get('/hero/Active')

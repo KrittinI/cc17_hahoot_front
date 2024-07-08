@@ -1,5 +1,3 @@
-
-
 const bgMap = {
   active: "bg-blue",
   disable: "bg-gray",
@@ -19,6 +17,9 @@ const colorMap = {
 const widthMap = {
   full: "w-full",
   20: "w-20",
+  25: "w-25",
+  30: "w-30",
+  35: "w-35",
   40: "w-40",
   60: "w-60",
 };

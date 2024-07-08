@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useEvent from "../hooks/useEvent";
 import useQuestion from "../hooks/useQuestion";
 import { useEffect } from "react";
 import { HeartIcon } from "../icons/heart";

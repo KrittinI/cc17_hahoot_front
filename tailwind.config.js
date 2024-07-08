@@ -4,14 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
+        timeLeft: "rgb(0, 34, 101)",
         red: "#FB7185",
         darkred: "#FF3D5A",
+        darkredDarker: "#E33B50",
         blue: "#60A5FA",
         darkblue: "#2587FF",
+        darkblueDarker: "#206BCC",
         yellow: "#FFDA45",
         darkyellow: "#FFCC00",
+        darkyellowDarker: "#CCAA00",
         green: "#4ADE80",
         darkgreen: "#00CB4A",
+        darkgreenDarker: "#00A93D",
         black: "#171717",
         grey: "#D9D9D9",
         darkgrey: "#969A9D",
@@ -79,6 +84,23 @@ export default {
       },
       outline: {
         "blue-bottom-solid-2": ["2px solid blue", "0 0 2px 0"],
+      },
+      animation: {
+        bounce: "bounce 1s infinite",
+        "bounce-delay-75": "bounce 1s infinite 0.75s",
+        "bounce-delay-150": "bounce 1s infinite 1.5s",
+        "fade-in": "fadeIn 1s ease-out",
+        pop: "pop 0.3s ease-out",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+        pop: {
+          "0%": { transform: "scale(0.5)" },
+          "100%": { transform: "scale(1)" },
+        },
       },
     },
   },

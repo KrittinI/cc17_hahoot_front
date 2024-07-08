@@ -7,6 +7,8 @@ import useAuth from "../hooks/useAuth";
 export const EventContext = createContext();
 
 export default function EventContextProvider({ children }) {
+  const { authUser } = useAuth();
+
   const [event, setEvent] = useState([]);
   const [singleEvent, setSingleEvent] = useState(null);
   const [isCreated, setIsCreated] = useState(null);
@@ -16,7 +18,6 @@ export default function EventContextProvider({ children }) {
   const [search, setSearch] = useState("");
   const [showEvent, setShowEvent] = useState([]);
   const [open, setOpen] = useState(false);
-  const { authUser } = useAuth();
   const getAllEvent = async () => {
     const res = await eventApi.getAllEvent();
     setEvent(res.data.events);
@@ -24,17 +25,9 @@ export default function EventContextProvider({ children }) {
 
   const getEventByUserId = async (id) => await eventApi.getEventByUserId(id);
 
-  const getEventByTopic = async (topicId) => {
-    const res = await eventApi.getEventByTopic(topicId);
-    setEventTopic(res.data.events);
-  };
+  const getEventByTopic = async (topicId) => await eventApi.getEventByTopic(topicId);
 
   const getEvent = async (id) => await eventApi.getEventByEventId(id);
-
-  const getFevEvent = async () => {
-    const res = await eventApi.getFevEvent();
-    return res.data.events;
-  };
 
   const createEvent = async (body) => {
     return await eventApi.create(body);
@@ -47,7 +40,6 @@ export default function EventContextProvider({ children }) {
   const deleteEvent = async (id) => {
     await eventApi.delete(id);
   };
-
   const isSeeAll = () => {
     if (seeAll) {
       if (search) {
@@ -74,14 +66,9 @@ export default function EventContextProvider({ children }) {
 
   const value = {
     event,
-    eventTopic,
-    showEvent,
-    setSeeAll,
-    setSearch,
     getEventByUserId,
     getEventByTopic,
     getEvent,
-    getFevEvent,
     createEvent,
     editEvent,
     deleteEvent,
@@ -96,9 +83,3 @@ export default function EventContextProvider({ children }) {
   };
   return <EventContext.Provider value={value}>{children}</EventContext.Provider>;
 }
-
-/*  singleEvent,
-    setSingleEvent, 
-    #####เพื่อ รับ event ที่พึ่งสร้าง
-    
-    */

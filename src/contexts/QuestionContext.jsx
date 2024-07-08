@@ -8,12 +8,14 @@ export const QuestionContext = createContext();
 
 export default function QuestionContextProvider({ children }) {
   const { authUser } = useAuth();
-
   const [question, setQuestion] = useState([]);
+
+  const [showQuestion, setShowQuestion] = useState([]);
+  const [playQuestion, setPlayQuestion] = useState([]);
+
   const [quizTopic, setQuizTopic] = useState([]);
   const [seeAll, setSeeAll] = useState(true);
   const [search, setSearch] = useState("");
-  const [showQuestion, setShowQuestion] = useState([]);
 
   const getAllQuestion = async () => {
     const res = await questionApi.getAllQuestion();
@@ -72,17 +74,20 @@ export default function QuestionContextProvider({ children }) {
 
   const value = {
     question,
-    quizTopic,
     showQuestion,
-    setSearch,
-    setSeeAll,
     setShowQuestion,
     getQuestionByTopicId,
     getQuestionByUserId,
     getQuestionByQuestionId,
+    setPlayQuestion,
+    playQuestion,
     getFavQuestion,
     createQuestion,
     editQuestion,
+    isSeeAll,
+    quizTopic,
+    setSearch,
+    setSeeAll,
   };
 
   return <QuestionContext.Provider value={value}>{children}</QuestionContext.Provider>;

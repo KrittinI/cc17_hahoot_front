@@ -19,7 +19,7 @@ export default function CreateQuestionPage() {
         formData.append(`questionImage`, file);
       });
       formData.append("questions", JSON.stringify(questions));
-      console.log(...formData);
+
       const res = await questionApi.createQuestion(formData);
       if (res.status !== 200) {
         return;
@@ -48,6 +48,9 @@ export default function CreateQuestionPage() {
         </div>
       </div>
       <div className="w-full flex justify-end items-end">
+        <Button bg={`black`} width={60} onClick={handleClickSave}>
+          Save
+        </Button>
         <Button bg={`black`} width={60} onClick={handleClickSave}>
           Save
         </Button>

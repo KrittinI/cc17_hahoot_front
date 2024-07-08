@@ -11,7 +11,7 @@ import CreateEventRight from "../features/events/components/CreateEventRight";
 export default function CreateEventPage() {
   const { open, setOpen, singleEvent } = useEvent();
   const navigate = useNavigate();
-  console.log(singleEvent);
+
   return (
     <div className="h-[calc(100vh-164px)]">
       {singleEvent ? (
