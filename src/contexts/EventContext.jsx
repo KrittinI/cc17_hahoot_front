@@ -11,12 +11,6 @@ export default function EventContextProvider({ children }) {
 
   const [event, setEvent] = useState([]);
   const [singleEvent, setSingleEvent] = useState(null);
-  const [isCreated, setIsCreated] = useState(null);
-  const [eventQuestion, setEventQuestion] = useState([]);
-  const [eventTopic, setEventTopic] = useState([]);
-  const [seeAll, setSeeAll] = useState(true);
-  const [search, setSearch] = useState("");
-  const [showEvent, setShowEvent] = useState([]);
   const [open, setOpen] = useState(false);
   const getAllEvent = async () => {
     const res = await eventApi.getAllEvent();
@@ -25,7 +19,8 @@ export default function EventContextProvider({ children }) {
 
   const getEventByUserId = async (id) => await eventApi.getEventByUserId(id);
 
-  const getEventByTopic = async (topicId) => await eventApi.getEventByTopic(topicId);
+  const getEventByTopic = async (topicId) =>
+    await eventApi.getEventByTopic(topicId);
 
   const getEvent = async (id) => await eventApi.getEventByEventId(id);
 
@@ -40,29 +35,10 @@ export default function EventContextProvider({ children }) {
   const deleteEvent = async (id) => {
     await eventApi.delete(id);
   };
-  const isSeeAll = () => {
-    if (seeAll) {
-      if (search) {
-        setShowEvent(event?.filter((el) => el.eventName.toLowerCase().includes(search)));
-      } else {
-        setShowEvent(event);
-      }
-    } else {
-      if (search) {
-        setShowEvent(eventTopic?.filter((el) => el.eventName.toLowerCase().includes(search)));
-      } else {
-        setShowEvent(eventTopic);
-      }
-    }
-  };
 
   useEffect(() => {
     getAllEvent();
-  }, [authUser, isCreated]);
-
-  useEffect(() => {
-    isSeeAll();
-  }, [seeAll, event, eventTopic, search]);
+  }, [authUser]);
 
   const value = {
     event,
@@ -76,11 +52,15 @@ export default function EventContextProvider({ children }) {
     setOpen,
     singleEvent,
     setSingleEvent,
-    setEvent,
-    eventQuestion,
-    setEventQuestion,
-    isCreated,
-    setIsCreated,
+    setEvent
   };
-  return <EventContext.Provider value={value}>{children}</EventContext.Provider>;
+  return (
+    <EventContext.Provider value={value}>{children}</EventContext.Provider>
+  );
 }
+
+/*  singleEvent,
+    setSingleEvent, 
+    #####เพื่อ รับ event ที่พึ่งสร้าง
+    
+    */
