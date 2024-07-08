@@ -62,6 +62,12 @@ const MultiPlayer = () => {
   const [newRoomId, setNewRoomId] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [answerCount, setAnswerCount] = useState(0);
+  const [roomAnswerCount, setRoomAnswerCount] = useState({
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0,
+  });
 
   useEffect(() => {
     //Reset state when component mounts or reload page
@@ -76,6 +82,12 @@ const MultiPlayer = () => {
     //socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setNewSocket(socket);
+
+    socket.on("RoomAnswerCount", (counts) => {
+      //set something in state
+      setRoomAnswerCount(counts);
+      console.log("RoomAnswerCounter is working");
+    });
 
     socket.on("answerCount", (count) => {
       console.log("answerCount =>", count);
@@ -172,6 +184,7 @@ const MultiPlayer = () => {
       socket.off("nextQuestion");
       socket.off("ShowScoreboard");
       socket.off("answerCount");
+      socket.off("RoomAnswerCount");
     };
   }, []);
 
@@ -211,6 +224,12 @@ const MultiPlayer = () => {
     setNewRoomId("");
     setIsGameOver(false);
     setAnswerCount(0);
+    setRoomAnswerCount({
+      A: 0,
+      B: 0,
+      C: 0,
+      D: 0,
+    });
 
     //alert("Reset State");
   };
@@ -359,13 +378,50 @@ const MultiPlayer = () => {
               >
                 {timeLeft}
               </span>
-              <img
-                className={`w-[420px] h-[250px] rounded-lg ${
-                  showAnswer ? "invisible" : ""
-                }`}
-                src={currentQuestion.questionPicture}
-                alt="Quiz Image"
-              />
+              {!showAnswer ? (
+                <img
+                  className={`w-[420px] h-[250px] rounded-lg ${
+                    showAnswer ? "invisible" : ""
+                  }`}
+                  src={currentQuestion.questionPicture}
+                  alt="Quiz Image"
+                />
+              ) : (
+                <div className="flex flex-row gap-2 mt-4">
+                  <div className="flex flex-col items-center justify-center bg-darkredDarker p-4 rounded-lg shadow-md">
+                    <div className="flex items-center justify-center w-20 h-20 bg-transparent text-white text-4xl font-bold rounded-full">
+                      {roomAnswerCount.A}
+                    </div>
+                    <div className="mt-2 bg-transparent px-4 py-2 rounded-full text-white text-lg font-semibold">
+                      ▲
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center justify-center bg-darkblueDarker p-4 rounded-lg shadow-md">
+                    <div className="flex items-center justify-center w-20 h-20 bg-transparent text-white text-4xl font-bold rounded-full">
+                      {roomAnswerCount.B}
+                    </div>
+                    <div className="mt-2 bg-transparent px-4 py-2 rounded-full text-white text-lg font-semibold">
+                      ◆
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center justify-center bg-darkyellowDarker p-4 rounded-lg shadow-md">
+                    <div className="flex items-center justify-center w-20 h-20 bg-transparent text-white text-4xl font-bold rounded-full">
+                      {roomAnswerCount.C}
+                    </div>
+                    <div className="mt-2 bg-transparent px-4 py-2 rounded-full text-white text-lg font-semibold">
+                      ●
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center justify-center bg-darkgreenDarker p-4 rounded-lg shadow-md">
+                    <div className="flex items-center justify-center w-20 h-20 bg-transparent text-white text-4xl font-bold rounded-full">
+                      {roomAnswerCount.D}
+                    </div>
+                    <div className="mt-2 bg-transparent px-4 py-2 rounded-full text-white text-lg font-semibold">
+                      ■
+                    </div>
+                  </div>
+                </div>
+              )}
               {showAnswer ? (
                 <button
                   className={`rounded-lg w-32 h-12 shadow-lg text-lg font-bold bg-white text-black animate-bounce transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl`}
@@ -421,13 +477,13 @@ const MultiPlayer = () => {
           </div>
         ) : clientAnswerResult !== null ? (
           clientAnswerResult ? (
-            <div className="bg-purple-800 text-white text-center p-6 rounded-lg shadow-lg">
+            <div className="bg-timeLeft text-white text-center p-6 rounded-lg shadow-lg">
               <div className="text-3xl mb-4 text-darkgreen">Correct</div>
               <div className="text-5xl mb-4 text-darkgreen">✅</div>
               {/* <div className="mt-2 text-2xl text-white">score:{score}</div> */}
             </div>
           ) : (
-            <div className="bg-purple-800 text-white text-center p-6 rounded-lg shadow-lg">
+            <div className="bg-timeLeft text-white text-center p-6 rounded-lg shadow-lg">
               <div className="text-3xl mb-4 text-darkred">Incorrect</div>
               <div className="text-5xl mb-4 text-darkred">❌</div>
               {/* <div className="mt-2 text-2xl text-white">score:{score}</div> */}
