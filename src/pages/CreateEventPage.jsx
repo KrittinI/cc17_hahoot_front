@@ -4,23 +4,30 @@ import useEvent from "../hooks/useEvent";
 import CreateEventForm from "../features/form/CreateEventForm";
 import SplitScreen from "../layouts/SplitScreen";
 
+import { useNavigate } from "react-router-dom";
+import CreateEventleft from "../features/events/components/CreateEventleft";
+import CreateEventRight from "../features/events/components/CreateEventRight";
+import { useState } from "react";
+
 export default function CreateEventPage() {
-  const { open, setOpen } = useEvent();
+  const [open, setOpen] = useState(true);
+
+  const { singleEvent } = useEvent();
+  console.log('singleEvent', singleEvent)
+  const navigate = useNavigate();
+
   return (
     <div className="h-[calc(100vh-164px)]">
-      <SplitScreen>
-        <div></div>
-        <div></div>
-      </SplitScreen>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        title="Create Event"
-        width={40}
-        p={'4'}
-        j="start"
-      >
-        <CreateEventForm />
+      {singleEvent ? (
+        <SplitScreen sizeRatio={30}>
+          <CreateEventleft event={singleEvent} />
+          <CreateEventRight event={singleEvent} />
+        </SplitScreen>
+      ) : (
+        <></>
+      )}
+      <Modal open={open} onClose={() => navigate("/events")} title="Create Event" width={40}>
+        <CreateEventForm onClose={() => setOpen(false)} />
       </Modal>
     </div>
   );
