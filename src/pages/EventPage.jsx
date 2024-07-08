@@ -27,11 +27,19 @@ export default function EventPage() {
   }
   const handleClickFavorite = async () => {
     try {
+      const data = [...event]
+      const foundData = data.find((el) => el.id === +eventId)
+      const foundIndex = data.findIndex((el) => el.id === +eventId)
       if (favorite) {
         await eventApi.deleteFav(oneEvent?.id);
+        const updateFoundData = { ...foundData, EventFavorites: [] }
+        data.splice(foundIndex, 1, updateFoundData)
       } else {
         await eventApi.createFev(oneEvent?.id);
+        const updateFoundData = { ...foundData, EventFavorites: [1] }
+        data.splice(foundIndex, 1, updateFoundData)
       }
+      setEvent(data)
       setFavorite((prev) => !prev);
     } catch (error) {
       console.log(error);
