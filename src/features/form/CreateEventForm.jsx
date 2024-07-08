@@ -6,7 +6,6 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useRef } from "react";
 import { ImageIcon } from "../../icons/Image";
-import authEvent from "../../api/event";
 
 export default function CreateEventForm() {
   const initialInput = {
@@ -19,47 +18,24 @@ export default function CreateEventForm() {
     topicId: "",
     description: "",
   };
-  const { setOpen, singleEvent, setSingleEvent } = useEvent();
-  //ใช้้handleCHange จัดการ value ใน input
+  const { setOpen, setSingleEvent } = useEvent();
+
   const [input, setInput] = useState(initialInput);
   const [file, setFile] = useState("");
-  //ไว้ ใช้กับ handleError
+
   const [error, setError] = useState(initialError);
-  //   const [isError, setIsError] = useState(false);
+
   const { topic } = useTopic();
   const fileEl = useRef();
-
-  //   console.log(topic);
-  //   console.log(select, "i am select");
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     setError((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
-  const formatData = () => {
-    const formData = new FormData();
-    console.log(file);
-    console.log(input);
-    if (file) {
-      formData.append("eventImage", file);
-    } else {
-      formData.append("eventImage", null);
-    }
-    for (let data in input) {
-      formData.append(`${data}`, `${input[data]}`);
-      console.log(data, input[data]);
-    }
-    console.log(...formData, "this is formdata");
-    return formData;
-  };
-
   const EventCreation = async () => {
     try {
-      const data = formatData();
-      const creatingEvent = await authEvent.create(data);
-      const event = await authEvent.getEventByEventId(creatingEvent.event.id);
-      setSingleEvent(event);
+      setSingleEvent({ ...input, file });
     } catch (err) {
       console.log(err.message);
     }
@@ -81,7 +57,7 @@ export default function CreateEventForm() {
       setOpen(false);
     }
   };
-  console.log(singleEvent, "i am single");
+
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full ">
@@ -104,8 +80,8 @@ export default function CreateEventForm() {
                 }}
               />
               {file ? (
-                <div role="button" className="bg-gray-100 relative" onClick={() => fileEl.current?.click()}>
-                  <img src={URL.createObjectURL(file)} alt="post" className="mx-auto" />
+                <div role="button" className="bg-gray-100 relative w-full h-full" onClick={() => fileEl.current?.click()}>
+                  <img src={URL.createObjectURL(file)} alt="post" className="mx-auto w-full h-full object-cover" />
                   <button
                     className="absolute top-1 right-1"
                     onClick={(e) => {
@@ -151,7 +127,7 @@ export default function CreateEventForm() {
         </div>
 
         <div className="flex justify-center p-3">
-          <Button bg="black">submit</Button>
+          <Button bg="black">Create</Button>
         </div>
       </form>
     </>

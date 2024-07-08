@@ -9,6 +9,8 @@ export const EventContext = createContext();
 export default function EventContextProvider({ children }) {
   const [event, setEvent] = useState([]);
   const [singleEvent, setSingleEvent] = useState(null);
+  const [isCreated, setIsCreated] = useState(null);
+  const [eventQuestion, setEventQuestion] = useState([]);
   const [eventTopic, setEventTopic] = useState([]);
   const [seeAll, setSeeAll] = useState(true);
   const [search, setSearch] = useState("");
@@ -64,7 +66,7 @@ export default function EventContextProvider({ children }) {
 
   useEffect(() => {
     getAllEvent();
-  }, [authUser]);
+  }, [authUser, isCreated]);
 
   useEffect(() => {
     isSeeAll();
@@ -87,6 +89,10 @@ export default function EventContextProvider({ children }) {
     setOpen,
     singleEvent,
     setSingleEvent,
+    eventQuestion,
+    setEventQuestion,
+    isCreated,
+    setIsCreated,
   };
   return <EventContext.Provider value={value}>{children}</EventContext.Provider>;
 }

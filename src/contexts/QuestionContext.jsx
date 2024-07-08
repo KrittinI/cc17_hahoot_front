@@ -7,7 +7,6 @@ import useAuth from "../hooks/useAuth";
 export const QuestionContext = createContext();
 
 export default function QuestionContextProvider({ children }) {
-
   const { authUser } = useAuth();
 
   const [question, setQuestion] = useState([]);
@@ -19,11 +18,10 @@ export default function QuestionContextProvider({ children }) {
   const getAllQuestion = async () => {
     const res = await questionApi.getAllQuestion();
     setQuestion(res.data.questions);
-    setShowQuestion(res.data.questions)
+    setShowQuestion(res.data.questions);
   };
 
-  const getQuestionByUserId = async (id) =>
-    await questionApi.getQuestionByUserId(id);
+  const getQuestionByUserId = async (id) => await questionApi.getQuestionByUserId(id);
 
   const getQuestionByQuestionId = async (id) => {
     const res = await questionApi.getQuestionByQuestionId(id);
@@ -51,17 +49,13 @@ export default function QuestionContextProvider({ children }) {
   const isSeeAll = () => {
     if (seeAll) {
       if (search) {
-        setShowQuestion(
-          question?.filter((el) => el.question.toLowerCase().includes(search))
-        );
+        setShowQuestion(question?.filter((el) => el.question.toLowerCase().includes(search)));
       } else {
         setShowQuestion(question);
       }
     } else {
       if (search) {
-        setShowQuestion(
-          quizTopic?.filter((el) => el.question.toLowerCase().includes(search))
-        );
+        setShowQuestion(quizTopic?.filter((el) => el.question.toLowerCase().includes(search)));
       } else {
         setShowQuestion(quizTopic);
       }
@@ -91,10 +85,5 @@ export default function QuestionContextProvider({ children }) {
     editQuestion,
   };
 
-
-  return (
-    <QuestionContext.Provider value={value}>
-      {children}
-    </QuestionContext.Provider>
-  );
+  return <QuestionContext.Provider value={value}>{children}</QuestionContext.Provider>;
 }

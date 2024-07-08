@@ -7,29 +7,29 @@ import useQuestion from "../hooks/useQuestion";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateQuestionPage() {
-  const { setShowQuestion } = useQuestion()
-  const navigate = useNavigate()
+  const { setShowQuestion } = useQuestion();
+  const navigate = useNavigate();
 
   const [questions, setQuestions] = useState([]);
   const [files, setFiles] = useState([]);
   const handleClickSave = async () => {
     try {
-      const formData = new FormData()
+      const formData = new FormData();
       files.forEach((file) => {
-        formData.append(`questionImage`, file)
-      })
-      formData.append("questions", JSON.stringify(questions))
+        formData.append(`questionImage`, file);
+      });
+      formData.append("questions", JSON.stringify(questions));
+      console.log(...formData);
       const res = await questionApi.createQuestion(formData);
       if (res.status !== 200) {
-        return
+        return;
       }
-      setShowQuestion(prev => [...prev, ...res.data.questions])
-      navigate(`/questions`)
+      setShowQuestion((prev) => [...prev, ...res.data.questions]);
+      navigate(`/questions`);
     } catch (error) {
       console.log(error);
     }
-
-  }
+  };
 
   return (
     <div className="h-[calc(100vh-164px)] w-[70%] mx-auto flex flex-col justify-between items-center p-4">
@@ -41,21 +41,16 @@ export default function CreateQuestionPage() {
         <div className="w-full overflow-auto max-h-[100%]">
           <div className="grid grid-cols-5 gap-4 w-full">
             <AddQuestionCard setQuestions={setQuestions} setFiles={setFiles} />
-            {questions?.map((quesion, index) =>
-              <QuestionCard
-                key={index}
-                index={index}
-                question={quesion}
-                setQuestions={setQuestions}
-                setFiles={setFiles}
-                image={files[index]}
-              />
-            )}
+            {questions?.map((quesion, index) => (
+              <QuestionCard key={index} index={index} question={quesion} setQuestions={setQuestions} setFiles={setFiles} image={files[index]} />
+            ))}
           </div>
         </div>
       </div>
       <div className="w-full flex justify-end items-end">
-        <Button bg={`black`} width={60} onClick={handleClickSave}>Save</Button>
+        <Button bg={`black`} width={60} onClick={handleClickSave}>
+          Save
+        </Button>
       </div>
     </div>
   );
