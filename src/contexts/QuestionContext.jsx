@@ -88,7 +88,6 @@ export default function QuestionContextProvider({ children }) {
     quizTopic,
     setSearch,
     setSeeAll,
-    playQuestion,
     setQuestion
   };
 

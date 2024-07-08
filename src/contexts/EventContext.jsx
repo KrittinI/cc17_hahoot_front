@@ -76,7 +76,7 @@ export default function EventContextProvider({ children }) {
     setOpen,
     singleEvent,
     setSingleEvent,
-    setEvent
+    setEvent,
     eventQuestion,
     setEventQuestion,
     isCreated,
