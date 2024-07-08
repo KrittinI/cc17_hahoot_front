@@ -10,7 +10,7 @@ import QuestionIcon from "../icons/Question";
 import Button from "../components/Button";
 import AddEventQuestionForm from "../features/form/AddEventQuestionForm";
 
-export default function EventQuestionCard({ index, question, setEventQuestion, eventQuestion, timeLimit, event }) {
+export default function EventQuestionCard({ index, question, setEventQuestions, eventQuestions, timeLimit, event }) {
   const [open, setOpen] = useState(false);
   const [currentData, setCurrentData] = useState(null);
   const [isDelete, setIsDelete] = useState(false);
@@ -20,6 +20,7 @@ export default function EventQuestionCard({ index, question, setEventQuestion, e
   const findQuestion = async (id) => {
     try {
       const data = await getQuestionByQuestionId(id);
+      console.log(data);
       setCurrentData(data);
       console.log(data, "data");
     } catch (err) {
@@ -29,15 +30,15 @@ export default function EventQuestionCard({ index, question, setEventQuestion, e
 
   useEffect(() => {
     findQuestion(question);
-  }, [eventQuestion]);
+  }, [eventQuestions]);
 
   const handleDelete = (id) => {
-    setEventQuestion((prev) => prev.filter((q, i) => i !== id));
+    setEventQuestions((prev) => prev.filter((q, i) => i !== id));
     setIsDelete(false);
   };
 
   const handleEdit = (index, input) => {
-    setEventQuestion((prev) => {
+    setEventQuestions((prev) => {
       const questions = [...prev];
       questions.splice(index, 1, input);
       return questions;

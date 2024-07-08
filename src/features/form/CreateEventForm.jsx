@@ -7,7 +7,7 @@ import Button from "../../components/Button";
 import { useRef } from "react";
 import { ImageIcon } from "../../icons/Image";
 
-export default function CreateEventForm() {
+export default function CreateEventForm({ onClose }) {
   const initialInput = {
     eventName: "",
     topicId: "",
@@ -18,7 +18,7 @@ export default function CreateEventForm() {
     topicId: "",
     description: "",
   };
-  const { setOpen, setSingleEvent } = useEvent();
+  const { setSingleEvent } = useEvent();
 
   const [input, setInput] = useState(initialInput);
   const [file, setFile] = useState("");
@@ -54,7 +54,7 @@ export default function CreateEventForm() {
 
     if (!hasError) {
       EventCreation();
-      setOpen(false);
+      onClose();
     }
   };
 

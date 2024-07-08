@@ -6,7 +6,6 @@ import Button from "./Button";
 import Input from "./Input";
 import { useState } from "react";
 import { useEffect } from "react";
-import useEvent from "../hooks/useEvent";
 
 export default function SearchBar({
   buttonText,
@@ -19,7 +18,6 @@ export default function SearchBar({
   const { authUser } = useAuth();
   const { topic } = useTopic();
   const [input, setInput] = useState("");
-  const { setOpen } = useEvent();
   const navigate = useNavigate();
 
   const handleClickTopic = (id, name) => {
@@ -46,7 +44,6 @@ export default function SearchBar({
             bg={`black`}
             width={`full`}
             onClick={() => {
-              setOpen(true);
               navigate(create);
             }}
           >

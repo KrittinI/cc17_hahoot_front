@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateEventleft({ event }) {
   const navigate = useNavigate();
-  const { eventQuestion, setEventQuestion, setSingleEvent, setIsCreated } = useEvent();
+  const { eventQuestions, setEventQuestions, setSingleEvent, setIsCreated } = useEvent();
   const [isCancle, setIsCancle] = useState(false);
   const [isSave, setIsSave] = useState(false);
 
@@ -20,37 +20,30 @@ export default function CreateEventleft({ event }) {
     } else {
       formData.append("eventImage", null);
     }
-
     //######### convert DATA TO Text FORM AND SEND THEM IN GROUP
     const { file, ...data } = event;
-
     const inputToText = JSON.stringify(data);
-    const questToString = eventQuestion.map((quest) => JSON.stringify(quest));
+    const questToString = eventQuestions.map((quest) => JSON.stringify(quest));
     formData.append("events", inputToText);
     formData.append("question", questToString);
-
-    //########## HOW TO LOG FORM DATA
-    // for (const pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1], "formmmm");
-    // }
     return formData;
   };
 
   const handleClickSave = async () => {
     try {
-      if (eventQuestion.length === 0) {
+      if (eventQuestions.length === 0) {
         return alert("please add some question");
       }
       const data = formatData();
       const res = await eventApi.create(data);
       console.log(res.data, "res");
-      const count = eventQuestion.length;
-      setEventQuestion([]);
+      const count = eventQuestions.length;
+      setEventQuestions([]);
       setIsSave(false);
-      setIsCreated(res.data);
+      // setIsCreated(res.data);
       setSingleEvent(null);
-      alert(`you've already created ${count} question `);
-      navigate("/events");
+      alert(`you've already created ${count} question(s) `);
+      // navigate("/events");
     } catch (err) {
       alert(err.message);
     }
@@ -58,10 +51,10 @@ export default function CreateEventleft({ event }) {
 
   const handleCancle = () => {
     setSingleEvent(null);
-    setEventQuestion([]);
+    setEventQuestions([]);
     navigate("/events");
   };
-  const path = URL?.createObjectURL(event?.file);
+  const path = event?.file && URL?.createObjectURL(event?.file);
 
   return (
     <div>
