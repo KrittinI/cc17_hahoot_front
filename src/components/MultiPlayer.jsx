@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Loading from "./Loading";
 // import ClientAnswerResult from "./ClientAnswerResult";
-import ScoreboardMultiplayer from "./ScoreboardMultiplayer";
+import ScoreboardMultiplayer from "../features/multiplayer/components/ScoreboardMultiplayer";
 import {
   Square,
   Circle,
@@ -14,7 +14,6 @@ import {
   CheckFalse,
 } from "../icons/kahoot";
 import Button from "./Button";
-import Input from "./Input";
 import Logo from "../icons/Logo";
 
 //const socket = io("http://localhost:4000");
@@ -71,14 +70,14 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     //Reset state when component mounts or reload page
-    localStorage.clear();
-    sessionStorage.clear();
+    // localStorage.clear();
+    // sessionStorage.clear();
     resetState();
   }, []);
 
   useEffect(() => {
     // เชื่อมต่อกับ Socket.IO โดยใช้ hostname ของเครื่องที่รัน Vite server
-    socket = io(`http://${window.location.hostname}:4000`);
+    socket = io(`http://${window.location.hostname}:8008`);
     //socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setNewSocket(socket);
@@ -338,9 +337,8 @@ const MultiPlayer = () => {
               {players.map((player, index) => (
                 <li
                   key={index}
-                  className={`flex items-center justify-between p-4 rounded-lg border-b last:border-b-0 ${
-                    index % 2 === 0 ? "bg-darkblueDarker" : "bg-darkredDarker"
-                  }`}
+                  className={`flex items-center justify-between p-4 rounded-lg border-b last:border-b-0 ${index % 2 === 0 ? "bg-darkblueDarker" : "bg-darkredDarker"
+                    }`}
                 >
                   <span className="text-2xl font-semibold text-white">
                     {player}
@@ -371,18 +369,16 @@ const MultiPlayer = () => {
             </div>
             <div className="flex flex-row justify-between items-center my-4 gap-60 animate-fade-in">
               <span
-                className={`flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32 ${
-                  showAnswer ? "invisible" : ""
-                }`}
+                className={`flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32 ${showAnswer ? "invisible" : ""
+                  }`}
                 style={{ minWidth: "40px" }}
               >
                 {timeLeft}
               </span>
               {!showAnswer ? (
                 <img
-                  className={`w-[420px] h-[250px] rounded-lg ${
-                    showAnswer ? "invisible" : ""
-                  }`}
+                  className={`w-[420px] h-[250px] rounded-lg ${showAnswer ? "invisible" : ""
+                    }`}
                   src={currentQuestion.questionPicture}
                   alt="Quiz Image"
                 />
@@ -450,13 +446,12 @@ const MultiPlayer = () => {
               ].map((option, index) => (
                 <button
                   key={option}
-                  className={`px-10 py-10 text-white text-font-title text-start animate-pop ${
-                    showAnswer
-                      ? indexToLetter(index) === currentQuestion.answer
-                        ? "bg-darkgreen"
-                        : "bg-red opacity-80"
-                      : `${buttonColors[index]} ${hoverColors[index]}`
-                  } flex justify-between items-center transition-all duration-500 ease-in-out transform hover:scale-105`}
+                  className={`px-10 py-10 text-white text-font-title text-start animate-pop ${showAnswer
+                    ? indexToLetter(index) === currentQuestion.answer
+                      ? "bg-darkgreen"
+                      : "bg-red opacity-80"
+                    : `${buttonColors[index]} ${hoverColors[index]}`
+                    } flex justify-between items-center transition-all duration-500 ease-in-out transform hover:scale-105`}
                   disabled={showAnswer}
                 >
                   <div className="flex items-center">

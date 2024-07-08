@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Button from "./Button";
+import Button from "../../../components/Button";
 import confetti from "canvas-confetti";
 
 //import io from "socket.io-client";
