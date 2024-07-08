@@ -17,7 +17,12 @@ export default function CardBoxInProfile({ data, name, type }) {
       onClick={() => navigate(`/${name}/${data?.id}`)}
     >
       <div className="bg-white w-[30px] h-[30px] rounded-full absolute right-2 top-2 flex justify-center items-center text-[#D7D7D7]">
-        {data?.QuestionFavorite?.length || data?.EventFavorites?.length ? <HeartIcon /> : <HeartIconUnfav />}
+        {/* {favorite ? <HeartIcon /> : <HeartIconUnfav />} */}
+        {data?.QuestionFavorite?.length || data?.EventFavorites?.length ? (
+          <HeartIcon />
+        ) : (
+          <HeartIconUnfav />
+        )}
       </div>
       <div className="bg-gray-100 rounded-t-[8px] flex justify-center">
         <img
