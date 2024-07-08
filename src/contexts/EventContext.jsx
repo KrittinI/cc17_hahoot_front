@@ -52,6 +52,7 @@ export default function EventContextProvider({ children }) {
     setOpen,
     singleEvent,
     setSingleEvent,
+    setEvent
   };
   return (
     <EventContext.Provider value={value}>{children}</EventContext.Provider>

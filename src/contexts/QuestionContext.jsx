@@ -41,7 +41,8 @@ export default function QuestionContextProvider({ children }) {
     getQuestionByUserId,
     getQuestionByQuestionId,
     setPlayQuestion,
-    playQuestion
+    playQuestion,
+    setQuestion
   };
 
   return (
