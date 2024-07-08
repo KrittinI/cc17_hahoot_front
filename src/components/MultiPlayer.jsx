@@ -22,10 +22,10 @@ let socket;
 
 const iconsDefault = [<Triangle />, <Dimond />, <Circle />, <Square />];
 const iconsCustom = [
-  <Triangle size="24vmin" />,
-  <Dimond size="24vmin" />,
-  <Circle size="24vmin" />,
-  <Square size="24vmin" />,
+  <Triangle size="20vmin" />,
+  <Dimond size="20vmin" />,
+  <Circle size="20vmin" />,
+  <Square size="20vmin" />,
 ];
 const buttonColors = [
   "bg-darkred",
