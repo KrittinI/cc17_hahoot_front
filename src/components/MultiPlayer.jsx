@@ -206,6 +206,7 @@ const MultiPlayer = () => {
   };
 
   const handleCreateRoom = () => {
+    if (!name) alert("type nickname for creating room");
     if (name.trim()) {
       socket.emit("createRoom", name);
     }
@@ -243,6 +244,10 @@ const MultiPlayer = () => {
     //check to send roomId to Event->ShowScoreboard
     socket.emit("ShowScoreboard", roomId);
     setShowScoreboard(true);
+  };
+
+  const indexToLetter = (index) => {
+    return ["A", "B", "C", "D"][index];
   };
 
   //const { question, options, answer, image } = currentQuestion;
@@ -298,7 +303,7 @@ const MultiPlayer = () => {
           </div>
         ) : !isStarted ? (
           <div className="bg-white w-3/4 h-5/6 rounded-lg shadow-xl gap-3 flex flex-col items-center justify-center">
-            <h2 className="text-2xl font-bold mb-4">PIN ID: {roomId}</h2>
+            <h2 className="text-2xl font-bold mb-4">PIN Code: {roomId}</h2>
             <h3 className="text-xl mb-4">Players:</h3>
             <ul className="mb-4">
               {players.map((player, index) => (
@@ -339,10 +344,9 @@ const MultiPlayer = () => {
                 className={`w-[420px] h-[250px] rounded-lg ${
                   showAnswer ? "invisible" : ""
                 }`}
-                src={currentQuestion.image}
+                src={currentQuestion.questionPicture}
                 alt="Quiz Image"
               />
-              {console.log("SRC = ", currentQuestion.image)}
               <button
                 className={`rounded-lg w-32 h-12 shadow-lg text-lg font-bold ${
                   showAnswer
@@ -356,12 +360,17 @@ const MultiPlayer = () => {
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 w-full">
-              {currentQuestion.options.map((option, index) => (
+              {[
+                currentQuestion.choice1,
+                currentQuestion.choice2,
+                currentQuestion.choice3,
+                currentQuestion.choice4,
+              ].map((option, index) => (
                 <button
                   key={option}
                   className={`px-10 py-10 text-white text-font-title text-start animate-pop ${
                     showAnswer
-                      ? option === currentQuestion.answer
+                      ? indexToLetter(index) === currentQuestion.answer
                         ? "bg-darkgreen"
                         : "bg-red opacity-80"
                       : `${buttonColors[index]} ${hoverColors[index]}`
@@ -373,7 +382,7 @@ const MultiPlayer = () => {
                   </div>
                   {showAnswer && (
                     <div className="ml-2">
-                      {option === currentQuestion.answer ? (
+                      {indexToLetter(index) === currentQuestion.answer ? (
                         <CheckTrue />
                       ) : (
                         <CheckFalse />
@@ -407,7 +416,12 @@ const MultiPlayer = () => {
             <div className="h-screen w-screen bg-transparent flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
                 <div className="grid grid-cols-2 gap-2 w-full h-full">
-                  {currentQuestion.options.map((option, index) => (
+                  {[
+                    currentQuestion.choice1,
+                    currentQuestion.choice2,
+                    currentQuestion.choice3,
+                    currentQuestion.choice4,
+                  ].map((option, index) => (
                     <button
                       key={option}
                       onClick={() => handleAnswerClick(option)}
