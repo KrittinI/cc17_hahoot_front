@@ -70,7 +70,9 @@ const MultiPlayer = () => {
   }, []);
 
   useEffect(() => {
-    socket = io("http://localhost:4000");
+    // เชื่อมต่อกับ Socket.IO โดยใช้ hostname ของเครื่องที่รัน Vite server
+    socket = io(`http://${window.location.hostname}:4000`);
+    //socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setNewSocket(socket);
     socket.on("gameOver", () => {
