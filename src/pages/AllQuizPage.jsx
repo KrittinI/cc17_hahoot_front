@@ -50,8 +50,6 @@ export default function AllQuizPage() {
     isSeeAll();
   }, [seeAll, topicId, search, question]);
 
-  console.log(question);
-
   return (
     <div className="w-[68%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={70}>

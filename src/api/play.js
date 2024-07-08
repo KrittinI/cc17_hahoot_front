@@ -1,6 +1,6 @@
 import axios from "../config/axios";
 const playApi = {};
 
-playApi.sendmail = async (id) => axios.post("/play-game/sendmail", id);
+playApi.sendmail = async (body) => axios.post("/play-game/sendmail", body);
 
 export default playApi;
