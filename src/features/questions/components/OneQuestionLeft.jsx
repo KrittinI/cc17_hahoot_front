@@ -65,29 +65,33 @@ export default function OneQuestionRight({
           </div>
           <div className="grid w-full grid-cols-2 gap-2">
             <div
-              className={`flex justify-start items-center p-4 w-full  ${data?.answer === "A" ? "bg-green" : "bg-red"
-                } shadow-xl rounded-lg `}
+              className={`flex justify-start items-center p-4 w-full  ${
+                data?.answer === "A" ? "bg-green" : "bg-red"
+              } shadow-xl rounded-lg `}
             >
               {data?.choice1}
             </div>
             <div
-              className={`flex justify-start items-center p-4 w-full  ${data?.answer === "B" ? "bg-green" : "bg-red"
-                } shadow-xl rounded-lg `}
+              className={`flex justify-start items-center p-4 w-full  ${
+                data?.answer === "B" ? "bg-green" : "bg-red"
+              } shadow-xl rounded-lg `}
             >
               {data?.choice2}
             </div>
             {data?.choice3 && (
               <div
-                className={`flex justify-start items-center p-4 w-full  ${data?.answer === "C" ? "bg-green" : "bg-red"
-                  } shadow-xl rounded-lg `}
+                className={`flex justify-start items-center p-4 w-full  ${
+                  data?.answer === "C" ? "bg-green" : "bg-red"
+                } shadow-xl rounded-lg `}
               >
                 {data?.choice3}
               </div>
             )}
             {data?.choice4 && (
               <div
-                className={`flex justify-start items-center p-4 w-full  ${data?.answer === "D" ? "bg-green" : "bg-red"
-                  } shadow-xl rounded-lg `}
+                className={`flex justify-start items-center p-4 w-full  ${
+                  data?.answer === "D" ? "bg-green" : "bg-red"
+                } shadow-xl rounded-lg `}
               >
                 {data?.choice4}
               </div>
@@ -129,7 +133,11 @@ export default function OneQuestionRight({
               >
                 <EditIcon />
               </div>
-              <Modal open={open} onClose={() => setOpen(false)} title={`Edit Yourw Question`}>
+              <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                title={`Edit Yourw Question`}
+              >
                 <FormAddQuestion
                   onSuccess={onSuccess}
                   data={data}
