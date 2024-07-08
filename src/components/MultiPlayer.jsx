@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Loading from "./Loading";
-// import ClientAnswerResult from "./ClientAnswerResult";
 import ScoreboardMultiplayer from "./ScoreboardMultiplayer";
 import {
   Square,
@@ -14,7 +13,6 @@ import {
   CheckFalse,
 } from "../icons/kahoot";
 import Button from "./Button";
-import Input from "./Input";
 import Logo from "../icons/Logo";
 
 //const socket = io("http://localhost:4000");
@@ -128,7 +126,7 @@ const MultiPlayer = () => {
       //setShowAnswer(true);
       //alert("answerResult received");
       //alert(correct);
-      //setScore(score); //100 from server
+      //setScore(score);
 
       // socket นี้จะทำงานเมื่อผู้เล่นทุกคนกดตอบจะshowในส่วนหน้าClient
 
@@ -291,7 +289,7 @@ const MultiPlayer = () => {
             <h2 className="text-center mb-2 font-bold text-black text-3xl">
               <Logo />
             </h2>
-            <div role="button" className="absolute top-1 right-1">
+            {/* <div role="button" className="absolute top-1 right-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -306,7 +304,7 @@ const MultiPlayer = () => {
                   d="M6 18 18 6M6 6l12 12"
                 />
               </svg>
-            </div>
+            </div> */}
             <input
               type="text"
               value={name}
@@ -475,18 +473,35 @@ const MultiPlayer = () => {
               ))}
             </div>
           </div>
+        ) : isGameOver ? (
+          <div className="flex flex-col items-center justify-center h-auto bg-gray-500 text-white rounded-lg">
+            <div className="bg-gray-900 p-8 rounded-lg shadow-md text-center">
+              <h1 className="text-4xl font-bold mb-4">The Game is Over</h1>
+              <p className="text-2xl mb-4">Your Score: {score}</p>
+              <div className="flex flex-col items-center justify-center gap-6">
+                <Button bg="black" width="60">
+                  Send to your E-mail
+                </Button>
+                <Button
+                  bg="blue"
+                  width="60"
+                  onClick={() => window.location.reload(true)}
+                >
+                  Play again
+                </Button>
+              </div>
+            </div>
+          </div>
         ) : clientAnswerResult !== null ? (
           clientAnswerResult ? (
             <div className="bg-timeLeft text-white text-center p-6 rounded-lg shadow-lg">
               <div className="text-3xl mb-4 text-darkgreen">Correct</div>
               <div className="text-5xl mb-4 text-darkgreen">✅</div>
-              {/* <div className="mt-2 text-2xl text-white">score:{score}</div> */}
             </div>
           ) : (
             <div className="bg-timeLeft text-white text-center p-6 rounded-lg shadow-lg">
               <div className="text-3xl mb-4 text-darkred">Incorrect</div>
               <div className="text-5xl mb-4 text-darkred">❌</div>
-              {/* <div className="mt-2 text-2xl text-white">score:{score}</div> */}
             </div>
           )
         ) : !isOwner && currentQuestion ? (
