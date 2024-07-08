@@ -16,20 +16,14 @@ export default function AllQuizPage() {
     const isSeeAll = async () => {
       if (seeAll) {
         if (search) {
-          setShowQuestion(
-            question?.filter((el) => el.question.toLowerCase().includes(search))
-          );
+          setShowQuestion(question?.filter((el) => el.question.toLowerCase().includes(search)));
         } else {
           setShowQuestion(question);
         }
       } else {
         const quizTopic = (await getQuestionByTopicId(topicId)).data.questions;
         if (search) {
-          setShowQuestion(
-            quizTopic?.filter((el) =>
-              el.question.toLowerCase().includes(search)
-            )
-          );
+          setShowQuestion(quizTopic?.filter((el) => el.question.toLowerCase().includes(search)));
         } else {
           setShowQuestion(quizTopic);
         }
@@ -42,14 +36,7 @@ export default function AllQuizPage() {
     <div className="w-[68%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={70}>
         <AllQuizzesLeft title={title} />
-        <SearchBar
-          buttonText={`Create New Question`}
-          setSeeAll={setSeeAll}
-          setSearch={setSearch}
-          topicId={setTopicId}
-          setTitle={setTitle}
-          create={`/questions/create-question`}
-        />
+        <SearchBar buttonText={`Create New Question`} setSeeAll={setSeeAll} setSearch={setSearch} topicId={setTopicId} setTitle={setTitle} create={`/questions/create-question`} />
       </SplitScreen>
     </div>
   );

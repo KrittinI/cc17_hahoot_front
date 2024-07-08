@@ -43,8 +43,6 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
     }
     if (isError) return;
     else {
-      //setเข้าstate
-
       console.log(input, "inputtt");
       setEventQuestion((prev) => [...prev, input]);
       setInput(initialInput);
