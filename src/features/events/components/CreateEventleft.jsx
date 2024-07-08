@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateEventleft({ event }) {
   const navigate = useNavigate();
-  const { eventQuestions, setEventQuestions, setSingleEvent, setIsCreated } = useEvent();
+  const { eventQuestions, setEventQuestions, setSingleEvent, setEvent } = useEvent();
   const [isCancle, setIsCancle] = useState(false);
   const [isSave, setIsSave] = useState(false);
 
@@ -23,9 +23,8 @@ export default function CreateEventleft({ event }) {
     //######### convert DATA TO Text FORM AND SEND THEM IN GROUP
     const { file, ...data } = event;
     const inputToText = JSON.stringify(data);
-    const questToString = eventQuestions.map((quest) => JSON.stringify(quest));
     formData.append("events", inputToText);
-    formData.append("question", questToString);
+    formData.append("question", JSON.stringify(eventQuestions));
     return formData;
   };
 
@@ -40,10 +39,10 @@ export default function CreateEventleft({ event }) {
       const count = eventQuestions.length;
       setEventQuestions([]);
       setIsSave(false);
-      // setIsCreated(res.data);
+      setEvent(prev => [...prev, res.data.event])
       setSingleEvent(null);
       alert(`you've already created ${count} question(s) `);
-      // navigate("/events");
+      navigate("/events");
     } catch (err) {
       alert(err.message);
     }
