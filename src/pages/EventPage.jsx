@@ -40,7 +40,6 @@ export default function EventPage() {
     const fetchEvent = async () => {
       try {
         const res = await eventApi.getEventByEventId(+eventId);
-        console.log(res.data);
         setEvent(res.data.event);
         setQuestions(res.data.questions);
         setFavorite(Boolean(res.data.event.EventFavorites?.length));
