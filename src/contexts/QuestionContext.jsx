@@ -39,7 +39,6 @@ export default function QuestionContextProvider({ children }) {
     getQuestionByQuestionId,
     setPlayQuestion,
     playQuestion,
-    setQuestion
   };
 
   return (
