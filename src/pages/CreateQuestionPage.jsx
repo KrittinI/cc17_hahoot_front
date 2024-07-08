@@ -19,13 +19,12 @@ export default function CreateQuestionPage() {
         formData.append(`questionImage`, file);
       });
       formData.append("questions", JSON.stringify(questions));
-      if (questions || files) {
-        const res = await questionApi.createQuestion(formData);
-        if (res.status !== 200) {
-          return;
-        }
-        setShowQuestion((prev) => [...prev, ...res.data.questions]);
+
+      const res = await questionApi.createQuestion(formData);
+      if (res.status !== 200) {
+        return;
       }
+      setShowQuestion((prev) => [...prev, ...res.data.questions]);
       navigate(`/questions`);
     } catch (error) {
       console.log(error);
@@ -43,19 +42,15 @@ export default function CreateQuestionPage() {
           <div className="grid grid-cols-5 gap-4 w-full">
             <AddQuestionCard setQuestions={setQuestions} setFiles={setFiles} />
             {questions?.map((quesion, index) => (
-              <QuestionCard
-                key={index}
-                index={index}
-                question={quesion}
-                setQuestions={setQuestions}
-                setFiles={setFiles}
-                image={files[index]}
-              />
+              <QuestionCard key={index} index={index} question={quesion} setQuestions={setQuestions} setFiles={setFiles} image={files[index]} />
             ))}
           </div>
         </div>
       </div>
       <div className="w-full flex justify-end items-end">
+        <Button bg={`black`} width={60} onClick={handleClickSave}>
+          Save
+        </Button>
         <Button bg={`black`} width={60} onClick={handleClickSave}>
           Save
         </Button>
