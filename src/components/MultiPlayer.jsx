@@ -61,6 +61,7 @@ const MultiPlayer = () => {
   const [newSocket, setNewSocket] = useState(null);
   const [newRoomId, setNewRoomId] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
+  const [answerCount, setAnswerCount] = useState(0);
 
   useEffect(() => {
     //Reset state when component mounts or reload page
@@ -75,6 +76,11 @@ const MultiPlayer = () => {
     //socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setNewSocket(socket);
+
+    socket.on("answerCount", (count) => {
+      console.log("answerCount =>", count);
+      setAnswerCount(count);
+    });
     socket.on("gameOver", () => {
       setIsGameOver(true);
     });
@@ -165,6 +171,7 @@ const MultiPlayer = () => {
       socket.off("updateScores");
       socket.off("nextQuestion");
       socket.off("ShowScoreboard");
+      socket.off("answerCount");
     };
   }, []);
 
@@ -203,6 +210,7 @@ const MultiPlayer = () => {
     setNewSocket(null);
     setNewRoomId("");
     setIsGameOver(false);
+    setAnswerCount(0);
 
     //alert("Reset State");
   };
@@ -307,9 +315,18 @@ const MultiPlayer = () => {
           <div className="bg-white w-3/4 h-5/6 rounded-lg shadow-xl gap-3 flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold mb-4">PIN Code: {roomId}</h2>
             <h3 className="text-xl mb-4">Players:</h3>
-            <ul className="mb-4">
+            <ul className="mb-4 bg-transparent rounded-lg p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {players.map((player, index) => (
-                <li key={index}>{player}</li>
+                <li
+                  key={index}
+                  className={`flex items-center justify-between p-4 rounded-lg border-b last:border-b-0 ${
+                    index % 2 === 0 ? "bg-darkblueDarker" : "bg-darkredDarker"
+                  }`}
+                >
+                  <span className="text-2xl font-semibold text-white">
+                    {player}
+                  </span>
+                </li>
               ))}
             </ul>
             {isOwner && (
@@ -349,17 +366,24 @@ const MultiPlayer = () => {
                 src={currentQuestion.questionPicture}
                 alt="Quiz Image"
               />
-              <button
-                className={`rounded-lg w-32 h-12 shadow-lg text-lg font-bold ${
-                  showAnswer
-                    ? "bg-white text-black animate-bounce"
-                    : "bg-grey text-white invisible"
-                } transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl`}
-                onClick={handleShowScoreboard}
-                disabled={!showAnswer}
-              >
-                Next
-              </button>
+              {showAnswer ? (
+                <button
+                  className={`rounded-lg w-32 h-12 shadow-lg text-lg font-bold bg-white text-black animate-bounce transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:shadow-xl`}
+                  onClick={handleShowScoreboard}
+                  disabled={!showAnswer}
+                >
+                  Next
+                </button>
+              ) : (
+                <div className="flex flex-col items-center justify-center bg-transparent p-4 rounded-lg">
+                  <div className="flex items-center justify-center w-20 h-20 bg-timeLeft text-white text-4xl font-bold rounded-full">
+                    {answerCount}
+                  </div>
+                  <div className="mt-2 bg-timeLeft px-4 py-2 rounded-full text-white text-lg font-semibold">
+                    Answers
+                  </div>
+                </div>
+              )}
             </div>
             <div className="grid grid-cols-2 gap-2 w-full">
               {[
@@ -399,14 +423,14 @@ const MultiPlayer = () => {
           clientAnswerResult ? (
             <div className="bg-purple-800 text-white text-center p-6 rounded-lg shadow-lg">
               <div className="text-3xl mb-4 text-darkgreen">Correct</div>
-              <div className="text-5xl mb-4 text-darkgreen">✔️</div>
-              <div className="mt-2 text-2xl text-white">score:{score}</div>
+              <div className="text-5xl mb-4 text-darkgreen">✅</div>
+              {/* <div className="mt-2 text-2xl text-white">score:{score}</div> */}
             </div>
           ) : (
             <div className="bg-purple-800 text-white text-center p-6 rounded-lg shadow-lg">
               <div className="text-3xl mb-4 text-darkred">Incorrect</div>
               <div className="text-5xl mb-4 text-darkred">❌</div>
-              <div className="mt-2 text-2xl text-white">score:{score}</div>
+              {/* <div className="mt-2 text-2xl text-white">score:{score}</div> */}
             </div>
           )
         ) : !isOwner && currentQuestion ? (
@@ -417,7 +441,7 @@ const MultiPlayer = () => {
             }
             <div className="h-screen w-screen bg-transparent flex justify-center items-center">
               <div className="flex flex-col justify-center items-center">
-                <div className="grid grid-cols-2 gap-2 w-full h-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full h-full">
                   {[
                     currentQuestion.choice1,
                     currentQuestion.choice2,
@@ -427,7 +451,7 @@ const MultiPlayer = () => {
                     <button
                       key={option}
                       onClick={() => handleAnswerClick(option)}
-                      className={`w-[473px] h-[294px] px-10 py-10 text-white animate-pop ${buttonColors[index]} ${hoverColors[index]} flex justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105`}
+                      className={`w-full sm:w-[220px] md:w-[320px] lg:w-[400px] xl:w-[473px] h-[120px] sm:h-[160px] md:h-[200px] lg:h-[250px] xl:h-[294px] px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 lg:px-10 lg:py-10 text-white animate-pop ${buttonColors[index]} ${hoverColors[index]} flex justify-center items-center transition-all duration-300 ease-in-out transform hover:scale-105`}
                     >
                       {iconsCustom[index]}
                     </button>
