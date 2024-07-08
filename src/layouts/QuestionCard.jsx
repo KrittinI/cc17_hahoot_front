@@ -5,7 +5,6 @@ import DeleteIcon from "../icons/delete";
 import EditIcon from "../icons/edit";
 import Button from "../components/Button";
 import Avatar from "../components/Avatar";
-import { HeartIcon } from "../icons/heart";
 import QuestionIcon from "../icons/Question";
 
 export default function QuestionCard({
@@ -52,9 +51,6 @@ export default function QuestionCard({
               alt="photo"
             />
           )}
-          <div className="absolute top-2 right-2 bg-white rounded-full p-1">
-            <HeartIcon />
-          </div>
         </div>
 
         <div className="px-2 py-3 w-full grid gap-y-6">

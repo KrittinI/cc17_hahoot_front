@@ -1,7 +1,7 @@
 export default function Cardcontainer({ title, children }) {
   return (
     <div
-      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg min-h-[80vh] gap-4 `}
+      className={`bg-white flex flex-col p-6 shadow-xl rounded-lg min-h-full max-h-full gap-4 `}
     >
       <div className="flex justify-between items-center gap-4 ">
         <div className="text-center  font-bold text-black text-3xl">
@@ -9,10 +9,10 @@ export default function Cardcontainer({ title, children }) {
         </div>
       </div>
       <hr className="shadow-2 w-full" />
-      <div className="w-full grid grid-cols-4 h-auto gap-2 pt-4">
+      <div className="w-full grid grid-cols-4 overflow-auto gap-2 p-4">
         {children}
       </div>
     </div>
-    
+
   );
 }

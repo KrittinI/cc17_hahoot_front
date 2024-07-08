@@ -8,16 +8,14 @@ export default function EventForm({ title, setSeeAll, events }) {
   };
 
   return (
-    <div className="">
-      <CardContainerInProfile title={title} onClick={handleClick}>
-        {events?.map((event) => (
-          <CardBoxInProfile
-            key={event.id}
-            data={event}
-            name="events"
-          />
-        ))}
-      </CardContainerInProfile>
-    </div>
+    <CardContainerInProfile title={title} onClick={handleClick}>
+      {events?.map((event) => (
+        <CardBoxInProfile
+          key={event.id}
+          data={event}
+          name="events"
+        />
+      ))}
+    </CardContainerInProfile>
   );
 }

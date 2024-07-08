@@ -77,7 +77,7 @@ export default function SearchBar({
         )}
       </div>
       <div className="flex flex-col gap-2 max-h-[80vh] overflow-auto">
-        <h1 className="sticky top-0 w-full text-font-title bg-white">Topics</h1>
+        <h1 className="sticky top-0 w-full text-font-title bg-white z-30">Topics</h1>
         <Button onClick={() => (setSeeAll(true), setTitle("All Topic"))}>
           <div className="flex ">
             <img

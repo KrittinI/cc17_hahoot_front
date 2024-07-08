@@ -6,16 +6,14 @@ export default function QuizForm({ title, setSeeAll, questions }) {
     setSeeAll((pre) => !pre);
   };
   return (
-    <div className="flex flex-col mb-7">
-      <CardContainerInProfile title={title} onClick={handleClick}>
-        {questions?.map((question) => (
-          <CardBoxInProfile
-            key={question.id}
-            data={question}
-            name="questions"
-          />
-        ))}
-      </CardContainerInProfile>
-    </div>
+    <CardContainerInProfile title={title} onClick={handleClick}>
+      {questions?.map((question) => (
+        <CardBoxInProfile
+          key={question.id}
+          data={question}
+          name="questions"
+        />
+      ))}
+    </CardContainerInProfile>
   );
 }
