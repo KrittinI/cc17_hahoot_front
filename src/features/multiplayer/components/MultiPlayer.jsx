@@ -144,6 +144,14 @@ const MultiPlayer = () => {
       setNextQuestion(true); //Dummy state
     });
 
+    socketIo.on("connect_error", (error) => {
+      console.log("Connection error:", error);
+    });
+
+    socketIo.on("reconnect_attempt", () => {
+      console.log("Attempting to reconnect...");
+    });
+
     return () => {
       socketIo.off("isOwner");
       socketIo.off("roomCreated");
@@ -161,6 +169,8 @@ const MultiPlayer = () => {
       socketIo.off("ShowScoreboard");
       socketIo.off("answerCount");
       socketIo.off("RoomAnswerCount");
+      socket.off("connect_error");
+      socket.off("reconnect_attempt");
       // เอามาไว้ disconnect ออก หากกด ออก
       socketIo.disconnect();
     };
