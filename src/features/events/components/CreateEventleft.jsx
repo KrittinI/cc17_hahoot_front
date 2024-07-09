@@ -38,7 +38,7 @@ export default function CreateEventleft({ event }) {
       const count = eventQuestions.length;
       setEventQuestions([]);
       setIsSave(false);
-      setEvent(prev => [...prev, res.data.event])
+      setEvent((prev) => [...prev, res.data.event]);
       setSingleEvent(null);
       alert(`you've already created ${count} question(s) `);
       navigate("/events");
