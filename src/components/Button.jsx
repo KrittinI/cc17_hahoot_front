@@ -6,6 +6,7 @@ const bgMap = {
   red: "bg-red text-white rounded-[8px] hover:bg-darkred",
   blue: "bg-blue text-white rounded-[8px] hover:bg-darkblue",
   white: "bg-white text-black rounded-[8px] hover:bg-lgreen",
+  lgreen: "bg-lgreen",
   outline: "hover:text-blue",
 };
 

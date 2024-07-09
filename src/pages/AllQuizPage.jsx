@@ -58,7 +58,8 @@ export default function AllQuizPage() {
           buttonText={`Create New Question`}
           setSeeAll={setSeeAll}
           setSearch={setSearch}
-          topicId={setTopicId}
+          topicId={topicId}
+          setTopicId={setTopicId}
           setTitle={setTitle}
           create={`/questions/create-question`}
         />

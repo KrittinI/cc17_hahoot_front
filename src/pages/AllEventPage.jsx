@@ -9,10 +9,9 @@ export default function AllEventPage() {
   const [title, setTitle] = useState("All Events");
   const [seeAll, setSeeAll] = useState(true);
   const [search, setSearch] = useState("");
-  const [topicId, setTopicId] = useState("");
+  const [topicId, setTopicId] = useState(0);
   const [showEvent, setShowEvent] = useState([]);
   const { getEventByTopic, event } = useEvent();
-
   useEffect(() => {
     const isSeeAll = async () => {
       if (seeAll) {
@@ -33,13 +32,12 @@ export default function AllEventPage() {
     isSeeAll();
   }, [seeAll, event, search, topicId]);
 
-  console.log(showEvent, "showEvent");
 
   return (
     <div className="w-[68%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={70}>
         <AllEventsLeft title={title} data={showEvent} />
-        <SearchBar buttonText={`Create New Event`} setSeeAll={setSeeAll} setSearch={setSearch} topicId={setTopicId} setTitle={setTitle} create={`/events/create-event`} />
+        <SearchBar buttonText={`Create New Event`} setSeeAll={setSeeAll} setSearch={setSearch} topicId={topicId} setTopicId={setTopicId} setTitle={setTitle} create={`/events/create-event`} />
       </SplitScreen>
     </div>
   );
