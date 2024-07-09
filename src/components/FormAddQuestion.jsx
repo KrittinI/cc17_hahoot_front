@@ -39,7 +39,6 @@ export default function FormAddQuestion({
   onClose,
   image,
   data,
-  setOpen,
 }) {
   const { topic } = useTopic();
   const fileEl = useRef();
@@ -103,7 +102,7 @@ export default function FormAddQuestion({
       return;
     }
     onSuccess(input, file);
-    setOpen(false);
+    onClose()
   };
 
   return (

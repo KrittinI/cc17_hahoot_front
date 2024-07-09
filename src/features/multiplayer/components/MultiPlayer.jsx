@@ -89,6 +89,7 @@ const MultiPlayer = () => {
 
     socketIo.on("newQuestion", (questionData) => {
       //setCurrentQuestion(null);
+      // setShowAnswer(false)
       console.log(questionData);
       setShowScoreboard(false);
       setClientAnswerResult(null);
