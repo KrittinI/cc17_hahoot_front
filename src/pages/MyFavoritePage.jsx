@@ -11,7 +11,7 @@ export default function MyFavoritePage() {
   const [title, setTitle] = useState("Favorites");
   const [seeAll, setSeeAll] = useState(true);
   const [search, setSearch] = useState("");
-  const [topicId, setTopicId] = useState(null);
+  const [topicId, setTopicId] = useState(0);
   const [eventFav, setEventFav] = useState([]);
   const [quizFav, setquizFav] = useState([]);
   const [showCard, setShowCard] = useState([]);
@@ -71,6 +71,7 @@ export default function MyFavoritePage() {
             <SearchFavorite
               setSeeAll={setSeeAll}
               setSearch={setSearch}
+              topicId={topicId}
               setTopicId={setTopicId}
               setTitle={setTitle}
             />
