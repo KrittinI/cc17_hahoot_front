@@ -19,6 +19,7 @@ export default function OneEventLeft({
   edit,
   setClickEdit,
   handleClickSinglePlay,
+  handleClickCreateRoom,
   setNewQuestion,
   setFiles,
 }) {
@@ -116,7 +117,7 @@ export default function OneEventLeft({
             <Button
               bg="blue"
               width={"full"}
-              onClick={() => navigate("/events/create-event")}
+              onClick={() => handleClickCreateRoom()}
             >
               Create Room
             </Button>

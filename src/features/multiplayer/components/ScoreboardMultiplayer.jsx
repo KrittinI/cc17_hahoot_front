@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Button from "../../../components/Button";
 import confetti from "canvas-confetti";
-
-//import io from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 const ScoreboardMultiplayer = ({
   players,
-  newSocket,
+  socket,
   newRoomId,
   isGameOver,
-  setIsGameOver,
 }) => {
+  const navigate = useNavigate()
   useEffect(() => {
     if (isGameOver) {
       confetti({
@@ -19,30 +18,24 @@ const ScoreboardMultiplayer = ({
         origin: { y: 0.6 },
       });
     }
-    // newSocket.on("aa",()=>{
-    //   //
-    // })
   }, [isGameOver]);
 
   const handleNextQuestion = () => {
-    newSocket.emit("nextQuestion", newRoomId);
-    //alert("handleNextQuestion is working");
+    socket.emit("nextQuestion", newRoomId);
   };
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
       <div className="grid grid-1 gap-8 text-center w-auto h-auto bg-white rounded-lg p-6 shadow-lg animate-pop">
         <h1 className="text-font-title">Scoreboard</h1>
-
         <ul>
-          {players.map((p) => (
+          {players.sort((a, b) => b.score - a.score).map((p) => (
             <li key={p.id} className="flex justify-between border-b py-2">
               <span>{p.name}</span>
               <span>{p.score}</span>
             </li>
           ))}
         </ul>
-
         <div className="w-full grid grid-col gap-2 justify-center items-center">
           {isGameOver ? (
             <>
@@ -52,9 +45,9 @@ const ScoreboardMultiplayer = ({
               <Button
                 bg="blue"
                 width="60"
-                onClick={() => window.location.reload(true)}
+                onClick={() => navigate('/')}
               >
-                Play again
+                Back Home
               </Button>
             </>
           ) : (
