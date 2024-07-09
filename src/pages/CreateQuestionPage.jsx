@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import questionApi from "../api/question";
 import useQuestion from "../hooks/useQuestion";
 import { useNavigate } from "react-router-dom";
-import Loading from "../components/Loading";
+// import Loading from "../components/Loading";
 import Spinner from "../components/Spinner";
 
 export default function CreateQuestionPage() {

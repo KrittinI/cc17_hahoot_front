@@ -88,7 +88,7 @@ export default function FormAddQuestion({
       setError((prev) => ({ ...prev, topicId: "topic is required" }));
     }
     if (!input.answer) {
-      setError((prev) => ({ ...prev, answer: "answer is required" }));
+      setError((prev) => ({ ...prev, answer: "required" }));
     }
     if (
       !input.answer ||
@@ -214,15 +214,15 @@ export default function FormAddQuestion({
                 name="answer"
                 onClick={() => handleClickAnswer("A")}
                 role="button"
-                className="w-[40px] h-[40px] flex justify-center items-center bg-grey  rounded-xl"
+                className="w-[40px] h-[40px] flex justify-center items-center rounded-xl"
               >
                 {input.answer === "A" ? (
-                  <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-green">
-                    <CorrectIcon />
+                  <div className="w-[40px] h-[40px] flex justify-center items-start">
+                    <CorrectIcon color="green" size={12} />
                   </div>
                 ) : (
-                  <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-red">
-                    <CloseIcon />
+                  <div className="w-[40px] h-[40px] flex justify-center items-start">
+                    <CloseIcon size={12} color={"red"} />
                   </div>
                 )}
               </span>
@@ -245,15 +245,15 @@ export default function FormAddQuestion({
                 name="answer"
                 onClick={() => handleClickAnswer("B")}
                 role="button"
-                className="w-[40px] h-[40px] flex justify-center items-center bg-grey  rounded-xl"
+                className="w-[40px] h-[40px] flex justify-center items-center rounded-xl"
               >
                 {input.answer === "B" ? (
-                  <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-green">
-                    <CorrectIcon />
+                  <div className="w-[40px] h-[40px] flex justify-center items-start">
+                    <CorrectIcon color="green" size={12} />
                   </div>
                 ) : (
-                  <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-red">
-                    <CloseIcon />
+                  <div className="w-[40px] h-[40px] flex justify-center items-start">
+                    <CloseIcon size={12} color={"red"} />
                   </div>
                 )}
               </span>
@@ -276,15 +276,15 @@ export default function FormAddQuestion({
                 name="answer"
                 onClick={() => handleClickAnswer("C")}
                 role="button"
-                className="w-[40px] h-[40px] flex justify-center items-center bg-grey  rounded-xl"
+                className="w-[40px] h-[40px] flex justify-center items-center rounded-xl"
               >
                 {input.answer === "C" ? (
-                  <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-green">
-                    <CorrectIcon />
+                  <div className="w-[40px] h-[40px] flex justify-center items-start">
+                    <CorrectIcon color="green" size={12} />
                   </div>
                 ) : (
-                  <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-red">
-                    <CloseIcon />
+                  <div className="w-[40px] h-[40px] flex justify-center items-start">
+                    <CloseIcon size={12} color={"red"} />
                   </div>
                 )}
               </span>
@@ -307,15 +307,15 @@ export default function FormAddQuestion({
                 name="answer"
                 onClick={() => handleClickAnswer("D")}
                 role="button"
-                className="w-[40px] h-[40px] flex justify-center items-center bg-grey rounded-xl"
+                className="w-[40px] h-[40px] flex justify-center items-center rounded-xl"
               >
                 {input.answer === "D" ? (
-                  <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-green">
-                    <CorrectIcon />
+                  <div className="w-[40px] h-[40px] flex justify-center items-start">
+                    <CorrectIcon color="green" size={12} />
                   </div>
                 ) : (
-                  <div className="w-[40px] h-[40px] flex justify-center items-center rounded-xl bg-red">
-                    <CloseIcon />
+                  <div className="w-[40px] h-[40px] flex justify-center items-start">
+                    <CloseIcon size={12} color={"red"} />
                   </div>
                 )}
               </span>
@@ -339,7 +339,7 @@ export default function FormAddQuestion({
             Cancel
           </Button>
           <Button width={"40"} bg={`blue`} onClick={handleClickSave}>
-            Done
+            Create
           </Button>
         </div>
       </div>
