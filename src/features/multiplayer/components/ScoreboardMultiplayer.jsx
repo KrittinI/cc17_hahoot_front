@@ -3,13 +3,8 @@ import Button from "../../../components/Button";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
 
-const ScoreboardMultiplayer = ({
-  players,
-  socket,
-  newRoomId,
-  isGameOver,
-}) => {
-  const navigate = useNavigate()
+const ScoreboardMultiplayer = ({ players, socket, newRoomId, isGameOver }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     if (isGameOver) {
       confetti({
@@ -29,12 +24,14 @@ const ScoreboardMultiplayer = ({
       <div className="grid grid-1 gap-8 text-center w-auto h-auto bg-white rounded-lg p-6 shadow-lg animate-pop">
         <h1 className="text-font-title">Scoreboard</h1>
         <ul>
-          {players.sort((a, b) => b.score - a.score).map((p) => (
-            <li key={p.id} className="flex justify-between border-b py-2">
-              <span>{p.name}</span>
-              <span>{p.score}</span>
-            </li>
-          ))}
+          {players
+            .sort((a, b) => b.score - a.score)
+            .map((p) => (
+              <li key={p.id} className="flex justify-between border-b py-2">
+                <span>{p.name}</span>
+                <span>{p.score}</span>
+              </li>
+            ))}
         </ul>
         <div className="w-full grid grid-col gap-2 justify-center items-center">
           {isGameOver ? (
@@ -42,11 +39,7 @@ const ScoreboardMultiplayer = ({
               <Button bg="black" width="60">
                 Send to your E-mail
               </Button>
-              <Button
-                bg="blue"
-                width="60"
-                onClick={() => navigate('/')}
-              >
+              <Button bg="blue" width="60" onClick={() => navigate("/")}>
                 Back Home
               </Button>
             </>

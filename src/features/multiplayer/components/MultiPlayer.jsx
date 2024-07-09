@@ -111,21 +111,16 @@ const MultiPlayer = () => {
       //setShowAnswer(true);
       //alert("answerResult received");
       //alert(correct);
-      //setScore(score); //100 from server
 
       // socket นี้จะทำงานเมื่อผู้เล่นทุกคนกดตอบจะshowในส่วนหน้าClient
+      //const updateScore = score;
+      setScore(score);
 
-      if (correct) setScore((prevScore) => prevScore + 1);
+      if (correct) setScore((prevScore) => prevScore + timeLeft * 50);
 
       //setLoading(true);
       setClientAnswerResult(correct);
       // setLoading(false);
-
-      //handleCheck();
-      // setTimeout(() => {
-      //   setShowAnswer(false);
-      //   setSelectedAnswer(null);
-      // }, 3000);
     });
     socketIo.on("gameOver", () => {
       setCurrentQuestion("over");
@@ -174,11 +169,16 @@ const MultiPlayer = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Score =>", score);
+  }, [score]);
+
+  useEffect(() => {
     if (isStarted) {
       if (timeLeft && timeLeft > 0 && !showAnswer) {
         const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
         return () => clearTimeout(timer);
       } else if (timeLeft === 0) {
+        //setShowAnswer(true)
         socket.emit("submitAnswer", { roomId, answer: false, isTimeout: true });
       }
     }
