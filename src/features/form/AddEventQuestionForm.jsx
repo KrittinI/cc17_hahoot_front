@@ -15,7 +15,7 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
   const [input, setInput] = useState(initialInput);
   const [error, setError] = useState(initialError);
   const [currentQuestion, setCurrentQuestion] = useState(data || {});
-  const [quizTopic, setQuizTopic] = useState([])
+  const [quizTopic, setQuizTopic] = useState([]);
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -23,22 +23,21 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
   const handleChangeForSelect = async (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     //can  be optimized
-    const selectQuestion = quizTopic.find(el => el.id === +e.target.value)
+    const selectQuestion = quizTopic.find((el) => el.id === +e.target.value);
     setCurrentQuestion(selectQuestion);
   };
 
   useEffect(() => {
     const fetchQuizTopic = async () => {
       try {
-        const res = await questionApi.getQuestionByTopicId(+event.topicId)
-        setQuizTopic(res.data.questions)
+        const res = await questionApi.getQuestionByTopicId(+event.topicId);
+        setQuizTopic(res.data.questions);
       } catch (error) {
         console.log(error);
       }
-    }
-    fetchQuizTopic()
+    };
+    fetchQuizTopic();
   }, [event.topicId]);
-
 
   const handleClickSave = () => {
     let isError = false;
@@ -51,7 +50,7 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
     if (isError) return;
     else {
       //setเข้าstate
-      setEventQuestions(prev => [...prev, input]);
+      setEventQuestions((prev) => [...prev, input]);
       onClose();
     }
   };

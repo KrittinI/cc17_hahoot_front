@@ -28,20 +28,14 @@ export default function AllQuizPage() {
     const isSeeAll = async () => {
       if (seeAll) {
         if (search) {
-          setShowQuestion(
-            question?.filter((el) => el.question.toLowerCase().includes(search))
-          );
+          setShowQuestion(question?.filter((el) => el.question.toLowerCase().includes(search)));
         } else {
           setShowQuestion(question);
         }
       } else {
         const quizTopic = (await getQuestionByTopicId(topicId)).data.questions;
         if (search) {
-          setShowQuestion(
-            quizTopic?.filter((el) =>
-              el.question.toLowerCase().includes(search)
-            )
-          );
+          setShowQuestion(quizTopic?.filter((el) => el.question.toLowerCase().includes(search)));
         } else {
           setShowQuestion(quizTopic);
         }
