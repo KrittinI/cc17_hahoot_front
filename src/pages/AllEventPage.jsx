@@ -17,20 +17,14 @@ export default function AllEventPage() {
     const isSeeAll = async () => {
       if (seeAll) {
         if (search) {
-          setShowEvent(
-            event?.filter((el) => el.eventName.toLowerCase().includes(search))
-          );
+          setShowEvent(event?.filter((el) => el.eventName.toLowerCase().includes(search)));
         } else {
           setShowEvent(event);
         }
       } else {
         const eventTopic = (await getEventByTopic(topicId)).data.events;
         if (search) {
-          setShowEvent(
-            eventTopic?.filter((el) =>
-              el.eventName.toLowerCase().includes(search)
-            )
-          );
+          setShowEvent(eventTopic?.filter((el) => el.eventName.toLowerCase().includes(search)));
         } else {
           setShowEvent(eventTopic);
         }
@@ -39,18 +33,13 @@ export default function AllEventPage() {
     isSeeAll();
   }, [seeAll, event, search, topicId]);
 
+  console.log(showEvent, "showEvent");
+
   return (
     <div className="w-[68%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={70}>
         <AllEventsLeft title={title} data={showEvent} />
-        <SearchBar
-          buttonText={`Create New Event`}
-          setSeeAll={setSeeAll}
-          setSearch={setSearch}
-          topicId={setTopicId}
-          setTitle={setTitle}
-          create={`/events/create-event`}
-        />
+        <SearchBar buttonText={`Create New Event`} setSeeAll={setSeeAll} setSearch={setSearch} topicId={setTopicId} setTitle={setTitle} create={`/events/create-event`} />
       </SplitScreen>
     </div>
   );
