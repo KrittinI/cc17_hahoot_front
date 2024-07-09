@@ -7,9 +7,12 @@ import SplitScreen from "../layouts/SplitScreen";
 import { useNavigate } from "react-router-dom";
 import CreateEventleft from "../features/events/components/CreateEventleft";
 import CreateEventRight from "../features/events/components/CreateEventRight";
+import { useState } from "react";
 
 export default function CreateEventPage() {
-  const { open, setOpen, singleEvent } = useEvent();
+  const [open, setOpen] = useState(true);
+
+  const { singleEvent } = useEvent();
   const navigate = useNavigate();
 
   return (
@@ -20,10 +23,10 @@ export default function CreateEventPage() {
           <CreateEventRight event={singleEvent} />
         </SplitScreen>
       ) : (
-        navigate("/events")
+        <></>
       )}
-      <Modal open={open} onClose={() => setOpen(false)} title="Create Event" width={40}>
-        <CreateEventForm />
+      <Modal open={open} onClose={() => navigate("/events")} title="Create Event" width={40}>
+        <CreateEventForm onClose={() => setOpen(false)} />
       </Modal>
     </div>
   );

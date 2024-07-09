@@ -5,19 +5,31 @@ import SplitScreen from "../layouts/SplitScreen";
 import OneQuestionLeft from "../features/questions/components/OneQuestionLeft";
 import CommentContainer from "../features/form/CommentContainer";
 import questionApi from "../api/question";
+import useQuestion from "../hooks/useQuestion";
+import Spinner from "../components/Spinner";
 
 export default function QuestionPage() {
   const { questionId } = useParams();
+  const { showQuestion, setShowQuestion } = useQuestion();
   const [oneQuestion, setOneQuestion] = useState(null);
   const [favorite, setFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClickFavorite = async () => {
     try {
+      const data = [...showQuestion];
+      const foundData = data.find((el) => el.id === +questionId);
+      const foundIndex = data.findIndex((el) => el.id === +questionId);
       if (favorite) {
         await questionApi.deleteFav(oneQuestion?.id);
+        const updateFoundData = { ...foundData, QuestionFavorite: [] };
+        data.splice(foundIndex, 1, updateFoundData);
       } else {
         await questionApi.createFav(oneQuestion?.id);
+        const updateFoundData = { ...foundData, QuestionFavorite: [1] };
+        data.splice(foundIndex, 1, updateFoundData);
       }
+      setShowQuestion(data);
       setFavorite((prev) => !prev);
     } catch (error) {
       console.log(error);
@@ -28,6 +40,7 @@ export default function QuestionPage() {
     const fetchQuestion = async () => {
       try {
         const res = await questionApi.getQuestionByQuestionId(+questionId);
+        console.log(res.data.question, "what are you looking for");
         setOneQuestion(res.data.question);
         setFavorite(Boolean(res.data.question.QuestionFavorite?.length));
       } catch (error) {
@@ -35,29 +48,30 @@ export default function QuestionPage() {
       }
     };
     fetchQuestion();
-  }, [questionId]);
+  }, [questionId, loading]);
 
   const onSuccess = async (input, file) => {
     try {
+      setLoading(true);
+      console.log(input);
       const formData = new FormData();
       formData.append("questionPicture", file);
       formData.append("questions", JSON.stringify(input));
-      await questionApi.editQuestionById(questionId, formData);
+      const res = await questionApi.editQuestionById(questionId, formData);
+      console.log(res.data.question);
+      setOneQuestion(res.data.question);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
+      {loading && <Spinner transparent />}
       <SplitScreen>
-        <OneQuestionLeft
-          data={oneQuestion}
-          id={+questionId}
-          favorite={favorite}
-          handleClickFavorite={handleClickFavorite}
-          onSuccess={onSuccess}
-        />
+        <OneQuestionLeft data={oneQuestion} id={+questionId} favorite={favorite} handleClickFavorite={handleClickFavorite} onSuccess={onSuccess} />
         <CommentContainer />
       </SplitScreen>
     </div>

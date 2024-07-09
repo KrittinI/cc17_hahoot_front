@@ -2,36 +2,42 @@ import { useState } from "react";
 import Select from "../../components/Select";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import useQuestion from "../../hooks/useQuestion";
 import { useEffect } from "react";
 import useEvent from "../../hooks/useEvent";
+import questionApi from "../../api/question";
 
-export default function AddEventQuestionForm({ onClose, event, onSuccess, data, timeLimit }) {
-  const { getQuestionByTopicId, quizTopic, getQuestionByQuestionId } = useQuestion();
-  const { setEventQuestion } = useEvent();
+export default function AddEventQuestionForm({ onClose, event, onSuccess, data, timeLimit = 10 }) {
+  const { setEventQuestions } = useEvent();
+
   const initialInput = { questionId: data?.id || "", timeLimit: timeLimit || "" };
   const initialError = { questionId: "", timeLimit: "" };
+
   const [input, setInput] = useState(initialInput);
   const [error, setError] = useState(initialError);
   const [currentQuestion, setCurrentQuestion] = useState(data || {});
-  console.log(data, "i am i am");
+  const [quizTopic, setQuizTopic] = useState([]);
 
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleChangeForSelect = async (e) => {
-    // console.log(e.target.values, "iddd");
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     //can  be optimized
-    const selectQuestion = await getQuestionByQuestionId(e.target.value);
+    const selectQuestion = quizTopic.find((el) => el.id === +e.target.value);
     setCurrentQuestion(selectQuestion);
   };
 
   useEffect(() => {
-    getQuestionByTopicId(event.topicId);
-  }, []);
-
-  console.log(quizTopic, "i am quizTopic");
+    const fetchQuizTopic = async () => {
+      try {
+        const res = await questionApi.getQuestionByTopicId(+event.topicId);
+        setQuizTopic(res.data.questions);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchQuizTopic();
+  }, [event.topicId]);
 
   const handleClickSave = () => {
     let isError = false;
@@ -43,9 +49,8 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
     }
     if (isError) return;
     else {
-      console.log(input, "inputtt");
-      setEventQuestion((prev) => [...prev, input]);
-      setInput(initialInput);
+      //setเข้าstate
+      setEventQuestions((prev) => [...prev, input]);
       onClose();
     }
   };
@@ -55,7 +60,7 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
         <div className="col-span-3">
           <Select id="questionId" value={input.questionId} onChange={handleChangeForSelect} name="questionId" error={error.questionId} header={`Select Question`}>
             {quizTopic?.map((el) => (
-              <option value={+el.id} key={el.id}>
+              <option value={el.id} key={el.id}>
                 {el.question}
               </option>
             ))}

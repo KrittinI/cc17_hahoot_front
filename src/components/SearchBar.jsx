@@ -6,7 +6,6 @@ import Button from "./Button";
 import Input from "./Input";
 import { useState } from "react";
 import { useEffect } from "react";
-import useEvent from "../hooks/useEvent";
 
 export default function SearchBar({
   buttonText,
@@ -19,7 +18,6 @@ export default function SearchBar({
   const { authUser } = useAuth();
   const { topic } = useTopic();
   const [input, setInput] = useState("");
-  const { setOpen } = useEvent();
   const navigate = useNavigate();
 
   const handleClickTopic = (id, name) => {
@@ -46,7 +44,6 @@ export default function SearchBar({
             bg={`black`}
             width={`full`}
             onClick={() => {
-              setOpen(true);
               navigate(create);
             }}
           >
@@ -77,7 +74,7 @@ export default function SearchBar({
         )}
       </div>
       <div className="flex flex-col gap-2 max-h-[80vh] overflow-auto">
-        <h1 className="sticky top-0 w-full text-font-title bg-white">Topics</h1>
+        <h1 className="sticky top-0 w-full text-font-title bg-white z-30">Topics</h1>
         <Button onClick={() => (setSeeAll(true), setTitle("All Topic"))}>
           <div className="flex ">
             <img

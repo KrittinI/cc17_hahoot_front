@@ -1,13 +1,6 @@
 export default function EditIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#FFDA45"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="#171717"
-      className="size-5"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="#FFDA45" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#171717" className="size-5">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

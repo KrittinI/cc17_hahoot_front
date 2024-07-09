@@ -7,25 +7,32 @@ export default function AddQuestionCard({ setQuestions, setFiles }) {
   const [open, setOpen] = useState(false);
 
   const onSuccess = (input, file) => {
-    setQuestions(prev => [...prev, input])
+    setQuestions((prev) => [...prev, input]);
     if (file) {
-      setFiles(prev => [...prev, file])
+      setFiles((prev) => [...prev, file]);
     } else {
-      setFiles(prev => [...prev, null])
+      setFiles((prev) => [...prev, null]);
     }
     // setOpen(false)
-  }
+  };
 
   return (
     <>
       <div className="bg-grey relative flex cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-xl">
-        <div className="w-full flex justify-center items-center" role="button" onClick={() => setOpen(true)}>
+        <div
+          className="w-full flex justify-center items-center"
+          role="button"
+          onClick={() => setOpen(true)}
+        >
           <Add />
         </div>
       </div>
-      <Modal open={open} onClose={() => setOpen(false)}
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
         title="Add Your Quiz"
-        j="start" >
+        j="start"
+      >
         <FormAddQuestion onSuccess={onSuccess} onClose={() => setOpen(false)} />
       </Modal>
     </>

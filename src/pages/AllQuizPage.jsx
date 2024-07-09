@@ -4,13 +4,25 @@ import SplitScreen from "../layouts/SplitScreen";
 import useQuestion from "../hooks/useQuestion";
 import AllQuizzesLeft from "../features/questions/components/AllQuizzesLeft";
 import { useEffect } from "react";
+import questionApi from "../api/question";
+import useAuth from "../hooks/useAuth";
 
 export default function AllQuizPage() {
   const [title, setTitle] = useState("All Quiz");
   const [seeAll, setSeeAll] = useState(true);
   const [search, setSearch] = useState("");
   const [topicId, setTopicId] = useState(null);
-  const { getQuestionByTopicId, setShowQuestion, question } = useQuestion();
+  const [question, setQuestion] = useState([]);
+  const { authUser } = useAuth();
+  const { getQuestionByTopicId, setShowQuestion } = useQuestion();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await questionApi.getAllQuestion();
+      setQuestion(res.data.questions);
+    };
+    fetchData();
+  }, [authUser]);
 
   useEffect(() => {
     const isSeeAll = async () => {
@@ -30,7 +42,7 @@ export default function AllQuizPage() {
       }
     };
     isSeeAll();
-  }, [seeAll, question, topicId, search]);
+  }, [seeAll, topicId, search, question]);
 
   return (
     <div className="w-[68%] mx-auto h-[auto]">

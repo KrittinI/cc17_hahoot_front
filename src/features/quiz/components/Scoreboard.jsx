@@ -8,6 +8,7 @@ export default function Scoreboard({
   resetQuiz,
   isLastQuestion,
   handleNextQuestion,
+  handleSendMail,
 }) {
   useEffect(() => {
     if (isLastQuestion) {
@@ -18,7 +19,8 @@ export default function Scoreboard({
       });
     }
   }, [isLastQuestion]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
       <div className="grid grid-1 gap-8 text-center w-[400px] h-[320px] bg-white rounded-lg p-6 shadow-lg animate-pop">
@@ -31,10 +33,10 @@ export default function Scoreboard({
               <Button bg="blue" width="60" onClick={resetQuiz}>
                 Play again
               </Button>
-              <Button bg="black" width="60">
+              <Button bg="black" width="60" onClick={handleSendMail}>
                 Send to your E-mail
               </Button>
-              <Button bg="blue" width="60" onClick={() => navigate('/')}>
+              <Button bg="blue" width="60" onClick={() => navigate("/")}>
                 Back to Home
               </Button>
             </>

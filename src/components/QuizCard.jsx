@@ -72,7 +72,7 @@ export default function QuizCard() {
     if (currentQuestionIndex !== 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     } else {
-      setCurrentQuestionIndex(quizData.length - 1)
+      setCurrentQuestionIndex(quizData.length - 1);
     }
     setTimeLeft(20);
   };
@@ -91,7 +91,7 @@ export default function QuizCard() {
             <Button
               bg="black"
               width="60"
-            // onClick={() => window.location.reload()}
+              // onClick={() => window.location.reload()}
             >
               Send to your E-mail
             </Button>
@@ -153,12 +153,13 @@ export default function QuizCard() {
             <button
               key={option}
               onClick={() => handleAnswerClick(option)}
-              className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${option === selectedAnswer
-                ? option === answer
-                  ? "bg-green"
-                  : "bg-red"
-                : "bg-blue hover:bg-darkblue"
-                }`}
+              className={`px-8 py-8 rounded-lg text-white text-font-title text-start ${
+                option === selectedAnswer
+                  ? option === answer
+                    ? "bg-green"
+                    : "bg-red"
+                  : "bg-blue hover:bg-darkblue"
+              }`}
             >
               {option}
             </button>

@@ -7,12 +7,14 @@ import OneEventRight from "../features/events/components/OneEventRight";
 import eventApi from "../api/event";
 import useQuestion from "../hooks/useQuestion";
 import { useNavigate } from "react-router-dom";
+import useEvent from "../hooks/useEvent";
 
 export default function EventPage() {
   const { eventId } = useParams();
   const { setPlayQuestion } = useQuestion([])
+  const { event, setEvent } = useEvent()
   const navigate = useNavigate()
-  const [event, setEvent] = useState(null);
+  const [oneEvent, setOneEvent] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [newQuestion, setNewQuestion] = useState([]);
   const [files, setFiles] = useState([]);
@@ -25,11 +27,19 @@ export default function EventPage() {
   }
   const handleClickFavorite = async () => {
     try {
+      const data = [...event]
+      const foundData = data.find((el) => el.id === +eventId)
+      const foundIndex = data.findIndex((el) => el.id === +eventId)
       if (favorite) {
-        await eventApi.deleteFav(event?.id);
+        await eventApi.deleteFav(oneEvent?.id);
+        const updateFoundData = { ...foundData, EventFavorites: [] }
+        data.splice(foundIndex, 1, updateFoundData)
       } else {
-        await eventApi.createFev(event?.id);
+        await eventApi.createFev(oneEvent?.id);
+        const updateFoundData = { ...foundData, EventFavorites: [1] }
+        data.splice(foundIndex, 1, updateFoundData)
       }
+      setEvent(data)
       setFavorite((prev) => !prev);
     } catch (error) {
       console.log(error);
@@ -40,7 +50,7 @@ export default function EventPage() {
     const fetchEvent = async () => {
       try {
         const res = await eventApi.getEventByEventId(+eventId);
-        setEvent(res.data.event);
+        setOneEvent(res.data.event);
         setQuestions(res.data.questions);
         setFavorite(Boolean(res.data.event.EventFavorites?.length));
       } catch (error) {
@@ -54,7 +64,7 @@ export default function EventPage() {
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)]">
       <SplitScreen sizeRatio={30}>
         <OneEventLeft
-          event={event}
+          event={oneEvent}
           favorite={favorite}
           handleClickFavorite={handleClickFavorite}
           handleClickSinglePlay={handleClickSinglePlay}
