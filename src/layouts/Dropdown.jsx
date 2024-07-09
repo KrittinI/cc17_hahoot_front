@@ -81,16 +81,6 @@ export function ProfileDropdown() {
       name: "your-profile",
     },
     {
-      title: "Your Quiz",
-      to: `/questions/users/${authUser?.id}`,
-      name: "your-quiz",
-    },
-    {
-      title: "Your Event",
-      to: `/events/users/${authUser?.id}`,
-      name: "your-event",
-    },
-    {
       title: "Your Favorite",
       to: `/myfavorite/users/${authUser?.id}`,
       name: "your-favorite",
