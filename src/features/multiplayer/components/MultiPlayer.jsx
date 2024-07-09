@@ -169,9 +169,10 @@ const MultiPlayer = () => {
       socketIo.off("ShowScoreboard");
       socketIo.off("answerCount");
       socketIo.off("RoomAnswerCount");
-      socket.off("connect_error");
-      socket.off("reconnect_attempt");
+      socketIo.off("connect_error");
+      socketIo.off("reconnect_attempt");
       // เอามาไว้ disconnect ออก หากกด ออก
+      //socketIo.off("disconnect");
       socketIo.disconnect();
     };
   }, []);
