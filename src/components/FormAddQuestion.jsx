@@ -18,7 +18,7 @@ const initialError = {
   choice4: "",
   answer: "",
   topicId: "",
-  isPublic: false,
+  isDelete: false,
 };
 
 const initialInput = {
@@ -30,7 +30,7 @@ const initialInput = {
   choice4: "",
   answer: "",
   topicId: 0,
-  isPublic: false,
+  isDelete: false,
 };
 
 export default function FormAddQuestion({
@@ -325,11 +325,11 @@ export default function FormAddQuestion({
             </div>
           </div>
           {/* 
-      <Select id="isPublic" className="text-center shadow-md mt-3" onChange={handleChange} name="isPublic" error={error.isPublic}>
-        <option value={true} selected={input?.isPublic == 0}>
+      <Select id="isDelete" className="text-center shadow-md mt-3" onChange={handleChange} name="isDelete" error={error.isDelete}>
+        <option value={true} selected={input?.isDelete == 0}>
           public
         </option>
-        <option value={false} selected={input?.isPublic == 1}>
+        <option value={false} selected={input?.isDelete == 1}>
           private
         </option>
       </Select> */}

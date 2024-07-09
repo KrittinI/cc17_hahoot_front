@@ -12,6 +12,7 @@ export default function EventContextProvider({ children }) {
   const [event, setEvent] = useState([]);
   const [singleEvent, setSingleEvent] = useState(null);
   const [eventQuestions, setEventQuestions] = useState([])
+  const [eventId, setEventId] = useState("")
   const getAllEvent = async () => {
     const res = await eventApi.getAllEvent();
     setEvent(res.data.events);
@@ -52,7 +53,9 @@ export default function EventContextProvider({ children }) {
     setSingleEvent,
     setEvent,
     eventQuestions,
-    setEventQuestions
+    setEventQuestions,
+    eventId,
+    setEventId
   };
   return (
     <EventContext.Provider value={value}>{children}</EventContext.Provider>

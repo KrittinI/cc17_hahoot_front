@@ -11,8 +11,8 @@ import useEvent from "../hooks/useEvent";
 
 export default function EventPage() {
   const { eventId } = useParams();
-  const { setPlayQuestion } = useQuestion([])
-  const { event, setEvent } = useEvent()
+  const { setPlayQuestion, } = useQuestion()
+  const { event, setEvent, setEventId } = useEvent()
   const navigate = useNavigate()
   const [oneEvent, setOneEvent] = useState(null);
   const [questions, setQuestions] = useState([]);
@@ -24,6 +24,11 @@ export default function EventPage() {
   const handleClickSinglePlay = () => {
     setPlayQuestion(questions)
     navigate("/quiz")
+  }
+  const handleClickCreateRoom = () => {
+    setPlayQuestion(questions)
+    setEventId(+eventId)
+    navigate("/multiplayer")
   }
   const handleClickFavorite = async () => {
     try {
@@ -68,6 +73,7 @@ export default function EventPage() {
           favorite={favorite}
           handleClickFavorite={handleClickFavorite}
           handleClickSinglePlay={handleClickSinglePlay}
+          handleClickCreateRoom={handleClickCreateRoom}
           setClickEdit={setClickEdit}
           edit={clickEdit}
           setNewQuestion={setNewQuestion}
