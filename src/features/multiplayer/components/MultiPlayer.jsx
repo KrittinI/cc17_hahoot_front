@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Loading from "../../../components/Loading";
+// import ClientAnswerResult from "./ClientAnswerResult";
 import ScoreboardMultiplayer from "./ScoreboardMultiplayer";
 import useAuth from "../../../hooks/useAuth";
 import useQuestion from "../../../hooks/useQuestion";
@@ -13,6 +13,7 @@ import PlayerChoice from "./PlayerChoice";
 import ShowResultBox from "./ShowResultBox";
 import ShowQuestion from "./ShowQuestion";
 import useEvent from "../../../hooks/useEvent";
+import Button from "../../../components/Button";
 
 const MultiPlayer = () => {
   const { authUser } = useAuth();
@@ -26,6 +27,7 @@ const MultiPlayer = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(null);
+  const [totalTimeLeft, setTotalTimeLeft] = useState(0);
   const [hasJoined, setHasJoined] = useState(false);
   const [loading, setLoading] = useState(false);
   const [clientAnswerResult, setClientAnswerResult] = useState(null);
@@ -92,7 +94,7 @@ const MultiPlayer = () => {
 
     socketIo.on("newQuestion", (questionData) => {
       //setCurrentQuestion(null);
-      showAnswer(false);
+      setShowAnswer(false);
       console.log(questionData);
       setShowScoreboard(false);
       setClientAnswerResult(null);
@@ -108,20 +110,10 @@ const MultiPlayer = () => {
       setShowAnswer(true);
     });
 
-    socketIo.on("answerResult", ({ correct, score }) => {
-      //setShowAnswer(true);
-      //alert("answerResult received");
-      //alert(correct);
-
-      // socket นี้จะทำงานเมื่อผู้เล่นทุกคนกดตอบจะshowในส่วนหน้าClient
-      //const updateScore = score;
-      setScore(score);
-
-      if (correct) setScore((prevScore) => prevScore + timeLeft * 50);
-
-      //setLoading(true);
+    socketIo.on("answerResult", ({ correct, scoreBackend }) => {
+      setScore(scoreBackend);
+      //setScore((prevScore) => prevScore);
       setClientAnswerResult(correct);
-      // setLoading(false);
     });
     socketIo.on("gameOver", () => {
       setCurrentQuestion("over");
@@ -170,20 +162,24 @@ const MultiPlayer = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Score =>", score);
-  }, [score]);
-
-  useEffect(() => {
     if (isStarted) {
       if (timeLeft && timeLeft > 0 && !showAnswer) {
         const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
         return () => clearTimeout(timer);
-      } else if (timeLeft === 0) {
-        //setShowAnswer(true)
-        socket.emit("submitAnswer", { roomId, answer: false, isTimeout: true });
       }
     }
   }, [timeLeft, showAnswer, isStarted]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      socket.emit("submitAnswer", {
+        roomId,
+        answer: null,
+        timeLeft: 0,
+        isTimeout: true,
+      });
+    }
+  }, [timeLeft]);
 
   const resetState = () => {
     setRoomId("");
@@ -194,6 +190,7 @@ const MultiPlayer = () => {
     setShowAnswer(false);
     setScore(0);
     setTimeLeft(null);
+    setTotalTimeLeft(0);
     setHasJoined(false);
     setLoading(false);
     setClientAnswerResult(null);
@@ -212,16 +209,23 @@ const MultiPlayer = () => {
   };
 
   const handleAnswerClick = (option) => {
-    setShowAnswer(false);
-    console.log("Player answer:", option);
-    socket.emit("submitAnswer", { roomId, answer: option, timeLeft });
+    // แสดงหน้า Loading ตอนที่ player กดคำตอบ
+    console.log(option, timeLeft);
+    socket.emit("submitAnswer", {
+      roomId,
+      answer: option,
+      timeLeft,
+      isTimeout: false,
+    });
     setLoading(true);
   };
 
   const handleShowScoreboard = () => {
-    setShowAnswer(false); // @ DONT DEL
+    setShowAnswer(false);
     setCurrentQuestion(null);
+    //setSelectedAnswer(null); it not works
     setTimeLeft(null);
+    //check to send roomId to Event->ShowScoreboard
     socket.emit("ShowScoreboard", roomId);
     setShowScoreboard(true);
   };
@@ -258,6 +262,25 @@ const MultiPlayer = () => {
             timeLeft={timeLeft}
             answerCount={answerCount}
           />
+        ) : isGameOver ? (
+          <div className="flex flex-col items-center justify-center h-auto bg-gray-500 text-white rounded-lg">
+            <div className="bg-gray-900 p-8 rounded-lg shadow-md text-center">
+              <h1 className="text-4xl font-bold mb-4">The Game is Over</h1>
+              <p className="text-2xl mb-4">Your Score: {score}</p>
+              <div className="flex flex-col items-center justify-center gap-6">
+                <Button bg="red" width="60">
+                  Send to your E-mail
+                </Button>
+                <Button
+                  bg="blue"
+                  width="60"
+                  onClick={() => window.location.reload(true)}
+                >
+                  Play again
+                </Button>
+              </div>
+            </div>
+          </div>
         ) : clientAnswerResult !== null ? (
           <ShowResultBox clientAnswerResult={clientAnswerResult} />
         ) : !isOwner && currentQuestion ? (
@@ -272,7 +295,7 @@ const MultiPlayer = () => {
             handleAnswerClick={handleAnswerClick}
           />
         ) : (
-          <div className="text-4xl">Oops Loading...</div>
+          <div className="text-4xl">Oops! something wrong!</div>
         )}
       </div>
     </div>
