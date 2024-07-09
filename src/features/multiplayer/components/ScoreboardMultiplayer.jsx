@@ -18,6 +18,13 @@ const ScoreboardMultiplayer = ({ players, socket, newRoomId, isGameOver }) => {
   const handleNextQuestion = () => {
     socket.emit("nextQuestion", newRoomId);
   };
+  const ownerId = socket.id; // Example way to get ownerId, adapt as needed
+  // Find the highest score
+  const highestScore = Math.max(...players.map((p) => p.score));
+
+  console.log("socket=>", socket);
+  console.log("newRoomId=>", newRoomId);
+  console.log("players=>", players);
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
@@ -25,9 +32,15 @@ const ScoreboardMultiplayer = ({ players, socket, newRoomId, isGameOver }) => {
         <h1 className="text-font-title">Scoreboard</h1>
         <ul>
           {players
+            .filter((p) => p.id !== ownerId)
             .sort((a, b) => b.score - a.score)
             .map((p) => (
-              <li key={p.id} className="flex justify-between border-b py-2">
+              <li
+                key={p.id}
+                className={`flex justify-between rounded-lg py-2 ${
+                  p.score === highestScore ? "bg-gray-200" : ""
+                }`}
+              >
                 <span>{p.name}</span>
                 <span>{p.score}</span>
               </li>

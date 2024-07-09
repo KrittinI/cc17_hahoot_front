@@ -139,6 +139,8 @@ const MultiPlayer = () => {
       setNextQuestion(true); //Dummy state
     });
 
+    console.log(playerInfo);
+    console.log(players);
     return () => {
       socketIo.off("isOwner");
       socketIo.off("roomCreated");
