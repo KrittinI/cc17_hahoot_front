@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateEventleft({ event }) {
   const navigate = useNavigate();
-  const { eventQuestions, setEventQuestions, setSingleEvent, setEvent } = useEvent();
+  const { eventQuestions, setEventQuestions, setSingleEvent, setEvent } =
+    useEvent();
   const [isCancle, setIsCancle] = useState(false);
   const [isSave, setIsSave] = useState(false);
 
@@ -58,16 +59,27 @@ export default function CreateEventleft({ event }) {
     <div>
       <div className="flex flex-col h-[auto] gap-8 rounded-lg mb-6 bg-white p-4 shadow">
         <div className="flex flex-col gap-4 border-b border-gray-300 pb-4 ">
-          <img className="rounded-lg object-cover max-h-64" src={path || image} alt="questionPicture" />
-          <div className="bg-white p-3 rounded-lg shadow  text-font-title-card">{event?.eventName}</div>
-          <div className="bg-white p-3 rounded-lg shadow flex justify-start items-start h-[10vh] text-font-body">{event?.description || "Description"}</div>
+          <img
+            className="rounded-lg object-cover max-h-64"
+            src={path || image}
+            alt="questionPicture"
+          />
+          <div className="bg-white p-3 rounded-lg shadow  text-font-title-card">
+            {event?.eventName}
+          </div>
+          <div className="bg-white p-3 rounded-lg shadow flex justify-start items-start h-[10vh] text-font-body">
+            {event?.description || "Description"}
+          </div>
         </div>
         <div
           className="grid gap-y-4
         "
         >
+          <Button bg={"blue"} width={"full"} onClick={() => setIsSave(true)}>
+            Save
+          </Button>
           <Button
-            bg="blue"
+            bg="black"
             width={"full"}
             onClick={() => {
               setIsCancle(true);
@@ -75,16 +87,14 @@ export default function CreateEventleft({ event }) {
           >
             Cancle
           </Button>
-
-          <Button bg={"black"} width={"full"} onClick={() => setIsSave(true)}>
-            Save
-          </Button>
         </div>
       </div>
 
       <Modal open={isCancle}>
         <div className="w-full flex flex-col justify-center items-center gap-4 p-6">
-          <div className=" text-font-title">Are you sure to Quit from creating</div>
+          <div className=" text-font-title">
+            Are you sure to Quit from creating
+          </div>
           <div className=" text-font-title"> this Event</div>
           <div>
             <QuestionIcon />
