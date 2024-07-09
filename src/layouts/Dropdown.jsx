@@ -63,13 +63,6 @@ const notLoginMap = [
   { title: "Log in", to: "/login", name: "login" },
 ];
 
-const adminMap = [
-  { title: "Admin", to: "/admin", name: "admin" },
-  { title: "Admin Quiz", to: "/your-quiz", name: "admin-quiz" },
-  { title: "Admin Event", to: "/your-event", name: "admin-event" },
-  { title: "Log out", to: "/login", name: "logout" },
-];
-
 // *************************  Profile Dropdown  ***************************
 
 function classNames(...classes) {
@@ -109,11 +102,7 @@ export function ProfileDropdown() {
     if (!authUser) {
       setMenuMap(notLoginMap);
     } else {
-      if (authUser?.isAdmin) {
-        setMenuMap(adminMap);
-      } else {
-        setMenuMap(userMap);
-      }
+      setMenuMap(userMap);
     }
   }, [authUser]);
 
