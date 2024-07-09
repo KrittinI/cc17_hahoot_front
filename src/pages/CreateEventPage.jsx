@@ -25,7 +25,7 @@ export default function CreateEventPage() {
       ) : (
         <></>
       )}
-      <Modal open={open} onClose={() => navigate("/events")} title="Create Event" width={40}>
+      <Modal open={open} onClose={() => navigate("/events")} title="Create Event" width={40} j="start">
         <CreateEventForm onClose={() => setOpen(false)} />
       </Modal>
     </div>
