@@ -88,7 +88,7 @@ export default function SearchBar({
         {topic?.map((el) => (
           <Button
             key={el?.id}
-            bg={`gray`}
+            bg={`white`}
             onClick={() => handleClickTopic(el?.id, el?.topicName)}
           >
             <div className="flex ">

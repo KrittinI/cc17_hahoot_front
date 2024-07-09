@@ -13,7 +13,7 @@ export default function CardBoxInProfile({ data, name, type }) {
   return (
     <div
       // className={`${sizeMap[width]} bg-white flex flex-col shadow-xl rounded-lg`}
-      className="relative text-left inline-block cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-md z-80"
+      className="relative text-left inline-block cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-md z-80 hover:w-[194px] hover:h-[245px] "
       onClick={() => navigate(`/${name}/${data?.id}`)}
     >
       <div className="bg-white w-[30px] h-[30px] rounded-full absolute right-2 top-2 flex justify-center items-center text-[#D7D7D7]">
@@ -26,19 +26,19 @@ export default function CardBoxInProfile({ data, name, type }) {
       </div>
       <div className="bg-gray-100 rounded-t-[8px] flex justify-center">
         <img
-          className="max-w-full min-h-[100px] max-h-[100px]"
+          className="overflow-hidden object-cover aspect-[16/11] rounded-t-lg"
           src={data?.questionPicture || data?.eventImage || image}
           alt={name}
         />
       </div>
-      <div className="grid grid-cols-1 gap-3 p-2 rounded-lg ">
+      <div className="grid grid-cols-1 gap-3 px-2 pt-3 pb-2 rounded-lg hover:pt-4 ">
         <div className="text-font-title-card h-10 overflow-hidden text-ellipsis whitespace-nowrap">
           {data?.question || data?.eventName}
         </div>
       </div>
-      <div className="flex p-2 justify-between items-center gap-2 ">
+      <div className="flex justify-between items-center px-2  ">
         <Avatar src={data?.user?.profileImage || data?.user?.googleImage} />
-        <div className="text-font-title-card text-blue w-[100px] overflow-hidden text-ellipsis whitespace-nowrap">
+        <div className="text-font-title-card text-blue">
           {data?.topic?.topicName}
         </div>
       </div>
