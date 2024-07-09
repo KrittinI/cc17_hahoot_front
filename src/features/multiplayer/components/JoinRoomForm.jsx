@@ -34,7 +34,7 @@ export default function JoinRoomForm({ socket, roomId, setRoomId, name, setName 
                     placeholder="Game PIN"
                     className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 text-center"
                 />
-                <Button width="full" bg="black">
+                <Button width="full" bg="blue">
                     Enter
                 </Button>
             </form>

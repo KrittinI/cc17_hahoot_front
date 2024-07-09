@@ -12,6 +12,7 @@ export default function SearchBar({
   setSeeAll,
   setSearch,
   topicId,
+  setTopicId,
   setTitle,
   create,
 }) {
@@ -21,7 +22,7 @@ export default function SearchBar({
   const navigate = useNavigate();
 
   const handleClickTopic = (id, name) => {
-    topicId(id);
+    setTopicId(id);
     setTitle(name);
     setSeeAll(false);
     setSearch("");
@@ -75,7 +76,7 @@ export default function SearchBar({
       </div>
       <div className="flex flex-col gap-2 max-h-[80vh] overflow-auto">
         <h1 className="sticky top-0 w-full text-font-title bg-white z-30">Topics</h1>
-        <Button onClick={() => (setSeeAll(true), setTitle("All Topic"))}>
+        <Button onClick={() => (setSeeAll(true), setTitle("All Topic"), setTopicId(0))} bg={topicId ? 'white' : 'lgreen'}>
           <div className="flex ">
             <img
               src="../src/assets/icon-hh.png"
@@ -88,7 +89,7 @@ export default function SearchBar({
         {topic?.map((el) => (
           <Button
             key={el?.id}
-            bg={`gray`}
+            bg={el?.id !== topicId ? 'white' : 'lgreen'}
             onClick={() => handleClickTopic(el?.id, el?.topicName)}
           >
             <div className="flex ">
