@@ -8,7 +8,9 @@ const ScoreboardMultiplayer = ({
   socket,
   newRoomId,
   isGameOver,
+  playerId
 }) => {
+  console.log(players);
   const navigate = useNavigate()
   useEffect(() => {
     if (isGameOver) {
@@ -30,7 +32,7 @@ const ScoreboardMultiplayer = ({
         <h1 className="text-font-title">Scoreboard</h1>
         <ul>
           {players.sort((a, b) => b.score - a.score).map((p) => (
-            <li key={p.id} className="flex justify-between border-b py-2">
+            <li key={p.id} className={`flex justify-between border-b py-2 ${p.id === playerId && "bg-green"}`}>
               <span>{p.name}</span>
               <span>{p.score}</span>
             </li>

@@ -18,10 +18,13 @@ const MultiPlayer = () => {
   const { authUser } = useAuth()
   const { playQuestion } = useQuestion()
   const { eventId } = useEvent()
+
+  const [name, setName] = useState("");
   const [roomId, setRoomId] = useState("");
   const [isOwner, setIsOwner] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [players, setPlayers] = useState([]);
+  const [playerId, setPlayerId] = useState("")
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
@@ -131,7 +134,9 @@ const MultiPlayer = () => {
     socketIo.on("roomNotFound", () => {
       alert("Room ID not found");
     });
-    socketIo.on("joinedRoom", () => {
+    socketIo.on("joinedRoom", ({ id }) => {
+      setPlayerId(id)
+      console.log(id);
       setHasJoined(true);
     });
 
@@ -177,12 +182,15 @@ const MultiPlayer = () => {
         const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
         return () => clearTimeout(timer);
       } else if (timeLeft === 0) {
-        socket.emit("submitAnswer", { roomId, answer: false, isTimeout: true });
+        if (!isOwner) {
+          socket.emit("submitAnswer", { roomId, answer: false, timeLeft, playerId, questionId: currentQuestion.id });
+        }
       }
     }
   }, [timeLeft, showAnswer, isStarted]);
 
   const resetState = () => {
+    setName("")
     setRoomId("");
     setIsOwner(false);
     setIsStarted(false);
@@ -211,8 +219,7 @@ const MultiPlayer = () => {
 
   const handleAnswerClick = (option) => {
     // แสดงหน้า Loading ตอนที่ player กดคำตอบ
-    console.log(option, timeLeft);
-    socket.emit("submitAnswer", { roomId, answer: option, timeLeft });
+    socket.emit("submitAnswer", { roomId, answer: option, timeLeft, playerId, questionId: currentQuestion.id });
     setLoading(true);
   };
 
@@ -234,7 +241,7 @@ const MultiPlayer = () => {
             <Loading />
           ) : !hasJoined ? (
             // Form to Join Game Room
-            <JoinRoomForm roomId={roomId} setRoomId={setRoomId} socket={socket} />
+            <JoinRoomForm roomId={roomId} setRoomId={setRoomId} socket={socket} name={name} setName={setName} />
           ) : !isStarted ? (
             // Waiting Room to Start
             <WaitingRoom socket={socket} players={players} roomId={roomId} isOwner={isOwner} />
@@ -244,6 +251,7 @@ const MultiPlayer = () => {
               socket={socket}
               newRoomId={newRoomId}
               isGameOver={isGameOver}
+              playerId={playerId}
             />
           ) : isOwner && currentQuestion ? (
             <ShowQuestion currentQuestion={currentQuestion} showAnswer={showAnswer} roomAnswerCount={roomAnswerCount} onClick={handleShowScoreboard} timeLeft={timeLeft} answerCount={answerCount} />

@@ -20,6 +20,7 @@ const buttonColors = [
 const answerChoice = ["A", "B", "C", "D"]
 
 export default function PlayerChoice({ handleAnswerClick, choice }) {
+    console.log(choice);
     return (
         <div className="h-screen w-screen bg-transparent flex justify-center items-center">
             <div className="flex flex-col justify-center items-center">
