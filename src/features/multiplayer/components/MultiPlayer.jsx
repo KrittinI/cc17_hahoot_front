@@ -85,7 +85,12 @@ const MultiPlayer = () => {
       setHasJoined(true);
     });
 
-    socketIo.on("updatePlayers", (players) => setPlayers(players));
+    socketIo.on("updatePlayers", (playersList) => {
+      setPlayers(playersList);
+      alert(playersList);
+      //alert("updatePlayers=>", playersList);
+      //alert("updatePlayers Event is Working");
+    });
 
     socketIo.on("gameStarted", () => {
       setIsStarted(true);
@@ -139,8 +144,6 @@ const MultiPlayer = () => {
       setNextQuestion(true); //Dummy state
     });
 
-    console.log(playerInfo);
-    console.log(players);
     return () => {
       socketIo.off("isOwner");
       socketIo.off("roomCreated");
