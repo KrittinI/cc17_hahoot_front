@@ -15,6 +15,7 @@ import FormAddQuestion from "../../../components/FormAddQuestion";
 export default function OneEventLeft({ event, favorite, handleClickFavorite, edit, setClickEdit, handleClickSinglePlay, handleClickCreateRoom, setNewQuestion, setFiles }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const { authUser } = useAuth();
 
   const onSuccess = (input, file) => {
@@ -97,11 +98,11 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
           </div>
         ) : (
           <div className="grid gap-y-4">
-            <Button bg="blue" width={"full"} onClick={() => setOpen(true)}>
+            <Button bg="blue" width={"full"} onClick={() => setIsEdit(true)}>
               Add New Quiz
             </Button>
-            <Modal open={open} onClose={() => setOpen(false)}>
-              <FormAddQuestion onSuccess={onSuccess} onClose={() => setOpen(false)} />
+            <Modal open={isEdit} onClose={() => setOpen(false)}>
+              <FormAddQuestion onSuccess={onSuccess} onClose={() => setIsEdit(false)} />
             </Modal>
             <Button bg={"blue"} width={"full"}>
               Save
