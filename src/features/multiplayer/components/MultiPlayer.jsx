@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import io from "socket.io-client";
 import Loading from "../../../components/Loading";
 import ScoreboardMultiplayer from "./ScoreboardMultiplayer";
@@ -92,6 +92,7 @@ const MultiPlayer = () => {
 
     socketIo.on("newQuestion", (questionData) => {
       //setCurrentQuestion(null);
+      showAnswer(false);
       console.log(questionData);
       setShowScoreboard(false);
       setClientAnswerResult(null);
@@ -211,18 +212,16 @@ const MultiPlayer = () => {
   };
 
   const handleAnswerClick = (option) => {
-    // แสดงหน้า Loading ตอนที่ player กดคำตอบ
-    console.log(option);
+    setShowAnswer(false);
+    console.log("Player answer:", option);
     socket.emit("submitAnswer", { roomId, answer: option, timeLeft });
     setLoading(true);
   };
 
   const handleShowScoreboard = () => {
-    setShowAnswer(false);
+    setShowAnswer(false); // @ DONT DEL
     setCurrentQuestion(null);
-    //setSelectedAnswer(null); it not works
     setTimeLeft(null);
-    //check to send roomId to Event->ShowScoreboard
     socket.emit("ShowScoreboard", roomId);
     setShowScoreboard(true);
   };
@@ -273,7 +272,7 @@ const MultiPlayer = () => {
             handleAnswerClick={handleAnswerClick}
           />
         ) : (
-          <div className="text-4xl">Oops! something wrong!</div>
+          <div className="text-4xl">Oops Loading...</div>
         )}
       </div>
     </div>
