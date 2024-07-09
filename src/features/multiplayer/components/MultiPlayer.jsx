@@ -210,7 +210,7 @@ const MultiPlayer = () => {
 
   const handleAnswerClick = (option) => {
     // แสดงหน้า Loading ตอนที่ player กดคำตอบ
-    console.log(option);
+    console.log(option, timeLeft);
     socket.emit("submitAnswer", { roomId, answer: option, timeLeft });
     setLoading(true);
   };
