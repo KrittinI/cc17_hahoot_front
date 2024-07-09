@@ -50,7 +50,10 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     // เชื่อมต่อกับ Socket.IO โดยใช้ hostname ของเครื่องที่รัน Vite server
-    const socketIo = io(`http://${window.location.hostname}:8008`);
+    const socketIo = io(`http://${window.location.hostname}:8008`, {
+      pingInterval: 10000, // ส่ง ping ทุกๆ 10 วินาที
+      pingTimeout: 5000, // รอการตอบสนองจาก ping 5 วินาที
+    });
     //socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setSocket(socketIo);
