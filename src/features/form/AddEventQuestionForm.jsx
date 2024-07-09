@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import useEvent from "../../hooks/useEvent";
 import questionApi from "../../api/question";
 
-export default function AddEventQuestionForm({ onClose, event, onSuccess, data, timeLimit = 10 }) {
+export default function AddEventQuestionForm({ onClose, event, onSuccess, data, timeLimit = 20 }) {
   const { setEventQuestions } = useEvent();
 
   const initialInput = { questionId: data?.id || "", timeLimit: timeLimit || "" };
@@ -92,11 +92,11 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
         </div>
       </div>
       {/* 
-          <Select id="isPublic" className="text-center shadow-md mt-3" onChange={handleChange} name="isPublic" error={error.isPublic}>
-            <option value={true} selected={input?.isPublic == 0}>
+          <Select id="isDelete" className="text-center shadow-md mt-3" onChange={handleChange} name="isDelete" error={error.isDelete}>
+            <option value={true} selected={input?.isDelete == 0}>
               public
             </option>
-            <option value={false} selected={input?.isPublic == 1}>
+            <option value={false} selected={input?.isDelete == 1}>
               private
             </option>
           </Select> */}

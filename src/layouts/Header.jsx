@@ -13,7 +13,7 @@ import Button from "../components/Button";
 export default function Header() {
   const navigate = useNavigate();
   const handleOnClickPlay = () => {
-    navigate("/pincode");
+    navigate("/multiplayer");
   };
   return (
     <Disclosure
