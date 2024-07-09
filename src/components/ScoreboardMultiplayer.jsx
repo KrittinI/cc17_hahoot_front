@@ -1,8 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import Button from "./Button";
 import confetti from "canvas-confetti";
-
-//import io from "socket.io-client";
 
 const ScoreboardMultiplayer = ({
   players,
@@ -11,6 +10,9 @@ const ScoreboardMultiplayer = ({
   isGameOver,
   setIsGameOver,
 }) => {
+  // เรียงลำดับผู้เล่นตามคะแนนจากสูงไปต่ำ
+  const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
+
   useEffect(() => {
     if (isGameOver) {
       confetti({
@@ -19,14 +21,10 @@ const ScoreboardMultiplayer = ({
         origin: { y: 0.6 },
       });
     }
-    // newSocket.on("aa",()=>{
-    //   //
-    // })
   }, [isGameOver]);
 
   const handleNextQuestion = () => {
     newSocket.emit("nextQuestion", newRoomId);
-    //alert("handleNextQuestion is working");
   };
 
   return (
@@ -35,7 +33,7 @@ const ScoreboardMultiplayer = ({
         <h1 className="text-font-title">Scoreboard</h1>
 
         <ul>
-          {players.map((p) => (
+          {sortedPlayers.map((p) => (
             <li key={p.id} className="flex justify-between border-b py-2">
               <span>{p.name}</span>
               <span>{p.score}</span>

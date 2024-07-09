@@ -122,31 +122,28 @@ const MultiPlayer = () => {
       setLoading(false);
       setShowAnswer(true);
     });
-    socket.on("answerResult", ({ correct, score }) => {
-      //setShowAnswer(true);
-      //alert("answerResult received");
-      //alert(correct);
-      //setScore(score);
+
+    socket.on("answerResult", ({ correct, scoreFromBackend }) => {
+      console.log("scoreFromBackend=", scoreFromBackend);
+      console.log("correct=", correct);
+      //setScore(scoreFromBackend);
 
       // socket นี้จะทำงานเมื่อผู้เล่นทุกคนกดตอบจะshowในส่วนหน้าClient
+      //if (correct) setScore((prevScore) => prevScore + 40);
 
-      if (correct) setScore((prevScore) => prevScore + 1);
+      setScore(() => scoreFromBackend); // อัปเดตคะแนนจาก backend
+      console.log("Score1=", score);
+      setScore(() => 99); // อัปเดตคะแนนเป็น 99 โดยใช้ฟังก์ชันที่ให้ภายใน setScore
+      socket.emit("updateScores", score);
+      console.log("Score2=", score);
 
-      //setLoading(true);
       setClientAnswerResult(correct);
-      // setLoading(false);
-
-      //handleCheck();
-      // setTimeout(() => {
-      //   setShowAnswer(false);
-      //   setSelectedAnswer(null);
-      // }, 3000);
     });
     socket.on("gameOver", () => {
       setCurrentQuestion("over");
     });
     socket.on("roomNotFound", () => {
-      alert("Room ID not found");
+      alert("PIN not found");
     });
     socket.on("joinedRoom", () => {
       setHasJoined(true);
@@ -220,6 +217,7 @@ const MultiPlayer = () => {
     setNextQuestion(false);
     setNewSocket(null);
     setNewRoomId("");
+    setPlayerInfo([]);
     setIsGameOver(false);
     setAnswerCount(0);
     setRoomAnswerCount({
@@ -267,7 +265,7 @@ const MultiPlayer = () => {
     setShowAnswer(false);
     setCurrentQuestion(null);
     //setSelectedAnswer(null); it not works
-    setTimeLeft(null);
+    setTimeLeft(null); //*************************************************************************************
     //check to send roomId to Event->ShowScoreboard
     socket.emit("ShowScoreboard", roomId);
     setShowScoreboard(true);
@@ -386,36 +384,36 @@ const MultiPlayer = () => {
                 />
               ) : (
                 <div className="flex flex-row gap-2 mt-4">
-                  <div className="flex flex-col items-center justify-center bg-darkredDarker p-4 rounded-lg shadow-md">
+                  <div className="flex flex-col items-center justify-center bg-darkred p-4 rounded-lg shadow-md">
                     <div className="flex items-center justify-center w-20 h-20 bg-transparent text-white text-4xl font-bold rounded-full">
                       {roomAnswerCount.A}
                     </div>
                     <div className="mt-2 bg-transparent px-4 py-2 rounded-full text-white text-lg font-semibold">
-                      ▲
+                      {iconsDefault[0]}
                     </div>
                   </div>
-                  <div className="flex flex-col items-center justify-center bg-darkblueDarker p-4 rounded-lg shadow-md">
+                  <div className="flex flex-col items-center justify-center bg-darkblue p-4 rounded-lg shadow-md">
                     <div className="flex items-center justify-center w-20 h-20 bg-transparent text-white text-4xl font-bold rounded-full">
                       {roomAnswerCount.B}
                     </div>
                     <div className="mt-2 bg-transparent px-4 py-2 rounded-full text-white text-lg font-semibold">
-                      ◆
+                      {iconsDefault[1]}
                     </div>
                   </div>
-                  <div className="flex flex-col items-center justify-center bg-darkyellowDarker p-4 rounded-lg shadow-md">
+                  <div className="flex flex-col items-center justify-center bg-darkyellow p-4 rounded-lg shadow-md">
                     <div className="flex items-center justify-center w-20 h-20 bg-transparent text-white text-4xl font-bold rounded-full">
                       {roomAnswerCount.C}
                     </div>
                     <div className="mt-2 bg-transparent px-4 py-2 rounded-full text-white text-lg font-semibold">
-                      ●
+                      {iconsDefault[2]}
                     </div>
                   </div>
-                  <div className="flex flex-col items-center justify-center bg-darkgreenDarker p-4 rounded-lg shadow-md">
+                  <div className="flex flex-col items-center justify-center bg-darkgreen p-4 rounded-lg shadow-md">
                     <div className="flex items-center justify-center w-20 h-20 bg-transparent text-white text-4xl font-bold rounded-full">
                       {roomAnswerCount.D}
                     </div>
                     <div className="mt-2 bg-transparent px-4 py-2 rounded-full text-white text-lg font-semibold">
-                      ■
+                      {iconsDefault[3]}
                     </div>
                   </div>
                 </div>
