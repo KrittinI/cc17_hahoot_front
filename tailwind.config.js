@@ -16,10 +16,12 @@ export default {
         darkyellowDarker: "#CCAA00",
         green: "#4ADE80",
         darkgreen: "#00CB4A",
+        lgreen:'#DCFAF8',
         darkgreenDarker: "#00A93D",
         black: "#171717",
         grey: "#D9D9D9",
         darkgrey: "#969A9D",
+
       },
       fontSize: {
         "font-logo": [
@@ -54,6 +56,30 @@ export default {
             fontWeight: "500",
           },
         ],
+        "font-title-card-quiz": [
+          "1.75rem",
+          {
+            lineHeight: "2.3rem",
+            letterSpacing: "-0.02em",
+            fontWeight: "500",
+          },
+        ],
+        "font-title-md": [
+          "1.3rem",
+          {
+            lineHeight: "2rem",
+            letterSpacing: "-0.03em",
+            fontWeight: "500",
+          },
+        ],
+        "font-title-sm": [
+          "1rem",
+          {
+            lineHeight: "2rem",
+            letterSpacing: "-0.03em",
+            fontWeight: "500",
+          },
+        ],
         "font-btn": [
           "1.25rem",
           {
@@ -64,6 +90,22 @@ export default {
         ],
         "font-body": [
           "1rem",
+          {
+            lineHeight: "1.5rem",
+            letterSpacing: "-0.02em",
+            fontWeight: "300",
+          },
+        ],
+        "font-body-md": [
+          "0.75rem",
+          {
+            lineHeight: "1.5rem",
+            letterSpacing: "-0.02em",
+            fontWeight: "300",
+          },
+        ],
+        "font-body-sm": [
+          "0.55rem",
           {
             lineHeight: "1.5rem",
             letterSpacing: "-0.02em",
