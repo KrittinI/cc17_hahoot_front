@@ -6,6 +6,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useRef } from "react";
 import { ImageIcon } from "../../icons/Image";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateEventForm({ onClose }) {
   const initialInput = {
@@ -18,6 +19,7 @@ export default function CreateEventForm({ onClose }) {
     topicId: "",
     description: "",
   };
+  const navigate = useNavigate();
   const { setSingleEvent } = useEvent();
 
   const [input, setInput] = useState(initialInput);
@@ -56,6 +58,10 @@ export default function CreateEventForm({ onClose }) {
       EventCreation();
       onClose();
     }
+  };
+  const handleClickCancle = () => {
+    onClose();
+    navigate('/events')
   };
 
   return (
@@ -163,7 +169,7 @@ export default function CreateEventForm({ onClose }) {
         </div>
 
         <div className="flex justify-between pt-4">
-          <Button bg="black" width={40}>
+          <Button bg="black" width={40} onClick={handleClickCancle}>
             Cancel
           </Button>
           <Button bg="blue" width={40}>
