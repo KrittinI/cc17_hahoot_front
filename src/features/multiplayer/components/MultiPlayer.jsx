@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import Loading from "../../../components/Loading";
-// import ClientAnswerResult from "./ClientAnswerResult";
+//import ClientAnswerResult from "./ClientAnswerResult";
 import ScoreboardMultiplayer from "./ScoreboardMultiplayer";
 import useAuth from "../../../hooks/useAuth";
 import useQuestion from "../../../hooks/useQuestion";
@@ -20,44 +20,53 @@ const MultiPlayer = () => {
   const { authUser } = useAuth();
   const { playQuestion } = useQuestion();
   const { eventId } = useEvent();
-
+  //WTF 20 States
   const [name, setName] = useState("");
   const [roomId, setRoomId] = useState("");
   const [isOwner, setIsOwner] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [players, setPlayers] = useState([]);
-  const [playerId, setPlayerId] = useState("")
+  const [playerId, setPlayerId] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(null);
-  const [totalTimeLeft, setTotalTimeLeft] = useState(0);
   const [hasJoined, setHasJoined] = useState(false);
   const [loading, setLoading] = useState(false);
   const [clientAnswerResult, setClientAnswerResult] = useState(null);
   const [showScoreboard, setShowScoreboard] = useState(false);
   const [playerInfo, setPlayerInfo] = useState([]);
-  const [nextQuestion, setNextQuestion] = useState(false);
   const [socket, setSocket] = useState(null);
   const [newRoomId, setNewRoomId] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [answerCount, setAnswerCount] = useState(0);
+  const [changeBG, setChangeBG] = useState(false);
+  const [hasAnswer, setHasAnswer] = useState(false);
   const [roomAnswerCount, setRoomAnswerCount] = useState({
     A: 0,
     B: 0,
     C: 0,
     D: 0,
   });
+
   useEffect(() => {
     resetState();
   }, []);
 
+  let socketIo;
+
   useEffect(() => {
     // เชื่อมต่อกับ Socket.IO โดยใช้ hostname ของเครื่องที่รัน Vite server
-    const socketIo = io(`http://${window.location.hostname}:8008`, {
+    socketIo = io(`http://${window.location.hostname}:8008`, {
       pingInterval: 10000, // ส่ง ping ทุกๆ 10 วินาที
       pingTimeout: 5000, // รอการตอบสนองจาก ping 5 วินาที
     });
+
+    socketIo.on("connection", (id) => {
+      setPlayerId(id);
+      console.log("setPlayerID: ", id);
+    });
+
     //socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setSocket(socketIo);
@@ -68,6 +77,7 @@ const MultiPlayer = () => {
         eventId,
       });
     }
+
     // count room answer
     socketIo.on("RoomAnswerCount", (counts) => {
       //set something in state
@@ -105,8 +115,10 @@ const MultiPlayer = () => {
     });
 
     socketIo.on("newQuestion", (questionData) => {
+      setHasAnswer(false);
       //setCurrentQuestion(null);
       setShowAnswer(false);
+      setChangeBG(false);
       console.log(questionData);
       setShowScoreboard(false);
       setClientAnswerResult(null);
@@ -120,13 +132,32 @@ const MultiPlayer = () => {
       //setShowAnswer เป็นstateที่เซ็ทเมื่อผู้เล่นทุกคนกดคำตอบทุกคนแล้วจะโชว์คำตอบที่จอ Owner
       setLoading(false);
       setShowAnswer(true);
+      setChangeBG(true);
     });
+    //playerId: player.id,
 
-    socketIo.on("answerResult", ({ correct, scoreBackend }) => {
-      setScore(scoreBackend);
-      //setScore((prevScore) => prevScore);
-      setClientAnswerResult(correct);
-    });
+    socketIo.on(
+      "answerResult",
+      ({ playerIdBackend, correct, scoreBackend }) => {
+        console.log(
+          "answerResultoObject=>",
+          playerIdBackend,
+          " ",
+          correct,
+          " ",
+          scoreBackend
+        );
+        console.log("playerId=>", { playerId });
+        console.log("playerId=>", playerId);
+        console.log("playerIdBackend=>", playerIdBackend);
+
+        setScore(scoreBackend);
+        //setScore((prevScore) => prevScore);
+        setClientAnswerResult(correct);
+        //console.log("Condition check playerId passed");
+        console.log("Condition answerResult check passed");
+      }
+    );
     socketIo.on("gameOver", () => {
       setCurrentQuestion("over");
     });
@@ -134,8 +165,8 @@ const MultiPlayer = () => {
       alert("Room ID not found");
     });
     socketIo.on("joinedRoom", ({ id }) => {
-      setPlayerId(id)
-      console.log(id);
+      //setPlayerId(id);
+      console.log("Peopole Join Room Player ID=>", id);
       setHasJoined(true);
     });
 
@@ -145,12 +176,8 @@ const MultiPlayer = () => {
       //resetState();
     });
 
-    socketIo.on("updateScores", (players) => {
-      setPlayerInfo(players);
-    });
-
-    socketIo.on("nextQuestion", () => {
-      setNextQuestion(true); //Dummy state
+    socketIo.on("updateScores", (updatedPlayers) => {
+      setPlayerInfo(updatedPlayers);
     });
 
     socketIo.on("connect_error", (error) => {
@@ -162,24 +189,24 @@ const MultiPlayer = () => {
     });
 
     return () => {
+      //17 sockets bro..
       socketIo.off("isOwner");
       socketIo.off("roomCreated");
       socketIo.off("updatePlayers");
       socketIo.off("gameStarted");
       socketIo.off("newQuestion");
-      socketIo.off("show");
       socketIo.off("showAnswer");
       socketIo.off("gameOver");
       socketIo.off("roomNotFound");
       socketIo.off("joinedRoom");
       socketIo.off("ownerDisconnected");
       socketIo.off("updateScores");
-      socketIo.off("nextQuestion");
       socketIo.off("ShowScoreboard");
       socketIo.off("answerCount");
       socketIo.off("RoomAnswerCount");
       socketIo.off("connect_error");
       socketIo.off("reconnect_attempt");
+      socketIo.off("connection");
       // เอามาไว้ disconnect ออก หากกด ออก
       //socketIo.off("disconnect");
       socketIo.disconnect();
@@ -188,44 +215,48 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     if (isStarted) {
-      if (timeLeft && timeLeft > 0 && !showAnswer) {
+      if (timeLeft && timeLeft > 0 && showAnswer === false) {
         const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
         return () => clearTimeout(timer);
+      } else if (timeLeft === 0) {
+        console.log("hasAns=", hasAnswer);
+        if (!hasAnswer) {
+          socket.emit("submitAnswer", {
+            roomId,
+            answer: null,
+            timeLeft: 0,
+            isTimeout: true,
+            playerId,
+            questionId: currentQuestion.id,
+          });
+        }
+        console.log("submitTimeout=> Passed!");
       }
-    }
-  }, [timeLeft, showAnswer, isStarted]);
-
-  useEffect(() => {
-    if (timeLeft === 0) {
-      socket.emit("submitAnswer", {
-        roomId,
-        answer: null,
-        timeLeft: 0,
-        isTimeout: true,
-      });
     }
   }, [timeLeft]);
 
   const resetState = () => {
-    setName("")
+    setName("");
     setRoomId("");
     setIsOwner(false);
     setIsStarted(false);
     setPlayers([]);
+    setPlayerId("");
     setCurrentQuestion(null);
     setShowAnswer(false);
     setScore(0);
     setTimeLeft(null);
-    setTotalTimeLeft(0);
     setHasJoined(false);
     setLoading(false);
     setClientAnswerResult(null);
     setShowScoreboard(false);
-    setNextQuestion(false);
+    setPlayerInfo([]);
     setSocket(null);
     setNewRoomId("");
     setIsGameOver(false);
     setAnswerCount(0);
+    setChangeBG(false);
+    setHasAnswer(false);
     setRoomAnswerCount({
       A: 0,
       B: 0,
@@ -236,12 +267,24 @@ const MultiPlayer = () => {
 
   const handleAnswerClick = (option) => {
     // แสดงหน้า Loading ตอนที่ player กดคำตอบ
-    socket.emit("submitAnswer", { roomId, answer: option, timeLeft, playerId, questionId: currentQuestion.id });
+    setHasAnswer((prev) => !prev);
+    if (playerId === socket.id) {
+      socket.emit("submitAnswer", {
+        roomId,
+        answer: option,
+        timeLeft,
+        playerId,
+        questionId: currentQuestion.id,
+      });
+      console.log("submitClick-> Passed!");
+    }
+    console.log("When Clicked PlayerId=>", playerId);
     setLoading(true);
   };
 
   const handleShowScoreboard = () => {
     setShowAnswer(false);
+    setChangeBG(false);
     setCurrentQuestion(null);
     //setSelectedAnswer(null); it not works
     setTimeLeft(null);
@@ -251,13 +294,23 @@ const MultiPlayer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div
+      className={`flex flex-col items-center justify-center min-h-screen ${
+        changeBG ? "bg-black opacity-90" : ""
+      }`}
+    >
       <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-full gap-12 transition-all duration-300 ease-in-out transform">
         {loading ? (
           <Loading />
         ) : !hasJoined ? (
           // Form to Join Game Room
-          <JoinRoomForm roomId={roomId} setRoomId={setRoomId} socket={socket} name={name} setName={setName} />
+          <JoinRoomForm
+            roomId={roomId}
+            setRoomId={setRoomId}
+            socket={socket}
+            name={name}
+            setName={setName}
+          />
         ) : !isStarted ? (
           // Waiting Room to Start
           <WaitingRoom
@@ -295,7 +348,7 @@ const MultiPlayer = () => {
             handleAnswerClick={handleAnswerClick}
           />
         ) : (
-          <div className="text-4xl">Oops! something wrong!</div>
+          <div className="text-4xl">Loading...</div>
         )}
       </div>
     </div>
