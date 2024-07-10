@@ -59,8 +59,6 @@ export default function QuizPage() {
     await playApi.sendmail(data);
   };
 
-  console.log("data", data);
-
   const handleNextQuestion = () => {
     if (showScoreboard && currentQuestionIndex < playQuestion.length - 1) {
       setSelectedAnswer(null);
