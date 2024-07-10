@@ -13,11 +13,12 @@ import PlayerChoice from "./PlayerChoice";
 import ShowResultBox from "./ShowResultBox";
 import ShowQuestion from "./ShowQuestion";
 import useEvent from "../../../hooks/useEvent";
+import Button from "../../../components/Button";
 
 const MultiPlayer = () => {
-  const { authUser } = useAuth()
-  const { playQuestion } = useQuestion()
-  const { eventId } = useEvent()
+  const { authUser } = useAuth();
+  const { playQuestion } = useQuestion();
+  const { eventId } = useEvent();
 
   const [name, setName] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -52,12 +53,19 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     // เชื่อมต่อกับ Socket.IO โดยใช้ hostname ของเครื่องที่รัน Vite server
-    const socketIo = io(`http://${window.location.hostname}:8008`);
+    const socketIo = io(`http://${window.location.hostname}:8008`, {
+      pingInterval: 10000, // ส่ง ping ทุกๆ 10 วินาที
+      pingTimeout: 5000, // รอการตอบสนองจาก ping 5 วินาที
+    });
     //socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setSocket(socketIo);
     if (authUser && playQuestion.length) {
-      socketIo.emit("createRoom", { name: authUser?.username, questions: playQuestion, eventId })
+      socketIo.emit("createRoom", {
+        name: authUser?.username,
+        questions: playQuestion,
+        eventId,
+      });
     }
     // count room answer
     socketIo.on("RoomAnswerCount", (counts) => {
@@ -83,7 +91,12 @@ const MultiPlayer = () => {
       setHasJoined(true);
     });
 
-    socketIo.on("updatePlayers", (players) => setPlayers(players));
+    socketIo.on("updatePlayers", (playersList) => {
+      setPlayers(playersList);
+      alert(playersList);
+      //alert("updatePlayers=>", playersList);
+      //alert("updatePlayers Event is Working");
+    });
 
     socketIo.on("gameStarted", () => {
       setIsStarted(true);
@@ -92,7 +105,7 @@ const MultiPlayer = () => {
 
     socketIo.on("newQuestion", (questionData) => {
       //setCurrentQuestion(null);
-      // setShowAnswer(false)
+      setShowAnswer(false);
       console.log(questionData);
       setShowScoreboard(false);
       setClientAnswerResult(null);
@@ -108,25 +121,10 @@ const MultiPlayer = () => {
       setShowAnswer(true);
     });
 
-    socketIo.on("answerResult", ({ correct, score }) => {
-      //setShowAnswer(true);
-      //alert("answerResult received");
-      //alert(correct);
-      //setScore(score); //100 from server
-
-      // socket นี้จะทำงานเมื่อผู้เล่นทุกคนกดตอบจะshowในส่วนหน้าClient
-
-      if (correct) setScore((prevScore) => prevScore + 1);
-
-      //setLoading(true);
+    socketIo.on("answerResult", ({ correct, scoreBackend }) => {
+      setScore(scoreBackend);
+      //setScore((prevScore) => prevScore);
       setClientAnswerResult(correct);
-      // setLoading(false);
-
-      //handleCheck();
-      // setTimeout(() => {
-      //   setShowAnswer(false);
-      //   setSelectedAnswer(null);
-      // }, 3000);
     });
     socketIo.on("gameOver", () => {
       setCurrentQuestion("over");
@@ -154,6 +152,14 @@ const MultiPlayer = () => {
       setNextQuestion(true); //Dummy state
     });
 
+    socketIo.on("connect_error", (error) => {
+      console.log("Connection error:", error);
+    });
+
+    socketIo.on("reconnect_attempt", () => {
+      console.log("Attempting to reconnect...");
+    });
+
     return () => {
       socketIo.off("isOwner");
       socketIo.off("roomCreated");
@@ -171,8 +177,11 @@ const MultiPlayer = () => {
       socketIo.off("ShowScoreboard");
       socketIo.off("answerCount");
       socketIo.off("RoomAnswerCount");
+      socketIo.off("connect_error");
+      socketIo.off("reconnect_attempt");
       // เอามาไว้ disconnect ออก หากกด ออก
-      socketIo.disconnect()
+      //socketIo.off("disconnect");
+      socketIo.disconnect();
     };
   }, []);
 
@@ -181,13 +190,20 @@ const MultiPlayer = () => {
       if (timeLeft && timeLeft > 0 && !showAnswer) {
         const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
         return () => clearTimeout(timer);
-      } else if (timeLeft === 0) {
-        if (!isOwner) {
-          socket.emit("submitAnswer", { roomId, answer: false, timeLeft, playerId, questionId: currentQuestion.id });
-        }
       }
     }
   }, [timeLeft, showAnswer, isStarted]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      socket.emit("submitAnswer", {
+        roomId,
+        answer: null,
+        timeLeft: 0,
+        isTimeout: true,
+      });
+    }
+  }, [timeLeft]);
 
   const resetState = () => {
     setName("")
@@ -236,39 +252,71 @@ const MultiPlayer = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-full gap-12 transition-all duration-300 ease-in-out transform">
-        {
-          loading ? (
-            <Loading />
-          ) : !hasJoined ? (
-            // Form to Join Game Room
-            <JoinRoomForm roomId={roomId} setRoomId={setRoomId} socket={socket} name={name} setName={setName} />
-          ) : !isStarted ? (
-            // Waiting Room to Start
-            <WaitingRoom socket={socket} players={players} roomId={roomId} isOwner={isOwner} />
-          ) : isOwner && showScoreboard ? (
-            <ScoreboardMultiplayer
-              players={playerInfo}
-              socket={socket}
-              newRoomId={newRoomId}
-              isGameOver={isGameOver}
-              playerId={playerId}
-            />
-          ) : isOwner && currentQuestion ? (
-            <ShowQuestion currentQuestion={currentQuestion} showAnswer={showAnswer} roomAnswerCount={roomAnswerCount} onClick={handleShowScoreboard} timeLeft={timeLeft} answerCount={answerCount} />
-          ) : clientAnswerResult !== null ? (
-            <ShowResultBox clientAnswerResult={clientAnswerResult} />
-          ) : !isOwner && currentQuestion ? (
-            // role === Player
-            <PlayerChoice choice={[
+        {loading ? (
+          <Loading />
+        ) : !hasJoined ? (
+          // Form to Join Game Room
+          <JoinRoomForm roomId={roomId} setRoomId={setRoomId} socket={socket} name={name} setName={setName} />
+        ) : !isStarted ? (
+          // Waiting Room to Start
+          <WaitingRoom
+            socket={socket}
+            players={players}
+            roomId={roomId}
+            isOwner={isOwner}
+          />
+        ) : isOwner && showScoreboard ? (
+          <ScoreboardMultiplayer
+            players={playerInfo}
+            socket={socket}
+            newRoomId={newRoomId}
+            isGameOver={isGameOver}
+            playerId={playerId}
+          />
+        ) : isOwner && currentQuestion ? (
+          <ShowQuestion
+            currentQuestion={currentQuestion}
+            showAnswer={showAnswer}
+            roomAnswerCount={roomAnswerCount}
+            onClick={handleShowScoreboard}
+            timeLeft={timeLeft}
+            answerCount={answerCount}
+          />
+        ) : isGameOver ? (
+          <div className="flex flex-col items-center justify-center h-auto bg-gray-500 text-white rounded-lg">
+            <div className="bg-gray-900 p-8 rounded-lg shadow-md text-center">
+              <h1 className="text-4xl font-bold mb-4">The Game is Over</h1>
+              <p className="text-2xl mb-4">Your Score: {score}</p>
+              <div className="flex flex-col items-center justify-center gap-6">
+                <Button bg="red" width="60">
+                  Send to your E-mail
+                </Button>
+                <Button
+                  bg="blue"
+                  width="60"
+                  onClick={() => window.location.reload(true)}
+                >
+                  Play again
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : clientAnswerResult !== null ? (
+          <ShowResultBox clientAnswerResult={clientAnswerResult} />
+        ) : !isOwner && currentQuestion ? (
+          // role === Player
+          <PlayerChoice
+            choice={[
               currentQuestion.choice1,
               currentQuestion.choice2,
               currentQuestion.choice3,
               currentQuestion.choice4,
-            ]} handleAnswerClick={handleAnswerClick} />
-          ) : (
-            <div className="text-4xl">Oops! something wrong!</div>
-          )
-        }
+            ]}
+            handleAnswerClick={handleAnswerClick}
+          />
+        ) : (
+          <div className="text-4xl">Oops! something wrong!</div>
+        )}
       </div>
     </div>
   );

@@ -25,18 +25,32 @@ const ScoreboardMultiplayer = ({
   const handleNextQuestion = () => {
     socket.emit("nextQuestion", newRoomId);
   };
+  const ownerId = socket.id; // Example way to get ownerId, adapt as needed
+  // Find the highest score
+  const highestScore = Math.max(...players.map((p) => p.score));
+
+  console.log("socket=>", socket);
+  console.log("newRoomId=>", newRoomId);
+  console.log("players=>", players);
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
       <div className="grid grid-1 gap-8 text-center w-auto h-auto bg-white rounded-lg p-6 shadow-lg animate-pop">
         <h1 className="text-font-title">Scoreboard</h1>
         <ul>
-          {players.sort((a, b) => b.score - a.score).map((p) => (
-            <li key={p.id} className={`flex justify-between border-b py-2 ${p.id === playerId && "bg-green"}`}>
-              <span>{p.name}</span>
-              <span>{p.score}</span>
-            </li>
-          ))}
+          {players
+            .filter((p) => p.id !== ownerId)
+            .sort((a, b) => b.score - a.score)
+            .map((p) => (
+              <li
+                key={p.id}
+                className={`flex justify-between rounded-lg py-2 ${p.score === highestScore ? "bg-gray-200" : ""
+                  }`}
+              >
+                <span>{p.name}</span>
+                <span>{p.score}</span>
+              </li>
+            ))}
         </ul>
         <div className="w-full grid grid-col gap-2 justify-center items-center">
           {isGameOver ? (
@@ -44,11 +58,7 @@ const ScoreboardMultiplayer = ({
               <Button bg="black" width="60">
                 Send to your E-mail
               </Button>
-              <Button
-                bg="blue"
-                width="60"
-                onClick={() => navigate('/')}
-              >
+              <Button bg="blue" width="60" onClick={() => navigate("/")}>
                 Back Home
               </Button>
             </>
