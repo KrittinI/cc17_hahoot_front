@@ -10,8 +10,9 @@ export default function Scoreboard({
   isLastQuestion,
   handleNextQuestion,
   handleSendMail,
+  isSendmail,
 }) {
-  const { setPlayQuestion } = useQuestion()
+  const { setPlayQuestion } = useQuestion();
   useEffect(() => {
     if (isLastQuestion) {
       confetti({
@@ -35,10 +36,12 @@ export default function Scoreboard({
               <Button bg="blue" width="60" onClick={resetQuiz}>
                 Play again
               </Button>
-              <Button bg="black" width="60" onClick={handleSendMail}>
-                Send to your E-mail
-              </Button>
-              <Button bg="blue" width="60" onClick={() => (setPlayQuestion([]), navigate("/"))}>
+              {isSendmail ? null : (
+                <Button bg="black" width="60" onClick={handleSendMail}>
+                  Send to your E-mail
+                </Button>
+              )}
+              <Button bg="blue" width="60" onClick={() => navigate("/")}>
                 Back to Home
               </Button>
             </>

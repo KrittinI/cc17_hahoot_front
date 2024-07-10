@@ -26,7 +26,7 @@ const MultiPlayer = () => {
   const [isOwner, setIsOwner] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [players, setPlayers] = useState([]);
-  const [playerId, setPlayerId] = useState("")
+  const [playerId, setPlayerId] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [score, setScore] = useState(0);
@@ -134,7 +134,7 @@ const MultiPlayer = () => {
       alert("Room ID not found");
     });
     socketIo.on("joinedRoom", ({ id }) => {
-      setPlayerId(id)
+      setPlayerId(id);
       console.log(id);
       setHasJoined(true);
     });
@@ -207,7 +207,7 @@ const MultiPlayer = () => {
   }, [timeLeft]);
 
   const resetState = () => {
-    setName("")
+    setName("");
     setRoomId("");
     setIsOwner(false);
     setIsStarted(false);
@@ -236,7 +236,13 @@ const MultiPlayer = () => {
 
   const handleAnswerClick = (option) => {
     // แสดงหน้า Loading ตอนที่ player กดคำตอบ
-    socket.emit("submitAnswer", { roomId, answer: option, timeLeft, playerId, questionId: currentQuestion.id });
+    socket.emit("submitAnswer", {
+      roomId,
+      answer: option,
+      timeLeft,
+      playerId,
+      questionId: currentQuestion.id,
+    });
     setLoading(true);
   };
 
@@ -257,7 +263,13 @@ const MultiPlayer = () => {
           <Loading />
         ) : !hasJoined ? (
           // Form to Join Game Room
-          <JoinRoomForm roomId={roomId} setRoomId={setRoomId} socket={socket} name={name} setName={setName} />
+          <JoinRoomForm
+            roomId={roomId}
+            setRoomId={setRoomId}
+            socket={socket}
+            name={name}
+            setName={setName}
+          />
         ) : !isStarted ? (
           // Waiting Room to Start
           <WaitingRoom

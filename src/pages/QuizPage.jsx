@@ -13,7 +13,7 @@ export default function QuizPage() {
   const [timeLeft, setTimeLeft] = useState(playQuestion[0]?.timeLimit || 20);
   const [showScoreboard, setShowScoreboard] = useState(false);
   const [data, setData] = useState([]);
-  // const [yourAnswer, setYourAnswer] = useState(null);
+  const [isSendmail, setIsSendmail] = useState(false);
 
   useEffect(() => {
     if (timeLeft > 0 && !selectedAnswer) {
@@ -56,6 +56,7 @@ export default function QuizPage() {
   };
 
   const handleSendMail = async () => {
+    setIsSendmail(true);
     await playApi.sendmail(data);
   };
 
@@ -78,6 +79,9 @@ export default function QuizPage() {
   const handleShowScoreboard = () => {
     setShowScoreboard(true);
     //alert("Show ScoreBoard");
+    if (data.length === 1) {
+      setIsSendmail(true);
+    }
   };
 
   return (
@@ -89,6 +93,7 @@ export default function QuizPage() {
           handleNextQuestion={handleNextQuestion}
           resetQuiz={resetQuiz}
           handleSendMail={handleSendMail}
+          isSendmail={isSendmail}
         />
       ) : (
         <Quiz

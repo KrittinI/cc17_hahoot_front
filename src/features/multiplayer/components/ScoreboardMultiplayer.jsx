@@ -2,16 +2,24 @@ import { useEffect } from "react";
 import Button from "../../../components/Button";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import Input from "../../../components/Input";
+import playApi from "../../../api/play";
 
 const ScoreboardMultiplayer = ({
   players,
   socket,
   newRoomId,
   isGameOver,
-  playerId
+  playerId,
 }) => {
-  console.log(players);
-  const navigate = useNavigate()
+  const [isSendMail, setIsSendMail] = useState(false);
+  const { authUser } = useAuth();
+  const [input, setInput] = useState("");
+  const [inputError, setInputError] = useState("");
+
+  const navigate = useNavigate();
   useEffect(() => {
     if (isGameOver) {
       confetti({
@@ -33,6 +41,23 @@ const ScoreboardMultiplayer = ({
   console.log("newRoomId=>", newRoomId);
   console.log("players=>", players);
 
+  const handleSendMail = async (e) => {
+    if (authUser) {
+      // setIsSendMail(true);
+      await playApi.sendmailMultiplayer({ email: authUser?.email, players });
+    } else {
+      e.preventDefault();
+      if (input.trim() === null) {
+        setInputError("E-mail is not allowed to be empty.");
+      }
+      if (input.includes("@gmail.com")) {
+        setInputError("Email is not formatted correctly");
+      }
+
+      await playApi.sendmailMultiplayer({ email: input.email, players });
+    }
+  };
+
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
       <div className="grid grid-1 gap-8 text-center w-auto h-auto bg-white rounded-lg p-6 shadow-lg animate-pop">
@@ -44,8 +69,9 @@ const ScoreboardMultiplayer = ({
             .map((p) => (
               <li
                 key={p.id}
-                className={`flex justify-between rounded-lg py-2 ${p.score === highestScore ? "bg-gray-200" : ""
-                  }`}
+                className={`flex justify-between rounded-lg py-2 ${
+                  p.score === highestScore ? "bg-gray-200" : ""
+                }`}
               >
                 <span>{p.name}</span>
                 <span>{p.score}</span>
@@ -55,9 +81,25 @@ const ScoreboardMultiplayer = ({
         <div className="w-full grid grid-col gap-2 justify-center items-center">
           {isGameOver ? (
             <>
-              <Button bg="black" width="60">
-                Send to your E-mail
-              </Button>
+              {isSendMail ? (
+                authUser ? null : (
+                  <>
+                    <Input
+                      placeholder="Fill E-mail to send result"
+                      onChange={(e) => setInput(e.target.value)}
+                      value={input}
+                      error={inputError}
+                    />
+                    <Button bg="black" width="60" onClick={handleSendMail}>
+                      Send to your E-mail
+                    </Button>
+                  </>
+                )
+              ) : (
+                <Button bg="black" width="60" onClick={handleSendMail}>
+                  Send to your E-mail
+                </Button>
+              )}
               <Button bg="blue" width="60" onClick={() => navigate("/")}>
                 Back Home
               </Button>
