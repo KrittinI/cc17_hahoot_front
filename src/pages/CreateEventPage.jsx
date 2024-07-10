@@ -16,9 +16,9 @@ export default function CreateEventPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-[calc(100vh-164px)] flex justify-center">
+    <div className="h-[calc(100vh-164px)] flex justify-center w-[65%] mx-auto">
       {singleEvent ? (
-        <SplitScreen sizeRatio={30} width={65}>
+        <SplitScreen sizeRatio={30}>
           <CreateEventleft event={singleEvent} />
           <CreateEventRight event={singleEvent} />
         </SplitScreen>
