@@ -6,6 +6,7 @@ import Button from "./Button";
 import Input from "./Input";
 import { useState } from "react";
 import { useEffect } from "react";
+import hhIcon from "../assets/icon-hh.png"
 
 export default function SearchBar({
   buttonText,
@@ -77,9 +78,9 @@ export default function SearchBar({
       <div className="flex flex-col gap-2 max-h-[80vh] overflow-auto">
         <h1 className="sticky top-0 w-full text-font-title bg-white z-30">Topics</h1>
         <Button onClick={() => (setSeeAll(true), setTitle("All Topic"), setTopicId(0))} bg={topicId ? 'white' : 'lgreen'}>
-          <div className="flex ">
+          <div className="flex items-center">
             <img
-              src="../src/assets/icon-hh.png"
+              src={hhIcon}
               alt="logo"
               className="w-8 mr-6"
             />
@@ -92,9 +93,9 @@ export default function SearchBar({
             bg={el?.id !== topicId ? 'white' : 'lgreen'}
             onClick={() => handleClickTopic(el?.id, el?.topicName)}
           >
-            <div className="flex ">
+            <div className="flex items-center">
               <img
-                src="../src/assets/icon-hh.png"
+                src={hhIcon}
                 alt="logo"
                 className="w-8 mr-6"
               />
