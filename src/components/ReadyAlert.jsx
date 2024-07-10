@@ -5,12 +5,12 @@ export default function ReadyAlert({ onClose, onClickConfirm }) {
 
   return (
     <div className="flex flex-col justify-center items-center gap-6 p-4">
-      <QuestionIcon />
+      <QuestionIcon size={20}/>
       <div className="grid grid-cols-2 gap-6">
-        <Button bg="black" width="20" onClick={onClose}>
+        <Button bg="black" width="40" onClick={onClose}>
           Exit
         </Button>
-        <Button bg="black" width="20" onClick={onClickConfirm}>
+        <Button bg="blue" width="40" onClick={onClickConfirm}>
           Confirm
         </Button>
       </div>

@@ -14,10 +14,10 @@ export default function QuestionPage() {
   const [oneQuestion, setOneQuestion] = useState(null);
   const [favorite, setFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [comments, setComments] = useState([])
+  const [comments, setComments] = useState([]);
 
   const handleClickFavorite = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const data = [...showQuestion];
       const foundData = data.find((el) => el.id === +questionId);
@@ -36,22 +36,22 @@ export default function QuestionPage() {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const fetchQuestion = async () => {
       try {
         const res = await questionApi.getQuestionByQuestionId(+questionId);
         setOneQuestion(res.data.question);
         setFavorite(Boolean(res.data.question.QuestionFavorite?.length));
-        setComments(res.data.question.questionComments)
+        setComments(res.data.question.questionComments);
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     };
     fetchQuestion();
@@ -72,11 +72,21 @@ export default function QuestionPage() {
   };
 
   return (
-    <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
+    <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden">
       {loading && <Spinner transparent />}
       <SplitScreen>
-        <OneQuestionLeft data={oneQuestion} id={+questionId} favorite={favorite} handleClickFavorite={handleClickFavorite} onSuccess={onSuccess} />
-        <CommentContainer comments={comments} setComments={setComments} setLoading={setLoading} />
+        <OneQuestionLeft
+          data={oneQuestion}
+          id={+questionId}
+          favorite={favorite}
+          handleClickFavorite={handleClickFavorite}
+          onSuccess={onSuccess}
+        />
+        <CommentContainer
+          comments={comments}
+          setComments={setComments}
+          setLoading={setLoading}
+        />
       </SplitScreen>
     </div>
   );

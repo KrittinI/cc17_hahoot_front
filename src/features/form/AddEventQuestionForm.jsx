@@ -14,6 +14,8 @@ export default function AddEventQuestionForm({
   data,
   timeLimit = 20,
 }) {
+  console.log(data?.questionPicture, "pictureeeee");
+
   const { setEventQuestions } = useEvent();
   console.log(event, "data");
 
@@ -98,7 +100,7 @@ export default function AddEventQuestionForm({
         </div>
 
         <div className="grid col-span-2 bg-grey hover:bg-darkgrey rounded-lg items-center justify-center">
-          {data?.questionPicture ? (
+          {currentQuestion?.questionPicture ? (
             <img
               className="h-[240px] "
               src={currentQuestion?.questionPicture}

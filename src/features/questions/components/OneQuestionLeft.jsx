@@ -52,7 +52,7 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
   return (
     <div className={`bg-white flex flex-col p-6 shadow-xl rounded-lg gap-8`}>
       <div className="flex justify-between items-center">
-        <div className="text-center text-font-title-card w-full">{data?.question}</div>
+        <div className="text-center text-font-title w-full">{data?.question}</div>
       </div>
       <hr className="shadow-2 w-full" />
       <div className="grid grid-cols-10 gap-4">
@@ -60,7 +60,7 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
           <LeftArrowIcon />
         </div>
         <div className="h-[450px] flex flex-col col-span-8 justify-center items-center gap-2">
-          <div className="bg-gray-300 p-2 w-full h-[80%] flex justify-center items-center">
+          <div className="p-2 w-full h-[80%] flex justify-center items-center">
             <img className="rounded-lg w-auto h-auto max-h-[100%] max-w-[100%]" src={data?.questionPicture || image} alt="questionPicture" />
           </div>
           <div className="grid w-full grid-cols-2 gap-2">
