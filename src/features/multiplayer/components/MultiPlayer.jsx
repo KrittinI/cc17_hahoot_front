@@ -13,7 +13,6 @@ import PlayerChoice from "./PlayerChoice";
 import ShowResultBox from "./ShowResultBox";
 import ShowQuestion from "./ShowQuestion";
 import useEvent from "../../../hooks/useEvent";
-import Button from "../../../components/Button";
 import PlayerGameOver from "./PlayerGameOver";
 
 const MultiPlayer = () => {
