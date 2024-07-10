@@ -1,15 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Logo from "../../../icons/Logo";
-import { useEffect, useState } from "react";
 
-export default function JoinRoomForm({ socket, roomId, setRoomId }) {
+export default function JoinRoomForm({ socket, roomId, setRoomId, name, setName }) {
     const navigate = useNavigate()
-
-    const [name, setName] = useState("");
-    useEffect(() => {
-        setName("")
-    }, [])
 
     const handleJoinRoom = (event) => {
         event.preventDefault();
