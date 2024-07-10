@@ -1,4 +1,16 @@
-export default function QuestionIcon() {
+
+
+const sizeMap = {
+  8: 'size-8',
+  10: 'size-10',
+  12: 'size-12',
+  14: 'size-14',
+  16: 'size-16',
+  20: 'size-20',
+
+}
+
+export default function QuestionIcon({size = 12}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +18,7 @@ export default function QuestionIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="size-12 text-red"
+      className={`${sizeMap[size]} text-red`}
     >
       <path
         strokeLinecap="round-none"
