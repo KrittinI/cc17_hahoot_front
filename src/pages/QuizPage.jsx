@@ -79,7 +79,7 @@ export default function QuizPage() {
   const handleShowScoreboard = () => {
     setShowScoreboard(true);
     //alert("Show ScoreBoard");
-    if (data.length === 1) {
+    if (playQuestion?.length === 1) {
       setIsSendmail(true);
     }
   };

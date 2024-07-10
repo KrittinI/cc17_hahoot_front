@@ -154,7 +154,7 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
           )}
         </div>
 
-        <Modal title="Are you ready" open={open}>
+        <Modal title="Are you ready" open={open} >
           <ReadyAlert onClose={() => setOpen(false)} onClickConfirm={handleClickSinglePlay} />
         </Modal>
         <Modal title="confirm to delete" open={isDelete}>

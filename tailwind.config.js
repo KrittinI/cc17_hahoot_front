@@ -10,6 +10,7 @@ export default {
         darkredDarker: "#E33B50",
         blue: "#60A5FA",
         darkblue: "#2587FF",
+        lblue: "#E7EDFF",
         darkblueDarker: "#206BCC",
         yellow: "#FFDA45",
         darkyellow: "#FFCC00",
