@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import useAuth from "../../../hooks/useAuth";
 import Logo from "../../../icons/Logo";
+import { IoPerson } from "react-icons/io5";
 
 const playerColorMap = {
   0: "bg-darkblueDarker",
@@ -22,33 +23,31 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
   };
 
   return (
-    <div className="bg-white w-full md:w-3/4 h-5/6 rounded-lg shadow-xl gap-2 flex flex-col items-center justify-center">
+    <div className="bg-white px-2 w-full md:w-3/4 h-5/6 rounded-lg shadow-xl gap-2 flex flex-col items-center justify-center">
       <div className="flex flex-col justify-between h-full p-4 items-center w-full bg-transparent">
         <div className="flex flex-col w-full">
-          <div className="flex flex-row justify-between items-center w-full h-24">
-            {isOwner ? (
-              <div className="text-3xl font-bold">👤 {players?.length - 1}</div>
-            ) : (
-              <div></div>
-            )}
-            <Logo />
-            {isOwner ? (
-              <Button width="20" bg="blue" onClick={handleStartGame}>
-                Start
-              </Button>
-            ) : (
-              <div className="h-10"></div>
-            )}
+          <div className="flex flex-row justify-between items-center w-full ">
+            {isOwner ? <Logo /> : <div></div>}
+            <div className="text-font-title text-black bg-lblue flex justify-center items-center rounded-md gap-4 py-2 px-4">
+              <IoPerson className=" text-blue w-[40px] h-[40px]  flex justify-center align-middle" />
+              {players?.length - 1}
+            </div>
           </div>
-          <div className="flex bg-transparent w-full justify-center mt-4 md:mt-0">
-            <h2 className="text-3xl font-bold ">Game PIN: {roomId}</h2>
+          <div className="flex flex-col gap-2 w-full justify-center items-center mt-4 md:mt-0">
+            <div className="text-font-title-card-quiz  ">Game PIN</div>
+            <div className="text-font-title text-blue border px-12 py-2 rounded-md shadow">
+              {roomId}
+            </div>
           </div>
         </div>
         {isOwner && (
-          <ul className="flex flex-wrap gap-4 p-4 bg-transparent">
+          <ul className="flex flex-wrap gap-4 p-4 bg-transparent justify-center">
             {players?.length === 1 ? (
               <div className="flex items-center justify-center text-2xl py-4 font-sans font-bold text-blue">
-                <div>Waiting for players . . .</div>
+                {/* <div>Waiting for players . . .</div> */}
+                <div className="rounded-full h-20 w-50 animate-ping">
+                  <Logo />
+                </div>
               </div>
             ) : (
               players
@@ -56,7 +55,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
                 ?.map((player, index) => (
                   <li
                     key={index}
-                    className={`p-3 shadow-2xl border-b last:border-b-0 ${
+                    className={`p-3 px-6 rounded-lg shadow-2xl border-b last:border-b-0 ${
                       playerColorMap[index % 4]
                     }`}
                   >
@@ -70,16 +69,88 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
         )}
 
         {!isOwner && (
-          <div className="flex flex-col items-center justify-center gap-16">
-            <code className="text-5xl text-purple-500">You&apos;re in!</code>
-            <span className="mt">...</span>
+          <div className="flex flex-col items-center justify-center gap-6">
+            <code className="text-font-title text-black">You&apos;re in!</code>
+            <div className="flex space-x-2 justify-center gap-6 items-center bg-white  dark:invert">
+              <div className="h-3 w-6 animate-bounce [animation-delay:-0.1s]">
+                <svg
+                  viewBox="0 0 32 32"
+                  focusable="false"
+                  stroke="#60A5FA"
+                  strokeWidth="2px"
+                  aria-labelledby="label-a149cdfd-d500-48ab-82c9-ce8f80f8656e"
+                  aria-hidden="true"
+                  className="icon__Svg-sc-xvsbpg-1 ipIYNE"
+                  style={{ paintOrder: "stroke", width: "30", height: "30" }}
+                >
+                  <path
+                    d="M27,24.559972 L5,24.559972 L16,7 L27,24.559972 Z"
+                    style={{ fill: "#60A5FA" }}
+                  ></path>
+                </svg>
+              </div>
+              <div className="h-3 w-5 animate-bounce [animation-delay:-0.3s]">
+                <svg
+                  viewBox="0 0 32 32"
+                  focusable="false"
+                  stroke="#00CB4A"
+                  strokeWidth="2px"
+                  aria-labelledby="label-781155b4-826c-4cd7-a360-9b04915ef98d"
+                  aria-hidden="true"
+                  className="icon__Svg-sc-xvsbpg-1 ipIYNE"
+                  style={{ paintOrder: "stroke", width: "30", height: "30" }}
+                >
+                  <path
+                    d="M4,16.0038341 L16,4 L28,16.0007668 L16,28 L4,16.0038341 Z"
+                    style={{ fill: "#00CB4A" }}
+                  ></path>
+                </svg>
+              </div>
+              <div className="h-4 w-5 animate-bounce [animation-delay:-0.15s]">
+                <svg
+                  viewBox="0 0 32 32"
+                  focusable="false"
+                  stroke="#FFDA45"
+                  strokeWidth="2px"
+                  aria-labelledby="label-c0599796-4596-4dbe-bcc2-e8ed9d0f2e9f"
+                  aria-hidden="true"
+                  className="icon__Svg-sc-xvsbpg-1 ipIYNE"
+                  style={{ paintOrder: "stroke", width: "30", height: "30" }}
+                >
+                  <path
+                    d="M16,27 C9.92486775,27 5,22.0751322 5,16 C5,9.92486775 9.92486775,5 16,5 C22.0751322,5 27,9.92486775 27,16 C27,22.0751322 22.0751322,27 16,27 Z"
+                    style={{ fill: "#FFDA45" }}
+                  ></path>
+                </svg>
+              </div>
+              <div className="h-4 w-5 animate-bounce [animation-delay:-0.2s]">
+                <svg
+                  viewBox="0 0 32 32"
+                  focusable="false"
+                  stroke="#FB7185"
+                  strokeWidth="2px"
+                  aria-labelledby="label-21f46f6a-a0d3-4a52-b216-21541425fb95"
+                  aria-hidden="true"
+                  className="icon__Svg-sc-xvsbpg-1 ipIYNE"
+                  style={{ paintOrder: "stroke", width: "30", height: "30" }}
+                >
+                  <path
+                    d="M7,7 L25,7 L25,25 L7,25 L7,7 Z"
+                    style={{ fill: "#FB7185" }}
+                  ></path>
+                </svg>
+              </div>
+            </div>
           </div>
         )}
 
         {isOwner ? (
-          <div className="flex justify-around">
+          <div className="flex justify-between w-full">
             <Button width="40" bg="black" onClick={() => navigate("/")}>
-              Back!
+              Back
+            </Button>
+            <Button width="40" bg="blue" onClick={handleStartGame}>
+              Start
             </Button>
           </div>
         ) : (
