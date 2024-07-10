@@ -22,7 +22,6 @@ export default function Scoreboard({
   }, [isLastQuestion]);
   const navigate = useNavigate();
 
-  console.log(isSendmail, isLastQuestion);
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
