@@ -15,9 +15,11 @@ questionApi.createFav = async (id) => axios.post(`/questions/${id}/favorite`);
 questionApi.deleteFav = async (id) => axios.delete(`/questions/${id}/favorite`);
 
 // Comment
-questionApi.comment = async (id) => axios.post(`/questions/${id}/comment`);
-questionApi.deleteComment = async (questionId, commentId) => axios.delete(`/questions/${questionId}/comment/${commentId}`);
-questionApi.editComment = async (questionId, commentId, body) => axios.patch(`/questions/${questionId}/comment/${commentId}`, body);
+questionApi.comment = async (id, body) => axios.post(`/questions/${id}/comment`, body);
+questionApi.deleteComment = async (questionId, commentId) =>
+  axios.delete(`/questions/${questionId}/comment/${commentId}`);
+questionApi.editComment = async (questionId, commentId, body) =>
+  axios.patch(`/questions/${questionId}/comment/${commentId}`, body);
 
 questionApi.deleteQuestionById = (questionId) => axios.delete(`/questions/${questionId}`);
 

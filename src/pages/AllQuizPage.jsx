@@ -48,7 +48,15 @@ export default function AllQuizPage() {
     <div className="w-[68%] mx-auto h-[auto]">
       <SplitScreen sizeRatio={70}>
         <AllQuizzesLeft title={title} />
-        <SearchBar buttonText={`Create New Question`} setSeeAll={setSeeAll} setSearch={setSearch} topicId={setTopicId} setTitle={setTitle} create={`/questions/create-question`} />
+        <SearchBar
+          buttonText={`Create New Question`}
+          setSeeAll={setSeeAll}
+          setSearch={setSearch}
+          topicId={topicId}
+          setTopicId={setTopicId}
+          setTitle={setTitle}
+          create={`/questions/create-question`}
+        />
       </SplitScreen>
     </div>
   );

@@ -37,7 +37,7 @@ export default function Modal({ width, title, children, open, onClose, p = 4, j 
                 >
                   <div className={`flex ${justifyMap[j]} items-center ${paddingMap[p]}`}>
                     <button className="invisible">&#10005;</button>
-                    <h5 className="text-font-title">{title}</h5>
+                    <h5 className="text-font-title text-center">{title}</h5>
                     <button className="text-red ab invisible" onClick={onClose}>
                       &#10005;
                     </button>

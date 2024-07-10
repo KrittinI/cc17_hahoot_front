@@ -6,6 +6,7 @@ const bgMap = {
   red: "bg-red text-white rounded-[8px] hover:bg-darkred",
   blue: "bg-blue text-white rounded-[8px] hover:bg-darkblue",
   white: "bg-white text-black rounded-[8px] hover:bg-lgreen",
+  lgreen: "bg-lgreen",
   outline: "hover:text-blue",
 };
 
@@ -45,7 +46,7 @@ export default function Button({
 }) {
   return (
     <button
-      className={`px-3 py-1 ${bgMap[bg]} ${colorMap[color]} rounded-md ${widthMap[width]} ${marginTopMap[mt]} ${selectMap[select]}`}
+      className={`px-3 py-1 font-bold ${bgMap[bg]} ${colorMap[color]} rounded-md ${widthMap[width]} ${marginTopMap[mt]} ${selectMap[select]}`}
       onClick={onClick}
     >
       {children}

@@ -14,8 +14,10 @@ export default function QuestionPage() {
   const [oneQuestion, setOneQuestion] = useState(null);
   const [favorite, setFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [comments, setComments] = useState([])
 
   const handleClickFavorite = async () => {
+    setLoading(true)
     try {
       const data = [...showQuestion];
       const foundData = data.find((el) => el.id === +questionId);
@@ -33,21 +35,27 @@ export default function QuestionPage() {
       setFavorite((prev) => !prev);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false)
     }
   };
 
   useEffect(() => {
+    setLoading(true)
     const fetchQuestion = async () => {
       try {
         const res = await questionApi.getQuestionByQuestionId(+questionId);
         setOneQuestion(res.data.question);
         setFavorite(Boolean(res.data.question.QuestionFavorite?.length));
+        setComments(res.data.question.questionComments)
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false)
       }
     };
     fetchQuestion();
-  }, [questionId, loading]);
+  }, [questionId]);
 
   const onSuccess = async (input, file) => {
     try {
@@ -68,7 +76,7 @@ export default function QuestionPage() {
       {loading && <Spinner transparent />}
       <SplitScreen>
         <OneQuestionLeft data={oneQuestion} id={+questionId} favorite={favorite} handleClickFavorite={handleClickFavorite} onSuccess={onSuccess} />
-        <CommentContainer />
+        <CommentContainer comments={comments} setComments={setComments} setLoading={setLoading} />
       </SplitScreen>
     </div>
   );
