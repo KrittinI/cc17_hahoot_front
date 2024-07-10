@@ -46,7 +46,7 @@ export default function Button({
 }) {
   return (
     <button
-      className={`px-3 py-1 ${bgMap[bg]} ${colorMap[color]} rounded-md ${widthMap[width]} ${marginTopMap[mt]} ${selectMap[select]}`}
+      className={`px-3 py-1 font-bold ${bgMap[bg]} ${colorMap[color]} rounded-md ${widthMap[width]} ${marginTopMap[mt]} ${selectMap[select]}`}
       onClick={onClick}
     >
       {children}
