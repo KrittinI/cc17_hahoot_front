@@ -90,12 +90,8 @@ export default function CreateEventleft({ event }) {
         </div>
       </div>
 
-      <Modal open={isCancle}>
+      <Modal width={20} open={isCancle} title={`Confirm to Quit this Event`}>
         <div className="w-full flex flex-col justify-center items-center gap-4 p-6">
-          <div className=" text-font-title">
-            Are you sure to Quit from creating
-          </div>
-          <div className=" text-font-title"> this Event</div>
           <div>
             <QuestionIcon />
           </div>
@@ -110,10 +106,8 @@ export default function CreateEventleft({ event }) {
         </div>
       </Modal>
 
-      <Modal open={isSave}>
+      <Modal open={isSave} title={`Confirm to Save this Event`}>
         <div className="w-full flex flex-col justify-center items-center gap-4 p-6">
-          <div className=" text-font-title">Are you sure to Save</div>
-          <div className=" text-font-title"> this Event</div>
           <div>
             <QuestionIcon />
           </div>
