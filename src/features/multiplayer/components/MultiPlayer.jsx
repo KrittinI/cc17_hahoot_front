@@ -61,7 +61,7 @@ const MultiPlayer = () => {
     //socket = io("http://localhost:4000");
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setSocket(socketIo);
-    if (authUser && playQuestion.length) {
+    if (authUser && playQuestion?.length) {
       socketIo.emit("createRoom", {
         name: authUser?.username,
         questions: playQuestion,

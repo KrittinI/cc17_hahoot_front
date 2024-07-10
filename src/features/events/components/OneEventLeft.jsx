@@ -25,7 +25,6 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
       setFiles((prev) => [...prev, null]);
     }
   };
-  console.log(event?.Room, "event");
 
   return (
     <div>

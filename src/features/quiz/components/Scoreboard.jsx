@@ -2,6 +2,7 @@ import Button from "../../../components/Button";
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
+import useQuestion from "../../../hooks/useQuestion";
 
 export default function Scoreboard({
   score,
@@ -10,6 +11,7 @@ export default function Scoreboard({
   handleNextQuestion,
   handleSendMail,
 }) {
+  const { setPlayQuestion } = useQuestion()
   useEffect(() => {
     if (isLastQuestion) {
       confetti({
@@ -36,7 +38,7 @@ export default function Scoreboard({
               <Button bg="black" width="60" onClick={handleSendMail}>
                 Send to your E-mail
               </Button>
-              <Button bg="blue" width="60" onClick={() => navigate("/")}>
+              <Button bg="blue" width="60" onClick={() => (setPlayQuestion([]), navigate("/"))}>
                 Back to Home
               </Button>
             </>
