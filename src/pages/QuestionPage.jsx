@@ -45,7 +45,6 @@ export default function QuestionPage() {
     const fetchQuestion = async () => {
       try {
         const res = await questionApi.getQuestionByQuestionId(+questionId);
-        console.log(res.data.question, "what are you looking for");
         setOneQuestion(res.data.question);
         setFavorite(Boolean(res.data.question.QuestionFavorite?.length));
         setComments(res.data.question.questionComments)
@@ -61,13 +60,10 @@ export default function QuestionPage() {
   const onSuccess = async (input, file) => {
     try {
       setLoading(true);
-      console.log(input);
       const formData = new FormData();
       formData.append("questionPicture", file);
       formData.append("questions", JSON.stringify(input));
-      const res = await questionApi.editQuestionById(questionId, formData);
-      console.log(res.data.question);
-      setOneQuestion(res.data.question);
+      await questionApi.editQuestionById(questionId, formData);
     } catch (error) {
       console.log(error);
     } finally {

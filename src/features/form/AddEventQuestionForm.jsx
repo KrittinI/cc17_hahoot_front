@@ -15,6 +15,7 @@ export default function AddEventQuestionForm({
   timeLimit = 20,
 }) {
   const { setEventQuestions } = useEvent();
+  console.log(event, "data");
 
   const initialInput = {
     questionId: data?.id || "",
@@ -51,6 +52,7 @@ export default function AddEventQuestionForm({
 
   const handleClickSave = () => {
     let isError = false;
+    console.log(input);
     for (let field in input) {
       if (!input[field]) {
         setError((prev) => ({ ...prev, field: `${field} is required` }));
@@ -77,8 +79,8 @@ export default function AddEventQuestionForm({
             header={`Select Question`}
           >
             {quizTopic?.map((el) => (
-              <option value={el.id} key={el.id}>
-                {el.question}
+              <option value={el?.id} key={el?.id}>
+                {el?.question}
               </option>
             ))}
           </Select>

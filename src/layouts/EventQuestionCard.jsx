@@ -9,6 +9,7 @@ import Modal from "../components/Modal";
 import QuestionIcon from "../icons/Question";
 import Button from "../components/Button";
 import AddEventQuestionForm from "../features/form/AddEventQuestionForm";
+import c4 from "../assets/c4.jpeg";
 
 export default function EventQuestionCard({ index, question, setEventQuestions, eventQuestions, timeLimit, event }) {
   const [open, setOpen] = useState(false);
@@ -54,7 +55,7 @@ export default function EventQuestionCard({ index, question, setEventQuestions, 
     <div className="flex flex-col gap-2">
       <div className="bg-white text-left inline-block cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-xl">
         <div className="w-full overflow-hidden rounded-t-xl relative">
-          {currentData?.questionPicture && <img className="overflow-hidden object-cover aspect-[16/11] relative " src={currentData?.questionPicture} alt="photo" />}
+          {currentData?.questionPicture && <img className="overflow-hidden object-cover aspect-[16/11] relative " src={currentData?.questionPicture || c4} alt="photo" />}
           <div className="absolute top-2 right-2 bg-white rounded-full p-1">
             <HeartIcon />
           </div>
