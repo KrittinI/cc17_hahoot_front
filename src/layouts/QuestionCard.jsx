@@ -6,16 +6,12 @@ import EditIcon from "../icons/edit";
 import Button from "../components/Button";
 import Avatar from "../components/Avatar";
 import QuestionIcon from "../icons/Question";
+import defaultImage from "../assets/c4.jpeg";
 
-export default function QuestionCard({
-  question,
-  image,
-  index,
-  setQuestions,
-  setFiles,
-}) {
+export default function QuestionCard({ question, image, index, setQuestions, setFiles }) {
   const [open, setOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  console.log(image);
   const handleDelete = (id) => {
     setQuestions((prev) => prev.filter((q, i) => i !== id));
     setFiles((prev) => prev.filter((q, i) => i !== id));
@@ -44,38 +40,26 @@ export default function QuestionCard({
     <div className="flex flex-col gap-2">
       <div className="bg-white text-left inline-block cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-xl">
         <div className="w-full overflow-hidden rounded-t-xl relative">
-          {image && (
-            <img
-              className="overflow-hidden object-cover aspect-[16/11] relative "
-              src={URL.createObjectURL(image)}
-              alt="photo"
-            />
+          {image ? (
+            <img className="overflow-hidden object-cover aspect-[16/11] relative " src={URL.createObjectURL(image)} alt="photo" />
+          ) : (
+            <img className="overflow-hidden object-cover aspect-[16/11] relative" src={question.questionPicture || defaultImage} alt="photo" />
           )}
         </div>
 
         <div className="px-2 py-3 w-full grid gap-y-6">
-          <p className="overflow-hidden text-ellipsis whitespace-nowrap">
-            {question?.question}
-          </p>
+          <p className="overflow-hidden text-ellipsis whitespace-nowrap">{question?.question}</p>
           <div className="flex justify-between items-center">
             <Avatar />
-            <div className="text-font-title-card text-blue">Mathematis</div>
+            <div className="text-font-title-card text-blue">{question?.topic?.topicName}</div>
           </div>
         </div>
       </div>
       <div className="flex justify-evenly w-[190px]">
-        <span
-          role="button"
-          onClick={() => setIsDelete(true)}
-          className="bg-white rounded-full flex justify-center items-center p-2 h-[40px] w-[40px] shadow-xl"
-        >
+        <span role="button" onClick={() => setIsDelete(true)} className="bg-white rounded-full flex justify-center items-center p-2 h-[40px] w-[40px] shadow-xl">
           <DeleteIcon />
         </span>
-        <span
-          role="button"
-          onClick={() => setOpen(true)}
-          className="bg-white rounded-full flex justify-center items-center p-2 h-[40px] w-[40px] shadow-xl"
-        >
+        <span role="button" onClick={() => setOpen(true)} className="bg-white rounded-full flex justify-center items-center p-2 h-[40px] w-[40px] shadow-xl">
           <EditIcon />
         </span>
       </div>
@@ -96,17 +80,8 @@ export default function QuestionCard({
           </div>
         </div>
       </Modal>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        title="Edit your question"
-      >
-        <FormAddQuestion
-          question={question}
-          onClose={() => setOpen(false)}
-          onSuccess={onSuccess}
-          image={image}
-        />
+      <Modal open={open} onClose={() => setOpen(false)} title="Edit your question">
+        <FormAddQuestion question={question} onClose={() => setOpen(false)} onSuccess={onSuccess} image={image} />
       </Modal>
     </div>
   );

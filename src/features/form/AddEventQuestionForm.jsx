@@ -8,6 +8,7 @@ import questionApi from "../../api/question";
 
 export default function AddEventQuestionForm({ onClose, event, onSuccess, data, timeLimit = 20 }) {
   const { setEventQuestions } = useEvent();
+  console.log(event, "data");
 
   const initialInput = { questionId: data?.id || "", timeLimit: timeLimit || "" };
   const initialError = { questionId: "", timeLimit: "" };
@@ -41,6 +42,7 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
 
   const handleClickSave = () => {
     let isError = false;
+    console.log(input);
     for (let field in input) {
       if (!input[field]) {
         setError((prev) => ({ ...prev, field: `${field} is required` }));
@@ -60,8 +62,8 @@ export default function AddEventQuestionForm({ onClose, event, onSuccess, data, 
         <div className="col-span-3">
           <Select id="questionId" value={input.questionId} onChange={handleChangeForSelect} name="questionId" error={error.questionId} header={`Select Question`}>
             {quizTopic?.map((el) => (
-              <option value={el.id} key={el.id}>
-                {el.question}
+              <option value={el?.id} key={el?.id}>
+                {el?.question}
               </option>
             ))}
           </Select>

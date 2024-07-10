@@ -13,6 +13,7 @@ import Modal from "../../../components/Modal";
 import FormAddQuestion from "../../../components/FormAddQuestion";
 import QuestionIcon from "../../../icons/Question";
 import Button from "../../../components/Button";
+import questionApi from "../../../api/question";
 
 export default function OneQuestionRight({ data, id, favorite, handleClickFavorite, onSuccess }) {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
   const [isDelete, setIsDelete] = useState(false);
 
   const isDisabled = data?.assignOfBridges?.length !== 0;
+  console.log(data);
 
   const index = showQuestion.findIndex((el) => el.id === id);
 
@@ -36,6 +38,15 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
     if (id === showQuestion[0].id) {
       navigate(`/questions/${showQuestion[showQuestion.length - 1].id}`);
     } else navigate(`/questions/${showQuestion[index - 1].id}`);
+  };
+
+  const handleClickDelete = async (questionId) => {
+    try {
+      await questionApi.deleteQuestionById(questionId);
+      setIsDelete(false);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (
@@ -110,13 +121,7 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
             <QuestionIcon />
           </div>
           <div className="w-full flex justify-around pt-6">
-            <Button
-              bg={`red`}
-              width={20}
-              onClick={() => {
-                alert("delete lawe");
-              }}
-            >
+            <Button bg={`red`} width={20} onClick={() => handleClickDelete(data?.id)}>
               Delete
             </Button>
             <Button bg={`black`} width={20} onClick={() => setIsDelete(false)}>
