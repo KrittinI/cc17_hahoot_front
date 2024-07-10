@@ -7,10 +7,13 @@ import { useEffect } from "react";
 import Avatar from "../../../components/Avatar";
 import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
+import hhIcon from "../../../assets/icon-hh.png"
+
 
 export default function SearchFavorite({
   setSeeAll,
   setSearch,
+  topicId,
   setTopicId,
   setTitle,
 }) {
@@ -72,10 +75,10 @@ export default function SearchFavorite({
           <h1 className="sticky top-0 w-full text-font-title bg-white">
             Topics
           </h1>
-          <Button onClick={() => (setSeeAll(true), setTitle("All Topic"))}>
+          <Button bg={topicId !== 0 ? 'white' : 'lgreen'} onClick={() => (setSeeAll(true), setTitle("All Topic"), setTopicId(0))}>
             <div className="flex ">
               <img
-                src="../../src/assets/icon-hh.png"
+                src={hhIcon}
                 alt="logo"
                 className="w-8 mr-6"
               />
@@ -85,12 +88,12 @@ export default function SearchFavorite({
           {topic?.map((el) => (
             <Button
               key={el?.id}
-              bg={`gray`}
+              bg={el?.id !== topicId ? 'white' : 'lgreen'}
               onClick={() => handleClickTopic(el?.id, el?.topicName)}
             >
               <div className="flex ">
                 <img
-                  src="../../src/assets/icon-hh.png"
+                  src={hhIcon}
                   alt="logo"
                   className="w-8 mr-6"
                 />

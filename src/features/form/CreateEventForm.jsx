@@ -6,6 +6,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useRef } from "react";
 import { ImageIcon } from "../../icons/Image";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateEventForm({ onClose }) {
   const initialInput = {
@@ -18,6 +19,7 @@ export default function CreateEventForm({ onClose }) {
     topicId: "",
     description: "",
   };
+  const navigate = useNavigate();
   const { setSingleEvent } = useEvent();
 
   const [input, setInput] = useState(initialInput);
@@ -57,6 +59,10 @@ export default function CreateEventForm({ onClose }) {
       onClose();
     }
   };
+  const handleClickCancle = () => {
+    onClose();
+    navigate('/events')
+  };
 
   return (
     <>
@@ -67,7 +73,16 @@ export default function CreateEventForm({ onClose }) {
       <form onSubmit={handleSubmit} className="w-full p-4">
         <div className="flex flex-col gap-4">
           <div>
-            <Input type="text" name="eventName" id="" value={input.eventName} placeholder="Enter Your Title" onChange={handleChange} error={error.eventName} position={"center"} />
+            <Input
+              type="text"
+              name="eventName"
+              id=""
+              value={input.eventName}
+              placeholder="Enter Your Title"
+              onChange={handleChange}
+              error={error.eventName}
+              position={"center"}
+            />
           </div>
           <div className="flex gap-3 ">
             <div className="w-3/6 h-56">
@@ -84,8 +99,16 @@ export default function CreateEventForm({ onClose }) {
                 }}
               />
               {file ? (
-                <div role="button" className="bg-gray-100 relative w-full h-full" onClick={() => fileEl.current?.click()}>
-                  <img src={URL.createObjectURL(file)} alt="post" className="mx-auto w-full h-full object-cover" />
+                <div
+                  role="button"
+                  className="bg-gray-100 relative w-full h-full"
+                  onClick={() => fileEl.current?.click()}
+                >
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="post"
+                    className="mx-auto w-full h-full object-cover"
+                  />
                   <button
                     className="absolute top-1 right-1"
                     onClick={(e) => {
@@ -97,7 +120,11 @@ export default function CreateEventForm({ onClose }) {
                   </button>
                 </div>
               ) : (
-                <div role="button" className="flex flex-col justify-center items-center gap-2 bg-grey rounded-lg py-8 hover:bg-darkgrey w-full h-full" onClick={() => fileEl.current?.click()}>
+                <div
+                  role="button"
+                  className="flex flex-col justify-center items-center gap-2 bg-grey rounded-lg py-8 hover:bg-darkgrey w-full h-full"
+                  onClick={() => fileEl.current?.click()}
+                >
                   <div
                     className="bg-white
                 w-10 h-10 rounded-full flex justify-center items-center"
@@ -109,7 +136,13 @@ export default function CreateEventForm({ onClose }) {
               )}
             </div>
             <div className="flex flex-col gap-3 h-50 w-3/6 justify-center">
-              <Select header="Topic" value={input.topicId} onChange={handleChange} name="topicId" error={error.topicId}>
+              <Select
+                header="Topic"
+                value={input.topicId}
+                onChange={handleChange}
+                name="topicId"
+                error={error.topicId}
+              >
                 {topic?.map((el, index) => (
                   <option value={el.id} key={index}>
                     {el.topicName}
@@ -128,13 +161,20 @@ export default function CreateEventForm({ onClose }) {
                     ? "h-full border border-red"
                     : "h-full w-full"`}
               ></textarea>
-              {error.description ? <small className="text-red">{error.description}</small> : null}
+              {error.description ? (
+                <small className="text-red">{error.description}</small>
+              ) : null}
             </div>
           </div>
         </div>
 
-        <div className="flex justify-center p-3">
-          <Button bg="black">Create</Button>
+        <div className="flex justify-between pt-4">
+          <Button bg="black" width={40} onClick={handleClickCancle}>
+            Cancel
+          </Button>
+          <Button bg="blue" width={40}>
+            Create
+          </Button>
         </div>
       </form>
     </>

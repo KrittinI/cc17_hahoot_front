@@ -28,20 +28,14 @@ export default function AllQuizPage() {
     const isSeeAll = async () => {
       if (seeAll) {
         if (search) {
-          setShowQuestion(
-            question?.filter((el) => el.question.toLowerCase().includes(search))
-          );
+          setShowQuestion(question?.filter((el) => el.question.toLowerCase().includes(search)));
         } else {
           setShowQuestion(question);
         }
       } else {
         const quizTopic = (await getQuestionByTopicId(topicId)).data.questions;
         if (search) {
-          setShowQuestion(
-            quizTopic?.filter((el) =>
-              el.question.toLowerCase().includes(search)
-            )
-          );
+          setShowQuestion(quizTopic?.filter((el) => el.question.toLowerCase().includes(search)));
         } else {
           setShowQuestion(quizTopic);
         }
@@ -58,7 +52,8 @@ export default function AllQuizPage() {
           buttonText={`Create New Question`}
           setSeeAll={setSeeAll}
           setSearch={setSearch}
-          topicId={setTopicId}
+          topicId={topicId}
+          setTopicId={setTopicId}
           setTitle={setTitle}
           create={`/questions/create-question`}
         />

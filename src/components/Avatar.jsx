@@ -1,11 +1,5 @@
 import profileImg from "../assets/user.png";
 
-// export default function Avatar({ src, size = 2.5 }) {
-//     return (
-//         <img src={src || profileImg} alt="user" className="rounded-full shadow" style={{ width: `${size}rem`, height: `${size}rem` }} />
-//     )
-// }
-
 const sizeMap = {
   40: "w-[40px] h-[40px]",
   60: "w-[60px] h-[60px]",

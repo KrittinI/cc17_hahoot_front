@@ -21,7 +21,7 @@ questionApi.deleteFav = async (id) =>
   axios.delete(`/questions/${id}/favorite`);
 
 // Comment
-questionApi.comment = async (id) => axios.post(`/questions/${id}/comment`);
+questionApi.comment = async (id, body) => axios.post(`/questions/${id}/comment`, body);
 questionApi.deleteComment = async (questionId, commentId) =>
   axios.delete(`/questions/${questionId}/comment/${commentId}`);
 questionApi.editComment = async (questionId, commentId, body) =>

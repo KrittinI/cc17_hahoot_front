@@ -1,6 +1,6 @@
-import hhHero from "../assets/hh-hero.png"
+import hhHero from "../assets/homepage.mov";
 
-export default function HeroContianer({ hero }) {
+export default function HeroContainer({ hero }) {
   return (
     <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-10 px-4 py-10 sm:px-6 sm:py-10 lg:max-w-7xl lg:grid-cols-2">
       {/* **************************** left container ************************* */}
@@ -13,10 +13,11 @@ export default function HeroContianer({ hero }) {
       {/* **************************** left container ************************* */}
       {/* **************************** right container ************************* */}
       <div className="bg-white p-4 h-full rounded-lg">
-        <img
+        <video
           src={hero?.eventPicture || hhHero}
-          alt="hero-image"
+          alt="hero-video"
           className="h-[240px] w-[800px]"
+          controls
         />
       </div>
       {/* **************************** right container ************************* */}

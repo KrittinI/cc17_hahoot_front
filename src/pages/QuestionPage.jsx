@@ -10,52 +10,64 @@ import Spinner from "../components/Spinner";
 
 export default function QuestionPage() {
   const { questionId } = useParams();
-  const { showQuestion, setShowQuestion } = useQuestion()
+  const { showQuestion, setShowQuestion } = useQuestion();
   const [oneQuestion, setOneQuestion] = useState(null);
   const [favorite, setFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [comments, setComments] = useState([])
 
   const handleClickFavorite = async () => {
+    setLoading(true)
     try {
-      const data = [...showQuestion]
-      const foundData = data.find((el) => el.id === +questionId)
-      const foundIndex = data.findIndex((el) => el.id === +questionId)
+      const data = [...showQuestion];
+      const foundData = data.find((el) => el.id === +questionId);
+      const foundIndex = data.findIndex((el) => el.id === +questionId);
       if (favorite) {
         await questionApi.deleteFav(oneQuestion?.id);
-        const updateFoundData = { ...foundData, QuestionFavorite: [] }
-        data.splice(foundIndex, 1, updateFoundData)
+        const updateFoundData = { ...foundData, QuestionFavorite: [] };
+        data.splice(foundIndex, 1, updateFoundData);
       } else {
         await questionApi.createFav(oneQuestion?.id);
-        const updateFoundData = { ...foundData, QuestionFavorite: [1] }
-        data.splice(foundIndex, 1, updateFoundData)
+        const updateFoundData = { ...foundData, QuestionFavorite: [1] };
+        data.splice(foundIndex, 1, updateFoundData);
       }
-      setShowQuestion(data)
+      setShowQuestion(data);
       setFavorite((prev) => !prev);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false)
     }
   };
 
   useEffect(() => {
+    setLoading(true)
     const fetchQuestion = async () => {
       try {
         const res = await questionApi.getQuestionByQuestionId(+questionId);
+        console.log(res.data.question, "what are you looking for");
         setOneQuestion(res.data.question);
         setFavorite(Boolean(res.data.question.QuestionFavorite?.length));
+        setComments(res.data.question.questionComments)
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false)
       }
     };
     fetchQuestion();
-  }, [questionId, loading]);
+  }, [questionId]);
 
   const onSuccess = async (input, file) => {
     try {
       setLoading(true);
+      console.log(input);
       const formData = new FormData();
       formData.append("questionPicture", file);
       formData.append("questions", JSON.stringify(input));
-      await questionApi.editQuestionById(questionId, formData);
+      const res = await questionApi.editQuestionById(questionId, formData);
+      console.log(res.data.question);
+      setOneQuestion(res.data.question);
     } catch (error) {
       console.log(error);
     } finally {
@@ -67,14 +79,8 @@ export default function QuestionPage() {
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)] overflow-hidden bg-black">
       {loading && <Spinner transparent />}
       <SplitScreen>
-        <OneQuestionLeft
-          data={oneQuestion}
-          id={+questionId}
-          favorite={favorite}
-          handleClickFavorite={handleClickFavorite}
-          onSuccess={onSuccess}
-        />
-        <CommentContainer />
+        <OneQuestionLeft data={oneQuestion} id={+questionId} favorite={favorite} handleClickFavorite={handleClickFavorite} onSuccess={onSuccess} />
+        <CommentContainer comments={comments} setComments={setComments} setLoading={setLoading} />
       </SplitScreen>
     </div>
   );

@@ -7,7 +7,13 @@ import useAuth from "../../../hooks/useAuth";
 import Input from "../../../components/Input";
 import playApi from "../../../api/play";
 
-const ScoreboardMultiplayer = ({ players, socket, newRoomId, isGameOver }) => {
+const ScoreboardMultiplayer = ({
+  players,
+  socket,
+  newRoomId,
+  isGameOver,
+  playerId,
+}) => {
   const [isSendMail, setIsSendMail] = useState(false);
   const { authUser } = useAuth();
   const [input, setInput] = useState("");
@@ -27,6 +33,13 @@ const ScoreboardMultiplayer = ({ players, socket, newRoomId, isGameOver }) => {
   const handleNextQuestion = () => {
     socket.emit("nextQuestion", newRoomId);
   };
+  const ownerId = socket.id; // Example way to get ownerId, adapt as needed
+  // Find the highest score
+  const highestScore = Math.max(...players.map((p) => p.score));
+
+  console.log("socket=>", socket);
+  console.log("newRoomId=>", newRoomId);
+  console.log("players=>", players);
 
   const handleSendMail = async (e) => {
     if (authUser) {
@@ -51,9 +64,15 @@ const ScoreboardMultiplayer = ({ players, socket, newRoomId, isGameOver }) => {
         <h1 className="text-font-title">Scoreboard</h1>
         <ul>
           {players
+            .filter((p) => p.id !== ownerId)
             .sort((a, b) => b.score - a.score)
             .map((p) => (
-              <li key={p.id} className="flex justify-between border-b py-2">
+              <li
+                key={p.id}
+                className={`flex justify-between rounded-lg py-2 ${
+                  p.score === highestScore ? "bg-gray-200" : ""
+                }`}
+              >
                 <span>{p.name}</span>
                 <span>{p.score}</span>
               </li>

@@ -2,6 +2,7 @@ import Button from "../../../components/Button";
 import { useEffect } from "react";
 import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
+import useQuestion from "../../../hooks/useQuestion";
 
 export default function Scoreboard({
   score,
@@ -11,6 +12,7 @@ export default function Scoreboard({
   handleSendMail,
   isSendmail,
 }) {
+  const { setPlayQuestion } = useQuestion();
   useEffect(() => {
     if (isLastQuestion) {
       confetti({

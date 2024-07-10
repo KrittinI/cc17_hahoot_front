@@ -1,15 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Logo from "../../../icons/Logo";
-import { useEffect, useState } from "react";
 
-export default function JoinRoomForm({ socket, roomId, setRoomId }) {
+export default function JoinRoomForm({ socket, roomId, setRoomId, name, setName }) {
     const navigate = useNavigate()
-
-    const [name, setName] = useState("");
-    useEffect(() => {
-        setName("")
-    }, [])
 
     const handleJoinRoom = (event) => {
         event.preventDefault();
@@ -40,7 +34,7 @@ export default function JoinRoomForm({ socket, roomId, setRoomId }) {
                     placeholder="Game PIN"
                     className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 text-center"
                 />
-                <Button width="full" bg="black">
+                <Button width="full" bg="blue">
                     Enter
                 </Button>
             </form>
