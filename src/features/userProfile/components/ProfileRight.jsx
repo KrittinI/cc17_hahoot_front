@@ -12,7 +12,6 @@ export default function ProfileRight({ isQuizForm, isEventForm }) {
   const { profile, setProfile } = useUser();
   const navigate = useNavigate();
 
-  console.log("profile", profile);
   useEffect(() => {
     if (authUser?.id === profile?.id) {
       setProfile(authUser);

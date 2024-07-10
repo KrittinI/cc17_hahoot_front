@@ -13,7 +13,7 @@ import questionApi from "../api/question";
 export default function EventPage() {
   const { eventId } = useParams();
   const { setPlayQuestion } = useQuestion();
-  const { event, setEvent, setEventId, setEventQuestions, eventQuestions } = useEvent();
+  const { event, setEvent, setEventId, eventQuestions } = useEvent();
   const navigate = useNavigate();
   const [oneEvent, setOneEvent] = useState(null);
   const [questions, setQuestions] = useState([]);
@@ -71,12 +71,10 @@ export default function EventPage() {
   useEffect(() => {
     if (eventQuestions.length === 0) return;
     const id = eventQuestions[eventQuestions.length - 1].questionId;
-    // console.log(id);
     //fetch data for display
     const fetchQuestion = async () => {
       try {
         const res = await questionApi.getQuestionByQuestionId(+id);
-        console.log(res.data.question);
         setNewQuestion((prev) => [...prev, res.data.question]);
         setFiles((prev) => [...prev, res.data.question.questionPicture]);
       } catch (err) {
@@ -85,7 +83,6 @@ export default function EventPage() {
     };
     fetchQuestion();
   }, [eventQuestions.length]);
-  console.log(eventQuestions, "eventQuestions");
 
   return (
     <div className="w-[66%] mx-auto h-[calc(100vh-164px)]">

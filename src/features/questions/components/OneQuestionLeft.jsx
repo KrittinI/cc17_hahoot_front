@@ -23,7 +23,6 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
   const [isDelete, setIsDelete] = useState(false);
 
   const isDisabled = data?.assignOfBridges?.length !== 0;
-  console.log(data);
 
   const index = showQuestion.findIndex((el) => el.id === id);
 

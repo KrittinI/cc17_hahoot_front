@@ -21,7 +21,6 @@ export default function EventQuestionCard({ index, question, setEventQuestions, 
   const findQuestion = async (id) => {
     try {
       const data = await getQuestionByQuestionId(id);
-      console.log(data);
       setCurrentData(data);
     } catch (err) {
       console.log(err.message);

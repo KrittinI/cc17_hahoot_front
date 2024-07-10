@@ -4,7 +4,6 @@ import Avatar from "./Avatar";
 export default function CommentCard({ comments }) {
   const navigate = useNavigate()
   const handleClickAvatar = (id) => {
-    console.log(id);
     navigate(`/users/${id}`)
   }
   return (
