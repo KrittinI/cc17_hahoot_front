@@ -15,9 +15,9 @@ import ShowQuestion from "./ShowQuestion";
 import useEvent from "../../../hooks/useEvent";
 
 const MultiPlayer = () => {
-  const { authUser } = useAuth()
-  const { playQuestion } = useQuestion()
-  const { eventId } = useEvent()
+  const { authUser } = useAuth();
+  const { playQuestion } = useQuestion();
+  const { eventId } = useEvent();
   const [roomId, setRoomId] = useState("");
   const [isOwner, setIsOwner] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
@@ -54,7 +54,11 @@ const MultiPlayer = () => {
     // const newSocket = io('http://localhost:4000'); // หรือ URL ของเซิร์ฟเวอร์จริง
     setSocket(socketIo);
     if (authUser && playQuestion.length) {
-      socketIo.emit("createRoom", { name: authUser?.username, questions: playQuestion, eventId })
+      socketIo.emit("createRoom", {
+        name: authUser?.username,
+        questions: playQuestion,
+        eventId,
+      });
     }
     // count room answer
     socketIo.on("RoomAnswerCount", (counts) => {
@@ -166,7 +170,7 @@ const MultiPlayer = () => {
       socketIo.off("answerCount");
       socketIo.off("RoomAnswerCount");
       // เอามาไว้ disconnect ออก หากกด ออก
-      socketIo.disconnect()
+      socketIo.disconnect();
     };
   }, []);
 
@@ -228,38 +232,51 @@ const MultiPlayer = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-full gap-12 transition-all duration-300 ease-in-out transform">
-        {
-          loading ? (
-            <Loading />
-          ) : !hasJoined ? (
-            // Form to Join Game Room
-            <JoinRoomForm roomId={roomId} setRoomId={setRoomId} socket={socket} />
-          ) : !isStarted ? (
-            // Waiting Room to Start
-            <WaitingRoom socket={socket} players={players} roomId={roomId} isOwner={isOwner} />
-          ) : isOwner && showScoreboard ? (
-            <ScoreboardMultiplayer
-              players={playerInfo}
-              socket={socket}
-              newRoomId={newRoomId}
-              isGameOver={isGameOver}
-            />
-          ) : isOwner && currentQuestion ? (
-            <ShowQuestion currentQuestion={currentQuestion} showAnswer={showAnswer} roomAnswerCount={roomAnswerCount} onClick={handleShowScoreboard} timeLeft={timeLeft} answerCount={answerCount} />
-          ) : clientAnswerResult !== null ? (
-            <ShowResultBox clientAnswerResult={clientAnswerResult} />
-          ) : !isOwner && currentQuestion ? (
-            // role === Player
-            <PlayerChoice choice={[
+        {loading ? (
+          <Loading />
+        ) : !hasJoined ? (
+          // Form to Join Game Room
+          <JoinRoomForm roomId={roomId} setRoomId={setRoomId} socket={socket} />
+        ) : !isStarted ? (
+          // Waiting Room to Start
+          <WaitingRoom
+            socket={socket}
+            players={players}
+            roomId={roomId}
+            isOwner={isOwner}
+          />
+        ) : isOwner && showScoreboard ? (
+          <ScoreboardMultiplayer
+            players={playerInfo}
+            socket={socket}
+            newRoomId={newRoomId}
+            isGameOver={isGameOver}
+          />
+        ) : isOwner && currentQuestion ? (
+          <ShowQuestion
+            currentQuestion={currentQuestion}
+            showAnswer={showAnswer}
+            roomAnswerCount={roomAnswerCount}
+            onClick={handleShowScoreboard}
+            timeLeft={timeLeft}
+            answerCount={answerCount}
+          />
+        ) : clientAnswerResult !== null ? (
+          <ShowResultBox clientAnswerResult={clientAnswerResult} />
+        ) : !isOwner && currentQuestion ? (
+          // role === Player
+          <PlayerChoice
+            choice={[
               currentQuestion.choice1,
               currentQuestion.choice2,
               currentQuestion.choice3,
               currentQuestion.choice4,
-            ]} handleAnswerClick={handleAnswerClick} />
-          ) : (
-            <div className="text-4xl">Oops! something wrong!</div>
-          )
-        }
+            ]}
+            handleAnswerClick={handleAnswerClick}
+          />
+        ) : (
+          <div className="text-4xl">Oops! something wrong!</div>
+        )}
       </div>
     </div>
   );

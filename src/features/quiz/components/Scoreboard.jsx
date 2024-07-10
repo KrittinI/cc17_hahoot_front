@@ -9,6 +9,7 @@ export default function Scoreboard({
   isLastQuestion,
   handleNextQuestion,
   handleSendMail,
+  isSendmail,
 }) {
   useEffect(() => {
     if (isLastQuestion) {
@@ -33,9 +34,11 @@ export default function Scoreboard({
               <Button bg="blue" width="60" onClick={resetQuiz}>
                 Play again
               </Button>
-              <Button bg="black" width="60" onClick={handleSendMail}>
-                Send to your E-mail
-              </Button>
+              {isSendmail ? null : (
+                <Button bg="black" width="60" onClick={handleSendMail}>
+                  Send to your E-mail
+                </Button>
+              )}
               <Button bg="blue" width="60" onClick={() => navigate("/")}>
                 Back to Home
               </Button>
