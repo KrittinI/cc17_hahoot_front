@@ -27,10 +27,10 @@ export default function QuizPage() {
   const handleAnswerClick = (answer) => {
     setSelectedAnswer(answer);
     if (answer === playQuestion[currentQuestionIndex]?.answer) {
-      setScore(score + timeLeft * 75);
+      setScore(score + timeLeft * 50);
     }
     const correctAnswer = playQuestion[currentQuestionIndex]?.answer;
-    const questionScore = answer === correctAnswer ? timeLeft * 75 : 0;
+    const questionScore = answer === correctAnswer ? timeLeft * 50 : 0;
     const result = answer === correctAnswer;
 
     if (answer === "A") {
