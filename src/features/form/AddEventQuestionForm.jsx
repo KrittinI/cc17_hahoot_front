@@ -14,6 +14,8 @@ export default function AddEventQuestionForm({
   data,
   timeLimit = 20,
 }) {
+  console.log(data?.questionPicture, "pictureeeee");
+
   const { setEventQuestions } = useEvent();
 
   const initialInput = {

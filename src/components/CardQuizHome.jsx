@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import ReadyAlert from "./ReadyAlert";
-import hhHero from "../assets/hh-hero.png"
+import hhHero from "../assets/c4.jpeg"
 import { useNavigate } from "react-router-dom";
 import useQuestion from "../hooks/useQuestion";
 
