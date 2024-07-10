@@ -66,12 +66,16 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
           <div className="flex bg-transparent w-full items-center justify-between mt-4 md:mt-0">
             <div></div>
             <h2 className="mt-4 text-3xl font-bold ">Game PIN: {roomId}</h2>
-            <button
-              className="w-20 bg-black text-white"
-              onClick={handleLockRoom}
-            >
-              {roomLock ? "Locked" : "Lock?"}
-            </button>
+            {isOwner ? (
+              <button
+                className="w-20 bg-black text-white"
+                onClick={handleLockRoom}
+              >
+                {roomLock ? "Locked" : "Lock?"}
+              </button>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
         {isOwner && (
