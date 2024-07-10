@@ -13,10 +13,8 @@ import { useState } from "react";
 import eventApi from "../../../api/event";
 import AddEventQuestionForm from "../../form/AddEventQuestionForm";
 import useEvent from "../../../hooks/useEvent";
-import { useEffect } from "react";
-import questionApi from "../../../api/question";
 
-export default function OneEventLeft({ event, favorite, handleClickFavorite, edit, setClickEdit, handleClickSinglePlay, handleClickCreateRoom, setNewQuestion, setFiles, fetchEvent }) {
+export default function OneEventLeft({ event, favorite, handleClickFavorite, edit, setClickEdit, handleClickSinglePlay, handleClickCreateRoom, setNewQuestion, fetchEvent }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -24,12 +22,8 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
   const { authUser } = useAuth();
   const { eventQuestions, setEventQuestions } = useEvent();
 
-  // const initialInput = { eventName: event?.eventName, topicId: event?.topic?.id, description: event?.description };
   const initialInput = { eventName: "", topicId: "", description: "" };
   const [input, setInput] = useState(initialInput);
-  // useEffect(() => {
-  //   setInput({ eventName: event?.eventName, topicId: event?.topic?.id, description: event?.description });
-  // }, []);
 
   const oldQuestions = event?.assignOfBridges;
   const convertKey = oldQuestions?.map((el) => ({ id: el?.questionId, timeLimit: el?.timeLimit }));
@@ -44,9 +38,7 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
   };
   const handleSave = async () => {
     try {
-      // const eventName = "gong";
       const topicId = event.topic.id;
-      // const events = { eventName, topicId };
       const events = { ...input, topicId: topicId };
       const questions = eventQuestions.map((el) => ({
         id: +el.questionId,
@@ -57,7 +49,6 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
       await fetchEvent();
       setEventQuestions([]);
       setClickEdit(true);
-      // navigate(`/events`);
     } catch (error) {
       alert(error.message);
     }
@@ -66,10 +57,6 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
   const handleChange = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
-  useEffect(() => {
-    fetchEvent();
-  }, []);
 
   return (
     <div className="h-full">
