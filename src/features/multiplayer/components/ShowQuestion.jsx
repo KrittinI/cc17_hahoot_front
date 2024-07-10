@@ -18,18 +18,16 @@ export default function ShowQuestion({
       </div>
       <div className="flex flex-row justify-between items-center my-4 gap-60 animate-fade-in">
         <span
-          className={`flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32 ${
-            showAnswer ? "invisible" : ""
-          }`}
+          className={`flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32 ${showAnswer ? "invisible" : ""
+            }`}
           style={{ minWidth: "40px" }}
         >
           {timeLeft}
         </span>
         {!showAnswer ? (
           <img
-            className={`w-[420px] h-[250px] rounded-lg ${
-              showAnswer ? "invisible" : ""
-            }`}
+            className={`w-[420px] h-[250px] rounded-lg ${showAnswer ? "invisible" : ""
+              }`}
             src={currentQuestion?.questionPicture}
             alt="Quiz Image"
           />
@@ -55,14 +53,8 @@ export default function ShowQuestion({
         )}
       </div>
       <OwnerChoice
-        answer={currentQuestion?.answer}
         showAnswer={showAnswer}
-        choice={[
-          currentQuestion?.choice1,
-          currentQuestion?.choice2,
-          currentQuestion?.choice3,
-          currentQuestion?.choice4,
-        ]}
+        currentQuestion={currentQuestion}
       />
     </div>
   );

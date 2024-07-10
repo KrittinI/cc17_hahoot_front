@@ -1,46 +1,41 @@
-import { CheckFalse, CheckTrue, Circle, Dimond, Square, Triangle } from "../../../icons/kahoot";
+import { Circle, Dimond, Square, Triangle } from "../../../icons/kahoot";
+import OwnerChoiceButton from "./OwnerChoiceButton";
 const iconsDefault = {
-    0: <Triangle />,
-    1: <Dimond />,
-    2: <Circle />,
-    3: <Square />,
+    A: <Triangle />,
+    B: <Dimond />,
+    C: <Circle />,
+    D: <Square />,
 }
-const buttonColors = [
-    "bg-darkred hover:bg-darkredDarker",
-    "bg-darkblue hover:bg-darkblueDarker",
-    "bg-darkyellow hover:bg-darkyellowDarker",
-    "bg-darkgreen hover:bg-darkgreenDarker",
-];
-const answerChoice = ["A", "B", "C", "D"]
 
-export default function OwnerChoice({ answer, choice, showAnswer }) {
+export default function OwnerChoice({ currentQuestion, showAnswer }) {
     return (
         <div className="grid grid-cols-2 gap-2 w-full">
-            {choice.map((option, index) => (
-                <button
-                    key={option}
-                    className={`px-10 py-10 text-white text-font-title text-start animate-pop ${showAnswer
-                        ? answerChoice[index] === answer
-                            ? "bg-darkgreen"
-                            : "bg-red opacity-80"
-                        : `${buttonColors[index]}`
-                        } flex justify-between items-center transition-all duration-500 ease-in-out transform hover:scale-105`}
-                    disabled={showAnswer}
-                >
+            <OwnerChoiceButton answer={currentQuestion?.answer} showAnswer={showAnswer} choice={"A"}>
+                <div className="flex items-center">
+                    {iconsDefault["A"]}&nbsp;&nbsp;{currentQuestion?.choice1}
+                </div>
+            </OwnerChoiceButton>
+            <OwnerChoiceButton answer={currentQuestion?.answer} showAnswer={showAnswer} choice={"B"}>
+                <div className="flex items-center">
+                    {iconsDefault["B"]}&nbsp;&nbsp;{currentQuestion?.choice2}
+                </div>
+            </OwnerChoiceButton>
+            {
+                currentQuestion?.choice3 &&
+                <OwnerChoiceButton answer={currentQuestion?.answer} showAnswer={showAnswer} choice={"C"}>
                     <div className="flex items-center">
-                        {iconsDefault[index]}&nbsp;&nbsp;{option}
+                        {iconsDefault["C"]}&nbsp;&nbsp;{currentQuestion?.choice3}
                     </div>
-                    {showAnswer && (
-                        <div className="ml-2">
-                            {answerChoice[index] === answer ? (
-                                <CheckTrue />
-                            ) : (
-                                <CheckFalse />
-                            )}
-                        </div>
-                    )}
-                </button>
-            ))}
+                </OwnerChoiceButton>
+            }
+            {
+                currentQuestion?.choice4 &&
+                <OwnerChoiceButton answer={currentQuestion?.answer} showAnswer={showAnswer} choice={"D"}>
+                    <div className="flex items-center">
+                        {iconsDefault["D"]}&nbsp;&nbsp;{currentQuestion?.choice4}
+                    </div>
+                </OwnerChoiceButton>
+            }
         </div>
     )
 }
