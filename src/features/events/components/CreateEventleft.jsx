@@ -75,9 +75,6 @@ export default function CreateEventleft({ event }) {
           className="grid gap-y-4
         "
         >
-          <Button bg={"blue"} width={"full"} onClick={() => setIsSave(true)}>
-            Save
-          </Button>
           <Button
             bg="black"
             width={"full"}
@@ -87,20 +84,24 @@ export default function CreateEventleft({ event }) {
           >
             Cancle
           </Button>
+          <Button bg={"blue"} width={"full"} onClick={() => setIsSave(true)}>
+            Save
+          </Button>
         </div>
       </div>
 
-      <Modal width={20} open={isCancle} title={`Confirm to Quit this Event`}>
+      <Modal open={isCancle} title={`Confirm to Quit this Event`}>
         <div className="w-full flex flex-col justify-center items-center gap-4 p-6">
           <div>
-            <QuestionIcon />
+            <QuestionIcon size={20} />
           </div>
-          <div className="w-full flex justify-around pt-6">
-            <Button bg={`red`} width={20} onClick={() => handleCancle()}>
-              Quit
-            </Button>
-            <Button bg={`black`} width={20} onClick={() => setIsCancle(false)}>
+          <div className="w-full flex justify-between pt-6">
+           
+            <Button bg={`black`} width={40} onClick={() => setIsCancle(false)}>
               Cancel
+            </Button>
+            <Button bg={`blue`} width={40} onClick={() => handleCancle()}>
+              Quit
             </Button>
           </div>
         </div>
@@ -109,14 +110,14 @@ export default function CreateEventleft({ event }) {
       <Modal open={isSave} title={`Confirm to Save this Event`}>
         <div className="w-full flex flex-col justify-center items-center gap-4 p-6">
           <div>
-            <QuestionIcon />
+            <QuestionIcon size={20} />
           </div>
           <div className="w-full flex justify-around pt-6">
-            <Button bg={`red`} width={20} onClick={() => handleClickSave()}>
-              Save
-            </Button>
-            <Button bg={`black`} width={20} onClick={() => setIsSave(false)}>
+            <Button bg={`black`} width={40} onClick={() => setIsSave(false)}>
               Cancel
+            </Button>
+            <Button bg={`blue`} width={40} onClick={() => handleClickSave()}>
+              Save
             </Button>
           </div>
         </div>

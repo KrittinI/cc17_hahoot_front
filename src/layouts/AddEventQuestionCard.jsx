@@ -12,7 +12,7 @@ export default function AddEventQuestionCard({ event }) {
         <div className="w-full flex justify-center items-center" role="button" onClick={() => setOpen(true)}>
           <Add />
         </div>
-        <Modal open={open} onClose={() => setOpen(false)}>
+        <Modal open={open} onClose={() => setOpen(false)} title={'Create Question'} j="start">
           <AddEventQuestionForm onClose={() => setOpen(false)} event={event} />
         </Modal>
       </div>
