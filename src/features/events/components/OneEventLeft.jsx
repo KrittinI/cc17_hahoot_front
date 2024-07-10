@@ -48,13 +48,11 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
       const topicId = event.topic.id;
       // const events = { eventName, topicId };
       const events = { ...input, topicId: topicId };
-      console.log(eventQuestions, "eiei");
       const questions = eventQuestions.map((el) => ({
         id: +el.questionId,
         timeLimit: el.timeLimit,
       }));
       questions.unshift(...convertKey);
-      // console.log(questions, "quess");
       await eventApi.edit(event?.id, { questions: questions, events: events });
       await fetchEvent();
       setEventQuestions([]);

@@ -19,11 +19,9 @@ export default function CommentForm({ setLoading, setComments }) {
     e.preventDefault()
     try {
       setLoading(true)
-      console.log(questionId);
       if (input.comment) {
         const res = await questionApi.comment(+questionId, input)
-        console.log(res.data.comment);
-        setComments(prev => [{ ...res.data.comment, user: { profileImage: authUser?.profileImage } }, ...prev])
+        setComments(prev => [{ ...res.data.comment, user: { profileImage: authUser?.profileImage, username: authUser?.username } }, ...prev])
       }
     } catch (error) {
       console.log(error);

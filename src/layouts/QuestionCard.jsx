@@ -11,7 +11,6 @@ import defaultImage from "../assets/c4.jpeg";
 export default function QuestionCard({ question, image, index, setQuestions, setFiles }) {
   const [open, setOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  console.log(image);
   const handleDelete = (id) => {
     setQuestions((prev) => prev.filter((q, i) => i !== id));
     setFiles((prev) => prev.filter((q, i) => i !== id));
@@ -71,11 +70,11 @@ export default function QuestionCard({ question, image, index, setQuestions, set
             <QuestionIcon />
           </div>
           <div className="w-full flex justify-around pt-6">
-            <Button bg={`red`} width={20} onClick={() => handleDelete(index)}>
-              Delete
-            </Button>
             <Button bg={`black`} width={20} onClick={() => setIsDelete(false)}>
               Cancel
+            </Button>
+            <Button bg={`red`} width={20} onClick={() => handleDelete(index)}>
+              Delete
             </Button>
           </div>
         </div>

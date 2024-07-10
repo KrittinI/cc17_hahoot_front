@@ -3,7 +3,6 @@ import Cardcontainer from "../../../components/CardContainer";
 import QuestionCard from "../../../layouts/QuestionCard";
 
 export default function OneEventRight({ questions, newQuestion, setNewQuestion, clickEdit }) {
-  console.log(newQuestion, "newww");
   return (
     <div className="h-full">
       <Cardcontainer title={`Question in Events`}>

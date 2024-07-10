@@ -15,7 +15,6 @@ export default function AddEventQuestionForm({
   timeLimit = 20,
 }) {
   const { setEventQuestions } = useEvent();
-  console.log(event, "data");
 
   const initialInput = {
     questionId: data?.id || "",
@@ -52,7 +51,6 @@ export default function AddEventQuestionForm({
 
   const handleClickSave = () => {
     let isError = false;
-    console.log(input);
     for (let field in input) {
       if (!input[field]) {
         setError((prev) => ({ ...prev, field: `${field} is required` }));
@@ -98,7 +96,7 @@ export default function AddEventQuestionForm({
         </div>
 
         <div className="grid col-span-2 bg-grey hover:bg-darkgrey rounded-lg items-center justify-center">
-          {data?.questionPicture ? (
+          {currentQuestion?.questionPicture ? (
             <img
               className="h-[240px] "
               src={currentQuestion?.questionPicture}
