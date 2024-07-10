@@ -27,10 +27,12 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
   };
 
   return (
-    <div>
-      <div className="flex flex-col h-[auto] gap-8 rounded-lg mb-6 bg-white p-4 shadow">
-        <div className="flex flex-col gap-4 border-b border-gray-300 pb-4 ">
-          <img className="rounded-lg" src={event?.eventImage || image} alt="eventImage" />
+    <div className="h-full">
+      <div className="flex flex-col h-full gap-8 rounded-lg mb-6 bg-white p-4 shadow">
+        <div className="flex flex-col gap-4 border-b border-gray-300 pb-4 h-full">
+          <div className="max-h-[50%] mx-auto">
+            <img className="rounded-lg max-h-full" src={event?.eventImage || image} alt="eventImage" />
+          </div>
           <div className="bg-white p-3 rounded-lg shadow  text-font-title-card">{edit ? event?.eventName : <Input placeholder={event?.eventName} type="text" />}</div>
 
           <div className="bg-white p-3 rounded-lg shadow flex justify-start items-start h-[10vh] text-font-body">
@@ -40,10 +42,10 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
           {edit && (
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-x-4 text-font-title-card">
-                <div role="button" onClick={() => navigate(`../../users/${event?.user.id}`)}>
+                <div className="flex items-center gap-2" role="button" onClick={() => navigate(`../../users/${event?.user.id}`)}>
                   <Avatar src={event?.user?.googleImage || event?.user?.profileImage} />
+                  <div>{event?.user?.username}</div>
                 </div>
-                <div>{event?.user?.username}</div>
               </div>
               <div className="flex gap-x-6">
                 <div role="button" className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey" onClick={handleClickFavorite}>
@@ -80,36 +82,35 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
               </div>
             </div>
           )}
+          {edit ? (
+            <div className="grid gap-y-2">
+              <Button bg="blue" width={"full"} onClick={() => setOpen(true)}>
+                Single Play
+              </Button>
+              <Button bg="blue" width={"full"} onClick={() => handleClickCreateRoom()}>
+                Create Room
+              </Button>
+              <Button bg={"black"} width={"full"} onClick={() => navigate("/events")}>
+                Back
+              </Button>
+            </div>
+          ) : (
+            <div className="grid gap-y-4">
+              <Button bg="blue" width={"full"} onClick={() => setOpen(true)}>
+                Add New Quiz
+              </Button>
+              <Modal open={open} onClose={() => setOpen(false)}>
+                <FormAddQuestion onSuccess={onSuccess} onClose={() => setOpen(false)} />
+              </Modal>
+              <Button bg={"blue"} width={"full"}>
+                Save
+              </Button>
+              <Button bg={"black"} width={"full"} onClick={() => setClickEdit(true)}>
+                Back
+              </Button>
+            </div>
+          )}
         </div>
-
-        {edit ? (
-          <div className="grid gap-y-2">
-            <Button bg="blue" width={"full"} onClick={() => setOpen(true)}>
-              Single Play
-            </Button>
-            <Button bg="blue" width={"full"} onClick={() => handleClickCreateRoom()}>
-              Create Room
-            </Button>
-            <Button bg={"black"} width={"full"} onClick={() => navigate("/events")}>
-              Back
-            </Button>
-          </div>
-        ) : (
-          <div className="grid gap-y-4">
-            <Button bg="blue" width={"full"} onClick={() => setOpen(true)}>
-              Add New Quiz
-            </Button>
-            <Modal open={open} onClose={() => setOpen(false)}>
-              <FormAddQuestion onSuccess={onSuccess} onClose={() => setOpen(false)} />
-            </Modal>
-            <Button bg={"blue"} width={"full"}>
-              Save
-            </Button>
-            <Button bg={"black"} width={"full"} onClick={() => setClickEdit(true)}>
-              Back
-            </Button>
-          </div>
-        )}
         <Modal title="Are you ready" open={open}>
           <ReadyAlert onClose={() => setOpen(false)} onClickConfirm={handleClickSinglePlay} />
         </Modal>

@@ -65,10 +65,10 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
       </div>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-x-4 text-font-title-card">
-          <div role="button" onClick={() => navigate(`../../users/${data?.user.id}`)}>
+          <div className="flex gap-2 items-center" role="button" onClick={() => navigate(`/users/${data?.user.id}`)}>
             <Avatar src={data?.user?.googleImage || data?.user?.profileImage} />
+            <div>{data?.user?.username}</div>
           </div>
-          <div>{data?.user?.username}</div>
         </div>
         <div className="flex gap-x-6">
           <div role="button" className="flex justify-center items-center w-12 h-12 shadow bg-white rounded-full hover:bg-grey" onClick={handleClickFavorite}>
