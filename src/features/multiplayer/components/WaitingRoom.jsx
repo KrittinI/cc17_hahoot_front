@@ -29,15 +29,15 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
             {isOwner ? (
               <div className="text-3xl font-bold">👤 {players?.length - 1}</div>
             ) : (
-              <div></div>
+              <div className="w-12"></div> // Placeholder div to keep space
             )}
             <Logo />
-            {isOwner ? (
+            {isOwner && players?.length > 2 ? (
               <Button width="20" bg="blue" onClick={handleStartGame}>
                 Start
               </Button>
             ) : (
-              <div className="h-10"></div>
+              <div className="w-20"></div> // Placeholder div to keep space
             )}
           </div>
           <div className="flex bg-transparent w-full justify-center mt-4 md:mt-0">
@@ -71,8 +71,10 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
 
         {!isOwner && (
           <div className="flex flex-col items-center justify-center gap-16">
-            <code className="text-5xl text-purple-500">You&apos;re in!</code>
-            <span className="mt">...</span>
+            <code className="text-5xl text-blue">You&apos;re in!</code>
+            <span className="text-emerald-600 mt-6">
+              Waiting for hosting to start the game...
+            </span>
           </div>
         )}
 
