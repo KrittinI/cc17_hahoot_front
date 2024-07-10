@@ -94,7 +94,7 @@ const MultiPlayer = () => {
 
     socketIo.on("updatePlayers", (playersList) => {
       setPlayers(playersList);
-      alert(playersList);
+      // alert(playersList);
       //alert("updatePlayers=>", playersList);
       //alert("updatePlayers Event is Working");
     });
