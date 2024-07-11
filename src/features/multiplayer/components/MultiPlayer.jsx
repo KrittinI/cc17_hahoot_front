@@ -14,6 +14,7 @@ import ShowResultBox from "./ShowResultBox";
 import ShowQuestion from "./ShowQuestion";
 import useEvent from "../../../hooks/useEvent";
 import PlayerGameOver from "./PlayerGameOver";
+import playApi from "../../../api/play";
 
 const MultiPlayer = () => {
   const { authUser } = useAuth();
@@ -292,10 +293,19 @@ const MultiPlayer = () => {
     setShowScoreboard(true);
   };
 
+  const handleSendMail = async (email) => {
+    playerInfo.shift();
+    await playApi.sendmailMultiplayer({
+      email: email,
+      data: playerInfo,
+    });
+  };
+
   return (
     <div
-      className={`flex flex-col items-center justify-center min-h-screen ${changeBG ? "bg-black opacity-90" : ""
-        }`}
+      className={`flex flex-col items-center justify-center min-h-screen ${
+        changeBG ? "bg-black opacity-90" : ""
+      }`}
     >
       <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-full gap-12 transition-all duration-300 ease-in-out transform">
         {loading ? (
@@ -324,6 +334,7 @@ const MultiPlayer = () => {
             newRoomId={newRoomId}
             isGameOver={isGameOver}
             playerId={playerId}
+            handleSendMail={handleSendMail}
           />
         ) : isOwner && currentQuestion ? (
           <ShowQuestion
@@ -335,7 +346,7 @@ const MultiPlayer = () => {
             answerCount={answerCount}
           />
         ) : isGameOver ? (
-          <PlayerGameOver score={score} />
+          <PlayerGameOver score={score} handleSendMail={handleSendMail} />
         ) : clientAnswerResult !== null ? (
           <ShowResultBox clientAnswerResult={clientAnswerResult} />
         ) : !isOwner && currentQuestion ? (
