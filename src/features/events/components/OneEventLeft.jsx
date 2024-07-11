@@ -216,7 +216,7 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
             <Button bg="blue" width={"full"} onClick={() => handleClickCreateRoom()}>
               Create Room
             </Button>
-            <Button bg={"black"} width={"full"} onClick={() => navigate("/events")}>
+            <Button bg={"black"} width={"full"} onClick={() => navigate(-1)}>
               Back
             </Button>
           </div>

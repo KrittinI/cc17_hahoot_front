@@ -7,7 +7,7 @@ export default function CreateEventRight({ event }) {
   return (
     <div className="bg-white w-full flex flex-col gap-4 h-[calc(100%-40px)] rounded-xl p-4">
       <div className="w-full overflow-auto max-h-[100%]">
-        <div className="grid grid-cols-5 gap-4 w-full">
+        <div className="grid grid-cols-4 gap-4 w-full">
           <AddEventQuestionCard event={event} />
           {eventQuestions?.map((question, index) => (
             <EventQuestionCard

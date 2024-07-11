@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Select from "../../components/Select";
+import image from "../../assets/c4.jpeg";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { useEffect } from "react";
 import useEvent from "../../hooks/useEvent";
 import questionApi from "../../api/question";
-import { ImageIcon } from "../../icons/Image";
 
 export default function AddEventQuestionForm({
   onClose,
@@ -14,7 +14,6 @@ export default function AddEventQuestionForm({
   data,
   timeLimit = 20,
 }) {
-  console.log(data?.questionPicture, "pictureeeee");
 
   const { setEventQuestions } = useEvent();
 
@@ -59,6 +58,7 @@ export default function AddEventQuestionForm({
         isError = true;
       }
     }
+    // if (typeof (input.timeLimit) !== "number") return
     if (isError) return;
     else {
       //setเข้าstate
@@ -87,34 +87,22 @@ export default function AddEventQuestionForm({
         </div>
         <div className="col-span-1 ">
           <Input
-            type="text"
+            type="number"
             name="timeLimit"
             id="timeLimit"
             value={input.timeLimit}
             onChange={handleChange}
             error={error.timeLimit}
-            placeholder={`fill timeLimit for this Question`}
+            placeholder={`Time Limit`}
           />
         </div>
 
         <div className="grid col-span-2 bg-grey hover:bg-darkgrey rounded-lg items-center justify-center">
-          {currentQuestion?.questionPicture ? (
-            <img
-              className="h-[240px] "
-              src={currentQuestion?.questionPicture}
-              alt=""
-            />
-          ) : (
-            <div className="flex flex-col items-center h-[240px] justify-center">
-              <div
-                className="bg-white
-                w-10 h-10 rounded-full flex justify-center items-center"
-              >
-                <ImageIcon />
-              </div>
-              <span>Add Photo</span>
-            </div>
-          )}
+          <img
+            className="h-[240px] "
+            src={currentQuestion?.questionPicture || image}
+            alt=""
+          />
         </div>
         <div className="grid col-span-2 grid-cols-2 gap-4 text-font-body text-black ">
           <div
@@ -148,7 +136,7 @@ export default function AddEventQuestionForm({
           <div
             className={
               currentQuestion?.answer === "D"
-                ? `col-span-4 gap-2 bg-greenrounded-md  flex pl-2 items-center`
+                ? `col-span-4 gap-2 bg-green rounded-md  flex pl-2 items-center`
                 : `col-span-4 gap-2 bg-red rounded-md  flex pl-2 items-center`
             }
           >
@@ -174,6 +162,7 @@ export default function AddEventQuestionForm({
         <Button bg={"black"} width={40} onClick={() => onClose()}>
           Cancel
         </Button>
+        { }
         <div></div>
         {onSuccess ? (
           <Button bg={`blue`} width={40} onClick={() => onSuccess(input)}>

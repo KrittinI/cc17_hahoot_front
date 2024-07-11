@@ -60,8 +60,9 @@ export default function CreateEventForm({ onClose }) {
     }
   };
   const handleClickCancle = () => {
+    setSingleEvent(null)
     onClose();
-    navigate('/events')
+    navigate(-1)
   };
 
   return (
