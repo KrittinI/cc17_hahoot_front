@@ -69,6 +69,9 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
     }
   };
 
+  let playerCount = (players?.length ?? 0) - 1;
+  if (playerCount === -1) playerCount = 0;
+
   return (
     <div className="bg-white px-2 w-full md:w-3/4 h-full rounded-lg shadow-xl gap-2 flex flex-col items-center justify-center">
       <div className="flex flex-col justify-between h-full p-4 items-center w-full bg-transparent">
@@ -86,7 +89,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
               )}
               <div className="text-font-title text-black bg-lblue flex justify-center items-center rounded-md gap-4 py-2 px-4">
                 <IoPerson className=" text-blue w-[40px] h-[40px]  flex justify-center align-middle" />
-                {players?.length - 1}
+                {playerCount}
               </div>
             </div>
           </div>
@@ -107,7 +110,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
         </div>
         {isOwner && (
           <ul className="flex flex-wrap gap-4 p-4 bg-transparent justify-center">
-            {players?.length === 1 ? (
+            {playerCount === 1 ? (
               <div className="flex items-center justify-center text-2xl py-4 font-sans font-bold text-blue">
                 {/* <div>Waiting for players . . .</div> */}
                 <div className="rounded-full h-20 w-50 animate-ping">

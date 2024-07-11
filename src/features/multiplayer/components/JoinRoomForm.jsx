@@ -14,21 +14,34 @@ export default function JoinRoomForm({
 
   const handleJoinRoom = (event) => {
     event.preventDefault();
-    if (!name) alert("Please Enter nickname");
-    if (!roomId) alert("Please Enter PIN");
+    if (!name) {
+      alert("Please Enter nickname");
+      return;
+    }
+    if (!roomId) {
+      alert("Please Enter PIN");
+      return;
+    }
     if (name.length > 16) {
       alert("The name must be < 16 characters.");
       return;
     }
-    socket.on("lockStatus", ({ status }) => {
+    const handleLockStatus = ({ status }) => {
       if (status === "locked") {
-        alert("This Room is Locked");
+        console.log("This Room is Locked");
         return;
       }
-    });
+    };
+
+    socket.on("lockStatus", handleLockStatus);
+
     if (name.trim() && roomId.trim() && name.length < 16) {
       socket.emit("joinRoom", { roomId, name });
     }
+    // Clean up the event
+    return () => {
+      socket.off("lockStatus", handleLockStatus);
+    };
   };
 
   return (
