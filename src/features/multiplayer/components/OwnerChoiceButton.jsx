@@ -1,10 +1,10 @@
 import { CheckFalse, CheckTrue } from "../../../icons/kahoot";
 
 const buttonColors = {
-    A: "bg-darkred hover:bg-darkredDarker",
-    B: "bg-darkblue hover:bg-darkblueDarker",
-    C: "bg-darkyellow hover:bg-darkyellowDarker",
-    D: "bg-darkgreen hover:bg-darkgreenDarker",
+    A: "bg-darkred",
+    B: "bg-darkblue ",
+    C: "bg-darkyellow ",
+    D: "bg-darkgreen",
 };
 export default function OwnerChoiceButton({ children, answer, showAnswer, choice }) {
     return (
@@ -14,7 +14,7 @@ export default function OwnerChoiceButton({ children, answer, showAnswer, choice
                     ? "bg-darkgreen"
                     : "bg-red opacity-80"
                 : `${buttonColors[choice]}`
-                } flex justify-between items-center transition-all duration-500 ease-in-out transform hover:scale-105`}
+                } flex justify-between items-center transition-all duration-500 ease-in-out transform`}
             disabled={showAnswer}
         >
             {children}
