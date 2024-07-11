@@ -1,6 +1,15 @@
 import OwnerChoice from "./OwnerChoice";
 import RoomAnswerCount from "./RoomAnswerCount";
+import Image01 from "../../../assets/c4.jpeg"
+import Image02 from "../../../assets/hh-hero-2.png"
+import Image03 from "../../../assets/hh-hero-3.png"
+import Image04 from "../../../assets/hh-hero-4.png"
+import Image05 from "../../../assets/hh-hero-5.png"
+import Image06 from "../../../assets/hh-hero-6.png"
+import Image07 from "../../../assets/hh-hero-7.png"
 
+
+const Image = [Image01, Image02, Image03, Image04, Image05, Image06, Image07]
 export default function ShowQuestion({
   currentQuestion,
   showAnswer,
@@ -28,7 +37,7 @@ export default function ShowQuestion({
           <img
             className={`w-[420px] h-[250px] rounded-lg ${showAnswer ? "invisible" : ""
               }`}
-            src={currentQuestion?.questionPicture}
+            src={currentQuestion?.questionPicture || Image[currentQuestion?.id % 7]}
             alt="Quiz Image"
           />
         ) : (

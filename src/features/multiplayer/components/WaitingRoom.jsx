@@ -110,7 +110,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
         </div>
         {isOwner && (
           <ul className="flex flex-wrap gap-4 p-4 bg-transparent justify-center">
-            {playerCount === 1 ? (
+            {playerCount === 0 ? (
               <div className="flex items-center justify-center text-2xl py-4 font-sans font-bold text-blue">
                 {/* <div>Waiting for players . . .</div> */}
                 <div className="rounded-full h-20 w-50 animate-ping">
@@ -123,9 +123,8 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
                 ?.map((player, index) => (
                   <li
                     key={index}
-                    className={`p-3 px-6 rounded-lg shadow-2xl border-b last:border-b-0 ${
-                      playerColorMap[index % 4]
-                    }`}
+                    className={`p-3 px-6 rounded-lg shadow-2xl border-b last:border-b-0 ${playerColorMap[index % 4]
+                      }`}
                   >
                     <span className="text-2xl font-semibold text-white">
                       {player}
