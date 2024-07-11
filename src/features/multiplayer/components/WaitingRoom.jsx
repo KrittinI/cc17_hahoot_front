@@ -187,7 +187,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
 
         {isOwner ? (
           <div className="flex justify-between w-full">
-            <Button width="40" bg="black" onClick={() => (navigate("/"), setPlayQuestion([]))}>
+            <Button width="40" bg="black" onClick={() => (navigate(-1), setPlayQuestion([]))}>
               Back
             </Button>
             <Button width="40" bg="blue" onClick={handleStartGame}>
