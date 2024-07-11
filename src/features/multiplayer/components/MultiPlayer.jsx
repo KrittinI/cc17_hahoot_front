@@ -294,8 +294,9 @@ const MultiPlayer = () => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center min-h-screen ${changeBG ? "bg-black opacity-90" : ""
-        }`}
+      className={`flex flex-col items-center justify-center min-h-screen ${
+        changeBG ? "bg-black opacity-90" : ""
+      }`}
     >
       <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-full gap-12 transition-all duration-300 ease-in-out transform">
         {loading ? (

@@ -28,7 +28,18 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
   useEffect(() => {
     socket.on("lockStatus", ({ status }) => {
       setLockStatus(status);
+      console.log("statusRoom=>", status);
     });
+
+    socket.on("kicked", () => {
+      console.log("You have been kicked from the room");
+      window.location.reload(true);
+    });
+
+    return () => {
+      socket.off("lockStatus");
+      socket.off("kicked");
+    };
   }, []);
 
   const { authUser } = useAuth();
@@ -69,8 +80,18 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
     }
   };
 
+  const kickPlayer = (playerId) => {
+    socket.emit("kickPlayer", playerId, roomId);
+  };
+
   let playerCount = (players?.length ?? 0) - 1;
   if (playerCount === -1) playerCount = 0;
+
+  console.log("Owner=>", players[0]);
+  console.log("players[array]=>", players);
+  console.log("playerCount", playerCount);
+
+  console.log("name oXXf players", players);
 
   return (
     <div className="bg-white px-2 w-full md:w-3/4 h-full rounded-lg shadow-xl gap-2 flex flex-col items-center justify-center">
@@ -89,7 +110,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
               )}
               <div className="text-font-title text-black bg-lblue flex justify-center items-center rounded-md gap-4 py-2 px-4">
                 <IoPerson className=" text-blue w-[40px] h-[40px]  flex justify-center align-middle" />
-                {playerCount}
+                {playerCount ?? 0}
               </div>
             </div>
           </div>
@@ -101,7 +122,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
             <QRCode
               className="mt-2"
               value={currentUrl}
-              size={125}
+              size={150}
               bgColor="#ffffff"
               fgColor="#000000"
               level="H"
@@ -109,8 +130,8 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
           </div>
         </div>
         {isOwner && (
-          <ul className="flex flex-wrap gap-4 p-4 bg-transparent justify-center">
-            {playerCount === 1 ? (
+          <ul className="w-full flex flex-wrap gap-4 p-4 bg-transparent justify-center">
+            {playerCount === 0 ? (
               <div className="flex items-center justify-center text-2xl py-4 font-sans font-bold text-blue">
                 {/* <div>Waiting for players . . .</div> */}
                 <div className="rounded-full h-20 w-50 animate-ping">
@@ -119,16 +140,18 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
               </div>
             ) : (
               players
-                ?.filter((p) => p !== authUser?.username)
+                ?.filter((p) => p.id !== players[0].id)
                 ?.map((player, index) => (
                   <li
+                    onClick={() => kickPlayer(player.id)}
                     key={index}
-                    className={`p-3 px-6 rounded-lg shadow-2xl border-b last:border-b-0 ${
+                    role="button"
+                    className={`hover:line-through flex justify-center items-center text-white p-3 px-6 shadow-2xl border-b last:border-b-0 ${
                       playerColorMap[index % 4]
-                    }`}
+                    } `}
                   >
-                    <span className="text-2xl font-semibold text-white">
-                      {player}
+                    <span className={`text-2xl font-semibold text-white `}>
+                      {player?.name}
                     </span>
                   </li>
                 ))
@@ -143,74 +166,74 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
               <div className=" animate-bounce [animation-delay:-0.4s]">
                 <Triangle color="#60A5FA" />
                 {/* <svg
-                  viewBox="0 0 32 32"
-                  focusable="false"
-                  stroke="#60A5FA"
-                  strokeWidth="2px"
-                  aria-labelledby="label-a149cdfd-d500-48ab-82c9-ce8f80f8656e"
-                  aria-hidden="true"
-                  className="icon__Svg-sc-xvsbpg-1 ipIYNE"
-                  style={{ paintOrder: "stroke", width: "30", height: "30" }}
-                >
-                  <path
-                    d="M27,24.559972 L5,24.559972 L16,7 L27,24.559972 Z"
-                    style={{ fill: "#60A5FA" }}
-                  ></path>
-                </svg> */}
+                    viewBox="0 0 32 32"
+                    focusable="false"
+                    stroke="#60A5FA"
+                    strokeWidth="2px"
+                    aria-labelledby="label-a149cdfd-d500-48ab-82c9-ce8f80f8656e"
+                    aria-hidden="true"
+                    className="icon__Svg-sc-xvsbpg-1 ipIYNE"
+                    style={{ paintOrder: "stroke", width: "30", height: "30" }}
+                  >
+                    <path
+                      d="M27,24.559972 L5,24.559972 L16,7 L27,24.559972 Z"
+                      style={{ fill: "#60A5FA" }}
+                    ></path>
+                  </svg> */}
               </div>
               <div className=" animate-bounce [animation-delay:-0.3s]">
                 <Dimond color="#00CB4A" />
                 {/* <svg
-                  viewBox="0 0 32 32"
-                  focusable="false"
-                  stroke="#00CB4A"
-                  strokeWidth="2px"
-                  aria-labelledby="label-781155b4-826c-4cd7-a360-9b04915ef98d"
-                  aria-hidden="true"
-                  className="icon__Svg-sc-xvsbpg-1 ipIYNE"
-                  style={{ paintOrder: "stroke", width: "30", height: "30" }}
-                >
-                  <path
-                    d="M4,16.0038341 L16,4 L28,16.0007668 L16,28 L4,16.0038341 Z"
-                    style={{ fill: "#00CB4A" }}
-                  ></path>
-                </svg> */}
+                    viewBox="0 0 32 32"
+                    focusable="false"
+                    stroke="#00CB4A"
+                    strokeWidth="2px"
+                    aria-labelledby="label-781155b4-826c-4cd7-a360-9b04915ef98d"
+                    aria-hidden="true"
+                    className="icon__Svg-sc-xvsbpg-1 ipIYNE"
+                    style={{ paintOrder: "stroke", width: "30", height: "30" }}
+                  >
+                    <path
+                      d="M4,16.0038341 L16,4 L28,16.0007668 L16,28 L4,16.0038341 Z"
+                      style={{ fill: "#00CB4A" }}
+                    ></path>
+                  </svg> */}
               </div>
               <div className="animate-bounce [animation-delay:-0.2s]">
                 <Circle color="#FFDA45" />
                 {/* <svg
-                  viewBox="0 0 32 32"
-                  focusable="false"
-                  stroke="#FFDA45"
-                  strokeWidth="2px"
-                  aria-labelledby="label-c0599796-4596-4dbe-bcc2-e8ed9d0f2e9f"
-                  aria-hidden="true"
-                  className="icon__Svg-sc-xvsbpg-1 ipIYNE"
-                  style={{ paintOrder: "stroke", width: "30", height: "30" }}
-                >
-                  <path
-                    d="M16,27 C9.92486775,27 5,22.0751322 5,16 C5,9.92486775 9.92486775,5 16,5 C22.0751322,5 27,9.92486775 27,16 C27,22.0751322 22.0751322,27 16,27 Z"
-                    style={{ fill: "#FFDA45" }}
-                  ></path>
-                </svg> */}
+                    viewBox="0 0 32 32"
+                    focusable="false"
+                    stroke="#FFDA45"
+                    strokeWidth="2px"
+                    aria-labelledby="label-c0599796-4596-4dbe-bcc2-e8ed9d0f2e9f"
+                    aria-hidden="true"
+                    className="icon__Svg-sc-xvsbpg-1 ipIYNE"
+                    style={{ paintOrder: "stroke", width: "30", height: "30" }}
+                  >
+                    <path
+                      d="M16,27 C9.92486775,27 5,22.0751322 5,16 C5,9.92486775 9.92486775,5 16,5 C22.0751322,5 27,9.92486775 27,16 C27,22.0751322 22.0751322,27 16,27 Z"
+                      style={{ fill: "#FFDA45" }}
+                    ></path>
+                  </svg> */}
               </div>
               <div className=" animate-bounce [animation-delay:-0.1s]">
                 <Square color="#FB7185" />
                 {/* <svg
-                  viewBox="0 0 32 32"
-                  focusable="false"
-                  stroke="#FB7185"
-                  strokeWidth="2px"
-                  aria-labelledby="label-21f46f6a-a0d3-4a52-b216-21541425fb95"
-                  aria-hidden="true"
-                  className="icon__Svg-sc-xvsbpg-1 ipIYNE"
-                  style={{ paintOrder: "stroke", width: "30", height: "30" }}
-                >
-                  <path
-                    d="M7,7 L25,7 L25,25 L7,25 L7,7 Z"
-                    style={{ fill: "#FB7185" }}
-                  ></path>
-                </svg> */}
+                    viewBox="0 0 32 32"
+                    focusable="false"
+                    stroke="#FB7185"
+                    strokeWidth="2px"
+                    aria-labelledby="label-21f46f6a-a0d3-4a52-b216-21541425fb95"
+                    aria-hidden="true"
+                    className="icon__Svg-sc-xvsbpg-1 ipIYNE"
+                    style={{ paintOrder: "stroke", width: "30", height: "30" }}
+                  >
+                    <path
+                      d="M7,7 L25,7 L25,25 L7,25 L7,7 Z"
+                      style={{ fill: "#FB7185" }}
+                    ></path>
+                  </svg> */}
               </div>
             </div>
           </div>
