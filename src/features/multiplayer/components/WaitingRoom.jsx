@@ -94,7 +94,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
   //console.log("name oXXf players", players);
 
   return (
-    <div className="bg-white px-2 w-full md:w-3/4 h-full rounded-lg shadow-xl gap-2 flex flex-col items-center justify-center">
+    <div className="overflow-auto bg-white px-2 w-full md:w-3/4 h-full rounded-lg shadow-xl gap-2 flex flex-col items-center justify-center">
       <div className="flex flex-col justify-between h-full p-4 items-center w-full bg-transparent">
         <div className="flex flex-col w-full">
           <div className="flex flex-row justify-between items-center w-full ">

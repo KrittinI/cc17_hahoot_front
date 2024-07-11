@@ -59,7 +59,7 @@ const ScoreboardMultiplayer = ({
   };
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
+    <div className="flex overflow-auto items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
       <div className="grid grid-1 gap-8 text-center w-auto h-auto bg-white rounded-lg p-6 shadow-lg animate-pop">
         <h1 className="text-font-title">Scoreboard</h1>
         <ul>
@@ -69,8 +69,9 @@ const ScoreboardMultiplayer = ({
             .map((p) => (
               <li
                 key={p.id}
-                className={`flex justify-between rounded-lg py-2 ${p.score === highestScore ? "bg-gray-200" : ""
-                  }`}
+                className={`flex justify-between rounded-lg py-2 ${
+                  p.score === highestScore ? "bg-gray-200" : ""
+                }`}
               >
                 <span>{p.name}</span>
                 <span>{p.score}</span>

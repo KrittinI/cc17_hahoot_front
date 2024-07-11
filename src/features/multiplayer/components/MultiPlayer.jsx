@@ -219,7 +219,7 @@ const MultiPlayer = () => {
         return () => clearTimeout(timer);
       } else if (timeLeft === 0) {
         console.log("hasAns=", hasAnswer);
-        if (!hasAnswer) {
+        if (!hasAnswer && !isOwner) {
           socket.emit("submitAnswer", {
             roomId,
             answer: null,
