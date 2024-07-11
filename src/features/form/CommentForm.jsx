@@ -42,6 +42,7 @@ export default function CommentForm({ setLoading, setComments }) {
         const res = await questionApi.comment(+questionId, input);
         setComments((prev) => [{ ...res.data.comment, user: { profileImage: authUser?.profileImage, username: authUser?.username } }, ...prev]);
       }
+      setRating(0);
     } catch (error) {
       console.log(error);
     } finally {
@@ -65,7 +66,7 @@ export default function CommentForm({ setLoading, setComments }) {
               onChange={onChangeInput}
             ></textarea>
             <div className="mx-auto">
-              <StarRating size={30} handleRating={handleRating} onPointerMove={onPointerMove} />
+              <StarRating size={30} handleRating={handleRating} onPointerMove={onPointerMove} initialValue={rating} />
             </div>
             <Button width="full" bg="black">
               Add Comment
