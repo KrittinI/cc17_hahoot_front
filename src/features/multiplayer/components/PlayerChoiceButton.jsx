@@ -10,23 +10,8 @@ export default function PlayerChoiceButton({ children, onClick, choice }) {
             onClick={onClick}
             className={`
                 w-full 
-                sm:w-[220px]
-                md:w-[320px]
-                lg:w-[400px]
-                xl:w-[473px]
-                h-[120px]
-                sm:h-[160px]
-                md:h-[200px]
-                lg:h-[250px]
-                xl:h-[294px]
-                px-4
-                py-4
-                sm:px-6
-                sm:py-6
-                md:px-8
-                md:py-8
-                lg:px-10
-                lg:py-10
+                h-full
+                p-4
                 text-white
                 animate-pop
                 ${buttonColors[choice]} 
