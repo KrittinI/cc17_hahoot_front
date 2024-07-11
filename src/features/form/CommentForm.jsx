@@ -3,33 +3,52 @@ import Button from "../../components/Button";
 import questionApi from "../../api/question";
 import { useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import StarRating from "../../components/StarRating";
+import { useEffect } from "react";
 
 const initialInput = {
-  comment: ""
+  comment: "",
+  rate: "",
 };
 
 export default function CommentForm({ setLoading, setComments }) {
-  const { authUser } = useAuth()
+  const { authUser } = useAuth();
   const [input, setInput] = useState(initialInput);
-  const { questionId } = useParams()
+  const { questionId } = useParams();
+
+  //########### for star
+  const [rating, setRating] = useState(0);
+
+  const handleRating = (rate) => {
+    setRating(rate);
+  };
+
+  useEffect(() => {
+    setInput((prev) => ({ ...prev, rate: rating }));
+  }, [rating]);
+
+  const onPointerMove = (value, index) => console.log(value, index);
+
+  //########### for star
+
   const onChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handleSubmitComment = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      setLoading(true)
+      setLoading(true);
       if (input.comment) {
-        const res = await questionApi.comment(+questionId, input)
-        setComments(prev => [{ ...res.data.comment, user: { profileImage: authUser?.profileImage, username: authUser?.username } }, ...prev])
+        const res = await questionApi.comment(+questionId, input);
+        setComments((prev) => [{ ...res.data.comment, user: { profileImage: authUser?.profileImage, username: authUser?.username } }, ...prev]);
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setInput(initialInput)
-      setLoading(false)
+      setInput(initialInput);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -44,8 +63,10 @@ export default function CommentForm({ setLoading, setComments }) {
               placeholder={`what's on your mind?`}
               value={input.comment}
               onChange={onChangeInput}
-            >
-            </textarea>
+            ></textarea>
+            <div className="mx-auto">
+              <StarRating size={30} handleRating={handleRating} onPointerMove={onPointerMove} />
+            </div>
             <Button width="full" bg="black">
               Add Comment
             </Button>
