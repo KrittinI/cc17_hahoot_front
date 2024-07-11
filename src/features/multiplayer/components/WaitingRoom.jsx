@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import useAuth from "../../../hooks/useAuth";
 import Logo from "../../../icons/Logo";
 import { IoPerson } from "react-icons/io5";
+import { useState, useEffect } from "react";
 
 const playerColorMap = {
   0: "bg-darkblueDarker",
@@ -12,6 +14,15 @@ const playerColorMap = {
 };
 
 export default function WaitingRoom({ roomId, players, isOwner, socket }) {
+  const [roomLock, setRoomLock] = useState(false);
+  const [lockStatus, setLockStatus] = useState("unlocked");
+
+  useEffect(() => {
+    socket.on("lockStatus", ({ status }) => {
+      setLockStatus(status);
+    });
+  }, []);
+
   const { authUser } = useAuth();
   // authUser?.username;
   console.log("RoomID", roomId);
@@ -20,6 +31,18 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
   const navigate = useNavigate();
   const handleStartGame = () => {
     socket.emit("startGame", roomId);
+  };
+
+  const handleLockRoom = () => {
+    if (roomLock === false) {
+      //unlocked to lock
+      setRoomLock(() => true);
+      socket.emit("lockRoom", { roomId });
+    } else {
+      //locked to unlock
+      setRoomLock(() => false);
+      socket.emit("unlockRoom", { roomId });
+    }
   };
 
   return (
@@ -33,6 +56,16 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
               {players?.length - 1}
             </div>
           </div>
+          {isOwner ? (
+            <button
+              className="w-20 bg-black text-white"
+              onClick={handleLockRoom}
+            >
+              {roomLock ? "Locked" : "Lock?"}
+            </button>
+          ) : (
+            <div></div>
+          )}
           <div className="flex flex-col gap-2 w-full justify-center items-center mt-4 md:mt-0">
             <div className="text-font-title-card-quiz  ">Game PIN</div>
             <div className="text-font-title text-blue border px-12 py-2 rounded-md shadow">
