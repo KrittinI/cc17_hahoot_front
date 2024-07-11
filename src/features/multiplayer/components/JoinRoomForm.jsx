@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Logo from "../../../icons/Logo";
+import { AiOutlineRotateRight } from "react-icons/ai";
 
 export default function JoinRoomForm({
   socket,
@@ -15,13 +16,17 @@ export default function JoinRoomForm({
     event.preventDefault();
     if (!name) alert("Please Enter nickname");
     if (!roomId) alert("Please Enter PIN");
+    if (name.length > 16) {
+      alert("The name must be < 16 characters.");
+      return;
+    }
     socket.on("lockStatus", ({ status }) => {
       if (status === "locked") {
         alert("This Room is Locked");
         return;
       }
     });
-    if (name.trim() && roomId.trim()) {
+    if (name.trim() && roomId.trim() && name.length < 16) {
       socket.emit("joinRoom", { roomId, name });
     }
   };
