@@ -63,17 +63,17 @@ export default function OneQuestionRight({ data, id, favorite, handleClickFavori
             <img className="rounded-lg w-auto h-auto max-h-[100%] max-w-[100%]" src={data?.questionPicture || image} alt="questionPicture" />
           </div>
           <div className="grid w-full grid-cols-2 gap-2">
-            <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "A" ? "bg-green" : "bg-red"} shadow-xl rounded-lg `}>{data?.choice1}</div>
-            <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "B" ? "bg-green" : "bg-red"} shadow-xl rounded-lg `}>{data?.choice2}</div>
-            {data?.choice3 && <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "C" ? "bg-green" : "bg-red"} shadow-xl rounded-lg `}>{data?.choice3}</div>}
-            {data?.choice4 && <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "D" ? "bg-green" : "bg-red"} shadow-xl rounded-lg `}>{data?.choice4}</div>}
+            <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "A" ? "bg-green" : "bg-red"} shadow-md rounded-lg `}>{data?.choice1}</div>
+            <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "B" ? "bg-green" : "bg-red"} shadow-md rounded-lg `}>{data?.choice2}</div>
+            {data?.choice3 && <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "C" ? "bg-green" : "bg-red"} shadow-md rounded-lg `}>{data?.choice3}</div>}
+            {data?.choice4 && <div className={`flex justify-start items-center p-4 w-full  ${data?.answer === "D" ? "bg-green" : "bg-red"} shadow-md rounded-lg `}>{data?.choice4}</div>}
           </div>
         </div>
         <div className="flex justify-center items-center col-span-1 self-center bg-red w-full aspect-[1/1] rounded-full invisiable hover:bg-grey" role="button" onClick={handleClickNext}>
           <RightArrowIcon />
         </div>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center border-t pt-2">
         <div className="flex items-center gap-x-4 text-font-title-card">
           <div className="flex gap-2 items-center" role="button" onClick={() => navigate(`/users/${data?.user.id}`)}>
             <Avatar src={data?.user?.googleImage || data?.user?.profileImage} />

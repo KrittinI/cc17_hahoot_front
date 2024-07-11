@@ -26,7 +26,7 @@ export default function CreateEventPage() {
         )}
       </div>
       <Modal open={open} title="Create Event" width={40} j="start">
-        <CreateEventForm onClose={() => setOpen(false)} />
+        <CreateEventForm onClose={() => (setOpen(false), singleEvent(null))} />
       </Modal>
     </>
 
