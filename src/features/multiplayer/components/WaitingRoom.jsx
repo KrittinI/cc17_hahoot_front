@@ -5,6 +5,9 @@ import useAuth from "../../../hooks/useAuth";
 import Logo from "../../../icons/Logo";
 import { IoPerson } from "react-icons/io5";
 import { useState, useEffect } from "react";
+import { LockIcon, UnlockIcon } from "../../../icons/Banned"
+import { Triangle, Dimond, Circle, Square } from "../../../icons/kahoot"
+import useQuestion from "../../../hooks/useQuestion";
 
 const playerColorMap = {
   0: "bg-darkblueDarker",
@@ -14,6 +17,8 @@ const playerColorMap = {
 };
 
 export default function WaitingRoom({ roomId, players, isOwner, socket }) {
+  const { setPlayQuestion } = useQuestion()
+
   const [roomLock, setRoomLock] = useState(false);
   const [lockStatus, setLockStatus] = useState("unlocked");
 
@@ -29,6 +34,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
   console.log("inWaitingRoom=> socket=", socket);
   console.log("players in room =", players);
   const navigate = useNavigate();
+
   const handleStartGame = () => {
     socket.emit("startGame", roomId);
   };
@@ -36,13 +42,12 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
   const handleLockRoom = () => {
     if (roomLock === false) {
       //unlocked to lock
-      setRoomLock(() => true);
       socket.emit("lockRoom", { roomId });
     } else {
       //locked to unlock
-      setRoomLock(() => false);
       socket.emit("unlockRoom", { roomId });
     }
+    setRoomLock(prev => !prev);
   };
 
   return (
@@ -51,21 +56,21 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
         <div className="flex flex-col w-full">
           <div className="flex flex-row justify-between items-center w-full ">
             {isOwner ? <Logo /> : <div></div>}
-            <div className="text-font-title text-black bg-lblue flex justify-center items-center rounded-md gap-4 py-2 px-4">
-              <IoPerson className=" text-blue w-[40px] h-[40px]  flex justify-center align-middle" />
-              {players?.length - 1}
+            <div className="flex items-center gap-2">
+              {isOwner && (
+                <button
+                  className=" text-white flex justify-center bg-gray-200 hover:bg-gray-300 p-2 rounded-full"
+                  onClick={handleLockRoom}
+                >
+                  {roomLock ? <LockIcon size={8} /> : <UnlockIcon size={8} />}
+                </button>
+              )}
+              <div className="text-font-title text-black bg-lblue flex justify-center items-center rounded-md gap-4 py-2 px-4">
+                <IoPerson className=" text-blue w-[40px] h-[40px]  flex justify-center align-middle" />
+                {players?.length - 1}
+              </div>
             </div>
           </div>
-          {isOwner ? (
-            <button
-              className="w-20 bg-black text-white"
-              onClick={handleLockRoom}
-            >
-              {roomLock ? "Locked" : "Lock?"}
-            </button>
-          ) : (
-            <div></div>
-          )}
           <div className="flex flex-col gap-2 w-full justify-center items-center mt-4 md:mt-0">
             <div className="text-font-title-card-quiz  ">Game PIN</div>
             <div className="text-font-title text-blue border px-12 py-2 rounded-md shadow">
@@ -103,9 +108,10 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
         {!isOwner && (
           <div className="flex flex-col items-center justify-center gap-6">
             <code className="text-font-title text-black">You&apos;re in!</code>
-            <div className="flex space-x-2 justify-center gap-6 items-center bg-white  dark:invert">
-              <div className="h-3 w-6 animate-bounce [animation-delay:-0.1s]">
-                <svg
+            <div className="flex space-x-2 justify-center gap-2 items-center">
+              <div className=" animate-bounce [animation-delay:-0.4s]">
+                <Triangle color="#60A5FA" />
+                {/* <svg
                   viewBox="0 0 32 32"
                   focusable="false"
                   stroke="#60A5FA"
@@ -119,10 +125,11 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
                     d="M27,24.559972 L5,24.559972 L16,7 L27,24.559972 Z"
                     style={{ fill: "#60A5FA" }}
                   ></path>
-                </svg>
+                </svg> */}
               </div>
-              <div className="h-3 w-5 animate-bounce [animation-delay:-0.3s]">
-                <svg
+              <div className=" animate-bounce [animation-delay:-0.3s]">
+                <Dimond color="#00CB4A" />
+                {/* <svg
                   viewBox="0 0 32 32"
                   focusable="false"
                   stroke="#00CB4A"
@@ -136,10 +143,11 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
                     d="M4,16.0038341 L16,4 L28,16.0007668 L16,28 L4,16.0038341 Z"
                     style={{ fill: "#00CB4A" }}
                   ></path>
-                </svg>
+                </svg> */}
               </div>
-              <div className="h-4 w-5 animate-bounce [animation-delay:-0.15s]">
-                <svg
+              <div className="animate-bounce [animation-delay:-0.2s]">
+                <Circle color="#FFDA45" />
+                {/* <svg
                   viewBox="0 0 32 32"
                   focusable="false"
                   stroke="#FFDA45"
@@ -153,10 +161,11 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
                     d="M16,27 C9.92486775,27 5,22.0751322 5,16 C5,9.92486775 9.92486775,5 16,5 C22.0751322,5 27,9.92486775 27,16 C27,22.0751322 22.0751322,27 16,27 Z"
                     style={{ fill: "#FFDA45" }}
                   ></path>
-                </svg>
+                </svg> */}
               </div>
-              <div className="h-4 w-5 animate-bounce [animation-delay:-0.2s]">
-                <svg
+              <div className=" animate-bounce [animation-delay:-0.1s]">
+                <Square color="#FB7185" />
+                {/* <svg
                   viewBox="0 0 32 32"
                   focusable="false"
                   stroke="#FB7185"
@@ -170,7 +179,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
                     d="M7,7 L25,7 L25,25 L7,25 L7,7 Z"
                     style={{ fill: "#FB7185" }}
                   ></path>
-                </svg>
+                </svg> */}
               </div>
             </div>
           </div>
@@ -178,7 +187,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
 
         {isOwner ? (
           <div className="flex justify-between w-full">
-            <Button width="40" bg="black" onClick={() => navigate("/")}>
+            <Button width="40" bg="black" onClick={() => (navigate("/"), setPlayQuestion([]))}>
               Back
             </Button>
             <Button width="40" bg="blue" onClick={handleStartGame}>
