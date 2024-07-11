@@ -18,6 +18,8 @@ export default function HeroContainer({ hero }) {
           alt="hero-video"
           className="h-[240px] w-[800px]"
           controls
+          autoPlay
+          muted
         />
       </div>
       {/* **************************** right container ************************* */}
