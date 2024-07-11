@@ -19,6 +19,7 @@ const playerColorMap = {
 
 export default function WaitingRoom({ roomId, players, isOwner, socket }) {
   const { setPlayQuestion } = useQuestion();
+
   const currentUrl = window.location.href;
 
   const [roomLock, setRoomLock] = useState(false);
@@ -232,7 +233,12 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
             </Button>
           </div>
         ) : (
-          <div></div>
+          <button
+            onClick={handleFullScreen}
+            className="bg-darkgreen rounded-lg w-40 text-white font-bold h-auto"
+          >
+            Full Screen
+          </button>
         )}
       </div>
     </div>
