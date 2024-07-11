@@ -16,6 +16,7 @@ export default function EventQuestionCard({ index, question, setEventQuestions, 
   const [currentData, setCurrentData] = useState(null);
   const [isDelete, setIsDelete] = useState(false);
 
+  console.log(currentData);
   const { getQuestionByQuestionId } = useQuestion();
 
   const findQuestion = async (id) => {
@@ -52,9 +53,9 @@ export default function EventQuestionCard({ index, question, setEventQuestions, 
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="bg-white text-left inline-block cursor-pointer w-[190px] h-[240px] rounded-[8px] shadow-xl">
+      <div className="bg-white text-left inline-block w-[190px] h-[240px] rounded-[8px] shadow-xl">
         <div className="w-full overflow-hidden rounded-t-xl relative">
-          {currentData?.questionPicture && <img className="overflow-hidden object-cover aspect-[16/11] relative " src={currentData?.questionPicture || c4} alt="photo" />}
+          <img className="overflow-hidden object-cover aspect-[16/11] relative " src={currentData?.questionPicture || c4} alt="photo" />
           <div className="absolute top-2 right-2 bg-white rounded-full p-1">
             <HeartIcon />
           </div>
@@ -62,9 +63,9 @@ export default function EventQuestionCard({ index, question, setEventQuestions, 
 
         <div className="px-2 py-3 w-full grid gap-y-6">
           <p className="overflow-hidden text-ellipsis whitespace-nowrap">{currentData?.question}</p>
-          <div className="flex justify-between items-center">
-            <Avatar />
-            <div className="text-font-title-card text-blue">{currentData?.topic.topicName}</div>
+          <div className="flex justify-start items-center text-blue gap-2">
+            <Avatar src={currentData?.user?.profileImage} />
+            <div className="text-font-title-card text-blue">{currentData?.user?.username}</div>
           </div>
         </div>
       </div>

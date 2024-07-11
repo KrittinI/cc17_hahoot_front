@@ -7,8 +7,10 @@ import Button from "../components/Button";
 import Avatar from "../components/Avatar";
 import QuestionIcon from "../icons/Question";
 import defaultImage from "../assets/c4.jpeg";
+import useAuth from "../hooks/useAuth";
 
 export default function QuestionCard({ question, image, index, setQuestions, setFiles }) {
+  const { authUser } = useAuth()
   const [open, setOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const handleDelete = (id) => {
@@ -48,8 +50,8 @@ export default function QuestionCard({ question, image, index, setQuestions, set
 
         <div className="px-2 py-3 w-full grid gap-y-6">
           <p className="overflow-hidden text-ellipsis whitespace-nowrap">{question?.question}</p>
-          <div className="flex justify-between items-center">
-            <Avatar />
+          <div className="flex justify-start gap-2 text-blue items-center">
+            <Avatar src={authUser?.profileImage} />{authUser?.username}
             <div className="text-font-title-card text-blue">{question?.topic?.topicName}</div>
           </div>
         </div>

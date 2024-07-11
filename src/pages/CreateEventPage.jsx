@@ -10,7 +10,6 @@ import { useState } from "react";
 
 export default function CreateEventPage() {
   const [open, setOpen] = useState(true);
-
   const { singleEvent } = useEvent();
 
   return (
@@ -26,7 +25,7 @@ export default function CreateEventPage() {
         )}
       </div>
       <Modal open={open} title="Create Event" width={40} j="start">
-        <CreateEventForm onClose={() => (setOpen(false), singleEvent(null))} />
+        <CreateEventForm onClose={() => (setOpen(false))} />
       </Modal>
     </>
 

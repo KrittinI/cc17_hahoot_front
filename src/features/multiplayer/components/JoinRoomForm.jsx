@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Logo from "../../../icons/Logo";
+import { AiOutlineRotateRight } from "react-icons/ai";
 
 export default function JoinRoomForm({
   socket,
@@ -13,17 +14,34 @@ export default function JoinRoomForm({
 
   const handleJoinRoom = (event) => {
     event.preventDefault();
-    if (!name) alert("Please Enter nickname");
-    if (!roomId) alert("Please Enter PIN");
-    socket.on("lockStatus", ({ status }) => {
+    if (!name) {
+      alert("Please Enter nickname");
+      return;
+    }
+    if (!roomId) {
+      alert("Please Enter PIN");
+      return;
+    }
+    if (name.length > 16) {
+      alert("The name must be < 16 characters.");
+      return;
+    }
+    const handleLockStatus = ({ status }) => {
       if (status === "locked") {
-        alert("This Room is Locked");
+        console.log("This Room is Locked");
         return;
       }
-    });
-    if (name.trim() && roomId.trim()) {
+    };
+
+    socket.on("lockStatus", handleLockStatus);
+
+    if (name.trim() && roomId.trim() && name.length < 16) {
       socket.emit("joinRoom", { roomId, name });
     }
+    // Clean up the event
+    return () => {
+      socket.off("lockStatus", handleLockStatus);
+    };
   };
 
   return (

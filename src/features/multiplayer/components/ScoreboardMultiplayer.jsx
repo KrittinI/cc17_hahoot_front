@@ -4,8 +4,6 @@ import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
-import Input from "../../../components/Input";
-import playApi from "../../../api/play";
 
 const ScoreboardMultiplayer = ({
   players,
@@ -13,11 +11,10 @@ const ScoreboardMultiplayer = ({
   newRoomId,
   isGameOver,
   playerId,
+  handleSendMail,
 }) => {
   const [isSendMail, setIsSendMail] = useState(false);
   const { authUser } = useAuth();
-  const [input, setInput] = useState("");
-  const [inputError, setInputError] = useState("");
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -41,21 +38,9 @@ const ScoreboardMultiplayer = ({
   console.log("newRoomId=>", newRoomId);
   console.log("players=>", players);
 
-  const handleSendMail = async (e) => {
-    if (authUser) {
-      // setIsSendMail(true);
-      await playApi.sendmailMultiplayer({ email: authUser?.email, players });
-    } else {
-      e.preventDefault();
-      if (input.trim() === null) {
-        setInputError("E-mail is not allowed to be empty.");
-      }
-      if (input.includes("@gmail.com")) {
-        setInputError("Email is not formatted correctly");
-      }
-
-      await playApi.sendmailMultiplayer({ email: input.email, players });
-    }
+  const sendMail = async () => {
+    setIsSendMail(true);
+    handleSendMail(authUser?.email);
   };
 
   return (
@@ -69,8 +54,9 @@ const ScoreboardMultiplayer = ({
             .map((p) => (
               <li
                 key={p.id}
-                className={`flex justify-between rounded-lg py-2 ${p.score === highestScore ? "bg-gray-200" : ""
-                  }`}
+                className={`flex justify-between rounded-lg py-2 ${
+                  p.score === highestScore ? "bg-gray-200" : ""
+                }`}
               >
                 <span>{p.name}</span>
                 <span>{p.score}</span>
@@ -80,22 +66,8 @@ const ScoreboardMultiplayer = ({
         <div className="w-full grid grid-col gap-2 justify-center items-center">
           {isGameOver ? (
             <>
-              {isSendMail ? (
-                authUser ? null : (
-                  <>
-                    <Input
-                      placeholder="Fill E-mail to send result"
-                      onChange={(e) => setInput(e.target.value)}
-                      value={input}
-                      error={inputError}
-                    />
-                    <Button bg="black" width="60" onClick={handleSendMail}>
-                      Send to your E-mail
-                    </Button>
-                  </>
-                )
-              ) : (
-                <Button bg="black" width="60" onClick={handleSendMail}>
+              {isSendMail ? null : (
+                <Button bg="black" width="60" onClick={sendMail}>
                   Send to your E-mail
                 </Button>
               )}
