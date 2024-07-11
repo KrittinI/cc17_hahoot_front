@@ -40,7 +40,7 @@ export default function Scoreboard({
                   Send to your E-mail
                 </Button>
               )}
-              <Button bg="blue" width="60" onClick={() => navigate("/")}>
+              <Button bg="blue" width="60" onClick={() => navigate(-1)}>
                 Back to Home
               </Button>
             </>

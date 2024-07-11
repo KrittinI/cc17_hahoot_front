@@ -69,9 +69,8 @@ const ScoreboardMultiplayer = ({
             .map((p) => (
               <li
                 key={p.id}
-                className={`flex justify-between rounded-lg py-2 ${
-                  p.score === highestScore ? "bg-gray-200" : ""
-                }`}
+                className={`flex justify-between rounded-lg py-2 ${p.score === highestScore ? "bg-gray-200" : ""
+                  }`}
               >
                 <span>{p.name}</span>
                 <span>{p.score}</span>
@@ -100,8 +99,8 @@ const ScoreboardMultiplayer = ({
                   Send to your E-mail
                 </Button>
               )}
-              <Button bg="blue" width="60" onClick={() => navigate("/")}>
-                Back Home
+              <Button bg="blue" width="60" onClick={() => navigate(-1)}>
+                Back to Event
               </Button>
             </>
           ) : (
