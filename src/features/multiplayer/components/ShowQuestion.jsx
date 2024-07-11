@@ -32,7 +32,7 @@ export default function ShowQuestion({
             alt="Quiz Image"
           />
         ) : (
-          <RoomAnswerCount roomAnswerCount={roomAnswerCount} />
+          <RoomAnswerCount roomAnswerCount={roomAnswerCount} currentQuestion={currentQuestion} />
         )}
         {showAnswer ? (
           <button
