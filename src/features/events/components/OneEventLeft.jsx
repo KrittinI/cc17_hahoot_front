@@ -91,7 +91,7 @@ export default function OneEventLeft({ event, favorite, handleClickFavorite, edi
 
   return (
     <div className="min-h-full min-w-full max-w-full flex flex-col h-full  gap-8 rounded-lg  bg-white p-4 shadow">
-      <div className="flex flex-col gap-4 justify-between border-b border-gray-300 pb-4 h-full">
+      <div className="flex flex-col gap-4 justify-between border-gray-300 pb-4 h-full">
         <div className="flex justify-center min-h-[50%] max-h-[50%] min-w-[100%] max-w-[100%] mx-auto bg-gray-100">
           {edit ? (
             <img className="rounded-lg max-h-full max-w-full object-cover" src={event?.eventImage || image} alt="eventImage" />

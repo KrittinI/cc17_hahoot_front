@@ -76,19 +76,17 @@ export default function EventQuestionCard({ index, question, setEventQuestions, 
           <EditIcon />
         </span>
       </div>
-      <Modal open={isDelete}>
+      <Modal open={isDelete} title={`Are you sure to delete this quiz`} width={20}>
         <div className="w-full flex flex-col justify-center items-center gap-4 p-6">
-          <div className=" text-font-title">Are you sure to delete</div>
-          <div className=" text-font-title"> this quiz</div>
           <div>
             <QuestionIcon />
           </div>
-          <div className="w-full flex justify-around pt-6">
-            <Button bg={`red`} width={20} onClick={() => handleDelete(index)}>
-              Delete
-            </Button>
-            <Button bg={`black`} width={20} onClick={() => setIsDelete(false)}>
+          <div className="w-full flex justify-around pt-6 gap-4">
+            <Button bg={`black`} width={40} onClick={() => setIsDelete(false)}>
               Cancel
+            </Button>
+            <Button bg={`blue`} width={40} onClick={() => handleDelete(index)}>
+              Delete
             </Button>
           </div>
         </div>
