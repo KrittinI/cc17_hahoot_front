@@ -84,14 +84,14 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
     socket.emit("kickPlayer", playerId, roomId);
   };
 
-  let playerCount = (players?.length ?? 0) - 1;
-  if (playerCount === -1) playerCount = 0;
+  //let playerCount = (players?.length ?? 0) - 1;
+  // if (playerCount === -1) playerCount = 0;
 
-  console.log("Owner=>", players[0]);
+  //console.log("Owner=>", players[0]);
   console.log("players[array]=>", players);
-  console.log("playerCount", playerCount);
+  // console.log("playerCount", playerCount);
 
-  console.log("name oXXf players", players);
+  //console.log("name oXXf players", players);
 
   return (
     <div className="bg-white px-2 w-full md:w-3/4 h-full rounded-lg shadow-xl gap-2 flex flex-col items-center justify-center">
@@ -110,7 +110,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
               )}
               <div className="text-font-title text-black bg-lblue flex justify-center items-center rounded-md gap-4 py-2 px-4">
                 <IoPerson className=" text-blue w-[40px] h-[40px]  flex justify-center align-middle" />
-                {playerCount ?? 0}
+                {players?.length - 1}
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
         </div>
         {isOwner && (
           <ul className="w-full flex flex-wrap gap-4 p-4 bg-transparent justify-center">
-            {playerCount === 0 ? (
+            {players?.length - 1 === 0 ? (
               <div className="flex items-center justify-center text-2xl py-4 font-sans font-bold text-blue">
                 {/* <div>Waiting for players . . .</div> */}
                 <div className="rounded-full h-20 w-50 animate-ping">
