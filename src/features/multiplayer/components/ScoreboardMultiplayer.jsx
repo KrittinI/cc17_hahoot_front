@@ -54,9 +54,8 @@ const ScoreboardMultiplayer = ({
             .map((p) => (
               <li
                 key={p.id}
-                className={`flex justify-between rounded-lg py-2 ${
-                  p.score === highestScore ? "bg-gray-200" : ""
-                }`}
+                className={`flex justify-between rounded-lg px-4 py-2 ${p.score === highestScore ? "bg-gray-200" : ""
+                  }`}
               >
                 <span>{p.name}</span>
                 <span>{p.score}</span>
