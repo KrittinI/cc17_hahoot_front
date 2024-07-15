@@ -15,11 +15,16 @@ import ShowQuestion from "./ShowQuestion";
 import useEvent from "../../../hooks/useEvent";
 import PlayerGameOver from "./PlayerGameOver";
 import playApi from "../../../api/play";
+import { useSearchParams } from "react-router-dom";
 
 const MultiPlayer = () => {
   const { authUser } = useAuth();
   const { playQuestion } = useQuestion();
   const { eventId } = useEvent();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pincode = searchParams.get('pincode')
+
+
   //WTF 20 States
   const [name, setName] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -51,6 +56,9 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     resetState();
+    if (pincode) {
+      setRoomId(pincode)
+    }
   }, []);
 
   let socketIo;
@@ -64,7 +72,6 @@ const MultiPlayer = () => {
 
     socketIo.on("connection", (id) => {
       setPlayerId(id);
-      console.log("setPlayerID: ", id);
     });
 
     //socket = io("http://localhost:4000");
@@ -82,11 +89,9 @@ const MultiPlayer = () => {
     socketIo.on("RoomAnswerCount", (counts) => {
       //set something in state
       setRoomAnswerCount(counts);
-      console.log("RoomAnswerCounter is working");
     });
 
     socketIo.on("answerCount", (count) => {
-      console.log("answerCount =>", count);
       setAnswerCount(count);
     });
 
@@ -119,12 +124,10 @@ const MultiPlayer = () => {
       //setCurrentQuestion(null);
       setShowAnswer(false);
       setChangeBG(false);
-      console.log(questionData);
       setShowScoreboard(false);
       setClientAnswerResult(null);
       setCurrentQuestion(questionData);
       setTimeLeft(questionData.timeLimit);
-      console.log("newQuestion has received =>", questionData);
       //alert("newQuestion has received");
     });
 
@@ -139,17 +142,6 @@ const MultiPlayer = () => {
     socketIo.on(
       "answerResult",
       ({ playerIdBackend, correct, scoreBackend }) => {
-        console.log(
-          "answerResultoObject=>",
-          playerIdBackend,
-          " ",
-          correct,
-          " ",
-          scoreBackend
-        );
-        console.log("playerId=>", { playerId });
-        console.log("playerId=>", playerId);
-        console.log("playerIdBackend=>", playerIdBackend);
 
         setScore(scoreBackend);
         //setScore((prevScore) => prevScore);
@@ -166,7 +158,6 @@ const MultiPlayer = () => {
     });
     socketIo.on("joinedRoom", ({ id }) => {
       setPlayerId(id);
-      console.log(id);
       setHasJoined(true);
     });
 
@@ -276,9 +267,7 @@ const MultiPlayer = () => {
         playerId,
         questionId: currentQuestion.id,
       });
-      console.log("submitClick-> Passed!");
     }
-    console.log("When Clicked PlayerId=>", playerId);
     setLoading(true);
   };
 
