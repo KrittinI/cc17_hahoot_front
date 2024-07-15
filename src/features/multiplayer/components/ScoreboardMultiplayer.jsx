@@ -10,7 +10,6 @@ const ScoreboardMultiplayer = ({
   socket,
   newRoomId,
   isGameOver,
-  playerId,
   handleSendMail,
 }) => {
   const [isSendMail, setIsSendMail] = useState(false);
