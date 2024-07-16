@@ -36,12 +36,10 @@ export default function CreateEventleft({ event }) {
       }
       const data = formatData();
       const res = await eventApi.create(data);
-      const count = eventQuestions.length;
       setEventQuestions([]);
       setIsSave(false);
       setEvent((prev) => [...prev, res.data.event]);
       setSingleEvent(null);
-      alert(`you've already created ${count} question(s) `);
       navigate("/events");
     } catch (err) {
       alert(err.message);
@@ -96,7 +94,7 @@ export default function CreateEventleft({ event }) {
             <QuestionIcon size={20} />
           </div>
           <div className="w-full flex justify-between pt-6">
-           
+
             <Button bg={`black`} width={40} onClick={() => setIsCancle(false)}>
               Cancel
             </Button>
