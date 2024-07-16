@@ -49,7 +49,7 @@ export default function AllQuizPage() {
       <SplitScreen sizeRatio={70}>
         <AllQuizzesLeft title={title} />
         <SearchBar
-          buttonText={`Create New Question`}
+          buttonText={`Create New Quiz`}
           setSeeAll={setSeeAll}
           setSearch={setSearch}
           topicId={topicId}

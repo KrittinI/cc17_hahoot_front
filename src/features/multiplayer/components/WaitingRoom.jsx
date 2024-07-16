@@ -20,7 +20,7 @@ const playerColorMap = {
 export default function WaitingRoom({ roomId, players, isOwner, socket }) {
   const { setPlayQuestion } = useQuestion();
 
-  const currentUrl = window.location.href;
+  const currentUrl = window.location.href + `?pincode=${roomId}`;
 
   const [roomLock, setRoomLock] = useState(false);
   const [lockStatus, setLockStatus] = useState("unlocked");
@@ -33,9 +33,6 @@ export default function WaitingRoom({ roomId, players, isOwner, socket }) {
 
   const { authUser } = useAuth();
   // authUser?.username;
-  console.log("RoomID", roomId);
-  console.log("inWaitingRoom=> socket=", socket);
-  console.log("players in room =", players);
   const navigate = useNavigate();
 
   const handleStartGame = () => {

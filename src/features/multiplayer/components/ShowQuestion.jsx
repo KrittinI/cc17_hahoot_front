@@ -20,12 +20,12 @@ export default function ShowQuestion({
 }) {
   return (
     <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] w-[75%] gap-12 transition-all duration-300 ease-in-out transform">
-      <div className="bg-white shadow-lg rounded-lg p-12 w-full transition-transform duration-500 ease-in-out transform hover:scale-105">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full transition-transform duration-500 ease-in-out transform hover:scale-105">
         <h2 className="text-font-title text-center animate-none">
           {currentQuestion?.question}
         </h2>
       </div>
-      <div className="flex flex-row justify-between items-center my-4 gap-60 animate-fade-in">
+      <div className="flex flex-row w-full px-4 justify-between items-center my-4 gap-60 animate-fade-in">
         <span
           className={`flex items-center justify-center text-6xl text-white font-bold bg-timeLeft shadow-lg rounded-full w-32 h-32 ${showAnswer ? "invisible" : ""
             }`}
@@ -35,7 +35,7 @@ export default function ShowQuestion({
         </span>
         {!showAnswer ? (
           <img
-            className={`w-[420px] h-[250px] rounded-lg ${showAnswer ? "invisible" : ""
+            className={`max-w-[420px] max-h-[250px] rounded-lg ${showAnswer ? "invisible" : ""
               }`}
             src={currentQuestion?.questionPicture || Image[currentQuestion?.id % 7]}
             alt="Quiz Image"

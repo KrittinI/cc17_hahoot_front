@@ -15,7 +15,7 @@ import userApi from "../../../api/user";
 
 export default function EditProfileForm({ onSuccess }) {
   const { authUser, setAuthUser } = useAuth();
-  const [input, setInput] = useState(authUser);
+  const [input, setInput] = useState({ ...authUser, password: "" });
   const [select, setSelect] = useState(1);
   const [error, setError] = useState("");
   const avatarMap = [

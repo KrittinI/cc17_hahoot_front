@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Button";
 import Logo from "../../../icons/Logo";
-import { AiOutlineRotateRight } from "react-icons/ai";
 
 export default function JoinRoomForm({
   socket,
@@ -11,7 +10,6 @@ export default function JoinRoomForm({
   setName,
 }) {
   const navigate = useNavigate();
-
   const handleJoinRoom = (event) => {
     event.preventDefault();
     if (!name) {
