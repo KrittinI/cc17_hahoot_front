@@ -15,6 +15,7 @@ import ShowQuestion from "./ShowQuestion";
 import useEvent from "../../../hooks/useEvent";
 import PlayerGameOver from "./PlayerGameOver";
 import playApi from "../../../api/play";
+import { screenShot } from "../../../utils/Html2Canvas";
 import { useSearchParams } from "react-router-dom";
 
 const MultiPlayer = () => {
@@ -282,9 +283,13 @@ const MultiPlayer = () => {
     setShowScoreboard(true);
   };
 
-  const handleSendMail = async (email) => {
+  const handleSendMail = async (image, email) => {
+    screenShot(image, email);
+  };
+
+  const handleSendleMailPlayer = async (email) => {
     playerInfo.shift();
-    await playApi.sendmailMultiplayer({
+    await playApi.sendmailMultiplayerClient({
       email: email,
       data: playerInfo,
     });
@@ -334,7 +339,10 @@ const MultiPlayer = () => {
             answerCount={answerCount}
           />
         ) : isGameOver ? (
-          <PlayerGameOver score={score} handleSendMail={handleSendMail} />
+          <PlayerGameOver
+            score={score}
+            handleSendMail={handleSendleMailPlayer}
+          />
         ) : clientAnswerResult !== null ? (
           <ShowResultBox clientAnswerResult={clientAnswerResult} />
         ) : !isOwner && currentQuestion ? (

@@ -4,6 +4,7 @@ import confetti from "canvas-confetti";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
+import { useRef } from "react";
 
 const ScoreboardMultiplayer = ({
   players,
@@ -13,6 +14,7 @@ const ScoreboardMultiplayer = ({
   handleSendMail,
 }) => {
   const [isSendMail, setIsSendMail] = useState(false);
+  const captureImgRef = useRef(null);
   const { authUser } = useAuth();
 
   const navigate = useNavigate();
@@ -29,22 +31,25 @@ const ScoreboardMultiplayer = ({
   const handleNextQuestion = () => {
     socket.emit("nextQuestion", newRoomId);
   };
-  const ownerId = socket.id; // Example way to get ownerId, adapt as needed
+  const ownerId = socket?.id; // Example way to get ownerId, adapt as needed
   // Find the highest score
-  const highestScore = Math.max(...players.map((p) => p.score));
+  const highestScore = Math.max(players?.map((p) => p.score));
 
   console.log("socket=>", socket);
   console.log("newRoomId=>", newRoomId);
   console.log("players=>", players);
 
-  const sendMail = async () => {
+  const sendMail = () => {
     setIsSendMail(true);
-    handleSendMail(authUser?.email);
+    handleSendMail(captureImgRef.current, authUser?.email);
   };
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-12rem)] animate-fade-in">
-      <div className="grid grid-1 gap-8 text-center w-auto h-auto bg-white rounded-lg p-6 shadow-lg animate-pop">
+      <div
+        className="grid grid-1 gap-8 text-center w-auto h-auto bg-white rounded-lg p-6 shadow-lg animate-pop"
+        ref={captureImgRef}
+      >
         <h1 className="text-font-title">Scoreboard</h1>
         <ul>
           {players
