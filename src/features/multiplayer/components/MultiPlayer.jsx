@@ -18,6 +18,8 @@ import playApi from "../../../api/play";
 import { screenShot } from "../../../utils/Html2Canvas";
 import { useSearchParams } from "react-router-dom";
 
+const BACK_URL = import.meta.env.VITE_API_URL;
+
 const MultiPlayer = () => {
   const { authUser } = useAuth();
   const { playQuestion } = useQuestion();
@@ -66,7 +68,7 @@ const MultiPlayer = () => {
 
   useEffect(() => {
     // เชื่อมต่อกับ Socket.IO โดยใช้ hostname ของเครื่องที่รัน Vite server
-    socketIo = io(`http://${window.location.hostname}:8008`, {
+    socketIo = io(BACK_URL, {
       pingInterval: 10000, // ส่ง ping ทุกๆ 10 วินาที
       pingTimeout: 5000, // รอการตอบสนองจาก ping 5 วินาที
     });
