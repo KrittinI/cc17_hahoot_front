@@ -71,6 +71,7 @@ const MultiPlayer = () => {
     socketIo = io(BACK_URL, {
       pingInterval: 10000, // ส่ง ping ทุกๆ 10 วินาที
       pingTimeout: 5000, // รอการตอบสนองจาก ping 5 วินาที
+      transports: ['websocket']
     });
 
     socketIo.on("connection", (id) => {
